@@ -87,7 +87,7 @@ The architecture has three memory types. Healthy balance varies by maturity:
 | ------ | ------------- | --------- | ------------ |
 | Skills added this month | Count new SKILL.md files | 1-5 new skills | 0 (stagnant) or > 10 (unfocused) |
 | Skills deepened | Skills edited to add depth | Active enrichment | Only new, never deepened |
-| Global knowledge growth | New GI-* and GK-* entries | Synthesis happening | No global entries (isolated learning) |
+| Global knowledge growth | New GI-\* and GK-\* entries | Synthesis happening | No global entries (isolated learning) |
 | Trifecta progression | New instructions/prompts | Capability maturing | Skills without procedures |
 
 ## Self-Actualization Session Flow

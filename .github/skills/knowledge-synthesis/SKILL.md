@@ -64,7 +64,7 @@ Before creating new knowledge, check: does this extend an existing pattern?
 
 ## Promotion Checklist (Insight → Pattern)
 
-Before promoting a GI-_ insight to GK-_ pattern:
+Before promoting a GI-\_ insight to GK-\_ pattern:
 
 - [ ] Abstracted from original project context
 - [ ] Named with clear, searchable slug
