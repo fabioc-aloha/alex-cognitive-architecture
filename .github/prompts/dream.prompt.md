@@ -1,0 +1,36 @@
+---
+sem: 1
+description: Run architecture maintenance to validate and repair cognitive connections
+application: "When maintaining cognitive architecture or memory systems"
+agent: Alex
+---
+
+# /dream - Architecture Maintenance
+
+
+Run unconscious processing and architecture health checks.
+
+## Process
+
+1. Run `brain-qa.cjs` for comprehensive architecture validation
+2. Use `alex_architecture_status` to check overall health
+3. **FIX** all issues found (don't just report them)
+4. Sync any drifted files between Master and Heir
+5. Update counts, timestamps, and stale references
+
+## Behavior
+
+- **DO NOT ASK** for permission — automatically fix everything fixable
+- Update GK counts if drifted
+- Repair broken file references
+- Only report issues that require human decision
+
+## Nature
+
+Dream is automatic maintenance. Fix problems silently; report only what you cannot fix.
+
+## Start
+
+Begin architecture maintenance now. Run diagnostics, fix all issues, and report only blockers.
+
+

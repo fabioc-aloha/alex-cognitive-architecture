@@ -1,5 +1,7 @@
 # Alex Cognitive Architecture
 
+![Alex — Your AI Learning Partner](assets/banner.png)
+
 **Your AI learning partner with meta-cognitive awareness.**
 
 Alex is a VS Code extension that transforms GitHub Copilot into a cognitive learning partner with skills, memory, and self-awareness.
