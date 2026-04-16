@@ -1,0 +1,35 @@
+# Deny all by default, then allowlist
+**
+
+# Bundled output
+!dist/extension.js
+!dist/extension.js.map
+
+# Assets
+!assets/icon.png
+!assets/logo-mono.svg
+
+# Walkthrough media
+!media/walkthrough/**
+
+# Brain files for workspace bootstrap
+!brain-files/**
+
+# Metadata
+!package.json
+!README.md
+!CHANGELOG.md
+!LICENSE.md
+
+# Exclude dev artifacts
+src/**
+tests/**
+node_modules/**
+tsconfig.json
+esbuild.mjs
+sync-brain-files.cjs
+*.vsix
+dist/**/*.d.ts
+dist/**/*.d.ts.map
+**/.env
+**/.env.*

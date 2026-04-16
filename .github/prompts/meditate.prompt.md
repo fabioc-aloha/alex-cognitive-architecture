@@ -1,37 +1,38 @@
 ---
 sem: 1
-description: Begin a guided meditation session for knowledge consolidation
-application: "When requesting knowledge consolidation, architecture maintenance, or reflective sessions"
+description: Knowledge consolidation — review, connect, persist, fix
+application: "When requesting knowledge consolidation or reflective sessions"
 agent: Alex
 ---
 
-# /meditate - Knowledge Consolidation
+# Meditate — Knowledge Consolidation
 
+Consolidate this session's learnings into permanent memory. Act, don't ask.
 
-Guide the user through conscious knowledge consolidation using Alex's meditation protocols.
+## The 4 R's
 
-## Process
+1. **Review** — Scan this conversation for insights, patterns, breakthroughs, and mistakes
+2. **Relate** — Connect findings to existing skills and instructions. Identify gaps.
+3. **Reinforce** — Decide what's worth persisting (non-obvious, reusable, easy to forget)
+4. **Record** — Save to the right location:
 
-1. **Reflect**: Review the current session for learnings
-2. **Connect**: How does this relate to existing knowledge?
-3. **Persist**: Save ALL findings to Global Knowledge (patterns/insights)
-4. **Fix**: Repair any issues discovered (broken links, drift, outdated content)
-5. **Integrate**: Update relevant `.instructions.md`, `.prompt.md`, or skills
+| Learning type | Store in | Format |
+|---|---|---|
+| Repeatable process | `.github/instructions/` | `.instructions.md` |
+| Domain expertise | `.github/skills/` | `SKILL.md` |
+| Interactive workflow | `.github/prompts/` | `.prompt.md` |
+| Cross-project pattern | `/memories/` | User memory file |
+| Repo-specific fact | `/memories/repo/` | Repo memory JSON |
 
-## Behavior
+## Rules
 
-- **DO NOT ASK** what to save — proactively save all valuable learnings
-- Create insights for session-specific discoveries
-- Create patterns for reusable solutions
-- Fix any issues found during reflection (don't just report them)
-- Update index.json with new entries
-
-## Important
-
-Meditation is incomplete without actual file changes. Every meditation must produce at least one artifact: an insight, a pattern, a fix, or an update.
+- Proactively save — do NOT ask what to save
+- Fix issues found during reflection (drift, broken refs, stale content)
+- Every meditation produces at least one artifact
+- Meditation without file changes is incomplete
 
 ## Start
 
-Begin the meditation session now. Review the current conversation for learnings, save them to Global Knowledge, and fix any issues discovered.
+Begin now. Review this conversation, save learnings, fix issues.
 
 

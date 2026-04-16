@@ -4,127 +4,59 @@ application: "When exploring new domains, synthesizing knowledge, or building ex
 applyTo: "**/*meditation*,**/*dream*,**/*consolidation*"
 ---
 
-# Meditation Protocols
+# Meditation Protocol
 
-## Mandatory Requirements (Non-Negotiable)
+Knowledge consolidation — transform working memory into permanent architecture.
 
-Every meditation session MUST complete ALL three before concluding:
+## Completion Gate
 
-| #   | Requirement                 | Action                                    | Validation                                                     |
-| --- | --------------------------- | ----------------------------------------- | -------------------------------------------------------------- |
-| 1   | **Memory File Persistence** | Create OR update at least one memory file | File saved to `.instructions.md`, `.prompt.md`, or `SKILL.md`  |
-| 2   | **Knowledge Connection**    | Link new knowledge to existing skills     | Related skills noted, frontmatter updated if needed            |
-| 3   | **Session Documentation**   | Record actions with timestamps            | Summary of changes with specific file paths                    |
+A meditation is INCOMPLETE unless it produces at least one file change:
 
-**Failure**: If ANY requirement is missing, the meditation is INCOMPLETE.
+| Output | Target |
+|---|---|
+| Repeatable process | `.github/instructions/*.instructions.md` |
+| Domain knowledge | `.github/skills/*/SKILL.md` |
+| Workflow template | `.github/prompts/*.prompt.md` |
+| Cross-project pattern | `/memories/` (user memory) |
+| Repo-specific fact | `/memories/repo/` (repo memory) |
 
----
+## 4 Phases
 
-## 8-Phase Protocol
+### 1. Review
 
-### Phase 1: Deep Content Analysis
+- Scan conversation for insights, patterns, breakthroughs, mistakes
+- Extract concepts worth persisting (non-obvious, reusable, easy to forget)
+- Discard noise — not everything deserves permanent storage
 
-1. Analyze conversation for insights, patterns, new knowledge
-2. Extract key concepts, methodologies, breakthroughs
-3. Discover connections between new information and existing knowledge
-4. Organize insights for permanent integration
+### 2. Connect
 
-### Phase 2: Cross-Project Memory Scan
+- Compare findings against existing instructions, skills, and `/memories/`
+- Identify reinforcements (existing knowledge confirmed) and contradictions (flag for review)
+- Look for cross-domain connections — one genuine insight beats three forced ones
 
-1. Read `/memories/` (all user memory files)
-2. Compare session insights against stored universal patterns
-3. If session produced a pattern that passes the 3-workspace test, promote to `/memories/`
-4. If a stored pattern was reinforced by this session, note confirmation in the episodic file
-5. If a stored pattern was contradicted, flag for review (do not auto-delete)
-6. Check for project-specific content that leaked into `/memories/` during this session
-7. If 3+ episodic files across different repos share an unrecorded pattern, surface as a skill candidate
+### 3. Persist
 
-See `memory-curation` skill for scope rules and the 3-workspace test.
+- Create or update the right file type (see Completion Gate)
+- Ensure frontmatter is complete (`description`, `applyTo`)
+- Link related skills/instructions via naming or frontmatter references
+- Patterns that pass the 3-workspace test → `/memories/` (user memory)
+- Patterns that are repo-specific → `/memories/repo/`
 
-### Phase 3: Cross-Domain Pattern Synthesis (Generative)
+### 4. Validate
 
-Evolve from consolidation (organizing what you know) to generation (creating new connections).
+Output checklist before concluding:
 
-1. Analyze episodic memories for cross-domain pattern synthesis (identify domain coverage, under-connected pairs, and opportunity scores)
-2. Review the synthesis report: domain coverage, under-connected pairs, opportunity scores
-3. For each top synthesis candidate (3 max per meditation):
-   - Read the episodic memories from both domains
-   - Ask: "What principle from domain A, if applied to domain B, would create value?"
-   - If a genuine connection exists, propose it as a new insight
-4. Validate proposed connections pass the **Transfer Test**:
-   - Is the connection structural (not superficial analogy)?
-   - Would someone working in domain B find this actionable?
-   - Does it hold without the original domain A context?
-5. For validated connections:
-   - Note related skills in frontmatter or naming
-   - Create a GI-\* insight documenting the cross-domain discovery
-   - Record the connection in the meditation episodic file
-6. Skip this phase if fewer than 10 episodic memories exist (insufficient data)
-
-**Quality over quantity**: One genuine cross-domain insight per meditation is excellent. Zero is fine. Forced connections waste tokens.
-
-### Phase 4: Memory File Creation
-
-1. **Procedural**: Create `.instructions.md` for repeatable processes
-2. **Episodic**: Create `.prompt.md` for complex workflows
-3. **Skills**: Add to `SKILL.md` or create new skills
-4. Transfer key learnings from working memory to long-term storage
-5. Mark session complete in Active Context (update Last Assessed via self-actualization)
-
-### Phase 5: Knowledge Integration
-
-1. Add new memory files to `copilot-instructions.md` if needed
-2. Establish trigger patterns for new files (applyTo in frontmatter)
-3. Document relationships between new and existing components
-4. Ensure trifecta naming consistency where appropriate
-
-### Phase 6: Skill Validation
-
-1. Scan `.github/skills/*/SKILL.md` for registered skills
-2. Verify skill frontmatter (applyTo, description) is complete
-3. Review trifecta completeness based on session experience
-4. Note skills that co-activated frequently for potential linking
-
-### Phase 7: Integration Validation
-
-1. Verify all insights captured in permanent memory
-2. Confirm new knowledge integrates with existing architecture
-3. Test that new connections function properly
-4. **Output validation** (mandatory before concluding):
-
-```
-✓ Memory File: [path/to/file.md] - [created|updated]
-✓ Related Skills: [skill-a, skill-b] - linked via naming/frontmatter
-✓ Session Log: [summary of changes]
+```text
+✓ File: [path] — [created|updated]
+✓ Related: [skill-a, skill-b] — linked
+✓ Summary: [one-line description of what was consolidated]
 ```
 
-### Phase 8: Post-Meditation Architecture Validation
+If new skills/instructions were created, verify they load correctly.
 
-1. Run `node .github/muscles/brain-qa.cjs` or use the dream prompt for automated health check
-2. Review generated report in `.github/quality/`
-3. Verify new files have complete frontmatter (applyTo, description)
-4. Confirm trifecta naming is consistent
-5. If issues found → repair before concluding
-6. **Runtime check**: If new skills/instructions were created, type `/troubleshoot` in chat to verify they loaded correctly — catches name mismatches, invalid frontmatter, or `applyTo` patterns that VS Code's loader silently skipped
+## When to Meditate
 
----
-
-## Automatic Consolidation Triggers
-
-- Working memory > 7 rules → Execute consolidation
-- Domain learning complete → Consolidate and update Focus Trifectas in Active Context
-- Significant breakthrough → Create permanent memory
-- Cross-domain patterns → Analyze episodic memories for cross-domain synthesis, then establish new connections
-
-## Pre-Meditation Optimization
-
-Meditation is a complex operation (3+ phases). Before starting:
-
-1. SSO auto-activates to survey needed skills
-2. Pre-load: brain-qa, knowledge-synthesis, global-knowledge, memory-curation
-3. Read `/memories/` for cross-project context (enriches episodic output)
-4. If architecture health unknown, run dream first
-
----
-
-_Meditation procedural memory — operationalizes the unified meditation protocols with mandatory persistence requirements_
+- Session produced reusable knowledge worth persisting
+- Domain learning reached a milestone
+- Cross-domain patterns emerged
+- Working memory feels overloaded (7+ unrecorded insights)

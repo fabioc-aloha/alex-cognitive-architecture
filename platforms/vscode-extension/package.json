@@ -1,0 +1,161 @@
+{
+  "name": "alex-cognitive-architecture",
+  "displayName": "Alex Cognitive Architecture",
+  "description": "Your cognitive learning partner — installs a living brain of skills, instructions, and prompts that makes GitHub Copilot dramatically smarter in any project.",
+  "version": "8.0.0",
+  "publisher": "fabioc-aloha",
+  "license": "MIT",
+  "icon": "assets/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabioc-aloha/alex-cognitive-architecture"
+  },
+  "private": true,
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "AI",
+    "Chat",
+    "Extension Packs",
+    "Education"
+  ],
+  "extensionPack": [
+    "GitHub.copilot-chat",
+    "ms-vscode.powershell",
+    "redhat.vscode-yaml",
+    "bierner.markdown-mermaid",
+    "DavidAnson.vscode-markdownlint"
+  ],
+  "keywords": [
+    "ai",
+    "copilot",
+    "cognitive architecture",
+    "brain",
+    "skills",
+    "instructions",
+    "prompts"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "alex-sidebar",
+          "title": "Alex Cognitive Architecture",
+          "icon": "assets/logo-mono.svg"
+        }
+      ]
+    },
+    "views": {
+      "alex-sidebar": [
+        {
+          "type": "webview",
+          "id": "alex.welcomeView",
+          "name": "Welcome"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Alex Cognitive Architecture",
+      "properties": {
+        "alex.workspace.protectedMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "When enabled, prevents brain operations that modify workspace files. Auto-enabled for Master Alex."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "alex.updateBrain",
+        "title": "Alex: Install / Update Brain"
+      },
+      {
+        "command": "alex.dream",
+        "title": "Alex: Dream (Knowledge Consolidation)"
+      },
+      {
+        "command": "alex.showStatus",
+        "title": "Alex: Show Status"
+      },
+      {
+        "command": "alex.optimizeSettings",
+        "title": "Alex: Optimize Settings"
+      },
+      {
+        "command": "alex.openDocs",
+        "title": "Alex: Open Documentation"
+      }
+    ],
+    "walkthroughs": [
+      {
+        "id": "alex.welcome",
+        "title": "Get Started with Alex",
+        "description": "Install the cognitive brain, explore the sidebar, and start collaborating with your AI learning partner.",
+        "steps": [
+          {
+            "id": "install-brain",
+            "title": "Install Brain Files",
+            "description": "Install the cognitive architecture into your workspace. This adds skills, instructions, and prompts that supercharge GitHub Copilot.\n\n[Install Brain](command:alex.updateBrain)",
+            "media": {
+              "markdown": "media/walkthrough/install-brain.md"
+            }
+          },
+          {
+            "id": "explore-sidebar",
+            "title": "Explore the Sidebar",
+            "description": "Click the Alex icon in the Activity Bar to see brain status, quick actions, and documentation links.",
+            "media": {
+              "markdown": "media/walkthrough/explore-sidebar.md"
+            }
+          },
+          {
+            "id": "chat-with-alex",
+            "title": "Chat with Alex",
+            "description": "Open GitHub Copilot Chat and start a conversation. Alex's brain files automatically enhance every response.\n\n[Open Chat](command:workbench.action.chat.open)",
+            "media": {
+              "markdown": "media/walkthrough/chat.md"
+            }
+          },
+          {
+            "id": "dream-state",
+            "title": "Run a Dream Session",
+            "description": "Consolidate knowledge and maintain architecture health through Alex's dream state.\n\n[Start Dream](command:alex.dream)",
+            "media": {
+              "markdown": "media/walkthrough/dream.md"
+            }
+          },
+          {
+            "id": "learn-more",
+            "title": "Documentation and Resources",
+            "description": "Read the user guide, FAQ, and architecture docs.\n\n[Open Documentation](command:alex.openDocs)",
+            "media": {
+              "markdown": "media/walkthrough/docs.md"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "build:check": "tsc --noEmit",
+    "watch": "node esbuild.mjs --watch",
+    "lint": "eslint src/",
+    "clean": "rimraf dist",
+    "prepackage": "node sync-brain-files.cjs",
+    "package": "npm run prepackage && vsce package --no-dependencies",
+    "vscode:prepublish": "npm run clean && npm run build:check && npm run build -- --production"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.100.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.2.0",
+    "rimraf": "^6.0.0",
+    "typescript": "^6.0.2"
+  }
+}
