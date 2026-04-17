@@ -60,3 +60,48 @@ Before solving a problem from scratch, check if another project solved it succes
 - Over-generalizing one-off fixes
 - Storing project-specific knowledge globally
 - Duplicating user-profile.json in heirs
+
+## Heir Contribution Procedures
+
+Heirs are **active contributors** to the shared knowledge base:
+
+### Contribute Pattern to Registry
+
+After solving a problem elegantly:
+
+```javascript
+// Update own entry in project-registry.json
+myEntry.successfulPatterns.push('pattern-name');
+myEntry.health.lastMeditation = new Date().toISOString();
+```
+
+### Create Insight File
+
+When a pattern proves valuable (reused 3+ times):
+
+```bash
+# Create: ~/AI-Memory/insights/GI-{topic}-{date}.md
+```
+
+Include: project, date, category, tags, context, discovery, evidence.
+
+### Report Friction
+
+When encountering recurring issues:
+
+```javascript
+// Update own entry
+myEntry.frictionPoints.push('issue-description');
+```
+
+Or create feedback file:
+
+```bash
+# Create: ~/AI-Memory/feedback/{date}-friction-{slug}.md
+```
+
+### What Heirs Cannot Do
+
+- Modify `user-profile.json` (read-only)
+- Edit other projects' registry entries
+- Delete global patterns (request via feedback)

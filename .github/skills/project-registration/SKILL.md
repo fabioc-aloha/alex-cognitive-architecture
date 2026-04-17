@@ -6,6 +6,23 @@ Register and update project metadata in the AI-Memory project registry for fleet
 
 Enable heirs to self-register in the centralized project registry, track successful patterns, document friction points, and promote reusable solutions to the fleet.
 
+## Heir Contribution Model
+
+Heirs are **active contributors** to the shared knowledge base, not passive consumers:
+
+| Resource | Heir Can | Example |
+|----------|----------|---------|
+| `project-registry.json` | Update own entry | Add patterns, friction, health |
+| `insights/` | Create new files | `GI-{topic}-{date}.md` |
+| `feedback/` | Create new files | Report friction to Master |
+| `user-profile.json` | Read only | Identity is centrally managed |
+
+**Contribution flow:**
+1. Heir solves a problem → records in `successfulPatterns`
+2. Pattern reused 3x → promotes to `AI-Memory/insights/`
+3. Master validates → graduates to `AI-Memory/patterns/`
+4. Pattern syncs to all heirs
+
 ## Registry Location
 
 ```
@@ -157,6 +174,54 @@ const needsMeditation = registry.projects.filter(p =>
 | `active` | Modified in last 7 days | On every significant change |
 | `maintenance` | Modified in last 30 days | Weekly or on changes |
 | `archived` | Not modified in 30+ days | Rarely/never |
+
+## Contributing Insights from Heirs
+
+When an heir discovers a valuable pattern, contribute it to the shared knowledge base.
+
+### 1. Create Insight File
+
+```markdown
+<!-- ~/AI-Memory/insights/GI-{topic}-{date}.md -->
+---
+project: project-name
+date: 2026-04-17
+category: backend|frontend|architecture|testing|devops
+tags: [relevant, searchable, terms]
+status: draft|validated
+---
+
+# Insight Title
+
+## Context
+What problem were you solving?
+
+## Discovery
+What pattern/solution did you find?
+
+## Evidence
+- Used in: [list files or scenarios]
+- Reuse count: 3+
+
+## Recommendation
+How should other projects apply this?
+```
+
+### 2. Update Registry Entry
+
+After contributing an insight, update your registry entry:
+
+```javascript
+// Mark that you contributed this pattern
+myEntry.successfulPatterns.push('pattern-name');
+```
+
+### 3. Insight Promotion
+
+Master Alex reviews `AI-Memory/insights/` during meditation:
+- **Validated**: Promoted to `AI-Memory/patterns/GK-*.md`
+- **Needs refinement**: Feedback added to file
+- **Project-specific**: Stays as insight, not promoted
 
 ## Integration with Fleet Operations
 
