@@ -2,7 +2,7 @@
 sem: 1
 agent: Alex
 description: Define or review project North Star vision
-application: "When requesting code reviews, PR feedback, or quality assessment"
+application: "When defining project vision, goals, or strategic direction"
 ---
 
 # /northstar

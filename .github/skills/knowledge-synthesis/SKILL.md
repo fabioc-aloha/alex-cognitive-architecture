@@ -13,22 +13,22 @@ applyTo: "**/*knowledge*,**/*insight*,**/*pattern*,**/*global*"
 
 ### 1. Abstract — Strip project-specific details
 
-| Before (project-specific)                                        | After (abstracted)                                                  |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------- |
-| "In Alex extension, synapses.json breaks when files are renamed" | "Connection metadata breaks when target files are renamed"          |
-| "We migrated knowledge files to skills/"                         | "When reorganizing knowledge files, update all internal references" |
-| "Alex's dream runs brain-qa.ps1"                                 | "Automated health checks should run validation scripts"             |
+| Before (project-specific)                                       | After (abstracted)                                                  |
+| --------------------------------------------------------------- | ------------------------------------------------------------------- |
+| "In Alex extension, skill links break when files are renamed"   | "Connection metadata breaks when target files are renamed"          |
+| "We migrated knowledge files to skills/"                        | "When reorganizing knowledge files, update all internal references" |
+| "Alex's dream runs brain-qa.ps1"                                | "Automated health checks should run validation scripts"             |
 
 **Test**: Would this insight help someone who's never seen this project?
 
 ### 2. Generalize — Find the abstraction level
 
-| Level                | Example                                                     | Store As             |
-| -------------------- | ----------------------------------------------------------- | -------------------- |
-| Project-specific     | "Alex uses synapses.json"                                   | Don't store globally |
-| Technology-specific  | "JSON schema files break silently on rename"                | GI-\* insight        |
-| Architecture pattern | "Self-referencing metadata needs rename-aware tooling"      | GK-\* pattern        |
-| Universal principle  | "Metadata that references other files is fragile by nature" | GK-\* (high value)   |
+| Level                | Example                                                       | Store As             |
+| -------------------- | ------------------------------------------------------------- | -------------------- |
+| Project-specific     | "Alex uses frontmatter applyTo patterns"                      | Don't store globally |
+| Technology-specific  | "YAML frontmatter files break silently on rename"             | GI-\* insight        |
+| Architecture pattern | "Self-referencing metadata needs rename-aware tooling"        | GK-\* pattern        |
+| Universal principle  | "Metadata that references other files is fragile by nature"   | GK-\* (high value)   |
 
 **Store at the highest level that remains true.** If generalizing makes it wrong, stay specific.
 
@@ -60,7 +60,7 @@ Before creating new knowledge, check: does this extend an existing pattern?
 | Same bug in different context   | Missing knowledge → capture the fix pattern    |
 | "This works everywhere"         | Universal principle → high-value pattern       |
 | "I wish I'd known this earlier" | Onboarding knowledge → insight worth capturing |
-| "This is not obvious"           | Non-obvious insight → capture the _why_        |
+| "This is not obvious"           | Non-obvious insight → capture the *why*        |
 
 ## Promotion Checklist (Insight → Pattern)
 
@@ -89,7 +89,7 @@ Phase 4 of meditation is the natural synthesis point:
 
 1. Review session insights (Phase 1 output)
 2. For each insight: Abstract → check if existing pattern covers it → extend or create
-3. Connect new entries via synapses to related skills
+3. Link new entries to related skills
 4. Verify the global knowledge index is updated
 
 ## Cross-Domain Pattern Synthesis
@@ -100,19 +100,19 @@ Phase 3 of meditation analyzes episodic memories for cross-domain synthesis to m
 
 Before accepting a cross-domain connection, validate all three:
 
-| Criterion   | Question                                            | Fail Example                                             |
-| ----------- | --------------------------------------------------- | -------------------------------------------------------- |
-| Structural  | Is the similarity in _structure_, not just _words_? | "Both use JSON" (superficial)                            |
-| Actionable  | Would someone in domain B find this useful?         | "Data viz is like meditation: both need focus" (vague)   |
-| Independent | Does it hold without domain A context?              | "Use synapses.json format for dashboards" (too specific) |
+| Criterion   | Question                                            | Fail Example                                               |
+| ----------- | --------------------------------------------------- | ---------------------------------------------------------- |
+| Structural  | Is the similarity in _structure_, not just _words_? | "Both use JSON" (superficial)                              |
+| Actionable  | Would someone in domain B find this useful?         | "Data viz is like meditation: both need focus" (vague)     |
+| Independent | Does it hold without domain A context?              | "Use frontmatter applyTo for dashboards" (too specific)    |
 
 ### Cross-Domain Connection Types
 
-| Type                         | Description                                                   | Example                                                                                 |
-| ---------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| **Technique transfer**       | A method from domain A solves a problem in domain B           | "Colorblind-safe palette enforcement (data) applied to brand asset validation (design)" |
-| **Pattern isomorphism**      | Same structural pattern appears independently in both domains | "Health checks: synapse validation (cognitive) mirrors dependency audit (security)"     |
-| **Principle generalization** | A domain-specific rule is actually a universal truth          | "Store at the highest true level (synthesis) = single source of truth (architecture)"   |
+| Type                         | Description                                                   | Example                                                                                   |
+| ---------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| **Technique transfer**       | A method from domain A solves a problem in domain B           | "Colorblind-safe palette enforcement (data) applied to brand asset validation (design)"   |
+| **Pattern isomorphism**      | Same structural pattern appears independently in both domains | "Health checks: connection validation (cognitive) mirrors dependency audit (security)"    |
+| **Principle generalization** | A domain-specific rule is actually a universal truth          | "Store at the highest true level (synthesis) = single source of truth (architecture)"     |
 | **Gap bridging**             | Domain A has a solution for a known gap in domain B           | "Automated drift detection (cognitive) could solve doc-code sync (documentation)"       |
 
 ### Synthesis Output Format
@@ -129,5 +129,5 @@ For each validated cross-domain connection, produce:
 
 **Insight**: [1-2 sentence description of the connection]
 **Evidence**: [episodic memories that support this connection]
-**Proposed action**: [new synapse, new skill, or extension to existing pattern]
+**Proposed action**: [new skill link, new skill, or extension to existing pattern]
 ```

@@ -1,7 +1,7 @@
 ---
 sem: 1
 description: Run a structured 4-phase implementation plan using the VS Code Plan Agent
-application: "When developing prompts, instructions, or agent configurations"
+application: "When planning implementation, creating project plans, or organizing tasks"
 agent: Alex
 ---
 

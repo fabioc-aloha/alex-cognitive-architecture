@@ -1,7 +1,7 @@
 ---
 sem: 1
 description: Create a Mermaid diagram following the ATACCU methodology
-application: "When scaffolding new projects, files, or architecture components"
+application: "When creating diagrams, flowcharts, or visual documentation"
 agent: Alex
 ---
 

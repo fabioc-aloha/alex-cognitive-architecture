@@ -393,7 +393,7 @@ azure-ai-agents/
 
 ---
 
-## Synapse Connection
+## Related Skills
 
 This skill complements:
 - **skill-building** — Alex-specific skill creation and promotion workflow

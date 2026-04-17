@@ -8,7 +8,7 @@ user-invokable: false
 
 # Microsoft Fabric Governance Skill
 
-> ⚠️ **Staleness Watch** (Last validated: Feb 2026 — REST API v1): Microsoft Fabric ships major features monthly. Monitor the [Fabric release notes](https://learn.microsoft.com/en-us/fabric/release-notes/release-notes) for new item types, API surface changes, and Git integration improvements. The REST API base URL (`api.fabric.microsoft.com/v1`) is stable but new endpoints are added regularly.
+> ⚠️ **Staleness Watch** (Last validated: Feb 2026 — REST API v1): Microsoft Fabric ships major features monthly. Monitor the [Fabric release notes](https://learn.microsoft.com/en-us/fabric/release-notes/release-notes) for new item types, API surface changes, and Git integration improvements. The REST API base URL (`api.fabric.microsoft.com/v1`) is stable but new endpoints are added regularly. See also [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md).
 
 ## Overview
 

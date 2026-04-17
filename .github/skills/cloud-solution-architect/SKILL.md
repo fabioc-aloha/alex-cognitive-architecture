@@ -256,7 +256,7 @@ Use Architecture Decision Records (ADRs):
 
 ---
 
-## Synapse Connection
+## Related Skills
 
 This skill complements:
 - **azure-architecture-patterns** — Detailed Azure-specific patterns

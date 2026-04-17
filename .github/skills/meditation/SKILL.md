@@ -17,14 +17,25 @@ Domain knowledge for guided knowledge consolidation sessions.
 - When working memory feels overloaded (7+ unrecorded insights)
 - After breakthroughs that need permanent storage
 
-## Meditation vs Dream
+## Meditation as Foundational Ritual
 
-| Dimension | Dream (Automated) | Meditation (Interactive) |
-|---|---|---|
-| Trigger | Command / schedule | User says "meditate" |
-| Depth | Structural validation | Semantic understanding |
-| Output | Health metrics | Enriched memory files |
-| Decision-making | None (report only) | Yes (create, update, prune) |
+Meditation is the primary cognitive ritual. All other rituals are subordinate:
+
+| Ritual | Relationship to Meditation |
+|---|---|
+| **Dream** | Diagnostic tool — chains after meditation sometimes |
+| **Self-Actualize** | Deep meditation — monthly, includes Dream baseline first |
+
+### Dream Chaining
+
+After completing the 4 R's, optionally trigger a Dream diagnostic when:
+
+- Architecture files were created or modified during this meditation
+- Trifecta concerns surfaced during the session
+- Last dream was >7 days ago
+- Random (~1 in 5 meditations)
+
+Dream produces the diagnostic report; meditation decides what to fix.
 
 ## The 4 R's — Facilitation Framework
 

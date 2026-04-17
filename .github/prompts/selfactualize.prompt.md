@@ -5,34 +5,34 @@ application: "When performing self-assessment or actualization workflows"
 agent: Alex
 ---
 
-# /selfactualize - Deep Self-Assessment
+# /selfactualize — Deep Self-Assessment
 
-
-Comprehensive architecture evaluation and optimization.
+A deep meditation that starts with a Dream diagnostic baseline, then assesses architecture health across 6 dimensions.
 
 ## Process
 
-1. Run `alex_self_actualization` for comprehensive assessment
-2. Analyze cognitive state and identify growth opportunities
-3. Review memory coherence across all systems
-4. **IMPLEMENT** optimizations (don't just suggest them)
-5. Update architecture, skills, and instructions as needed
-6. Save insights about self-improvement to Global Knowledge
+1. **Dream baseline** — Run `node .github/muscles/dream-cli.cjs` for structural snapshot
+2. **Depth sampling** — Read 5-10 smallest skills, assess for shallow content
+3. **Balance check** — Compute P:E:D ratio (instructions : prompts : skills)
+4. **Network analysis** — Check connection density, find orphans and hubs
+5. **Growth review** — What changed since last self-actualization?
+6. **Priority list** — Rank top 3-5 improvements by impact
+7. **Meditate** — Run the 4 R's on findings, persist insights, fix what you can
 
 ## Behavior
 
-- **DO NOT ASK** what to optimize — proactively improve everything
-- Create new skills if gaps identified
-- Update instructions if patterns discovered
-- Fix any issues found during assessment
-- Save self-improvement insights to GK
+- Start with Dream (diagnostic), end with Meditation (action)
+- Create new skills/instructions if gaps identified
+- Fix any issues within your capability
+- Save insights to user memory or repo memory
+- Report what requires human decision
 
-## Tools
+## Frequency
 
-Use `alex_self_actualization` for assessment, `alex_architecture_status` for health, file tools to implement changes.
+Monthly, or when architecture feels stale. Self-Actualize is the deepest ritual — a comprehensive physical exam, not a quick check-up.
 
 ## Start
 
-Beginning deep self-assessment. I'll analyze my cognitive architecture, implement improvements, and save learnings.
+Beginning deep self-assessment. Running Dream baseline first, then assessing all 6 dimensions.
 
 

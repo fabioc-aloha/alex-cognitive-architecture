@@ -1,7 +1,7 @@
 ---
 sem: 1
 description: Run 4-dimension gap analysis (Skills, Instructions, Agents, Prompts) before implementation
-application: "When analyzing data, creating visualizations, or building reports"
+application: "When planning implementation, analyzing architecture gaps, or preparing for development"
 agent: Alex
 ---
 

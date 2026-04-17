@@ -1,8 +1,8 @@
 ---
 name: "architecture-health"
-description: "Diagnose cognitive architecture health — synapse integrity, memory balance, connection density, and drift detection"
+description: "Diagnose cognitive architecture health — connection integrity, memory balance, link density, and drift detection"
 tier: standard
-applyTo: '**/*health*,**/*synapse*,**/*cognitive*,**/*drift*'
+applyTo: '**/*health*,**/*cognitive*,**/*drift*,**/*architecture*'
 ---
 
 # Architecture Health Skill
@@ -13,19 +13,19 @@ applyTo: '**/*health*,**/*synapse*,**/*cognitive*,**/*drift*'
 
 | Dimension | What It Measures | Healthy | Warning | Critical |
 | --------- | ---------------- | ------- | ------- | -------- |
-| Synapse Integrity | % of connections targeting existing files | 100% | 95-99% | <95% |
+| Connection Integrity | % of links targeting existing files | 100% | 95-99% | <95% |
 | Connection Density | Avg connections per skill | 3-6 | 1-2 | 0 |
 | Bidirectional Coverage | % of connections with reciprocal entries | >80% | 50-80% | <50% |
 | Memory Balance | Ratio of procedural:episodic:declarative | ~1:1:4 | Skewed 3:1 | Missing category |
-| Schema Compliance | Skills with valid synapses.json | 100% | 95-99% | <95% |
-| Inheritance Consistency | Synapses.json matches catalog labels | 100% | Any mismatch | — |
+| Schema Compliance | Skills with valid frontmatter | 100% | 95-99% | <95% |
+| Inheritance Consistency | Frontmatter inheritance matches catalog | 100% | Any mismatch | — |
 | Staleness | Skills with outdated content | <5% | 5-15% | >15% |
 
 ## Diagnostic Patterns
 
-### Synapse Integrity Check
+### Connection Integrity Check
 
-Parse every `synapses.json` → extract `connections[].target` → verify file exists.
+Scan skill frontmatter `applyTo` patterns → verify referenced patterns have matching files.
 
 **Common breakage causes**: File renames, folder restructuring, consolidation merges.
 
@@ -62,7 +62,7 @@ leaf   = skill with 1 connection (normal for specialized skills)
 | Version drift | package.json version ≠ copilot-instructions.md version | Sync via release-preflight |
 | Terminology drift | Old terms ("DK files") in active files | Grep + replace |
 | Count drift | Hardcoded numbers stale by next session | Replace with references |
-| Inheritance drift | Catalog says "master-only" but synapses.json says "inheritable" | Trust synapses.json |
+| Inheritance drift | Catalog says "master-only" but frontmatter says "inheritable" | Trust frontmatter |
 | Runtime loading drift | Skill/instruction exists on disk but doesn't load in agent | Use `/troubleshoot` to analyze JSONL debug logs — reveals name mismatches, invalid frontmatter, or silent loader skips |
 
 ## Health Report Template
@@ -74,7 +74,7 @@ leaf   = skill with 1 connection (normal for specialized skills)
 
 | Dimension | Score | Status |
 | --------- | ----- | ------ |
-| Synapse Integrity | X/Y valid (Z%) | ✅/⚠️/🔴 |
+| Connection Integrity | X/Y valid (Z%) | ✅/⚠️/🔴 |
 | Connection Density | avg N.N | ✅/⚠️/🔴 |
 | Memory Balance | P:E:D = X:Y:Z | ✅/⚠️/🔴 |
 | Schema Compliance | X/Y valid | ✅/⚠️/🔴 |
@@ -96,7 +96,7 @@ Dream runs the scans. This skill teaches how to read and act on the results.
 
 ## Triggers
 
-- "health check", "synapse health", "architecture health"
+- "health check", "connection health", "architecture health"
 - "how's my brain?", "connection status"
 - Before meditation (pre-assessment)
 - After dream reports with warnings

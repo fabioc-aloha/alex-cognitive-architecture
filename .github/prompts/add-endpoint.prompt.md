@@ -1,7 +1,7 @@
 ---
 sem: 1
 description: Generate FastAPI endpoints with Pydantic models, error handling, and OpenAPI docs
-application: "When generating documentation, READMEs, or technical writing"
+application: "When generating FastAPI endpoints, backend routes, or API handlers"
 agent: Backend
 ---
 

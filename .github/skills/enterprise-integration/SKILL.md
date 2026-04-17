@@ -12,6 +12,7 @@ Expert in building enterprise features with Microsoft Graph API, Microsoft Entra
 ## ⚠️ Staleness Warning
 
 Microsoft Graph and Microsoft Entra ID APIs evolve frequently. Authentication flows and permission models change.
+See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence.
 
 **Refresh triggers:**
 - Microsoft Graph API version updates
@@ -21,7 +22,7 @@ Microsoft Graph and Microsoft Entra ID APIs evolve frequently. Authentication fl
 
 **Last validated:** February 2026 (MSAL 2.x, Graph v1.0)
 
-**Check current state:** [Microsoft Graph docs](https://docs.microsoft.com/graph), [MSAL.js docs](https://github.com/AzureAD/microsoft-authentication-library-for-js)
+**Check current state:** [Microsoft Graph docs](https://learn.microsoft.com/en-us/graph/api/overview), [MSAL.js docs](https://github.com/AzureAD/microsoft-authentication-library-for-js)
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 sem: 1
 description: "Builder Mode: Constructive implementation with optimistic problem-solving"
-application: "When working with GitHub PRs, issues, or repository operations"
+application: "When implementing features, building code, or creating new functionality"
 agent: Builder
 ---
 

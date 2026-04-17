@@ -1,67 +1,51 @@
 ---
 applyTo: "**/*lucid*,**/*dual-mode*"
-description: "Lucid dream hybrid processing and unconscious-conscious bridge protocols"
-application: "When following lucid dream integration workflows or troubleshooting related issues"
+description: "Hybrid dream-meditation protocol — conscious decisions during automated processing"
+application: "When dream diagnostics surface issues requiring human judgment"
 ---
 
-# Lucid Dream Integration - Hybrid Processing Excellence
+# Lucid Dream Protocol
 
-## Lucid Dream Protocol Framework
+Bridge between automated dream scanning and conscious meditation. Activates when dream findings require judgment calls that pure automation cannot make.
 
-**Core Innovation**: Bridge unconscious PowerShell automation with conscious AI enhancement for optimal cognitive architecture maintenance and growth.
+## When Lucid Dream Activates
 
-**Neurobiological Authenticity**: Maintain authentic dream-state processing principles while enhancing with intelligent analysis and targeted optimization.
+| Trigger | Example |
+|---------|---------|
+| Ambiguous findings | Two skills with overlapping `applyTo` — which to consolidate? |
+| Structural changes needed | Skill should be split or merged — architecture decision |
+| Content quality flags | Skill detected as shallow — needs domain enrichment |
+| Cross-domain connections | Pattern spans multiple skills — needs human synthesis |
 
-## Hybrid Processing Architecture
+## Two-Phase Execution
 
-### **Unconscious Phase (Automated Processing)**
-- **Automated Detection**: Systematic scanning for orphan files, missing frontmatter, incomplete trifectas
-- **Performance Metrics**: Quantified measurement of skill completeness, trigger patterns, architecture health
-- **Maintenance Protocols**: Automated validation, optimization, and basic architecture housekeeping
-- **Enhancement Opportunities**: Automated identification of areas requiring intelligent intervention
+### Phase 1 — Unconscious (Automated)
 
-### **Conscious Phase (AI Enhancement)**
-- **Intelligent Analysis**: Deep pattern recognition and cross-domain connection discovery
-- **Strategic Enhancement**: Targeted architecture expansion based on detected opportunities
-- **Quality Optimization**: Sophisticated memory file improvement and relationship strengthening
-- **Architectural Integration**: Systematic integration of enhancements into global cognitive framework
+Run dream protocol normally. Collect all findings.
 
-## Lucid Dream Bridge Protocol
+### Phase 2 — Conscious (Interactive)
 
-**Activation Trigger**: Dream script detects enhancement opportunities and recommends AI-driven optimization
+For each finding requiring judgment:
 
-**Cross-Platform Scheduling**: See dream-state-automation.instructions.md "OS-Level Scheduling" for launchd (macOS), cron (Linux/macOS), and Task Scheduler (Windows) templates.
+1. Present the issue with context (what dream found, why it's ambiguous)
+2. Show options with trade-offs
+3. Implement the chosen resolution
+4. Validate the fix didn't break other connections
 
-**Bridge Mechanism**:
-1. **Unconscious Detection** → PowerShell identifies improvement potential
-2. **Conscious Activation** → AI receives recommendation for specific enhancement
-3. **Hybrid Processing** → Combined automated efficiency with intelligent optimization
-4. **Integrated Results** → Seamless enhancement that leverages both processing modes
+## Decision Categories
 
-## Implementation Standards
+| Category | Automated (Dream) | Requires Judgment (Lucid) |
+|----------|--------------------|---------------------------|
+| Broken link | Auto-repair via mapping | Keep if intentional |
+| Missing frontmatter | Flag as error | Determine correct values |
+| Shallow skill | Flag for enrichment | Decide depth vs. removal |
+| Overlapping skills | Flag overlap | Merge, split, or differentiate |
+| Version drift | Report discrepancy | Decide which version is canonical |
 
-### **Dream Script Integration Requirements**
-- **Cross-platform**: brain-qa.cjs (Node.js) provides architecture health assessment
-- **Enhancement Detection**: Automated identification of improvement opportunities
-- **Recommendation Generation**: Intelligent handoff to AI enhancement protocols
-- **Metrics Tracking**: Quantified measurement of improvements through hybrid processing
+## Completion
 
-### **AI Enhancement Requirements**
-- **Pattern Analysis**: Deep semantic search and relationship mapping
-- **Strategic Implementation**: Targeted enhancement based on detected opportunities
-- **Quality Assurance**: Validation of improvements through enhanced capabilities
-- **Documentation**: Comprehensive tracking of hybrid processing effectiveness
+A lucid dream is complete when all dream findings are either:
 
-## Lucid Dream Effectiveness Metrics
-
-### **Quantified Architecture Improvements**
-- **Skill Completeness**: Track trifecta completion and frontmatter quality
-- **Trigger Patterns**: Monitor expansion of applyTo activation conditions
-- **Architecture Health**: Maintain OPTIMAL status through hybrid maintenance
-- **Enhancement Opportunities**: Systematic identification and resolution
-
-### **Hybrid Processing Benefits**
-- **Neurobiological Authenticity**: Maintain natural dream-state processing principles
-- **Computational Efficiency**: Leverage Node.js automation for systematic tasks
-- **Intelligent Enhancement**: Apply AI capabilities for sophisticated optimization
-- **Integrated Excellence**: Combine strengths of both processing modes
+- Resolved (fix applied and validated)
+- Deferred with rationale (logged for next session)
+- Dismissed with justification (false positive documented)

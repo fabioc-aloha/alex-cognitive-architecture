@@ -1,7 +1,7 @@
 ---
 sem: 1
 description: "Alex Mode: Orchestrator with auto-routing to specialist agents"
-application: "When generating tests, test plans, or validation strategies"
+application: "When routing tasks or starting orchestrated workflows"
 agent: Alex
 ---
 

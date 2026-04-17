@@ -1,5 +1,4 @@
 ---
-sem: 1
 description: Semantic review of brain files for clarity, coherence, correctness, completeness, and conciseness
 application: "When performing semantic reviews of skills, instructions, agents, or prompts in the brain health grid"
 agent: Brain Ops

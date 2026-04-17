@@ -20,12 +20,7 @@ handoffs:
     agent: Brain Ops
     prompt: Run brain-qa to validate trifecta completeness.
     send: true
-  - label: 📖 Update Catalogs
-    agent: Documentarian
-    prompt: Update SKILLS-CATALOG.md and TRIFECTA-CATALOG.md.
-    send: true
-    model: GPT-4o
-  - label: 🔙 Return to Alex
+  - label:  Return to Alex
     agent: Alex
     prompt: Returning to main cognitive mode.
     send: true

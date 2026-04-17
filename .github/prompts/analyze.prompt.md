@@ -1,7 +1,7 @@
 ---
 sem: 1
 description: Guided exploratory data analysis -- profile, discover patterns, and extract narrative insights
-application: "When optimizing performance or investigating bottlenecks"
+application: "When analyzing data, creating visualizations, or building reports"
 agent: Alex
 ---
 

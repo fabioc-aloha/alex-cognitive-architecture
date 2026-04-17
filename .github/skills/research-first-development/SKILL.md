@@ -61,7 +61,7 @@ Each research document should:
 | 2 | **Context instruction** | Central hub: `{project}-context.instructions.md` |
 | 3 | **Workflow instruction** | Dev process: `{project}-development-workflow.instructions.md` |
 | 4 | **Agent creation** | Builder + Validator agents |
-| 5 | **Synapse wiring** | 2-4 connections per new file |
+| 5 | **Connection wiring** | 2-4 links per new file |
 
 **Key distinction**:
 - **Skills** encode *patterns and principles* — reusable, domain knowledge ("how does X work?")
@@ -146,7 +146,7 @@ Catalogue current knowledge across all four dimensions:
 
 #### Step 5: Fill Gaps Before Coding
 
-Create missing skills, instructions, agents, and prompts. Wire synapses. **Then** begin implementation.
+Create missing skills, instructions, agents, and prompts. Wire connections. **Then** begin implementation.
 
 ### GA-A Deep Dive: Agent Gap Analysis
 
@@ -219,21 +219,21 @@ Adversarial thinking requires a **different context** than constructive thinking
 
 ---
 
-## Synapse Hygiene (During Development)
+## Connection Hygiene (During Development)
 
-Synapses wired **at creation time** are 10x more valuable than synapses discovered during maintenance. Practice "clean as you go":
+Connections wired **at creation time** are 10x more valuable than connections discovered during maintenance. Practice "clean as you go":
 
 | Practice | Why | How |
 |----------|-----|-----|
-| Wire at creation | Fresh knowledge = accurate connections | Add synapses when creating any skill/instruction |
+| Wire at creation | Fresh knowledge = accurate links | Add `applyTo` patterns when creating any skill/instruction |
 | 2-4 connections minimum | Prevents isolated knowledge islands | Every new file connects to at least 2 existing files |
 | Star topology for instructions | Central activation hub | Every instruction connects to the project context instruction |
 | Run Dream before major phases | Catch broken connections early | Use the dream prompt or `node .github/muscles/brain-qa.cjs` |
 | Strength reflects reality | Don't over-connect | Critical = always co-activate; Low = rarely |
 
-### Connection Strategy (Legacy Format)
+### Connection Strategy
 
-> Note: The `(Strength, Type)` notation below is deprecated. Use `synapses.json` for skill relationships.
+> Connection patterns use frontmatter `applyTo` globs to link files. Use specific globs over generic patterns.
 
 ```
 project-context.instructions.md  (hub)
@@ -270,7 +270,7 @@ To apply Research-First Development to any new project:
 - [ ] **Builder agent**: Create `{project}-dev.agent.md` for implementation
 - [ ] **Validator agent**: Create `{project}-qa.agent.md` for testing
 - [ ] **Interactive prompts**: Create `{project}-implement`, `{project}-test`, `{project}-deploy` prompts
-- [ ] **Synapse network**: Wire all new files with 2-4 connections each
+- [ ] **Connection network**: Wire all new files with 2-4 connections each
 - [ ] **4D gap analysis**: Run GA-S, GA-I, GA-A, GA-P before each phase
 - [ ] **Dream validation**: Use the dream prompt or run `node .github/muscles/brain-qa.cjs` to validate network health
 
@@ -287,7 +287,7 @@ This skill is `inheritable` — every heir gets the full methodology.
 | Research-first paradigm | Full methodology | Domain-specific research topics |
 | 4-dimension gap analysis | GA-S, GA-I, GA-A, GA-P templates | Project-specific subsystem lists |
 | Two-agent pattern | Builder + Validator template | Agent names, skills, commands |
-| Synapse hygiene | Wiring discipline | Project-specific connections |
+| Connection hygiene | Wiring discipline | Project-specific connections |
 | `/gapanalysis` prompt | Interactive workflow | — (universal) |
 
 ### Heir Adaptation Flow
@@ -316,7 +316,7 @@ When heir knowledge is cross-project applicable:
 | "Just start coding" | AI has no context, hallucinates patterns | Research → Teach → Plan → Execute |
 | Skipping gap analysis | Discover missing knowledge mid-implementation | Run 4D protocol (GA-S/I/A/P) at every phase boundary |
 | One mega-agent | Conflates builder/validator mental models | Separate agents with distinct roles |
-| Orphan skills | Knowledge islands that never activate | Wire 2-4 synapses at creation time |
+| Orphan skills | Knowledge islands that never activate | Wire 2-4 connections at creation time |
 | Research without encoding | Raw documents aren't loadable context | Extract skills from every research doc |
 | Theory-only skills | Untested patterns break under pressure | Validate with real implementation, then encode |
 | Skills-only gap analysis | Misses procedures, roles, and workflows | Always run all 4 dimensions |
@@ -332,7 +332,7 @@ When heir knowledge is cross-project applicable:
 | **Skill Selection Optimization** | Plan | SSO selects from skills that research-first created |
 | **Project Scaffolding** | Execute | Scaffolding creates files; research-first creates *knowledge* first |
 | **Skill Building** | Encode | Skill-building quality gates apply to research-extracted skills |
-| **Dream Protocol** | Validate | Dream validates the synapse network research-first wired |
+| **Dream Protocol** | Validate | Dream validates the connection network research-first wired |
 | **Heir Skill Promotion** | Promote | Heir knowledge flows back to Master via promotion protocol |
 | **Research-First Workflow** | Procedure | Instruction file provides step-by-step procedures for this skill |
 
@@ -378,7 +378,7 @@ When heir knowledge is cross-project applicable:
 | "GA-P" / "prompt gap" | Prompts dimension only |
 | "research first" | Core methodology explanation |
 | "two-agent pattern" | Builder + Validator agent setup |
-| "synapse hygiene" | Connection best practices |
+| "connection hygiene" | Connection best practices |
 | "before coding" | Pre-implementation checklist |
 | "knowledge encoding" | Research → Skill extraction workflow |
 
@@ -386,7 +386,7 @@ When heir knowledge is cross-project applicable:
 
 ## Origin
 
-Discovered by the Dead Letter heir (AI mystery game project, February 2026). The heir independently created 18 project-specific skills, 9 instructions, 2 agents, and 251 synapses **before writing any implementation code** — proving that research-first investment in the cognitive architecture produces dramatically higher-quality AI-assisted development.
+Discovered by the Dead Letter heir (AI mystery game project, February 2026). The heir independently created 18 project-specific skills, 9 instructions, 2 agents, and 251 connections **before writing any implementation code** — proving that research-first investment in the cognitive architecture produces dramatically higher-quality AI-assisted development.
 
 The 4-dimension gap analysis (GA-S, GA-I, GA-A, GA-P) was developed by Master Alex to generalize the heir's methodology into a repeatable protocol for all projects and heirs.
 

@@ -1,5 +1,4 @@
 ---
-sem: 1
 description: "Generate AI music and soundtracks for video, podcasts, and content creation"
 application: "When generating music, soundtracks, songs with lyrics, or background audio"
 mode: agent

@@ -9,6 +9,8 @@ applyTo: '**/copilot*,**/*copilot-sdk*,**/*github-copilot*'
 
 > Build applications that programmatically interact with GitHub Copilot
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 The SDK wraps the Copilot CLI via JSON-RPC, providing session management, custom tools, hooks, MCP server integration, and streaming across Node.js, Python, Go, and .NET.
 
 ---

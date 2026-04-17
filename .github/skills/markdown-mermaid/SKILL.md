@@ -12,6 +12,8 @@ applyTo: '**/*.md,**/*mermaid*,**/*diagram*'
 
 A skill for markdown authoring, Mermaid diagramming, multi-tool visualization, VS Code integration, and cross-platform rendering consistency.
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 ## When to Use
 
 - Creating technical documentation with diagrams
@@ -1162,10 +1164,10 @@ end
 
 ```text
 %% ❌ RISKY - <i> tag may break parsing
-SYN["synapses.json<br/><i>inert — rarely traversed</i>"]
+CFG["config.json<br/><i>inert — rarely traversed</i>"]
 
 %% ✅ SAFE - plain text with em dash
-SYN["synapses.json — inert, rarely traversed"]
+CFG["config.json — inert, rarely traversed"]
 ```
 
 **Rule 3**: Avoid em dashes (—) in subgraph titles (some parsers treat them as operators)

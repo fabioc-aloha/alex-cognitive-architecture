@@ -12,7 +12,7 @@ Adapted from: AI-First Dev Starter Pack `ai-starter-pack-signal` skill.
 
 Answer: "Which skills get used?", "Which fail?", "What patterns emerge?"
 
-The synapse-weight-update hook tracks tool-to-skill weights. This protocol adds structured session-level telemetry: activation timestamp, outcome, duration, error context.
+The skill-weight-update hook tracks tool-to-skill weights. This protocol adds structured session-level telemetry: activation timestamp, outcome, duration, error context.
 
 ## Two-Phase Signal Protocol
 
@@ -83,7 +83,7 @@ comm -23 <(grep '"startedAt"' skill-signals.jsonl | jq -r '.sessionId' | sort) \
 ## Integration Points
 
 1. **Episodic memory**: Skill signals complement session records (episodicMemory.ts). Session records capture "what happened"; skill signals capture "which capabilities were used and how well."
-2. **Weight updates**: The synapse-weight-update hook updates connection strength based on tool calls. Telemetry adds the outcome dimension: a skill that's called often but fails often should not gain weight.
+2. **Weight updates**: The skill-weight-update hook updates connection strength based on tool calls. Telemetry adds the outcome dimension: a skill that's called often but fails often should not gain weight.
 3. **Meditation reports**: During meditation, aggregate recent skill signals to identify: underused skills (candidates for pruning), high-failure skills (need repair), high-usage skills (candidates for optimization).
 4. **Brain-QA**: Add a telemetry validation phase: verify signals file exists, check for orphaned Phase 1 entries, flag skills with >30% failure rate.
 

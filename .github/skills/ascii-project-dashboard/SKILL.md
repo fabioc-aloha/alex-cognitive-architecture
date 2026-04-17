@@ -26,7 +26,7 @@ inheritance: inheritable
 
 ```
      🧠 BRAIN          🔄 HEIR SYNC       ⚙️ EXTENSION       🎨 UI/UX
-   Skills, Synapses   Architecture      TypeScript Code    Sidebar Design
+   Skills, Links      Architecture      TypeScript Code    Sidebar Design
    ─────────────────  ─────────────────  ─────────────────  ─────────────────
    ▓▓▓░░░░░░░ 30%     ▓▓▓▓▓░░░░░ 50%     ▓░░░░░░░░░ 10%     ░░░░░░░░░░  0%
 ```
@@ -81,7 +81,7 @@ inheritance: inheritable
 | B1 | Health status rules | ✅ | — |
 | B2 | Meditation parsing | ✅ | — |
 | B3 | Dream state markers | ✅ | — |
-| B4 | Synapse scoring | ✅ | — |
+| B4 | Connection scoring | ✅ | — |
 | B5 | Chat memory audit | ⬜ | — |
 | B6 | Frecency ranking | 🔄 | UI1 |
 ```

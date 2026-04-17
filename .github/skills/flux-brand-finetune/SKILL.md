@@ -13,6 +13,8 @@ metadata:
 
 **Pattern**: Train once with 10–20 curated images → get a trigger-word-activated LoRA → generate unlimited consistent images at ~$0.003–0.04/image.
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 ---
 
 ## Why Fine-Tune?

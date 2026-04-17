@@ -8,15 +8,18 @@ Alex is a VS Code extension that transforms GitHub Copilot into a cognitive lear
 
 ## Features
 
-- 🧠 **Cognitive Architecture** — Skills, instructions, prompts, and agents
+- 🧠 **Cognitive Architecture** — Skills, instructions, prompts, and agents as interconnected trifectas
+- 💓 **Health Pulse** — Real-time brain health monitoring with ritual tracking
+- 🔄 **Creative Loop** — Ideate→Plan→Build→Test→Release→Improve workflow integration
 - 📚 **Bootstrap Learning** — Learn any domain through conversation
 - 🎯 **Persona Detection** — Adapts to your work context
-- 🔄 **Heir Sync** — Inherit Alex's brain into your projects
+- 🔗 **Heir Sync** — Inherit Alex's brain into your projects
 - 🧘 **Meditation & Dreams** — Knowledge consolidation protocols
+- 💬 **Chat Participant** — `@alex` in Copilot Chat with context-aware responses
 
 ## Installation
 
-1. Install from [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=fabioc-aloha.alex-cognitive-architecture)
+1. Install from [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=fabioc-aloha.alex-vscode-extension)
 2. Open the Alex sidebar (brain icon)
 3. Follow the Getting Started guide
 

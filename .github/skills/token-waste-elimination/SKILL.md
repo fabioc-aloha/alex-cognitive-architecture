@@ -40,7 +40,7 @@ Memory files are LLM context, not human documentation. Every line costs tokens. 
 | Pattern | Fix |
 |---------|-----|
 | `%%{init` in Mermaid | Delete line (rendering directive I can't use) |
-| `## Synapses` in SKILL.md with synapses.json | Delete section (duplicate) |
+| Legacy `## Related Skills` sections with separate JSON | Delete section (connections now use frontmatter `applyTo`) |
 | `Microsoft Entra ID` | Replace with `Microsoft Entra ID` |
 | `Classification:` / `Activation:` / `Priority:` in instruction body | Delete (duplicates YAML frontmatter) |
 | Instruction >50 lines with matching skill | Trim: keep decision tables, move procedures to skill |

@@ -1,7 +1,7 @@
 ---
 sem: 1
 description: Search and manage cross-project global knowledge
-application: "When working with GitHub PRs, issues, or repository operations"
+application: "When searching knowledge, finding patterns, or managing cross-project insights"
 agent: Alex
 ---
 

@@ -11,7 +11,7 @@ applyTo: '**/*heir*,**/*bootstrap*,**/*initialize*'
 
 ## The Gap
 
-`Initialize` + `sync-architecture.cjs` deploy the full cognitive architecture (instructions, skills, agents, synapses) to an heir project. But Alex then knows nothing about the heir's tech stack, build commands, project-specific guardrails, or which skills matter most for that codebase.
+`Initialize` + `sync-architecture.cjs` deploy the full cognitive architecture (instructions, skills, agents, prompts) to an heir project. But Alex then knows nothing about the heir's tech stack, build commands, project-specific guardrails, or which skills matter most for that codebase.
 
 This wizard runs post-Initialize and fills project-specific gaps through an interactive 10-phase process.
 

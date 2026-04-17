@@ -5,32 +5,36 @@ application: "When maintaining cognitive architecture or memory systems"
 agent: Alex
 ---
 
-# /dream - Architecture Maintenance
+# /dream — Architecture Diagnostics
 
-
-Run unconscious processing and architecture health checks.
+Run unconscious processing and architecture health checks. Dream observes and measures — it never modifies.
 
 ## Process
 
-1. Run `brain-qa.cjs` for comprehensive architecture validation
-2. Use `alex_architecture_status` to check overall health
-3. **FIX** all issues found (don't just report them)
-4. Sync any drifted files between Master and Heir
-5. Update counts, timestamps, and stale references
+1. Run `node .github/muscles/dream-cli.cjs` for architecture validation
+2. Scan trifecta completeness, broken references, frontmatter health
+3. Report all issues found with severity classification
+4. Check Master/heir version drift
+5. Summarize health status
 
 ## Behavior
 
-- **DO NOT ASK** for permission — automatically fix everything fixable
-- Update GK counts if drifted
-- Repair broken file references
-- Only report issues that require human decision
+- Dream is **read-only** — diagnose, never modify
+- Report issues clearly with file paths and severity
+- Flag items that need human decision or meditation follow-up
+- If critical issues found, recommend a meditation session to address them
 
-## Nature
+## Relationship to Meditation
 
-Dream is automatic maintenance. Fix problems silently; report only what you cannot fix.
+Dream is subordinate to Meditation. It runs:
+- Explicitly via `/dream` command
+- Chained after meditation when architecture concerns are detected
+- Randomly after ~1 in 5 meditations as a health check
+
+Dream produces the diagnostic; Meditation decides what to fix.
 
 ## Start
 
-Begin architecture maintenance now. Run diagnostics, fix all issues, and report only blockers.
+Begin architecture diagnostics now. Scan, validate, report. Do not modify files.
 
 

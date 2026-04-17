@@ -59,7 +59,7 @@ Learning a new domain is hard because you don't know what you don't know. This s
 - Map analogies: "This is like [existing concept] because..."
 - Find contradictions: "This conflicts with [existing belief] — which is right?"
 - Identify synergies: "Combining this with [skill X] could improve..."
-- Update synapses: Create connections in synapses.json
+- Update connections: Add links to related skills
 
 **Exit criteria**: At least 2 connections to existing skills identified.
 
@@ -75,7 +75,7 @@ Learning a new domain is hard because you don't know what you don't know. This s
 | Cross-project pattern | GK-* | Global knowledge |
 | One-off insight | GI-* | Global insights |
 
-**Exit criteria**: At least one memory file created. Synapses updated.
+**Exit criteria**: At least one memory file created. Connections linked.
 
 ## Gap Identification Patterns
 
