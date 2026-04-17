@@ -19,8 +19,9 @@ A meditation is INCOMPLETE unless it produces at least one file change:
 | Workflow template | `.github/prompts/*.prompt.md` |
 | Cross-project pattern | `/memories/` (user memory) |
 | Repo-specific fact | `/memories/repo/` (repo memory) |
+| Fleet insight | `AI-Memory/insights/GI-*.md` |
 
-## 4 Phases
+## 4 Phases (+Fleet Sync)
 
 ### 1. Review
 
@@ -42,6 +43,19 @@ A meditation is INCOMPLETE unless it produces at least one file change:
 - Patterns that pass the 3-workspace test → `/memories/` (user memory)
 - Patterns that are repo-specific → `/memories/repo/`
 
+### 3b. Fleet Sync (v8.0.0+)
+
+After local persistence, update fleet-wide storage:
+
+| Condition | Action | Target |
+|-----------|--------|--------|
+| Pattern reusable across projects | Create insight file | `AI-Memory/insights/GI-{topic}-{date}.md` |
+| Solved problem elegantly | Add to registry | `successfulPatterns[]` |
+| Encountered recurring friction | Document issue | `frictionPoints[]` |
+| Every meditation | Update health | `health.lastMeditation`, `meditationCount++` |
+
+Fleet sync is best-effort — if AI-Memory is not accessible (offline, different machine), local updates proceed and fleet updates queue for next sync.
+
 ### 4. Validate
 
 Output checklist before concluding:
@@ -49,6 +63,8 @@ Output checklist before concluding:
 ```text
 ✓ File: [path] — [created|updated]
 ✓ Related: [skill-a, skill-b] — linked
+✓ Fleet: project-registry.json health updated
+✓ Fleet: [insight file] created (if applicable)
 ✓ Summary: [one-line description of what was consolidated]
 ```
 
