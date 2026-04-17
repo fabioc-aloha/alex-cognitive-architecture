@@ -54,14 +54,53 @@ The registry syncs across all machines via OneDrive. Never create local copies.
 }
 ```
 
-## Procedures
+## Autonomous Heir Operation
 
-### 1. Register Current Project
+**Heirs operate WITHOUT Master Alex.** Each heir maintains its own registry entry using the `update-registry.cjs` muscle that syncs to the shared AI-Memory.
 
-When an heir wants to join the fleet registry:
+### Heir Self-Registration
 
 ```bash
-# Master Alex has a scanner muscle:
+# First-time registration
+node .github/muscles/update-registry.cjs --register
+
+# Update health metrics (run after brain changes)
+node .github/muscles/update-registry.cjs
+
+# Record meditation completion
+node .github/muscles/update-registry.cjs --meditated
+
+# Add successful pattern
+node .github/muscles/update-registry.cjs --pattern "webview-state"
+
+# Document friction point  
+node .github/muscles/update-registry.cjs --friction "msal-token-refresh"
+```
+
+The muscle:
+- Finds AI-Memory via OneDrive sync paths
+- Creates/updates only THIS project's entry
+- Never modifies other projects' data
+- Works offline (queues for next sync)
+
+### Heir Responsibilities
+
+| Trigger | Action | Command |
+|---------|--------|---------|
+| First session in project | Self-register | `--register` |
+| After meditation | Record completion | `--meditated` |
+| Solved problem elegantly | Document pattern | `--pattern "name"` |
+| Recurring issue | Document friction | `--friction "issue"` |
+| Brain updated | Refresh health | (no args) |
+
+## Procedures
+
+### 1. Register Current Project (Master)
+
+When Master Alex scans the fleet:
+
+```bash
+# Master Alex scanner muscle:
 node scripts/scan-projects.cjs
 ```
 

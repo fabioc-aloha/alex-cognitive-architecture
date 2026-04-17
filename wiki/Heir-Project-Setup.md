@@ -257,6 +257,69 @@ The wizard guides you through 10 phases:
 9. **Integration** — CI/CD, testing frameworks
 10. **Validation** — Verify setup works
 
+## Fleet Membership (AI-Memory)
+
+Your heir project is part of a fleet — a network of Alex-enabled projects that share knowledge. Heirs operate **autonomously** without Master Alex.
+
+### Self-Registration
+
+Register your project in the fleet registry:
+
+```bash
+node .github/muscles/update-registry.cjs --register
+```
+
+This creates your entry in the shared AI-Memory. Other projects can discover your patterns, and you can discover theirs.
+
+### After Meditation
+
+Record that you completed a meditation session:
+
+```bash
+node .github/muscles/update-registry.cjs --meditated
+```
+
+This tracks your project's health and keeps it marked as "active."
+
+### Recording Patterns
+
+When you solve a problem elegantly:
+
+```bash
+node .github/muscles/update-registry.cjs --pattern "webview-state-management"
+```
+
+Other projects can now search for this pattern and learn from your solution.
+
+### Documenting Friction
+
+When you encounter recurring issues:
+
+```bash
+node .github/muscles/update-registry.cjs --friction "webpack-5-esm-compatibility"
+```
+
+This helps identify common pain points across the fleet.
+
+### AI-Memory Location
+
+The registry lives in a OneDrive-synced folder:
+
+```
+~/OneDrive - Correa Family/AI-Memory/project-registry.json
+```
+
+If AI-Memory is unavailable (offline, different machine), updates queue until the next sync.
+
+### Heir Contribution Model
+
+| Resource | Your Access |
+|----------|-------------|
+| `project-registry.json` | Update your own entry |
+| `insights/` | Create new insight files |
+| `feedback/` | Submit feedback to Master |
+| `user-profile.json` | Read-only |
+
 ## Troubleshooting
 
 ### Skills Not Activating
