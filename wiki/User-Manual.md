@@ -118,7 +118,7 @@ Or explicitly:
 
 ## Skills
 
-Alex has 165+ skills across domains. Skills activate automatically based on context.
+Alex has 177 skills across domains. Skills activate automatically based on context.
 
 ### Skill Categories
 

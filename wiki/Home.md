@@ -38,7 +38,7 @@ Whether you're writing code, a dissertation, or a business plan, Alex meets you 
 |---------|-------------|
 | **Synapses** | Learned connections between concepts — Alex's long-term memory |
 | **Episodic Memory** | Records of significant sessions and decisions |
-| **Skills** | Specialized knowledge domains (165+ available) |
+| **Skills** | Specialized knowledge domains (177 available) |
 | **Agents** | Specialized personas for different tasks (Builder, Researcher, etc.) |
 | **Heir Projects** | Your projects that inherit Alex's cognitive architecture |
 
