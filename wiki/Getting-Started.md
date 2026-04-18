@@ -1,5 +1,7 @@
 # Getting Started
 
+![Getting Started](./assets/banner-getting-started.svg)
+
 Get up and running with Alex in 5 minutes.
 
 ## Prerequisites

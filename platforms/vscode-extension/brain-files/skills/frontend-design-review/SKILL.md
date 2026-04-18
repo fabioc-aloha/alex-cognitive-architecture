@@ -260,7 +260,7 @@ Match implementation complexity to vision. Maximalist = elaborate code. Minimali
 
 ---
 
-## Synapse Connection
+## Related Skills
 
 This skill complements:
 - **ui-ux-design** — Accessibility patterns, design system foundations

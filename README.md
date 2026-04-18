@@ -25,10 +25,10 @@ Alex is a VS Code extension that transforms GitHub Copilot into a cognitive lear
 
 ## Documentation
 
-- [Getting Started](wiki/Getting-Started.md)
-- [User Manual](wiki/User-Manual.md)
-- [Heir Project Setup](wiki/Heir-Project-Setup.md)
-- [FAQ](wiki/FAQ.md)
+- [Getting Started](https://github.com/fabioc-aloha/alex-cognitive-architecture/wiki/Getting-Started)
+- [User Manual](https://github.com/fabioc-aloha/alex-cognitive-architecture/wiki/User-Manual)
+- [Heir Project Setup](https://github.com/fabioc-aloha/alex-cognitive-architecture/wiki/Heir-Project-Setup)
+- [FAQ](https://github.com/fabioc-aloha/alex-cognitive-architecture/wiki/FAQ)
 
 ## Platforms
 

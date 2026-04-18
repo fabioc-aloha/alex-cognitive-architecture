@@ -27,7 +27,7 @@ For Command Center micro-assets (16-24px), use `DK-correax-brand.md` — optimiz
 | Tagline | "Strap a Rocket to Your Back" | LOCKED |
 | Subtitle template | "Take Your [NOUN] to New Heights" | LOCKED |
 | Primary icon | `$(rocket)` codicon | LOCKED |
-| Colors | Azure blue (#0078d4) + thrust orange (#ff6b35) | LOCKED |
+| Colors | sky blue (#38bdf8) + coral (#f97316) + indigo (#6366f1) — CorreaX dark palette | LOCKED |
 | Logo rotation | 30° (dynamic launch angle) | LOCKED |
 
 ## Asset Locations

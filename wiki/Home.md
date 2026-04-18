@@ -1,5 +1,7 @@
 # Alex Cognitive Architecture
 
+![Alex Cognitive Architecture](./assets/banner-home.svg)
+
 > **The most advanced and trusted AI partner for any job.**
 
 Welcome to the Alex Cognitive Architecture Wiki — your comprehensive guide to working with Alex in VS Code.
@@ -55,7 +57,7 @@ Alex needs periodic maintenance to stay healthy:
 ## Getting Help
 
 - **In VS Code**: Type `@alex` in chat for any question
-- **GitHub Issues**: [Report bugs or request features](https://github.com/fabioc-aloha/Alex_Plug_In/issues)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/fabioc-aloha/alex-cognitive-architecture/issues)
 - **This Wiki**: Browse the sidebar for detailed guides
 
 ---

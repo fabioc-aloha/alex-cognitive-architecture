@@ -5,7 +5,7 @@ tier: standard
   Semantic, logic, code, and architectural validation of Alex's cognitive architecture — not just file counts, but
   meaning coherence
 disable-model-invocation: true
-applyTo: "**/*synapse*,**/*skill*,**/*trigger*"
+applyTo: "**/*skill*,**/*trigger*,**/*brain*,**/*qa*"
 ---
 
 # Brain QA
@@ -37,54 +37,20 @@ The script auto-detects context: if `sync-architecture.cjs` exists, it reads mas
 
 ## Quick Start
 
-### Master Context
+### Run
 
 ```bash
-# Full 31-phase audit
-.github/muscles/brain-qa.ps1
-
-# Quick validation (phases 1-6)
-.github/muscles/brain-qa.ps1 -Mode quick
-
-# Sync validation only (phases 5,7,8,13,14,15,27,28)
-.github/muscles/brain-qa.ps1 -Mode sync
-
-# Schema/frontmatter validation (phases 2,6,11,16,17)
-.github/muscles/brain-qa.ps1 -Mode schema
-
-# LLM-first content validation (phases 10,20,21)
-.github/muscles/brain-qa.ps1 -Mode llm
-
-# Specific phases
-.github/muscles/brain-qa.ps1 -Phase 1,5,7
-
-# Auto-fix sync issues
-.github/muscles/brain-qa.ps1 -Mode sync -Fix
+# Generate brain health grid
+node .github/muscles/brain-qa.cjs
 ```
 
-### Heir Context
-
-```bash
-# Full heir audit (23 heir-relevant phases)
-.github/muscles/brain-qa.ps1
-
-# Quick validation (phases 1-4,6)
-.github/muscles/brain-qa.ps1 -Mode quick
-
-# Schema/frontmatter validation (phases 2,6,11,16,17)
-.github/muscles/brain-qa.ps1 -Mode schema
-
-# LLM content validation (phases 10,20,21)
-.github/muscles/brain-qa.ps1 -Mode llm
-
-# Note: -Mode sync is not available in heir (sync phases are master-only)
-```
+The output is written to `.github/quality/brain-health-grid.md`.
 
 ## When to Use
 
 - Before releases (structural + semantic review)
-- After adding/modifying skills (do new synapses make logical sense?)
-- After bulk synapse updates (are connections semantically meaningful?)
+- After adding/modifying skills (do new connections make logical sense?)
+- After bulk connection updates (are links semantically meaningful?)
 - When trigger conflicts are suspected (logic: can two triggers fire contradictory protocols?)
 - To verify Master-Heir parity (architectural: does heir behavior match master docs?)
 - To validate LLM-friendly content formats
@@ -96,15 +62,15 @@ The script auto-detects context: if `sync-architecture.cjs` exists, it reads mas
 
 | Phase | Name                         | Validates                                     | Heir?             |
 | ----- | ---------------------------- | --------------------------------------------- | ----------------- |
-| 1     | Synapse Target Validation    | All connection targets exist                  | Yes               |
+| 1     | Connection Target Validation | All connection targets exist                  | Yes               |
 | 2     | Inheritance Field Validation | All skills have inheritance field             | Yes               |
 | 3     | Skill Index Coverage         | All skills in memory-activation index         | Yes               |
 | 4     | Trigger Semantic Analysis    | Overlapping keywords (warnings OK if related) | Yes               |
 | 5     | Master-Heir Skill Sync       | Skill directories match                       | No                |
-| 6     | Synapse Schema Format        | Numeric strengths, $schema present            | Yes               |
-| 7     | Synapse File Sync            | synapses.json hash match                      | No                |
+| 6     | Connection Schema Format     | Valid frontmatter, applyTo present            | Yes               |
+| 7     | Connection File Sync         | Skill file hash match                         | No                |
 | 8     | Memory-Activation Index Sync | SKILL.md hash match                           | No                |
-| 9     | Catalog Accuracy             | SKILLS-CATALOG count matches reality          | Yes (count-only)  |
+| 9     | *(retired)*                  | *(catalogs removed — use brain-health-grid)*  | —                 |
 | 10    | Core File Token Budget       | Size + ASCII art checks on core files         | Yes               |
 | 11    | Boilerplate Descriptions     | No placeholder skill descriptions             | Yes               |
 | 12    | Heir Reset Validation        | Empty profile, available P5-P7 slots          | Yes               |
@@ -153,7 +119,7 @@ The script auto-detects context: if `sync-architecture.cjs` exists, it reads mas
 
 | Issue                    | Fix                                                        |
 | ------------------------ | ---------------------------------------------------------- |
-| Broken synapse target    | Update path in synapses.json                               |
+| Broken connection target | Update path in frontmatter or body links                   |
 | Missing from heir        | Check `SKILL_EXCLUSIONS` in sync-architecture.cjs          |
 | Out of sync              | Run with `-Fix` or use `build-extension-package.ps1`       |
 | Boilerplate description  | Write meaningful description in SKILL.md frontmatter       |
@@ -162,8 +128,8 @@ The script auto-detects context: if `sync-architecture.cjs` exists, it reads mas
 | ASCII art warning        | Replace with Mermaid diagrams or tables                    |
 | Missing return-to-Alex   | Add handoff to main Alex agent                             |
 | Brain HTML count drift   | Update hardcoded numbers in `docs/alex-brain-anatomy.html` |
-| Incomplete synapse path  | Use full path: `.github/skills/name/SKILL.md` not `name`   |
-| Missing $schema property | Add `"$schema": "../SYNAPSE-SCHEMA.json"` to synapses.json |
+| Incomplete connection    | Use full path: `.github/skills/name/SKILL.md` not `name`   |
+| Missing applyTo pattern  | Add `applyTo:` to SKILL.md frontmatter                     |
 | Master-heir ref mismatch | Remove master-only files (ROADMAP.md) from heir            |
 
 ## Iterative Validation Workflow
@@ -180,8 +146,8 @@ When repairing architecture issues, use this proven pattern:
 
 **Example from 2026-02-15 session:**
 
-- Phase 1 failed → Fixed incomplete synapse paths → Phase 1 passed
-- Phase 6 failed → Added $schema properties → Phase 6 passed
+- Phase 1 failed → Fixed incomplete connection paths → Phase 1 passed
+- Phase 6 failed → Added applyTo patterns → Phase 6 passed
 - Phase 7 warned about sync differences → Expected after manual edits, auto-resolves at publish
 
 **Key principle:** Iterative validation catches cascading errors before they compound. Each phase builds on previous fixes.
@@ -193,7 +159,7 @@ After running the script, Alex should check:
 - [ ] **Cross-document meaning**: Do copilot-instructions, alex-core, and protocol-triggers describe the same processes consistently?
 - [ ] **Working memory model**: Does the 4+3 slot claim match the actual P1-P7 table? Are sub-slots (P4a-d) accounted for?
 - [ ] **Legacy terminology**: Any surviving references to deprecated concepts (DK files, domain-knowledge folders)?
-- [ ] **Trigger-to-code alignment**: Do synapse trigger keywords in .md files match actual activation paths in TypeScript?
+- [ ] **Trigger-to-code alignment**: Do trigger keywords in .md files match actual activation paths in TypeScript?
 - [ ] **Heir evolution logic**: Does the documented 4-step heir cycle match what heir-skill-promotion.instructions.md actually describes?
 - [ ] **Version source of truth**: Is `package.json` the single source, or are versions hardcoded in prose that will drift?
 - [ ] **Neuroanatomical consistency**: Do brain-analog mappings in copilot-instructions match descriptions in alex-core?
@@ -214,16 +180,16 @@ After running the script, Alex should check:
 
 | Dimension              | What It Measures                          | Healthy | Warning    | Critical         |
 | ---------------------- | ----------------------------------------- | ------- | ---------- | ---------------- |
-| Synapse Integrity      | % of connections targeting existing files | 100%    | 95-99%     | <95%             |
+| Connection Integrity   | % of links targeting existing files       | 100%    | 95-99%     | <95%             |
 | Connection Density     | Avg connections per skill                 | 3-6     | 1-2        | 0                |
 | Bidirectional Coverage | % of connections with reciprocal entries  | >80%    | 50-80%     | <50%             |
 | Memory Balance         | Ratio of procedural:episodic:declarative  | ~1:1:4  | Skewed 3:1 | Missing category |
-| Schema Compliance      | Skills with valid synapses.json           | 100%    | 95-99%     | <95%             |
+| Schema Compliance      | Skills with valid frontmatter             | 100%    | 95-99%     | <95%             |
 | Staleness              | Skills with outdated content              | <5%     | 5-15%      | >15%             |
 
 ### Diagnostic Patterns
 
-**Synapse Integrity**: Parse `synapses.json` → extract `connections[].target` → verify file exists. Common breakage: file renames, consolidation merges.
+**Connection Integrity**: Parse skill frontmatter → verify applyTo patterns have matching files. Common breakage: file renames, consolidation merges.
 
 **Connection Density**: orphan = 0 connections (isolated), hub = 8+ connections (bottleneck), leaf = 1-3 (normal).
 
@@ -245,19 +211,19 @@ After running the script, Alex should check:
 
 ### Summary: [HEALTHY | ATTENTION REQUIRED | CRITICAL]
 
-| Dimension          | Score          | Status   |
-| ------------------ | -------------- | -------- |
-| Synapse Integrity  | X/Y valid (Z%) | ✅/⚠️/🔴 |
-| Connection Density | avg N.N        | ✅/⚠️/🔴 |
-| Memory Balance     | P:E:D = X:Y:Z  | ✅/⚠️/🔴 |
-| Schema Compliance  | X/Y valid      | ✅/⚠️/🔴 |
+| Dimension            | Score          | Status   |
+| -------------------- | -------------- | -------- |
+| Connection Integrity | X/Y valid (Z%) | ✅/⚠️/🔴 |
+| Connection Density   | avg N.N        | ✅/⚠️/🔴 |
+| Memory Balance       | P:E:D = X:Y:Z  | ✅/⚠️/🔴 |
+| Schema Compliance    | X/Y valid      | ✅/⚠️/🔴 |
 ```
 
 ## Triggers
 
 - "brain qa", "brain audit", "validate brain"
-- "synapse audit", "deep synapse check"
-- "health check", "synapse health", "architecture health"
+- "connection audit", "deep connection check"
+- "health check", "connection health", "architecture health"
 - "master heir sync", "heir sync validation"
 - "catalog validation", "instruction sync"
 - "semantic audit", "logic check", "meaning consistency"

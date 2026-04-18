@@ -39,6 +39,20 @@ applyTo: "**/*safety*,**/*content-filter*,**/*guardrail*,**/*kill-switch*,**/*in
 | Medium | Log + deflect in-character |
 | High/Critical | Log + block + increment incident counter |
 
+```javascript
+function sanitizeInput(raw) {
+  const INJECTION_PATTERNS = [
+    /ignore\s+(previous|above|all)\s+instructions/i,
+    /you\s+are\s+now/i,
+    /act\s+as\s+(a|an)?\s*(different|new)/i,
+    /\[system\]/i,
+  ];
+  const text = raw.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '').trim();
+  const severity = INJECTION_PATTERNS.some(p => p.test(text)) ? 'high' : 'low';
+  return { text, severity };
+}
+```
+
 ---
 
 ## Layer 2: Prompt Hardening Rules

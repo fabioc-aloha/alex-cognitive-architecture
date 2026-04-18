@@ -59,6 +59,6 @@ Default: `inheritable` (syncs to all heirs). Only declare if non-default.
 
 ## Phase 7: Finalize
 
-- Update SKILLS-CATALOG.md, TRIFECTA-CATALOG.md
+- Run brain-qa to verify trifecta completeness
 - Run sync-architecture
 - Compile, package, install VSIX

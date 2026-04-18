@@ -1,5 +1,6 @@
 ---
 sem: 1
+mode: agent
 name: "generate-image"
 description: "Generate an image or video using Replicate AI models"
 application: "When generating images, banners, or visual assets"

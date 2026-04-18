@@ -9,6 +9,8 @@ applyTo: '**/mcp*,**/*mcp-server*,**/*model-context-protocol*'
 
 > Build high-quality MCP servers that enable LLMs to interact with external services
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 The quality of an MCP server is measured by how well it enables LLMs to accomplish real-world tasks.
 
 ---
@@ -298,7 +300,7 @@ Each question must be:
 
 ---
 
-## Synapse Connection
+## Related Skills
 
 This skill complements:
 - **mcp-development** — Core MCP protocol patterns and architecture

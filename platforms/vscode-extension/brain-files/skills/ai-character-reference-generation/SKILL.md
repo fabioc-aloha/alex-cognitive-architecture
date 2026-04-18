@@ -9,7 +9,7 @@ applyTo: '**/*character*,**/*portrait*,**/*avatar*,**/*reference*,**/generate-al
 
 > Create 17+ consistent character poses from detailed prompts — no reference images needed.
 
-> ⚠️ **Staleness Watch** (Last validated: July 2025 — Flux 1.1 Pro; Feb 2026 — nano-banana-pro): Image generation models on Replicate release new versions and deprecate old ones. Before generating, verify the model identifier at [replicate.com/black-forest-labs](https://replicate.com/black-forest-labs). **Upgrade path**: `black-forest-labs/flux-1.1-pro-ultra` provides higher resolution (up to 4MP) with the same API surface. `black-forest-labs/flux-2-pro` adds multi-reference editing. `google/nano-banana-2` is the faster/cheaper successor to nano-banana-pro (same `image_input` API). Input parameter schema may change between model versions.
+> ⚠️ **Staleness Watch** (Last validated: July 2025 — Flux 1.1 Pro; Feb 2026 — nano-banana-pro): Image generation models on Replicate release new versions and deprecate old ones. Before generating, verify the model identifier at [replicate.com/black-forest-labs](https://replicate.com/black-forest-labs). **Upgrade path**: `black-forest-labs/flux-1.1-pro-ultra` provides higher resolution (up to 4MP) with the same API surface. `black-forest-labs/flux-2-pro` adds multi-reference editing. `google/nano-banana-2` is the faster/cheaper successor to nano-banana-pro (same `image_input` API). Input parameter schema may change between model versions. See also [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md).
 
 ---
 

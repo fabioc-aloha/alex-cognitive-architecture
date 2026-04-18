@@ -1,5 +1,7 @@
 # Frequently Asked Questions
 
+![FAQ](./assets/banner-faq.svg)
+
 Common questions about Alex and quick answers.
 
 ## General

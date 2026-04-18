@@ -8,6 +8,7 @@ applyTo: "**/*auth*,**/*msal*,**/*login*,**/*identity*,**/*entra*"
 # MSAL Authentication
 
 > Microsoft Authentication Library patterns for React/SPA applications with Microsoft Entra ID.
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
 
 **Version**: 1.0.0
 

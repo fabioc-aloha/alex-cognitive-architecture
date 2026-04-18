@@ -28,7 +28,7 @@ Memory files define *what* and *how*; muscles *do*.
 | `data-ingest.cjs`             | JavaScript | Universal data ingestion                  | inheritable |
 | `data-profile.cjs`            | JavaScript | Statistical data profiler                 | inheritable |
 | `docx-to-md.cjs`              | JavaScript | Word document to Markdown conversion      | inheritable |
-| `dream-cli.ts`                | TypeScript | Architecture maintenance CLI              | master-only |
+| `dream-cli.cjs`               | JavaScript | Architecture maintenance CLI              | master-only |
 | `fix-fence-bug.cjs`           | JavaScript | Detect/fix VS Code fence bug              | inheritable |
 | `gamma-generator.cjs`         | JavaScript | Markdown to Gamma slides                  | inheritable |
 | `install-hooks.cjs`           | JavaScript | Install hooks config                      | inheritable |
@@ -40,7 +40,7 @@ Memory files define *what* and *how*; muscles *do*.
 | `nav-inject.cjs`              | JavaScript | Cross-document navigation injection       | inheritable |
 | `new-skill.cjs`               | JavaScript | Scaffold new skill trifecta               | inheritable |
 | `normalize-paths.cjs`         | JavaScript | Path consistency fixes                    | inheritable |
-| `pptxgen-cli.ts`              | TypeScript | PowerPoint generation                     | master-only |
+| `pptxgen-cli.cjs`             | JavaScript | PowerPoint generation                     | master-only |
 | `ralph-loop.cjs`              | JavaScript | Iterative quality improvement loop        | inheritable |
 | `session-name.cjs`            | JavaScript | Generate session names from context       | inheritable |
 | `sync-architecture.cjs`       | JavaScript | Master to Heir sync                       | master-only |
@@ -96,7 +96,7 @@ Pre/post action hooks for chat agent lifecycle (22 scripts). See `.github/hooks.
 | `rai-session-safety.cjs`        | session.start  | Session-level RAI monitoring                |
 | `researcher-session-start.cjs`  | session.start  | Researcher agent research context setup     |
 | `researcher-stop.cjs`           | session.stop   | Researcher agent findings consolidation     |
-| `synapse-weight-update.cjs`     | post.tool      | Update synapse weights from usage           |
+| `skill-weight-update.cjs`       | post.tool      | Update skill connection weights from usage  |
 | `targeted-test-runner.cjs`      | post.tool      | Run tests related to changed files          |
 | `validator-pre-tool-use.cjs`    | pre.tool       | Validator agent adversarial checks          |
 | `validator-session-start.cjs`   | session.start  | Validator agent QA context setup            |
@@ -108,7 +108,7 @@ Pre/post action hooks for chat agent lifecycle (22 scripts). See `.github/hooks.
 | Language         | Best For                                        | Example Muscles                                 |
 | ---------------- | ----------------------------------------------- | ----------------------------------------------- |
 | **Node.js (JS)** | Complex transforms, JSON manipulation, npm libs | `sync-architecture.cjs`, `gamma-generator.cjs`  |
-| **TypeScript**   | CLI tools with nice UX, type-safe APIs          | `dream-cli.ts`, `pptxgen-cli.ts`                |
+| **Node.js (CJS)**| CLI tools with dependency checking              | `dream-cli.cjs`, `pptxgen-cli.cjs`              |
 | **PowerShell**   | Windows-specific automation                     | `build-extension-package.ps1`                   |
 | **Bash / Zsh**   | macOS/Linux quick scripts, CI pipelines         | `*.sh` (future)                                 |
 
@@ -138,9 +138,9 @@ Controlled by `inheritance.json` — each muscle declares its own inheritance:
     "description": "32-phase brain QA validation (master-only, full phases)",
     "referencedBy": ["brain-qa"]
   },
-  "dream-cli.ts": {
+  "dream-cli.cjs": {
     "inheritance": "master-only",
-    "description": "CLI wrapper for dream/architecture maintenance (requires extension)",
+    "description": "CLI wrapper for dream/architecture maintenance (standalone)",
     "referencedBy": ["dream-state-automation"]
   }
 }
@@ -166,7 +166,7 @@ Controlled by `inheritance.json` — each muscle declares its own inheritance:
 Examples:
 - validate-skills.ps1    → Validates skill files
 - sync-architecture.cjs   → Syncs architecture to heirs
-- dream-cli.ts           → CLI for dream protocol
+- dream-cli.cjs          → CLI for dream protocol
 - gamma-generator.cjs    → Generates Gamma slides
 ```
 
@@ -180,8 +180,8 @@ pwsh -File .github/muscles/validate-skills.ps1
 # Node.js muscles
 node .github/muscles/sync-architecture.cjs
 
-# TypeScript muscles (via tsx)
-npx tsx .github/muscles/dream-cli.ts
+# CJS muscles
+node .github/muscles/dream-cli.cjs
 ```
 
 From heir via npm scripts:
@@ -199,15 +199,14 @@ npm run validate-skills
 | `md-to-html.cjs`        | Requires **pandoc** and shared modules; optional **mmdc** for `--mermaid-png` |
 | `md-to-eml.cjs`         | Requires **pandoc** and shared modules                                        |
 | `docx-to-md.cjs`        | Requires **pandoc**                                                           |
-| `pptxgen-cli.ts`        | **Must run from heir directory** -- needs heir's node_modules for pptxgenjs   |
+| `pptxgen-cli.cjs`       | Requires **pptxgenjs** (`npm install pptxgenjs`)                              |
 | `sync-architecture.cjs` | Must run from repo root (uses `npm run sync-architecture`)                    |
 | `gamma-generator.cjs`   | Requires `GAMMA_API_KEY` env var; optional Playwright for export              |
 | `svg-pipeline.cjs`      | Requires Inkscape, rsvg-convert, or ImageMagick for SVG to PNG                |
 
 ```bash
-# pptxgen-cli.ts example (run from heir context)
-cd platforms/vscode-extension
-npx tsx ../../.github/muscles/pptxgen-cli.ts --help
+# pptxgen-cli.cjs example
+node .github/muscles/pptxgen-cli.cjs --help
 ```
 
 ---

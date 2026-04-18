@@ -45,3 +45,15 @@ const x = 1;
 
 - Relative paths for internal: `[Guide](./docs/guide.md)`
 - No bare URLs: `[Example](https://example.com)` not `https://example.com`
+
+### Table Rules
+
+- Pipes must align visually (optional but preferred)
+- Header separator row required: `| --- | --- |`
+- No empty cells — use `-` or `N/A` for missing values
+
+### List Rules
+
+- Use `-` for unordered lists (not `*`)
+- Indent nested items by 2 spaces
+- Blank line before and after list blocks (MD032)

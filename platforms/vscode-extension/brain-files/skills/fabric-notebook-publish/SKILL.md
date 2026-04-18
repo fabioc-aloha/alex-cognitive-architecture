@@ -31,32 +31,11 @@ This skill enables seamless notebook publishing from VS Code to Microsoft Fabric
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    subgraph LOCAL["VS Code"]
-        NB[Notebooks]
-        SCRIPT[Sync-ToFabric.v2.ps1]
-    end
+**Three environments**: VS Code (local) → Git (version control) → Fabric (cloud)
 
-    subgraph GIT["Git"]
-        WT[Worktree]
-        ADO[Azure DevOps]
-    end
-
-    subgraph CLOUD["Fabric"]
-        WS[Workspace]
-        API[REST API]
-    end
-
-    NB --> |Copy changed| WT
-    WT --> |Push| ADO
-    SCRIPT --> |Sync| API
-    ADO --> |Git Integration| WS
-
-    style LOCAL fill:#cce5ff,stroke:#4a90d9,color:#333
-    style GIT fill:#e6d5f2,stroke:#8b6eb3,color:#333
-    style CLOUD fill:#b3d9ff,stroke:#4a90d9,color:#333
-```
+- **VS Code**: Notebooks edited locally; `Sync-ToFabric.v2.ps1` syncs via REST API
+- **Git**: Changed notebooks copied to worktree → pushed to Azure DevOps
+- **Fabric**: ADO Git Integration syncs to workspace; script syncs directly via REST API
 
 ## Fishbowl Color Palette
 

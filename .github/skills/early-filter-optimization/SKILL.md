@@ -1,11 +1,11 @@
 ---
-name: cognitive-load-optimization
+name: early-filter-optimization
 description: "Cross-domain early-filtering paradigm for reducing cognitive and computational load in data pipelines, AI context, and human attention"
 applyTo: "**/*optimi*,**/*performance*,**/*cognitive*"
 tier: extended
 ---
 
-# Domain Knowledge: Cognitive Load Optimization
+# Domain Knowledge: Early Filter Optimization
 
 **Domain**: Cross-Domain Performance Optimization
 **Mastery Level**: Applied (Real-world validation)
@@ -110,3 +110,8 @@ When optimizing any system, ask:
 - [ ] **What is duplicated unnecessarily?** (Reference instead)
 - [ ] **What never gets used?** (Prune aggressively)
 - [ ] **Where is the bottleneck?** (Focus optimization there)
+
+
+
+
+

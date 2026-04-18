@@ -12,6 +12,8 @@ applyTo: '**/*.md,**/*mermaid*,**/*diagram*'
 
 A skill for markdown authoring, Mermaid diagramming, multi-tool visualization, VS Code integration, and cross-platform rendering consistency.
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 ## When to Use
 
 - Creating technical documentation with diagrams
@@ -588,12 +590,13 @@ linkStyle default stroke:#57606a,stroke-width:1.5px
 **Complete Example**:
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#57606a', 'primaryColor': '#ddf4ff', 'primaryBorderColor': '#0969da', 'primaryTextColor': '#1f2328', 'edgeLabelBackground': '#ffffff'}}}%%
 flowchart LR
-    A[Source] --> |Transform| B[Target]
-    
-    style A fill:#ddf4ff,color:#0550ae,stroke:#80ccff
-    style B fill:#d3f5db,color:#1a7f37,stroke:#6fdd8b
-    
+    A[Source]:::blue -->|Transform| B[Target]:::green
+
+    classDef blue fill:#ddf4ff,color:#0550ae,stroke:#80ccff
+    classDef green fill:#d3f5db,color:#1a7f37,stroke:#6fdd8b
+
     linkStyle default stroke:#57606a,stroke-width:1.5px
 ```
 
@@ -1162,10 +1165,10 @@ end
 
 ```text
 %% ❌ RISKY - <i> tag may break parsing
-SYN["synapses.json<br/><i>inert — rarely traversed</i>"]
+CFG["config.json<br/><i>inert — rarely traversed</i>"]
 
 %% ✅ SAFE - plain text with em dash
-SYN["synapses.json — inert, rarely traversed"]
+CFG["config.json — inert, rarely traversed"]
 ```
 
 **Rule 3**: Avoid em dashes (—) in subgraph titles (some parsers treat them as operators)

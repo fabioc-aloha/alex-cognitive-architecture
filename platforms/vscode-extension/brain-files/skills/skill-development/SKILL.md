@@ -320,7 +320,7 @@ When heirs successfully practice a wishlist skill:
 
 | Metric                | Source                                  | Target           |
 | --------------------- | --------------------------------------- | ---------------- |
-| Total Skills Acquired | See SKILLS-CATALOG.md for current count | —                |
+| Total Skills Acquired | Count `.github/skills/` directories | —                |
 | Wishlist Items        | ~60                                     | Reduce over time |
 | Skills In Development | 0                                       | 1-2 at a time    |
 

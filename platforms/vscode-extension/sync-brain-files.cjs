@@ -64,10 +64,17 @@ if (fs.existsSync(DEST)) {
 const copied = copyDir(SRC, DEST, "");
 console.log(`brain-files/ synced: ${copied} files`);
 
-// Copy heir CHANGELOG.md into extension directory for VSIX
+// Copy heir root metadata into extension directory for VSIX
 const HEIR_ROOT = path.resolve(__dirname, "..", "..");
+
 const heirChangelog = path.join(HEIR_ROOT, "CHANGELOG.md");
 if (fs.existsSync(heirChangelog)) {
   fs.copyFileSync(heirChangelog, path.join(__dirname, "CHANGELOG.md"));
   console.log("CHANGELOG.md copied from heir root");
+}
+
+const heirLicense = path.join(HEIR_ROOT, "LICENSE.md");
+if (fs.existsSync(heirLicense)) {
+  fs.copyFileSync(heirLicense, path.join(__dirname, "LICENSE.md"));
+  console.log("LICENSE.md copied from heir root");
 }

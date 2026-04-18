@@ -11,6 +11,8 @@ applyTo: '**/*banner*,**/*readme*,**/generate-readme*'
 
 **Last Updated**: April 2026 | **Models Verified**: Replicate API
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 ---
 
 ## Core Pattern

@@ -26,7 +26,7 @@
     Inheritance: master-only
     Version: 1.0.0
     Skill: vscode-extension-patterns
-    Reviewed: 2026-04-15
+    @reviewed 2026-04-18
     Platform: windows
     Requires: powershell7, node, vsce
 #>

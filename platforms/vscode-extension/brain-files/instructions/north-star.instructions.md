@@ -42,17 +42,3 @@ North Star > Feature requests > Timeline pressure
 3. Daily implications: How does this affect small decisions?
 4. Document: Create `NORTH-STAR.md` with full breakdown
 5. Integrate: Add `North Star:`, `Guidelines:`, and `Persona:` fields to Active Context
-3. If yes: Proceed, noting alignment
-4. If no: Flag the misalignment, suggest alternatives
-5. If unclear: Request clarification before proceeding
-```
-
----
-
-## Hierarchy
-
-- North Star defined in the project's North Star document (NORTH-STAR.md)
-- Heir projects: Inherit NASA-Quality default OR define custom
-- Sub-projects: May have local North Stars that serve parent's vision
-
-A local North Star should never contradict the parent project's North Star.

@@ -569,7 +569,8 @@ function scanMuscles() {
   const muscleExtensions = ['.cjs', '.js', '.ts', '.ps1'];
   const files = fs.readdirSync(musclesDir)
     .filter(f => muscleExtensions.some(ext => f.endsWith(ext)))
-    .filter(f => !f.includes('.bak')); // Exclude backup files
+    .filter(f => !f.includes('.bak'))   // Exclude backup files
+    .filter(f => !f.includes('.test.')); // Exclude test files
 
   for (const file of files) {
     const filePath = path.join(musclesDir, file);
@@ -670,6 +671,67 @@ function scanMuscles() {
   });
 }
 
+// --- Scan Hooks ---
+function scanHooks() {
+  const hooksDir = path.join(GH, "muscles", "hooks");
+  if (!fs.existsSync(hooksDir)) return [];
+
+  const results = [];
+  const files = fs.readdirSync(hooksDir)
+    .filter(f => f.endsWith('.cjs') || f.endsWith('.js'));
+
+  for (const file of files) {
+    const filePath = path.join(hooksDir, file);
+    const content = fs.readFileSync(filePath, "utf-8");
+    const lineCount = content.split("\n").length;
+    const name = file;
+
+    // Check for header documentation (JSDoc block)
+    const hasHeader = /^\/\*\*[\s\S]*?\*\//m.test(content);
+
+    // Check for stdin JSON parsing pattern (hooks consume JSON from stdin)
+    const hasStdinParse = /readFileSync\s*\(\s*0\s*[,)]|process\.stdin/i.test(content);
+
+    // Check for stdout JSON output (hooks emit JSON to stdout)
+    const hasStdoutJson = /JSON\.stringify|console\.log\s*\(\s*JSON/i.test(content);
+
+    // Check for error handling (try/catch around stdin parse or main logic)
+    const hasErrorHandling = /try\s*\{[\s\S]*?catch/i.test(content);
+
+    // Check for bounds (hooks should be 30-300 lines)
+    const withinBounds = lineCount >= 30 && lineCount <= 300;
+
+    // Determine hook event from filename or content
+    const eventMatch = content.match(/hook_event_name.*?["'](.*?)["']/i) ||
+                       content.match(/@hook\s+(\S+)/i);
+    const event = eventMatch ? eventMatch[1] : name.replace('.cjs', '').replace('.js', '');
+
+    // Extract @reviewed date
+    const reviewMatch = content.match(/@(?:reviewed|lastReview|review)\s*:?\s*(\d{4}-\d{2}-\d{2})/i);
+    const reviewDate = reviewMatch ? reviewMatch[1] : null;
+
+    const flags = {
+      header: hasHeader ? 1 : 0,
+      stdin: hasStdinParse ? 1 : 0,
+      stdout: hasStdoutJson ? 1 : 0,
+      err: hasErrorHandling ? 1 : 0,
+      bounds: withinBounds ? 1 : 0,
+    };
+
+    const score = flags.header + flags.stdin + flags.stdout + flags.err + flags.bounds;
+    // stdin is GATE — hooks that don't parse stdin are broken
+    const pass = flags.stdin === 1 && (score >= 4);
+
+    results.push({ name, lines: lineCount, event, flags, score, maxScore: 5, pass, reviewDate });
+  }
+
+  // Sort: worst score first, then alphabetically
+  return results.sort((a, b) => {
+    if (a.score !== b.score) return a.score - b.score;
+    return a.name.localeCompare(b.name);
+  });
+}
+
 // --- Generate Grid ---
 function generateGrid() {
   const skills = scanSkills();
@@ -677,6 +739,7 @@ function generateGrid() {
   const instructions = scanInstructions();
   const prompts = scanPrompts();
   const muscles = scanMuscles();
+  const hooks = scanHooks();
 
   const date = new Date().toISOString().split("T")[0];
   const lines = [];
@@ -684,6 +747,8 @@ function generateGrid() {
   lines.push("# Brain Health Grid");
   lines.push("");
   lines.push(`Generated: ${date}`);
+  lines.push("");
+  lines.push("> **Scope**: This is a **structural linter**, not a content quality gate. It validates frontmatter, bounds, trifecta binding, and file presence — not whether advice is correct, examples are current, or skills conflict. Content accuracy requires semantic review (see below).");
   lines.push("");
   lines.push("## Scoring Criteria");
   lines.push("");
@@ -839,6 +904,20 @@ function generateGrid() {
     });
   }
 
+  for (const h of hooks) {
+    priorityItems.push({
+      type: 'hook',
+      name: h.name,
+      path: `../muscles/hooks/${h.name}`,
+      score: h.score,
+      maxScore: 5,
+      pass: h.pass,
+      sem: h.reviewDate || '-',
+      staleProne: false,
+      staleDate: '-',
+    });
+  }
+
   // Sort: failing first, then unaudited (sem = '-'), then stale-prone (oldest stale date first), then stalest review date, then lowest score
   priorityItems.sort((a, b) => {
     // Failing items first
@@ -887,8 +966,21 @@ function generateGrid() {
     const totalFailing = priorityItems.filter(i => !i.pass).length;
     const totalUnreviewed = priorityItems.filter(i => i.pass && i.sem === '-').length;
     const totalAudited = priorityItems.filter(i => i.sem !== '-').length;
+    // Staleness detection: flag items with sem review dates >90 days old
+    const now = new Date();
+    const STALE_DAYS = 90;
+    const staleItems = priorityItems.filter(i => {
+      if (i.sem === '-') return false;
+      const reviewDate = new Date(i.sem);
+      if (isNaN(reviewDate.getTime())) return false;
+      const daysSince = Math.floor((now - reviewDate) / (1000 * 60 * 60 * 24));
+      return daysSince > STALE_DAYS;
+    });
     lines.push("");
     lines.push(`**Queue depth**: ${totalFailing} failing | ${totalUnreviewed} unaudited | ${totalAudited} audited | ${priorityItems.length} total`);
+    if (staleItems.length > 0) {
+      lines.push(`**Stale reviews**: ${staleItems.length} items have sem review dates older than ${STALE_DAYS} days — re-review recommended`);
+    }
   } else {
     lines.push("**Status**: ✅ All brain files passing and reviewed");
   }
@@ -1167,8 +1259,45 @@ function generateGrid() {
   lines.push("");
   lines.push(`**Categories**: ${categoryStats}`);
 
+  // Hooks table
+  lines.push("");
+  lines.push("## Hooks");
+  lines.push("");
+  lines.push("> **Design**: Hooks are **event-driven scripts** invoked by the VS Code agent platform at lifecycle boundaries. They read JSON from stdin and emit JSON to stdout.");
+  lines.push("");
+  lines.push("**Scoring Criteria**:");
+  lines.push("| Dim | Name | 1 (good) | 0 (defect) |");
+  lines.push("|:---:|------|----------|------------|");
+  lines.push("| **header** | Documentation | Has JSDoc header block | Missing documentation |");
+  lines.push("| **stdin** | Stdin Parse | Reads JSON from fd 0 / process.stdin | Missing stdin parse (broken hook) |");
+  lines.push("| **stdout** | Stdout JSON | Emits JSON.stringify to stdout | No structured output |");
+  lines.push("| **err** | Error Handling | try/catch around main logic | No error handling |");
+  lines.push("| **bounds** | Bounds | 30–300 lines | <30 (stub) or >300 (bloated) |");
+  lines.push("");
+  lines.push("**Pass criteria**: stdin=1 (gate) AND score ≥4/5");
+  lines.push("");
+  lines.push("| Hook | Lines | Event | header | stdin | stdout | err | bounds | Score | Pass | Reviewed |");
+  lines.push("|------|------:|-------|:------:|:-----:|:------:|:---:|:------:|------:|:----:|----------|");
+
+  for (const h of hooks) {
+    const f = h.flags;
+    const passIcon = h.pass ? "✓" : "✗";
+    const reviewedDate = h.reviewDate || "—";
+    const nameLink = `[${h.name}](../muscles/hooks/${h.name})`;
+    lines.push(`| ${nameLink} | ${h.lines} | ${h.event} | ${f.header} | ${f.stdin} | ${f.stdout} | ${f.err} | ${f.bounds} | ${h.score}/5 | ${passIcon} | ${reviewedDate} |`);
+  }
+
+  // Hooks summary
+  const hooksPassing = hooks.filter(h => h.pass).length;
+  const hooksFailing = hooks.filter(h => !h.pass).length;
+  const hooksPerfect = hooks.filter(h => h.score === 5).length;
+  const hooksReviewed = hooks.filter(h => h.reviewDate).length;
+  lines.push("");
+  lines.push(`**Summary**: ${hooks.length} hooks | Passing: ${hooksPassing} | Failing: ${hooksFailing} | Perfect(5/5): ${hooksPerfect}`);
+  lines.push(`**Reviewed**: ${hooksReviewed}/${hooks.length} have review dates`);
+
   // Overall summary
-  const totalItems = skills.length + agents.length + instructions.length + prompts.length + muscles.length;
+  const totalItems = skills.length + agents.length + instructions.length + prompts.length + muscles.length + hooks.length;
   lines.push("");
   lines.push("## Overall");
   lines.push("");
@@ -1179,6 +1308,7 @@ function generateGrid() {
   lines.push(`| Instructions | ${instructions.length} |`);
   lines.push(`| Prompts | ${prompts.length} |`);
   lines.push(`| Muscles | ${muscles.length} |`);
+  lines.push(`| Hooks | ${hooks.length} |`);
   lines.push(`| **Total** | **${totalItems}** |`);
 
   // Token Waste Report
@@ -1253,13 +1383,39 @@ function generateGrid() {
   return lines.join("\n");
 }
 
-// --- Main ---
-const grid = generateGrid();
+// --- Exports for testing ---
+if (typeof module !== 'undefined') {
+  module.exports = {
+    detectTokenWaste,
+    isWorkflowSkill,
+    hasMatchingInstruction,
+    hasMatchingMuscle,
+    getPassThreshold,
+    scanSkills,
+    scanAgents,
+    scanInstructions,
+    scanPrompts,
+    scanMuscles,
+    scanHooks,
+    generateGrid,
+    TIER_THRESHOLDS,
+    MIN_SKILL_LINES,
+    MAX_SKILL_LINES,
+    MIN_AGENT_LINES,
+    MAX_AGENT_LINES,
+    STALE_PRONE,
+  };
+}
 
-if (STDOUT_MODE) {
-  console.log(grid);
-} else {
-  const outputPath = path.join(QUALITY_DIR, "brain-health-grid.md");
-  fs.writeFileSync(outputPath, grid);
-  console.log(`Brain health grid written to ${path.relative(ROOT, outputPath)}`);
+// --- Main ---
+if (require.main === module) {
+  const grid = generateGrid();
+
+  if (STDOUT_MODE) {
+    console.log(grid);
+  } else {
+    const outputPath = path.join(QUALITY_DIR, "brain-health-grid.md");
+    fs.writeFileSync(outputPath, grid);
+    console.log(`Brain health grid written to ${path.relative(ROOT, outputPath)}`);
+  }
 }

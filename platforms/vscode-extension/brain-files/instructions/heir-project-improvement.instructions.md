@@ -324,7 +324,7 @@ Research-first and trifecta creation work together:
 | **Copy-paste trifecta**      | Skill duplicates instruction content                           | Skill = patterns/why, Instruction = steps/how          |
 | **Skipping research**        | Encoding shallow knowledge produces shallow skills             | Research sprint → validate with examples → then encode |
 | **Skills-only gap analysis** | Misses procedures, roles, workflows                            | Always run all 4 dimensions (GA-S/I/A/P)               |
-| **Inconsistent naming**      | Files exist but Alex can't discover connections                | Use same base name across skill/instruction/muscle     |
+| **Inconsistent naming**      | Files exist but Alex can't discover connections                | Use same base name across skill/instruction/prompt     |
 | **"Just start coding"**      | AI has no context, guesses at patterns                         | Research → Teach → Plan → Execute                      |
 
 ### Mission-Critical Projects (NASA Standards)

@@ -14,6 +14,8 @@ applyTo: "**/*dashboard*,**/*kpi*,**/*panel*,**/*layout*"
 | **Components** | SKILL.md + dashboard-design.instructions.md + dashboard.prompt.md      |
 | **Depends**  | data-visualization (chart content), data-analysis (KPIs and segments)  |
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 ## Overview
 
 Design dashboards that tell stories through layout. A dashboard is not a collection of charts -- it's a guided reading experience where position, size, and interaction design control what the viewer understands and in what order.

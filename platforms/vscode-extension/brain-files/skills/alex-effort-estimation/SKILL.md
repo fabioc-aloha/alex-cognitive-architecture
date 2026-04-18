@@ -104,6 +104,41 @@ These take real time regardless of AI:
 3. **Factor approval cycles** (human response latency)
 4. **Buffer 20%** for unexpected iteration
 
+---
+
+## Calibrated from 62-Project Retrospective
+
+### What Accelerates Well (4-10×)
+
+| Task Type | Human | Alex | Factor | Evidence |
+|-----------|-------|------|--------|----------|
+| Documentation | 4h | 25m | 10× | METHODOLOGY doc: 400 lines in ~30 min |
+| Skill creation | 2h | 15m | 8× | 65 skills created, many in single sessions |
+| Code generation | 4h | 30m | 8× | Slash commands, refactors |
+| Research + synthesis | 8h | 45m | 10× | 62 project analysis in ~20 min |
+| Architecture decisions | 8h | 2h | 4× | Root cause analysis + recommendations |
+
+### What Doesn't Accelerate (<2×)
+
+| Bottleneck | Why | Evidence |
+|------------|-----|----------|
+| External dependencies | Can't control | CookProject blocked by book formatting |
+| Unrealistic scope | Must be discovered | Altman-Z-Score, KalabashDashboard |
+
+### Example: v4.2.5 Release Retrospective
+
+| Task | Human Est. | Actual Alex | Bottleneck |
+|------|------------|-------------|------------|
+| Update engine to 1.109 | 30m | ⚡ 5 min | None |
+| Consolidate 9→3 agents | 4h | 🔄 20 min | None |
+| Create 6 slash commands | 2h | 🔄 15 min | None |
+| Refactor dream to shared | 4h | ⏱️ 45 min | Testing |
+| Test all features | 2h | ⏱️ 1h | Human testing |
+| Release process | 4h | 📦 1h | CI/approval |
+| **Total** | **16.5h** | **📦 2.5h** | - |
+
+**Acceleration factor: 6.6×**
+
 ### Success Predictors
 
 | Good Sign | Bad Sign |

@@ -61,7 +61,6 @@ Meta-skill for heirs to build high-quality skills that can be promoted to Master
 ```text
 .github/skills/{skill-name}/
 ├── SKILL.md          # Required: Main content
-├── synapses.json     # Optional: Brain connections
 └── {assets}          # Optional: Templates, CSS, scripts
 ```
 
@@ -173,9 +172,14 @@ applyTo: "**/*"
 
 ---
 
-## Synapse Guidelines
+## Connection Guidelines
 
-### When to Add Synapses
+### When to Connect Skills
+
+Skills connect through:
+1. **Frontmatter `applyTo` patterns** — File patterns that trigger activation
+2. **Body text references** — Links to related skills: `[skill-name](..\skill-name/SKILL.md)`
+3. **Semantic relationships** — VS Code's semantic search finds related skills by content
 
 | Connection Type | When | Example |
 |-----------------|------|---------|
@@ -184,31 +188,21 @@ applyTo: "**/*"
 | **Requires** | This skill depends on another | citation → literature-review |
 | **Extends** | This skill adds to another | airs-appropriate-reliance → appropriate-reliance |
 
-### Strength Values
+### How to Link Skills
 
-| Strength | Meaning | Use When |
-|----------|---------|----------|
-| **Critical** (0.95-1.0) | Always co-activate | Core dependencies |
-| **High** (0.8-0.94) | Usually co-activate | Strong relationships |
-| **Medium** (0.6-0.79) | Sometimes co-activate | Contextual connections |
-| **Low** (0.4-0.59) | Rarely co-activate | Weak associations |
+1. **Related Skills section** — Add at end of SKILL.md:
+   ```markdown
+   ## Related Skills
+   - [debugging-patterns](../debugging-patterns/SKILL.md) - Systematic problem-solving
+   - [root-cause-analysis](../root-cause-analysis/SKILL.md) - Deep investigation
+   ```
 
-### Direction Types (Deprecated)
+2. **In-line references** — Mention related skills in context:
+   ```markdown
+   For visual diagrams, see the [markdown-mermaid](../markdown-mermaid/SKILL.md) skill.
+   ```
 
-> **Note**: Embedded `## Synapses` sections were deprecated in v7.8. Use `synapses.json` files instead.
-
-| Direction | Meaning | Symbol |
-|-----------|---------|--------|
-| **Forward** | I help them | → |
-| **Bidirectional** | Mutual benefit | ↔ |
-| **Backward** | They help me | ← |
-
-**Legacy Format (deprecated):**
-```markdown
-- [.github/skills/{skill}/SKILL.md] (High, Enables, Bidirectional) - "When X happens"
-```
-
-**Current Format**: Use `synapses.json` in skill directory.
+3. **applyTo overlap** — Skills with overlapping `applyTo` patterns naturally co-activate.
 
 ---
 
@@ -233,7 +227,7 @@ Before promoting to Master, verify:
 ### Integration Quality
 
 - [ ] **applyTo set**: Appropriate glob patterns
-- [ ] **Synapses defined**: 2-5 meaningful connections
+- [ ] **Connections defined**: 2-5 related skill links
 - [ ] **No duplication**: Doesn't overlap with existing skills
 - [ ] **Keywords identified**: For memory-activation index
 
@@ -246,7 +240,7 @@ Calculate before requesting Master promotion:
 | Criterion | Points | Your Score |
 |-----------|--------|------------|
 | Has applyTo frontmatter | +2 | |
-| Has Synapses section | +3 | |
+| Has Related Skills section | +3 | |
 | Has Troubleshooting | +2 | |
 | Has code examples | +2 | |
 | Content > 100 lines | +1 | |
@@ -350,7 +344,7 @@ A **trifecta** = SKILL.md (declarative) + .instructions.md (procedural) + muscle
 2. **Observe usage** — is there a repeatable process emerging?
 3. **Add .instructions.md** — when you can write numbered steps with decision points
 4. **Add .prompt.md** — when users need an interactive guided experience
-5. **Register in catalogs** — update TRIFECTA-CATALOG.md
+5. **Verify registration** — run brain-qa to confirm trifecta completeness
 
 ---
 
@@ -362,7 +356,7 @@ A **muscle** is an execution script in `.github/muscles/` — the motor cortex o
 
 | Signal | Create Muscle? | Example |
 |--------|:-:|----------|
-| Same terminal commands run repeatedly | **Yes** | `brain-qa.ps1` — synapse validation |
+| Same terminal commands run repeatedly | **Yes** | `brain-qa.ps1` — architecture validation |
 | File validation that could be automated | **Yes** | `validate-skills.ps1` — schema checking |
 | Multi-file transformations | **Yes** | `sync-architecture.cjs` — heir sync |
 | Decision-making that requires judgment | **No** | Code review (that's a skill, not a script) |
@@ -373,7 +367,7 @@ A **muscle** is an execution script in `.github/muscles/` — the motor cortex o
 
 | Pattern | Example | What It Does |
 |---------|---------|---------------|
-| `{verb}-{noun}.ps1` | `validate-synapses.ps1` | PowerShell validation |
+| `{verb}-{noun}.ps1` | `validate-skills.ps1` | PowerShell validation |
 | `{verb}-{noun}.js` | `sync-architecture.cjs` | Node.js transformation |
 | `{noun}-{noun}.ps1` | `brain-qa.ps1` | PowerShell audit |
 
@@ -444,7 +438,7 @@ Without this, the instruction/prompt syncs as an orphan to heirs where the paire
 | Write skill before project starts | Ship first, document after |
 | Copy-paste from docs | Add your insights and gotchas |
 | Create single-use skills | Wait for 3+ use cases |
-| Skip synapses | Connect to 2-5 related skills |
+| Skip connections | Link to 2-5 related skills |
 | Use project-specific names | Generalize (MyAppConfig → config patterns) |
 | Mega-skill (1000+ lines) | Split into focused skills |
 | Orphan skill (no connections) | Always connect to network |
@@ -509,7 +503,7 @@ When related skills exist, merge rather than proliferate:
 
 1. **Choose anchor**: Most comprehensive skill
 2. **Absorb content**: Move unique sections from others
-3. **Update synapses**: Redirect connections to anchor
+3. **Update links**: Redirect references to anchor
 4. **Archive sources**: Keep in heir for history
 5. **Document merge**: Note absorbed skills at bottom
 

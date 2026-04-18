@@ -31,16 +31,15 @@ Create technical documentation with embedded Mermaid diagrams following the ATAC
 ## Mandatory Template (Copy First)
 
 ```text
-%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#57606a', 'primaryColor': '#ddf4ff', 'primaryBorderColor': '#0969da', 'primaryTextColor': '#1f2328', 'edgeLabelBackground': '#ffffff'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#57606a', 'primaryColor': '#e0f2fe', 'primaryBorderColor': '#38bdf8', 'primaryTextColor': '#1f2328', 'edgeLabelBackground': '#ffffff'}}}%%
 flowchart LR
-    A[Input]:::blue --> B[Process]:::purple --> C[Output]:::green
+    A[Input]:::sky --> B[Process]:::indigo --> C[Output]:::coral
 
-    classDef blue fill:#ddf4ff,color:#0550ae,stroke:#80ccff
-    classDef green fill:#d3f5db,color:#1a7f37,stroke:#6fdd8b
-    classDef purple fill:#d8b9ff,color:#6639ba,stroke:#bf8aff
-    classDef gold fill:#fff8c5,color:#9a6700,stroke:#d4a72c
-    classDef red fill:#ffebe9,color:#cf222e,stroke:#f5a3a3
+    classDef sky fill:#e0f2fe,color:#0c4a6e,stroke:#38bdf8
+    classDef coral fill:#fff7ed,color:#9a3412,stroke:#f97316
+    classDef indigo fill:#eef2ff,color:#3730a3,stroke:#6366f1
     classDef neutral fill:#eaeef2,color:#24292f,stroke:#d0d7de
+    classDef red fill:#ffebe9,color:#cf222e,stroke:#f5a3a3
 
     linkStyle default stroke:#57606a,stroke-width:1.5px
 ```

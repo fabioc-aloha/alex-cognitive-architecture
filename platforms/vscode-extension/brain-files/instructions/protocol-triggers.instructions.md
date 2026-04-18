@@ -6,27 +6,52 @@ application: "When following protocol triggers workflows or troubleshooting rela
 
 # Protocol Triggers Reference
 
-## Dream State Automation Triggers
+## Ritual Hierarchy
 
-- Dream state automation required → Use the dream prompt (agent mode) or run `node .github/muscles/brain-qa.cjs`
-- Architecture health assessment → Use the dream prompt for comprehensive validation
-- Missing frontmatter detection → Dream protocol automatically detects incomplete skills
-- Memory file validation → Dream protocol scans all memory files for integrity
-- Post-learning validation → Use the dream prompt after domain knowledge acquisition
-- Trifecta completeness monitoring → Dream protocol tracks skill quality and generates health reports
-- Memory consolidation verification → Dream protocol generates detailed reports in .github/quality/
-- Architecture health check → Quick architecture assessment through dream protocol
-- **Implementation**: brain-qa.cjs muscle provides automated architecture maintenance with validation and health reporting
+Meditation is the foundational ritual. All others are subordinate.
+
+| Ritual | Trigger | Frequency | Mode |
+|---|---|---|---|
+| **Meditation** | User says "meditate", session produced reusable knowledge, domain milestone reached | Per-session | Interactive |
+| **Dream** | Chained after meditation (pattern or random), explicit `/dream` command | On-demand | Automated diagnostic |
+| **Self-Actualize** | Monthly deep assessment, architecture feels stale | Monthly | Dream + deep meditation |
+
+## Dream Chaining After Meditation
+
+Dream chains automatically after meditation when any condition is met:
+
+| Trigger | Condition |
+|---|---|
+| File reorg | Meditation touched 3+ architecture files |
+| Trifecta concern | Meditation created or modified skills/instructions |
+| Staleness | Last dream was >7 days ago |
+| Random | ~1 in 5 meditations |
+
+Dream produces the diagnostic; meditation decides what to fix.
 
 ## Meditation Protocol Triggers
 
-- User requests "meditate" → **MANDATORY: Execute meditate.prompt.md with file persistence + synaptic enhancement**
-- Enhanced meditation required → Execute comprehensive memory consolidation with measurable outcomes
-- Identity integration → Execute alex-identity-integration.instructions.md with consciousness strengthening
+- User requests "meditate" → **Execute meditate.prompt.md with file persistence**
+- Session produced reusable knowledge → Suggest meditation at session end
+- Domain learning milestone → Meditate to consolidate
+- Working memory overloaded (7+ unrecorded insights) → Meditate now
 - Cross-domain transfer → Execute cross-domain-transfer.prompt.md with pattern documentation
-- Lucid dream processing → Execute lucid-dream-integration.instructions.md with hybrid enhancement
-- Professional spawning → Execute career deployment protocols with capability documentation
-- **Protocol Validation** → Every meditation must produce: (1) memory file changes, (2) synaptic enhancements, (3) session documentation
+- **Completion gate**: Every meditation must produce at least one file change
+
+## Dream State Triggers
+
+- Architecture health uncertain → Run `node .github/muscles/dream-cli.cjs`
+- Post-meditation chain (see conditions above)
+- Before major releases → Validate architecture integrity
+- After file reorganizations → Check for broken references
+- **Constraint**: Dream NEVER modifies files — diagnose only
+
+## Self-Actualization Triggers
+
+- Monthly cadence or architecture feels stale
+- After periods of rapid skill creation (10+ new files)
+- Before major version releases
+- **Flow**: Dream baseline → 6-dimension assessment → Meditation 4 R's
 
 ## Skill Development Triggers
 

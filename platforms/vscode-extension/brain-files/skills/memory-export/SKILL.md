@@ -88,7 +88,7 @@ The export is designed to be pasted into:
 
 The receiving surface won't have Alex's architecture, so:
 - Omit references to specific file paths within the Alex architecture
-- Omit synapse connections, trifecta internals, and cognitive protocols
+- Omit internal connections, trifecta internals, and cognitive protocols
 - Focus on **what the user wants the AI to know and do**, not how Alex implements it
 - Keep technical project details that help any AI assist the user
 
@@ -96,7 +96,7 @@ The receiving surface won't have Alex's architecture, so:
 
 | Don't | Why |
 |-------|-----|
-| Include architecture internals (synapses, hooks, muscles) | Not portable — specific to Alex |
+| Include architecture internals (connections, hooks, muscles) | Not portable — specific to Alex |
 | Paraphrase user instructions | Loses intent; verbatim preserves meaning |
 | Include secrets, tokens, or API keys | Security risk |
 | Include full file contents from the workspace | Too large; export should be <10KB |

@@ -84,13 +84,7 @@ This agent orchestrates five image-related skill clusters:
 
 ### Process
 
-```mermaid
-flowchart LR
-    PHOTOS[Raw Photos] -->|"512px, 85%"| RESIZE[Resize]
-    RESIZE -->|"base64"| ENCODE[Encode]
-    ENCODE --> JSON[visual-memory.json]
-    JSON --> SKILL[Skill Folder]
-```
+**Raw Photos** → Resize (512px, 85% JPEG) → Base64 encode → `visual-memory.json` → Skill folder
 
 **Step 1: Prepare Photos**
 ```powershell

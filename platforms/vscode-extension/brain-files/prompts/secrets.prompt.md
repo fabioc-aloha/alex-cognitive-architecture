@@ -1,7 +1,7 @@
 ---
 sem: 1
 description: Manage API keys and secrets with VS Code SecretStorage
-application: "When designing APIs, integrations, or service interfaces"
+application: "When managing secrets, API keys, or credential storage"
 agent: Alex
 ---
 

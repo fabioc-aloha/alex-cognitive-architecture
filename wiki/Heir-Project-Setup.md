@@ -1,5 +1,7 @@
 # Heir Project Setup
 
+![Heir Project Setup](./assets/banner-heir-setup.svg)
+
 Configure Alex for your specific project ("heir project"). Alex inherits cognitive architecture to your workspace and learns project-specific patterns.
 
 ## What is an Heir Project?

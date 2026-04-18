@@ -83,6 +83,11 @@ When called after development work, execute this checklist:
 - Living: README, copilot-instructions, ROADMAP, user-facing guides, architecture docs
 - Historical: research papers, competitive analyses, archived docs
 
+```bash
+# Find hardcoded counts in living docs
+grep -rn "[0-9]\+ skills\|[0-9]\+ instructions\|[0-9]\+ agents" *.md master-wiki/ .github/
+```
+
 ### Phase 3: Cross-Reference Validation
 
 - Do file references point to files that still exist?

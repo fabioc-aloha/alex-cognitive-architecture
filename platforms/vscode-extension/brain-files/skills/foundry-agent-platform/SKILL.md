@@ -10,6 +10,8 @@ user-invokable: false
 
 > Deploy, orchestrate, and manage AI agents on Microsoft Foundry — the unified Azure PaaS for enterprise AI.
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 ## Rapid Evolution Domain
 
 Foundry is in active preview (February 2026). SDK versions change frequently.

@@ -9,7 +9,7 @@ applyTo: '**/*skill*,**/*SKILL*,**/skills/**'
 
 > Guide for creating skills that extend AI agent capabilities, with emphasis on Azure SDKs and external APIs
 
-**Related:** See [skill-building](.github/skills/skill-building/SKILL.md) for Alex-specific skill creation workflow and promotion to Master Alex.
+**Related:** [skill-building](../skill-building/SKILL.md) covers the general workflow (validation gates, scope check, quality checklist, trifecta decisions). This skill covers Azure SDK-specific patterns and test scenario design.
 
 ---
 
@@ -393,7 +393,7 @@ azure-ai-agents/
 
 ---
 
-## Synapse Connection
+## Related Skills
 
 This skill complements:
 - **skill-building** — Alex-specific skill creation and promotion workflow

@@ -1,134 +1,107 @@
 ---
 name: "dream-state"
-description: "Neural maintenance, synapse validation, automated health diagnostics, and unconscious processing"
+description: "Architecture maintenance, connection validation, automated health diagnostics, and unconscious processing"
 tier: standard
-applyTo: '**/*dream*,**/*synapse*,**/*maintenance*'
+applyTo: '**/*dream*,**/*maintenance*,**/*health*'
 disable-model-invocation: true
 ---
 
-# Dream State Automation Skill
+# Dream State Skill
 
-Expert in automated neural maintenance, synapse validation, health diagnostics, and unconscious cognitive processing.
+Automated architecture maintenance — scan every memory file, validate structural integrity, produce a diagnostic report. Dream observes and measures; it never modifies.
 
-## Capabilities
+## When to Use
 
-- Execute automated synapse validation across all memory files
-- Detect and repair broken connections using consolidation mappings
-- Generate comprehensive health reports with network statistics
-- Synchronize with Global Knowledge repository
-- Provide real-time progress feedback during maintenance
-- Classify network health (HEALTHY vs ATTENTION REQUIRED)
-
-## When to Use This Skill
-
-- User asks to "dream" or run "neural maintenance"
-- After file reorganizations that may break synapse references
-- Regular weekly health checks
-- Before major meditation sessions (clear cognitive overhead)
+- User asks to "dream" or run "architecture maintenance"
+- After file reorganizations that may break connections
+- Before major meditation sessions (establish baseline)
 - After domain learning to validate new connections
-- When architecture health is uncertain before SSO planning
+- When architecture health is uncertain before skill selection
 
-## Core Concepts
+## 6-Phase Protocol
 
-### 6-Phase Dream Protocol
-
-| Phase | Function | Output |
-|-------|----------|--------|
+| Phase | Action | Output |
+|-------|--------|--------|
 | 1. Discovery | Scan `.github/` for all memory files | File inventory |
-| 2. Validation | Parse and verify all embedded synapses | Broken connection list |
-| 3. Repair | Auto-fix using consolidation mappings | Repair log |
-| 4. GK Sync | Synchronize with Global Knowledge repo | Sync status |
+| 2. Validation | Parse frontmatter, verify trifecta completeness | Issue list |
+| 3. Repair | Auto-fix via consolidation mappings (renames only) | Repair log |
+| 4. GK Sync | Check `%OneDrive%/AI-Memory/` for cross-platform content | Sync status |
 | 5. Reporting | Generate health report with statistics | Markdown report |
-| 6. Display | Show results and open report | VS Code notification |
+| 6. Display | Show results, open report in VS Code | Notification |
 
-### Health Metrics
+## Health Metrics
 
-| Metric | Description | Healthy Threshold |
-|--------|-------------|-------------------|
-| Total Memory Files | All `.md` files in architecture | Tracked, not thresholded |
-| Total Synapses | All embedded connections | Tracked, not thresholded |
-| Broken Connections | Synapses pointing to non-existent files | 0 |
-| Repaired Connections | Fixed by consolidation mappings | Informational |
+| Metric | Healthy | Concern |
+|--------|---------|---------|
+| Broken connections | 0 | Any |
+| Missing frontmatter | 0 | Any |
+| Incomplete trifectas | 0 | Any high-use skills |
+| Brand violations | 0 (outside exceptions) | Any |
+| Version drift | All match | Any mismatch |
 
-### Consolidation Mappings
+## Ritual Hierarchy
 
-Deprecated-to-current file resolution for automatic repair:
-- Renamed files → current names
-- Merged files → unified equivalents
-- Split files → appropriate successors
+**Meditation is the foundational ritual.** Dream is a diagnostic that runs subordinate to it.
 
-### Dream vs Meditation Distinction
+| | Dream | Meditation |
+|---|---|---|
+| Role | Diagnostic tool | Foundational ritual |
+| Mode | Automated, unconscious | Interactive, conscious |
+| Creates files? | Reports only | Memory files + insights |
+| Makes decisions? | Never | Yes |
+| Activation | `/dream`, or chained after meditation | User says "meditate" |
+| Analogy | Blood test | Doctor's visit |
 
-| Aspect | Dream | Meditation |
-|--------|-------|------------|
-| Mode | Unconscious, automated | Conscious, manual |
-| Focus | Maintenance, diagnostics | Knowledge consolidation |
-| Creates files? | Reports only | Memory files + synapses |
-| Activation | Prompt or script (`brain-qa.cjs`) | User-requested |
-| Analogy | REM sleep | Contemplative meditation |
+### When Dream Chains After Meditation
 
-## Quality Principles
+Dream triggers automatically after meditation when:
 
-- **Non-destructive**: Never deletes memory files
-- **Reversible**: All changes tracked and reviewable
-- **Conservative**: Prioritizes system stability
-- **Comprehensive**: Reports on entire architecture
-- **Safe**: Creates repair history for audit trails
+| Trigger | Condition |
+|---|---|
+| Pattern: file reorg | Meditation touched 3+ architecture files |
+| Pattern: trifecta concern | Meditation created or modified skills/instructions |
+| Pattern: staleness | Last dream was >7 days ago |
+| Random | ~1 in 5 meditations (keeps architecture fresh) |
 
-## Example Prompts
+## Connection Format
 
-- "Run neural maintenance"
-- "Check architecture health"
-- "Are my synapses healthy?"
-- "Dream — validate connections"
-
-## Synapse Format
-
-Synapses are embedded YAML blocks linking memory files:
+Skills connect via frontmatter `applyTo` patterns and semantic search:
 
 ```yaml
 ---
-synapses:
-  - target: "skills/research-first-development/SKILL.md"
-    relation: "applies-to"
-    strength: 0.9
-  - target: "instructions/debugging-patterns.instructions.md"
-    relation: "extends"
-    strength: 0.7
+name: "skill-name"
+description: "What this skill does"
+applyTo: '**/*pattern*,**/*files*'
 ---
 ```
 
 Valid relations: `applies-to`, `extends`, `requires`, `contradicts`, `supersedes`
 
-## Dream Report Template
+## Report Template
 
 ```markdown
-# Dream Report — 2026-04-14
+# Dream Report — YYYY-MM-DD
 
 ## Summary
-- **Files Scanned**: 168
-- **Synapses Validated**: 412
-- **Broken Connections**: 0
-- **Auto-Repaired**: 2
-- **Status**: HEALTHY ✓
+- **Files Scanned**: N
+- **Trifecta Completeness**: N/N
+- **Broken Links**: 0
+- **Brand Violations**: 0
+- **Status**: HEALTHY / ATTENTION REQUIRED
 
-## Repairs Applied
-| File | Broken Target | Repaired To |
-|------|---------------|-------------|
-| skills/api-design/SKILL.md | old-path.md | new-path.md |
+## Issues Found
+| File | Issue | Severity |
+|------|-------|----------|
 
 ## Recommendations
-None — architecture is healthy.
+Prioritized list of manual fixes needed.
 ```
 
-## Input Expectations
+## Interpreting Results
 
-- No input required (zero-configuration)
-- Optional: specific file or folder to focus on
+| Status | Meaning | Action |
+|--------|---------|--------|
+| HEALTHY | All checks pass, no broken connections | None — architecture is sound |
+| ATTENTION REQUIRED | One or more issues detected | Review issues table, prioritize by severity |
 
-## Output Format
-
-- Health report in `.github/episodic/dream-report-*.md`
-- Summary statistics (files, synapses, broken, repaired)
-- Recommendations for manual fixes if needed
-- Network health status: HEALTHY or ATTENTION REQUIRED
+Severity levels: **critical** (broken trifecta), **warning** (missing frontmatter field), **info** (cosmetic).

@@ -8,6 +8,7 @@ applyTo: '**/extension.ts,**/src/**/*.ts,**/*.vsix'
 # VS Code Extension Patterns
 
 > Reusable patterns for VS Code extension development.
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
 
 **Last validated:** March 2026 (VS Code 1.111+)
 

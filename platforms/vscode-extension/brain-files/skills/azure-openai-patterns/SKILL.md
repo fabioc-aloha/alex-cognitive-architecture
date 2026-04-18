@@ -9,6 +9,8 @@ applyTo: "**/*openai*,**/*chat*,**/*llm*,**/*gpt*"
 
 > Rate limiting, function calling, error handling, and token optimization for Azure OpenAI API.
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 **Version**: 1.0.0
 
 ---

@@ -8,6 +8,7 @@ applyTo: '**/*.png,**/*.jpg,**/*.jpeg,**/*.webp,**/*.svg,**/*image*'
 # Image Handling Skill
 
 > Right format, right size, right quality.
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
 
 ## Format Selection
 

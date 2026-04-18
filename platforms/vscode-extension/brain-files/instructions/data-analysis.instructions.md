@@ -20,6 +20,21 @@ Before any analysis, establish what you're working with.
 4. Report data quality score (completeness, consistency, uniqueness)
 5. Show first 5 rows as sanity check
 
+```python
+import pandas as pd
+
+def profile_dataset(df: pd.DataFrame) -> dict:
+    return {
+        "rows": len(df),
+        "columns": len(df.columns),
+        "nulls_pct": df.isnull().mean().to_dict(),
+        "dtypes": df.dtypes.astype(str).to_dict(),
+        "cardinality": df.nunique().to_dict(),
+        "duplicates": int(df.duplicated().sum()),
+        "quality": round(1 - df.isnull().mean().mean(), 2),
+    }
+```
+
 ### Step 2: Univariate Exploration
 
 For every numeric column:

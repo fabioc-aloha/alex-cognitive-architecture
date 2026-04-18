@@ -7,6 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.0.0-alpha.0] - 2026-04-16
+
+### 🚀 Major Release — Clean-Room Extension Rebuild
+
+This alpha marks the beginning of the v8.0.0 major release cycle. The extension has been completely rebuilt from scratch with a modern, maintainable architecture.
+
+### Added
+
+- **Health Pulse System** (`healthPulse.ts`): Real-time brain health monitoring with status computation (healthy/attention/critical), connection health scoring, ritual tracking, and architecture inventory
+- **3-Tab Sidebar Design**: Loop (creative workflow), Brain (architecture visibility), Setup (configuration) — data-driven, declarative button definitions
+- **Creative Loop Integration**: Ideate→Plan→Build→Test→Release→Improve workflow buttons in sidebar
+- **AI-Generated Extension Icon**: Hand-painted watercolor style icon with neural network motif in teal/amber brand colors
+- **Chat Participant**: `@alex` chat participant with icon integration
+- **Architecture Stats**: Dynamic skill/instruction/prompt/agent counts displayed in Brain tab
+
+### Changed
+
+- **Complete Terminology Modernization**: "Neural" → "Architecture", "Synapse" → "Connection" across 28 skills, 7 prompts, and all documentation
+- **Ritual Hierarchy Clarified**: Meditation (foundational) → Dream (diagnostic) → Self-Actualize (deep assessment)
+- **Cognitive Architecture v3**: Modern trifecta-based design (skill + instruction + prompt = atomic capability)
+- **Muscles Decoupled**: CLI tools (dream-cli.cjs, pptxgen-cli.cjs) rewritten as standalone — no extension dependencies
+
+### Removed
+
+- **Neural Terminology**: All references to "neural maintenance", "neural networks" (when referring to architecture), "synapses" replaced with modern equivalents
+- **Broken Import Dependencies**: CLI tools no longer import from extension codebase
+
+### Documentation
+
+- **Wiki Published**: Getting Started, User Manual, Heir Project Setup, FAQ — all published to GitHub Wiki
+- **Blog #7**: "Every Age I'll Never Be" published with portrait gallery
+- **Master Wiki**: Full architecture documentation with branded banners
+
+### Technical
+
+- **esbuild**: Modern build system replacing webpack
+- **TypeScript Strict**: Clean compilation with no errors
+- **Zero Dependencies**: Extension uses only VS Code API and Node.js built-ins
+
+---
+
 ## [7.9.0] - 2026-04-15
 
 ### Added

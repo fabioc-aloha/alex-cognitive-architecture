@@ -31,7 +31,7 @@
 
 - [FAQ](FAQ)
 - [Troubleshooting](FAQ#troubleshooting)
-- [GitHub Issues](https://github.com/fabioc-aloha/Alex_Plug_In/issues)
+- [GitHub Issues](https://github.com/fabioc-aloha/alex-cognitive-architecture/issues)
 
 ---
 

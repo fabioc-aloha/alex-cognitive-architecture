@@ -155,7 +155,7 @@ When using **Auto** in VS Code Copilot, the model switches dynamically based on 
 | Self-actualization | Comprehensive architecture assessment |
 | Complex architecture refactoring | Multi-file changes, deep context |
 | Bootstrap learning (new skills) | Skill acquisition needs maximum capability |
-| Synapse validation/dream | Neural maintenance requires full architecture |
+| Connection validation/dream | Architecture maintenance requires full architecture context |
 | Adaptive thinking tasks | Opus 4.6 uses dynamic reasoning depth for optimal results |
 
 ### Warning Protocol

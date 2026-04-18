@@ -4,6 +4,24 @@ import * as path from "path";
 import { BRAIN_DIR, TARGET_DIR, VERSION_FILE } from "./shared/constants.js";
 
 /**
+ * Brain subdirectories managed by Alex.
+ * Only these are cleaned and replaced during install/upgrade.
+ * Other .github/ content (workflows, CODEOWNERS, etc.) is never touched.
+ */
+const BRAIN_SUBDIRS = [
+  "instructions",
+  "skills",
+  "prompts",
+  "agents",
+  "muscles",
+  "config",
+  "hooks",
+];
+
+/** Root-level brain files deployed alongside subdirectories. */
+const BRAIN_ROOT_FILES = ["copilot-instructions.md"];
+
+/**
  * Get the version string from the bundled brain files.
  * Uses the extension version as the brain version stamp.
  */
@@ -46,7 +64,8 @@ function copyDirSync(src: string, dest: string, destRoot?: string): void {
 
 /**
  * Install .github brain files into the workspace (user-initiated).
- * Uses atomic staging: copy → swap to avoid partial writes.
+ * Deploys brain subdirectories individually to preserve non-brain
+ * content in .github/ (workflows, CODEOWNERS, issue templates, etc.).
  *
  * @param context Extension context (for extensionUri)
  * @param force   Skip version check and always overwrite
@@ -86,14 +105,35 @@ export function bootstrapBrainFiles(
   }
 
   try {
-    // Atomic staging: copy to temp dir, then rename
-    const stagingPath = targetPath + `.staging-${Date.now()}`;
-    copyDirSync(sourcePath, stagingPath);
+    // Deploy brain subdirectories individually.
+    // Each managed subdirectory is replaced atomically; non-brain
+    // content in .github/ (workflows, CODEOWNERS, etc.) is preserved.
+    const githubDir = path.join(workspaceRoot, TARGET_DIR);
+    fs.mkdirSync(githubDir, { recursive: true });
 
-    if (fs.existsSync(targetPath)) {
-      fs.rmSync(targetPath, { recursive: true, force: true });
+    for (const subdir of BRAIN_SUBDIRS) {
+      const srcSub = path.join(sourcePath, subdir);
+      if (!fs.existsSync(srcSub)) continue;
+
+      const destSub = path.join(githubDir, subdir);
+      const stagingSub = destSub + `.staging-${Date.now()}`;
+
+      copyDirSync(srcSub, stagingSub);
+
+      if (fs.existsSync(destSub)) {
+        fs.rmSync(destSub, { recursive: true, force: true });
+      }
+      fs.renameSync(stagingSub, destSub);
     }
-    fs.renameSync(stagingPath, targetPath);
+
+    // Deploy root-level brain files
+    for (const file of BRAIN_ROOT_FILES) {
+      const srcFile = path.join(sourcePath, file);
+      if (!fs.existsSync(srcFile)) continue;
+
+      const destFile = path.join(githubDir, file);
+      fs.copyFileSync(srcFile, destFile);
+    }
 
     // Stamp version
     const versionPath = path.join(workspaceRoot, VERSION_FILE);

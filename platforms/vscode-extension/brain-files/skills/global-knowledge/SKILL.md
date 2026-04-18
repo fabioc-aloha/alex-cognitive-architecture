@@ -112,7 +112,7 @@ Project-specific cognitive architecture. Use for:
 
 - Skills, instructions, muscles (the trifecta), plus prompts
 - Episodic memories from meditation sessions
-- Synapse connections between skills
+- Connections between skills (via `applyTo` patterns)
 - Project persona (.github/config/project-persona.json)
 
 ### Decision Matrix

@@ -129,10 +129,10 @@ await generateAndSavePresentation(slides, { title: 'Q4 Review' }, 'review.pptx')
 
 ```bash
 # From markdown
-npx ts-node .github/muscles/pptxgen-cli.ts --input slides.md --output deck.pptx
+node .github/muscles/pptxgen-cli.cjs --input slides.md --output deck.pptx
 
 # Quick content
-npx ts-node .github/muscles/pptxgen-cli.ts --content "Welcome to Alex|Point 1|Point 2" -o quick.pptx
+node .github/muscles/pptxgen-cli.cjs --content "Welcome to Alex|Point 1|Point 2" --output quick.pptx
 ```
 
 ---

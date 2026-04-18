@@ -20,7 +20,7 @@ Hardcoded counts (e.g., "109 skills", "28 instructions", "6 agents") in prose be
 | **No counts in prose** | "See the skills catalog for the current list" | "Alex has 109 skills" |
 | **Counts in tables OK** | Tables with `| Count | Value |` format are scannable and updatable | Counts buried in paragraphs |
 | **Single source of truth** | One canonical location per metric | Same count in 5 files |
-| **Link, don't copy** | "See [SKILLS-CATALOG.md]" | Duplicate the catalog inline |
+| **Link, don't copy** | "See brain-health-grid for current list" | Duplicate the list inline |
 | **Timestamp proximity** | Counts near a "Last Updated" date are acceptable | Undated counts |
 
 ### Canonical Sources
@@ -35,7 +35,7 @@ The filesystem is always the source of truth. Derive counts from directories, no
 | Agent count | `.github/agents/` directory listing | Filesystem is truth |
 | Muscle count | `.github/muscles/` directory listing | Filesystem is truth |
 | Command count | `package.json` `contributes.commands` (if applicable) | Code is truth |
-| Synapse count | Brain QA validation output | Validated at runtime |
+| Connection count | Brain QA validation output | Validated at runtime |
 
 ### Acceptable Count Locations
 
@@ -65,7 +65,7 @@ All other files should use **descriptive references** instead of counts.
 |------|----------|-------------|
 | **Living** | README, copilot-instructions, ROADMAP, USER-MANUAL | Minimize counts; keep current |
 | **Historical** | Research papers, competitive analyses, archived docs | Counts are snapshots — leave as-is |
-| **Generated** | SKILLS-CATALOG, TRIFECTA-CATALOG | Counts are output of audit — OK |
+| **Generated** | brain-health-grid output | Counts are output of audit — OK |
 
 ## Docs-as-Architecture
 

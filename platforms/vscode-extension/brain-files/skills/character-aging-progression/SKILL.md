@@ -9,6 +9,8 @@ applyTo: '**/*aging*,**/*age-progression*,**/*life-stage*,**/*character-ages*'
 
 > Create consistent character avatars from childhood through elderhood — maintaining identity while showing natural aging.
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 ---
 
 ## Summary

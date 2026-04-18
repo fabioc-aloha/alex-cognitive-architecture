@@ -1,5 +1,196 @@
 # Contributing to Alex Cognitive Architecture
 
+Thank you for your interest in contributing!
+
+## Repository Structure
+
+```text
+alex-cognitive-architecture/
+├── .github/                           # Cognitive architecture (brain files)
+│   ├── copilot-instructions.md        # Main cognitive framework
+│   ├── instructions/                  # Behavior rules (auto-loaded by applyTo)
+│   ├── skills/                        # Domain knowledge (on-demand)
+│   ├── prompts/                       # Reusable workflow templates
+│   ├── agents/                        # Agent definitions
+│   ├── muscles/                       # Automation scripts
+│   └── config/                        # Configuration files
+├── platforms/
+│   └── vscode-extension/              # VS Code extension source
+│       ├── src/                       # TypeScript source
+│       ├── brain-files/               # Generated at package time (gitignored)
+│       ├── package.json               # Extension manifest
+│       ├── esbuild.mjs                # Build script
+│       └── sync-brain-files.cjs       # Brain → VSIX packaging
+├── wiki/                              # User documentation (published to GitHub Wiki)
+├── assets/                            # Repo-level assets (banner, etc.)
+├── CHANGELOG.md                       # Release history
+├── README.md                          # Project overview
+└── LICENSE.md                         # License
+```
+
+## Prerequisites
+
+- **Node.js** 20+ and npm
+- **VS Code** 1.100+
+- **Git**
+
+## Building the VS Code Extension
+
+```bash
+# Clone the repository
+git clone https://github.com/fabioc-aloha/alex-cognitive-architecture.git
+cd alex-cognitive-architecture/platforms/vscode-extension
+
+# Install dependencies
+npm install
+
+# Build the extension (type-check + bundle + package brain files)
+npm run package
+```
+
+This produces `alex-cognitive-architecture-X.X.X.vsix` in the extension directory.
+
+### Build Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `npm run build` | Bundle with esbuild |
+| `npm run build:check` | TypeScript type checking |
+| `npm run package` | Full build → VSIX (runs prepackage + vsce) |
+| `npm run watch` | Development mode with hot reload |
+| `npm run lint` | ESLint |
+| `npm run clean` | Remove dist/ |
+
+### How Packaging Works
+
+1. `sync-brain-files.cjs` copies `.github/` → `brain-files/` (excluding session data)
+2. `vscode:prepublish` runs type-check + production bundle
+3. `vsce package` creates the VSIX with brain-files included
+
+### Testing Locally
+
+```bash
+# Install the VSIX in your VS Code
+code --install-extension alex-cognitive-architecture-8.0.0.vsix
+```
+
+Then open a workspace, click the Alex sidebar icon, and run **Install Brain**.
+
+## Development Workflow
+
+### 1. Fork and Clone
+
+```bash
+git clone https://github.com/YOUR-USERNAME/alex-cognitive-architecture.git
+cd alex-cognitive-architecture
+```
+
+### 2. Run in Development Mode
+
+```bash
+cd platforms/vscode-extension
+npm install
+npm run watch
+```
+
+Then press `F5` in VS Code to launch the Extension Development Host.
+
+### 3. Validate Brain Files
+
+```bash
+# Run brain-qa validation from repo root
+node .github/muscles/brain-qa.cjs
+```
+
+### 4. Create a Feature Branch
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+## Contributing Brain Files
+
+### Skills
+
+Create a directory under `.github/skills/your-skill/` with a `SKILL.md` file:
+
+```markdown
+---
+name: your-skill
+description: "What this skill does"
+applyTo: "**/*pattern*"
+tier: domain
+---
+
+# Your Skill
+
+## Quick Reference
+
+One-paragraph summary.
+
+## Procedural Guide
+
+Step-by-step workflows.
+```
+
+### Instructions
+
+Create `.github/instructions/your-topic.instructions.md`:
+
+```markdown
+---
+description: "When and why this instruction loads"
+applyTo: "**/*pattern*"
+---
+
+# Your Topic
+
+## Rules
+
+1. First rule
+2. Second rule
+```
+
+### Prompts
+
+Create `.github/prompts/your-workflow.prompt.md`:
+
+```markdown
+---
+mode: "agent"
+description: "What this prompt does"
+---
+
+# Your Workflow
+
+Steps for the AI to follow.
+```
+
+## Commit Messages
+
+Format: `{type}: {short description}`
+
+Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
+
+```text
+feat: add security-review skill for OWASP Top 10 audits
+fix: correct applyTo pattern in api-design instruction
+docs: update User Manual with new agent descriptions
+```
+
+## Pull Request Process
+
+1. Ensure `node .github/muscles/brain-qa.cjs` passes with 0 errors
+2. Verify `npm run package` succeeds in `platforms/vscode-extension/`
+3. Describe what changed and why
+4. Link related issues
+
+## Questions?
+
+- [GitHub Issues](https://github.com/fabioc-aloha/alex-cognitive-architecture/issues) — Bug reports and feature requests
+- [Wiki](https://github.com/fabioc-aloha/alex-cognitive-architecture/wiki) — User documentation
+# Contributing to Alex Cognitive Architecture
+
 **Last Updated**: April 11, 2026
 
 Thank you for your interest in contributing to the Alex Cognitive Architecture project! This document provides guidelines and information for contributors.

@@ -32,7 +32,6 @@ Embed optimized reference assets directly in the skill as base64 data URIs. The 
 ```
 skill-folder/
 ├── SKILL.md
-├── synapses.json
 └── visual-memory/
     ├── index.json              ← Metadata only (no binary data)
     ├── visual-memory.json      ← Full base64 data URIs (~30-80KB per photo)

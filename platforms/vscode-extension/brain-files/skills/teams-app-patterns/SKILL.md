@@ -14,7 +14,7 @@ applyTo: '**/*teams*,**/*manifest*,**/*m365*'
 
 Teams platform evolves rapidly. **Last validated:** February 13, 2026 (M365 Agents Toolkit CLI 3.1.0, Manifest v1.19, DA v1.6)
 
-**Check:** [Teams Docs](https://learn.microsoft.com/en-us/microsoftteams/platform/), [M365 Agents Toolkit](https://github.com/OfficeDev/TeamsFx)
+**Check:** [Teams Docs](https://learn.microsoft.com/en-us/microsoftteams/platform/), [M365 Agents Toolkit](https://github.com/OfficeDev/TeamsFx), [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md)
 
 > 💡 Use `@m365agents` chat participant in VS Code Copilot Chat for scaffolding, schema help, and troubleshooting.
 

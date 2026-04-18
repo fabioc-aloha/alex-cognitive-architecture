@@ -82,6 +82,22 @@ What context does the chart NOT provide?
 - **Medium**: Some values estimated from visual position
 - **Low**: Blurry image, missing labels, ambiguous encoding
 
+Structured output per chart:
+
+```json
+{
+  "chartType": "bar",
+  "title": "Q3 Revenue by Region",
+  "confidence": "high",
+  "insights": [
+    { "level": "primary", "text": "APAC leads at $4.2M, 35% above EMEA" },
+    { "level": "supporting", "text": "NA declined 12% QoQ" }
+  ],
+  "misleading": ["Y-axis starts at $1M — differences appear 2x larger"],
+  "missing": ["Cost data not shown alongside revenue"]
+}
+```
+
 ### Step 9: Generate Audience-Adapted Output
 
 Produce all three formats:

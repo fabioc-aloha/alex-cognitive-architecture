@@ -13,6 +13,7 @@ Comprehensive reference for Microsoft Graph API integration including endpoints,
 ## ⚠️ Staleness Warning
 
 Microsoft Graph APIs evolve frequently. Permissions, endpoints, and authentication flows may change.
+See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence.
 
 **Refresh triggers:**
 - Microsoft Graph API version updates

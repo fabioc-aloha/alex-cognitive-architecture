@@ -70,6 +70,17 @@ Output checklist before concluding:
 
 If new skills/instructions were created, verify they load correctly.
 
+### 5. Content Spot-Check (per session)
+
+Randomly sample 3-5 existing skills. For each, verify:
+
+- Are code examples still accurate? (API changes, deprecated methods)
+- Do version references match current reality?
+- Does advice conflict with any other loaded skill/instruction?
+- Is the skill still relevant to active projects?
+
+Flag issues found — update the skill or note in session memory for follow-up.
+
 ## When to Meditate
 
 - Session produced reusable knowledge worth persisting

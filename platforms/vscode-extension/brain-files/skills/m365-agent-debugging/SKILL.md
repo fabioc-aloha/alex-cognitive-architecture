@@ -13,6 +13,7 @@ user-invokable: false
 ## ⚠️ Staleness Warning
 
 M365 Copilot and Teams platform APIs are in rapid evolution. Schema versions, capabilities, and tooling change frequently.
+See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence.
 
 **Refresh triggers:**
 

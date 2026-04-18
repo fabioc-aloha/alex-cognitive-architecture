@@ -18,7 +18,7 @@ Heirs use a shared feedback folder in AI-Memory to communicate issues, ideas, an
 - You discovered a bug in Alex's cognitive architecture (skills, instructions, prompts, agents)
 - A skill doesn't work as documented or has incorrect information
 - You want to request a new skill, instruction, or feature
-- You encountered a sync-architecture drift or broken synapse in your heir
+- You encountered a sync-architecture drift or broken connection in your heir
 - You have improvement suggestions based on real-world project use
 
 ---
@@ -46,7 +46,7 @@ OneDrive/AI-Memory/
 ├── learning-goals.md
 ├── global-knowledge.md
 └── feedback/                  ← Heir feedback channel
-    ├── 2026-04-11-bug-synapse-broken-link.md
+    ├── 2026-04-11-bug-broken-link.md
     ├── 2026-04-11-feature-new-skill-request.md
     └── 2026-04-12-improvement-meditation-flow.md
 ```
@@ -113,7 +113,7 @@ status: new
 
 | Type | When to Use | Example |
 |------|-------------|---------|
-| **bug** | Something is broken or incorrect | Skill has wrong API pattern, synapse points to deleted file |
+| **bug** | Something is broken or incorrect | Skill has wrong API pattern, `applyTo` points to deleted file |
 | **feature** | New capability needed | "Need a skill for Terraform modules" |
 | **improvement** | Existing thing could be better | "meditation instructions could mention episodic cleanup" |
 | **question** | Unclear documentation or behavior | "What's the difference between tier:standard and tier:advanced?" |

@@ -1,5 +1,7 @@
 # User Manual
 
+![User Manual](./assets/banner-user-manual.svg)
+
 Complete reference for Alex commands, UI, and features.
 
 ## Table of Contents

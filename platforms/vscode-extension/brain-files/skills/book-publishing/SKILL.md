@@ -11,6 +11,8 @@ metadata:
 
 > End-to-end book production pipeline: Markdown → Pandoc → LuaLaTeX → dual PDF (print + digital).
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 **Scope**: Inheritable skill. Covers the complete pipeline for producing professional-quality PDF books from Markdown source, including emoji handling, dual format output, and print-ready configuration.
 
 ## Pipeline Architecture

@@ -9,6 +9,7 @@ user-invokable: false
 # Skill: Bicep AVM Mastery
 
 > Azure Verified Modules (AVM), Bicep best practices, and MCP-powered infrastructure as code for Azure.
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
 
 ## Metadata
 

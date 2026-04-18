@@ -8,6 +8,8 @@ $schema: ../SKILL-SCHEMA.json
 
 # Audio Memory Skill
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 > **Domain**: AI Audio / Voice Cloning  
 > **Version**: 1.0.0  
 > **Last Updated**: 2026-04-15  

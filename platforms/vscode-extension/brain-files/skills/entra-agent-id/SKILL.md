@@ -9,6 +9,8 @@ applyTo: '**/entra*,**/*agent-id*,**/*agent-identity*,**/*blueprint*'
 
 > Create and manage OAuth2-capable identities for AI agents using Microsoft Graph beta API
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 **⚠️ Preview API** — All Agent Identity endpoints are under `/beta` only. Not available in `/v1.0`.
 
 ---
@@ -259,7 +261,7 @@ requests.delete(f"{GRAPH}/applications/{blueprint_obj_id}", headers=headers)
 
 ---
 
-## Synapse Connection
+## Related Skills
 
 This skill complements:
 - **microsoft-graph-api** — General Graph API patterns

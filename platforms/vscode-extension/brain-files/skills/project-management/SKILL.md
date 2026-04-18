@@ -53,7 +53,7 @@ Based on actual project history (v3.6.0 → v4.2.5 in ~6 days vs months planned)
 |--------------|----------|--------|
 | **Work Sprint** | Variable | Code, docs, features |
 | **Meditation** | 15-45 min | Memory files, insights |
-| **Dream** | 5-15 min | Synapse validation, health report |
+| **Dream** | 5-15 min | Connection validation, health report |
 | **Release** | 30-60 min | Published version, changelog |
 
 ### When to Meditate

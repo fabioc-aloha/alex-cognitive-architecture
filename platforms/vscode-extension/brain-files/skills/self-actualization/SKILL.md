@@ -26,8 +26,8 @@ disable-model-invocation: true
 
 | Metric | How to Measure | Healthy | Concern |
 | ------ | -------------- | ------- | ------- |
-| Synapse validity | All targets exist, bidirectional | 100% valid | Any broken links |
-| Schema compliance | All synapses.json match SYNAPSE-SCHEMA | Full compliance | Any schema violations |
+| Connection validity | All `applyTo` targets exist | 100% valid | Any broken links |
+| Schema compliance | All frontmatter matches spec | Full compliance | Any format violations |
 | Version alignment | Version string consistent across files | All match | Any drift |
 | File organization | Files in correct directories | All correct | Orphaned files |
 
@@ -59,12 +59,12 @@ The architecture has three memory types. Healthy balance varies by maturity:
 
 **The capabilities-list anti-pattern**: "Expert in X. Capabilities: validate, detect, assess..." — this adds zero value because an LLM already knows these things generically. Skills must encode *specific* knowledge.
 
-### 4. Connection Density (Synapse Network)
+### 4. Connection Density (Link Network)
 
 | Metric | How to Measure | Healthy | Concern |
 | ------ | -------------- | ------- | ------- |
-| Avg connections per skill | Total synapses / total skills | 3-6 | < 2 (isolated) or > 10 (over-connected) |
-| Orphan skills | Skills with 0 synapses | 0 | Any |
+| Avg connections per skill | Total `applyTo` links / total skills | 3-6 | < 2 (isolated) or > 10 (over-connected) |
+| Orphan skills | Skills with no `applyTo` patterns | 0 | Any |
 | Hub skills | Skills with > 8 connections | 1-2 core hubs | > 4 (over-centralized) |
 | Bidirectional coverage | % of connections that are reciprocated | > 80% | < 60% |
 
@@ -114,88 +114,28 @@ The architecture has three memory types. Healthy balance varies by maturity:
 
 **Overall**: Weighted average. > 4.0 = healthy. 3.0-4.0 = needs attention. < 3.0 = urgent.
 
-## Relationship to Other Cognitive Processes
+## Relationship to Other Rituals
 
-| Process | Frequency | Depth | Purpose |
+Meditation is the foundational ritual. Self-Actualize is a deep meditation variant.
+
+| Ritual | Frequency | Depth | Relationship |
 | ------- | --------- | ----- | ------- |
-| Dream | On-demand | Structural | Automated validation |
-| Quick Meditation | Per-session | Light | Session consolidation |
-| Full Meditation | Weekly | Moderate | Knowledge integration |
-| **Self-Actualization** | **Monthly** | **Deep** | **Comprehensive assessment + growth plan** |
+| **Meditation** | Per-session | Moderate | Foundational — the primary ritual |
+| Dream | On-demand | Structural | Diagnostic — chains after meditation sometimes |
+| **Self-Actualize** | **Monthly** | **Deep** | **Deep meditation — always starts with Dream baseline** |
+
+### Session Flow
+
+1. Dream (structural baseline) → 2. 6-dimension assessment → 3. Meditation 4 R's (persist findings)
 
 ## Drift Remediation Protocol
 
-Self-actualization often detects **documentation drift** — when implementation evolves faster than documentation. Common drift categories:
+Self-actualization detects documentation drift — when implementation evolves faster than docs.
 
-### 1. Version Reference Drift
+| Drift Type | Detection | Fix |
+|------------|-----------|-----|
+| Version references | Scan for outdated version strings in `.github/` | grep + multi-replace |
+| Documentation counts | Compare `copilot-instructions.md` counts vs actual file counts | Update counts |
+| Memory balance | P:E:D ratio outside maturity target | Consolidate episodic, enrich skills, prune redundant instructions |
 
-**Detection**: Self-actualization scans memory files for outdated version references (e.g., `v5.6.8` when current is `v5.7.1`)
-
-**Common locations**:
-- Skill examples: "as of v5.X.Y" annotations
-- Release notes embedded in skills
-- Instruction file headers
-- Comments with version-specific behavior
-
-**Remediation**:
-```typescript
-// Find all outdated version references
-grep -r "v5\.[0-6]\.\d+" .github/ --include="*.md"
-
-// Update via multi_replace or manual edit
-// Pattern: v5.6.8 → v5.7.1
-```
-
-### 2. Documentation Count Drift
-
-**Detection**: Compare copilot-instructions.md documented counts vs. actual file counts
-
-**Verification commands** (PowerShell):
-```powershell
-# Count actual skills (directories with SKILL.md)
-(Get-ChildItem -Path .\.github\skills -Directory | Where-Object { 
-  Test-Path "$($_.FullName)\SKILL.md" 
-}).Count
-
-# Count actual instructions
-(Get-ChildItem -Path .\.github\instructions -Filter "*.instructions.md").Count
-
-# Count prompts
-(Get-ChildItem -Path .\.github\prompts -Filter "*.prompt.md").Count
-```
-
-**Remediation**:
-Update copilot-instructions.md with actual counts:
-```markdown
-Total Skills: 119 | Total Instructions: 31
-```
-
-### 3. Memory Balance Drift
-
-**Detection**: Calculate P:E:D ratio, compare to maturity-appropriate target
-
-**Not always remediation needed** — growth causes natural shifts:
-- Adding skills → D increases (good)
-- Consolidating episodic → E decreases (good)
-- Removing redundant instructions → P decreases (good)
-
-**Action required when**:
-- Episodic debt (too many unconsolidated sessions)
-- Procedural bloat (overlapping instructions)
-- Skill stagnation (no new domain knowledge)
-
-### Pre-Publish Drift Check Workflow
-
-**Order** (run before `vsce package`):
-1. **Self-Actualization** → Detect all drift categories
-2. **Remediation** → Fix version refs, update counts
-3. **Verification** → Run PowerShell counts, grep version patterns
-4. **Build & Install** → Confirm clean heir sync, 0 TypeScript errors
-5. **User Testing** → Regression checklist
-
-**Real-world example** (v5.7.1):
-- Detected: persona-detection/SKILL.md had v5.6.8 references
-- Detected: copilot-instructions.md missing skill/instruction counts
-- Fixed: Updated 3 version instances, added counts
-- Verified: PowerShell confirmed 119 skills, 31 instructions
-- Result: Clean build, 0 contamination, ready for publish
+**Drift is not always bad** — growth causes natural ratio shifts. Remediate only when the shift indicates debt (e.g., unconsolidated sessions, stagnant skills, overlapping instructions).
