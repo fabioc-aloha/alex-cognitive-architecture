@@ -10,7 +10,7 @@ Sync `master-wiki/` to `AlexMaster.wiki.git`. Source of truth is always `master-
 
 ## Steps
 
-1. **Clone**: `git clone https://github.com/fabioc-aloha/AlexMaster.wiki.git` to a temp directory
+1. **Clone**: `git clone https://github.com/fabioc-aloha/alex-cognitive-architecture.wiki.git` to a temp directory
 2. **Inventory**: List all `.md` and `.svg` files in `master-wiki/`, excluding `alex3/`, `skills/`, and non-doc files
 3. **Copy with mapping**: Apply folder-to-prefix rules from the wiki-publish skill
 4. **Rewrite links**: Fix internal references from relative paths to flat wiki names
@@ -50,7 +50,7 @@ Sync `master-wiki/` to `AlexMaster.wiki.git`. Source of truth is always `master-
 
 ```bash
 # Clone wiki repo
-git clone https://github.com/fabioc-aloha/AlexMaster.wiki.git /tmp/wiki-staging
+git clone https://github.com/fabioc-aloha/alex-cognitive-architecture.wiki.git /tmp/wiki-staging
 
 # After copying and rewriting, check diff
 cd /tmp/wiki-staging

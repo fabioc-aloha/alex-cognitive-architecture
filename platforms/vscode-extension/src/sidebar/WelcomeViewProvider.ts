@@ -7,6 +7,38 @@ interface BrainStatus {
   bundledVersion: string;
 }
 
+interface SettingsStatus {
+  configured: number;
+  total: number;
+  missing: string[];
+}
+
+/** Essential settings that default OFF and must be enabled for full Alex functionality. */
+const ESSENTIAL_SETTINGS: Array<{ key: string; label: string }> = [
+  { key: "chat.useCustomAgentHooks", label: "Custom agent hooks" },
+  { key: "github.copilot.chat.copilotMemory.enabled", label: "Copilot Memory" },
+  { key: "chat.customAgentInSubagent.enabled", label: "Custom agents in subagents" },
+  { key: "chat.useNestedAgentsMdFiles", label: "Nested agent files" },
+  { key: "chat.includeReferencedInstructions", label: "Referenced instructions" },
+  { key: "github.copilot.chat.agent.thinkingTool", label: "Agent thinking tool" },
+  { key: "chat.plugins.enabled", label: "Agent plugins" },
+];
+
+export function checkEssentialSettings(): SettingsStatus {
+  const config = vscode.workspace.getConfiguration();
+  const missing: string[] = [];
+  for (const s of ESSENTIAL_SETTINGS) {
+    if (config.get(s.key) !== true) {
+      missing.push(s.label);
+    }
+  }
+  return {
+    configured: ESSENTIAL_SETTINGS.length - missing.length,
+    total: ESSENTIAL_SETTINGS.length,
+    missing,
+  };
+}
+
 export class WelcomeViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewId = "alex.welcomeView";
 
@@ -15,12 +47,14 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     installed: false,
     bundledVersion: "unknown",
   };
+  private settingsStatus: SettingsStatus = { configured: 0, total: 7, missing: [] };
 
   constructor(private readonly extensionUri: vscode.Uri) {}
 
   /** Update brain status and refresh the webview. */
   public updateStatus(status: BrainStatus): void {
     this.brainStatus = status;
+    this.settingsStatus = checkEssentialSettings();
     if (this.view) {
       this.view.webview.html = this.getHtml(this.view.webview);
     }
@@ -38,6 +72,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       localResourceRoots: [this.extensionUri],
     };
 
+    this.settingsStatus = checkEssentialSettings();
     webviewView.webview.html = this.getHtml(webviewView.webview);
 
     webviewView.webview.onDidReceiveMessage((msg: { command: string }) => {
@@ -72,6 +107,18 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     const statusClass = installed ? "status-ok" : "status-warn";
 
     const updateLabel = installed ? "Update Brain" : "Install Brain";
+
+    const { configured, total, missing } = this.settingsStatus;
+    const allConfigured = missing.length === 0;
+    const settingsIcon = allConfigured ? "&#x2713;" : "&#x26A0;";
+    const settingsClass = allConfigured ? "status-ok" : "status-warn";
+    const settingsSummary = allConfigured
+      ? `All ${total} essential settings configured`
+      : `${configured}/${total} essential settings configured`;
+
+    const missingListHtml = missing
+      .map((m) => `<li>${escapeHtml(m)}</li>`)
+      .join("\n        ");
 
     return /* html */ `<!DOCTYPE html>
 <html lang="en">
@@ -153,6 +200,15 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     .links a:hover {
       text-decoration: underline;
     }
+    .setup-checklist {
+      margin: 4px 0 8px;
+      padding: 0 0 0 18px;
+      font-size: 12px;
+      color: var(--vscode-descriptionForeground);
+    }
+    .setup-checklist li {
+      padding: 1px 0;
+    }
   </style>
 </head>
 <body>
@@ -168,6 +224,16 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     <button data-command="showStatus">Show Status</button>
     <button data-command="optimizeSettings">Optimize Settings</button>
   </div>
+
+  <h2>Setup</h2>
+  <div class="status-bar ${settingsClass}">
+    <span class="dot">${settingsIcon}</span>
+    <span>${settingsSummary}</span>
+  </div>
+  ${!allConfigured ? `<ul class="setup-checklist">${missingListHtml}</ul>
+  <div class="actions">
+    <button class="primary" data-command="optimizeSettings">Fix Settings</button>
+  </div>` : ""}
 
   <h2>Resources</h2>
   <div class="links">

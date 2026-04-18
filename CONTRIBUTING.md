@@ -351,7 +351,7 @@ Detailed step-by-step procedures.
 
 ### Creating Skill Files
 
-Skills follow a three-level progressive disclosure pattern. See [.github/skills/](https://github.com/fabioc-aloha/Alex_Plug_In/tree/main/.github/skills) for examples.
+Skills follow a three-level progressive disclosure pattern. See [.github/skills/](https://github.com/fabioc-aloha/alex-cognitive-architecture/tree/main/.github/skills) for examples.
 
 ```markdown
 # Skill Name

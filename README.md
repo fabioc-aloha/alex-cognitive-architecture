@@ -19,7 +19,7 @@ Alex is a VS Code extension that transforms GitHub Copilot into a cognitive lear
 
 ## Installation
 
-1. Install from [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=fabioc-aloha.alex-vscode-extension)
+1. Install from [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=fabioc-aloha.alex-cognitive-architecture)
 2. Open the Alex sidebar (brain icon)
 3. Follow the Getting Started guide
 

@@ -1,6 +1,6 @@
 # Wiki Source Files
 
-This folder contains the source files for the [Alex Cognitive Architecture Wiki](https://github.com/fabioc-aloha/Alex_Plug_In/wiki).
+This folder contains the source files for the [Alex Cognitive Architecture Wiki](https://github.com/fabioc-aloha/alex-cognitive-architecture/wiki).
 
 ## Contents
 
@@ -29,13 +29,13 @@ GitHub Wikis are stored in a separate git repository:
 
 ```bash
 # Clone the wiki repo
-git clone https://github.com/fabioc-aloha/Alex_Plug_In.wiki.git
+git clone https://github.com/fabioc-aloha/alex-cognitive-architecture.wiki.git
 
 # Copy wiki files
-cp -r wiki/* Alex_Plug_In.wiki/
+cp -r wiki/* alex-cognitive-architecture.wiki/
 
 # Push to wiki
-cd Alex_Plug_In.wiki
+cd alex-cognitive-architecture.wiki
 git add -A
 git commit -m "docs: Initialize wiki from source"
 git push

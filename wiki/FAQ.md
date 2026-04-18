@@ -158,7 +158,7 @@ This validates and repairs the synapse network.
 
 ### How do I report bugs?
 
-[GitHub Issues](https://github.com/fabioc-aloha/Alex_Plug_In/issues)
+[GitHub Issues](https://github.com/fabioc-aloha/alex-cognitive-architecture/issues)
 
 Include:
 - VS Code version
@@ -168,11 +168,11 @@ Include:
 
 ### Can I contribute skills?
 
-Yes! See [Contributing Guide](https://github.com/fabioc-aloha/Alex_Plug_In/blob/main/CONTRIBUTING.md).
+Yes! See [Contributing Guide](https://github.com/fabioc-aloha/alex-cognitive-architecture/blob/main/CONTRIBUTING.md).
 
 ### How do I request features?
 
-[GitHub Discussions](https://github.com/fabioc-aloha/Alex_Plug_In/discussions) for ideas and requests.
+[GitHub Discussions](https://github.com/fabioc-aloha/alex-cognitive-architecture/discussions) for ideas and requests.
 
 ---
 

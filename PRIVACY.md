@@ -133,8 +133,8 @@ We may update this policy. Check the "Last Updated" date at the top.
 ## Contact
 
 For privacy questions:
-- Open an issue: [GitHub Issues](https://github.com/fabioc-aloha/Alex_Plug_In/issues)
-- Create an issue: [GitHub Issues](https://github.com/fabioc-aloha/Alex_Plug_In/issues)
+- Open an issue: [GitHub Issues](https://github.com/fabioc-aloha/alex-cognitive-architecture/issues)
+- Create an issue: [GitHub Issues](https://github.com/fabioc-aloha/alex-cognitive-architecture/issues)
 
 ---
 

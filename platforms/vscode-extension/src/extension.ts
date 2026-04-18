@@ -56,7 +56,7 @@ function activateInternal(context: vscode.ExtensionContext): void {
         "Cancel",
       );
       if (choice === "Install") {
-        bootstrapBrainFiles(context, true);
+        await bootstrapBrainFiles(context, true);
         refreshSidebar(context, welcomeProvider);
       }
     }),
@@ -106,21 +106,78 @@ function activateInternal(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand("alex.optimizeSettings", async () => {
       const config = vscode.workspace.getConfiguration();
-      const updates: Array<{ key: string; value: unknown; label: string }> = [
+
+      // Settings that default to OFF and must be enabled for full Alex functionality.
+      // Verified against VS Code Copilot Settings Reference (April 2026).
+      const essentialUpdates: Array<{ key: string; value: unknown; label: string }> = [
         {
-          key: "editor.inlineSuggest.enabled",
+          key: "chat.useCustomAgentHooks",
           value: true,
-          label: "Enable inline suggestions",
+          label: "Custom agent hooks",
+        },
+        {
+          key: "github.copilot.chat.copilotMemory.enabled",
+          value: true,
+          label: "Copilot Memory",
+        },
+        {
+          key: "chat.customAgentInSubagent.enabled",
+          value: true,
+          label: "Custom agents in subagents",
+        },
+        {
+          key: "chat.useNestedAgentsMdFiles",
+          value: true,
+          label: "Nested agent files",
+        },
+        {
+          key: "chat.includeReferencedInstructions",
+          value: true,
+          label: "Referenced instructions",
         },
         {
           key: "github.copilot.chat.agent.thinkingTool",
           value: true,
-          label: "Enable Copilot thinking tool",
+          label: "Agent thinking tool",
+        },
+        {
+          key: "chat.plugins.enabled",
+          value: true,
+          label: "Agent plugins",
         },
       ];
 
+      const recommendedUpdates: Array<{ key: string; value: unknown; label: string }> = [
+        {
+          key: "chat.agent.maxRequests",
+          value: 100,
+          label: "Max agent requests → 100",
+        },
+        {
+          key: "chat.notifyWindowOnConfirmation",
+          value: "always",
+          label: "OS notifications for confirmations",
+        },
+        {
+          key: "chat.agentsControl.enabled",
+          value: true,
+          label: "Agent session status indicator",
+        },
+        {
+          key: "chat.requestQueuing.defaultAction",
+          value: "queue",
+          label: "Request queuing → queue",
+        },
+        {
+          key: "github.copilot.chat.localeOverride",
+          value: "en",
+          label: "Locale → English",
+        },
+      ];
+
+      // Apply essential settings without asking
       const applied: string[] = [];
-      for (const u of updates) {
+      for (const u of essentialUpdates) {
         const current = config.get(u.key);
         if (current !== u.value) {
           await config.update(u.key, u.value, vscode.ConfigurationTarget.Global);
@@ -128,10 +185,29 @@ function activateInternal(context: vscode.ExtensionContext): void {
         }
       }
 
+      // Ask before applying recommended settings
+      const needsRecommended = recommendedUpdates.filter(
+        (u) => config.get(u.key) !== u.value,
+      );
+      if (needsRecommended.length > 0) {
+        const choice = await vscode.window.showInformationMessage(
+          `Also apply ${needsRecommended.length} recommended setting(s)?`,
+          "Yes",
+          "Skip",
+        );
+        if (choice === "Yes") {
+          for (const u of needsRecommended) {
+            await config.update(u.key, u.value, vscode.ConfigurationTarget.Global);
+            applied.push(u.label);
+          }
+        }
+      }
+
       if (applied.length > 0) {
         vscode.window.showInformationMessage(
-          `Alex: Applied ${applied.length} setting(s): ${applied.join(", ")}.`,
+          `Alex: Applied ${applied.length} setting(s).`,
         );
+        refreshSidebar(context, welcomeProvider);
       } else {
         vscode.window.showInformationMessage("Alex: Settings already optimized.");
       }

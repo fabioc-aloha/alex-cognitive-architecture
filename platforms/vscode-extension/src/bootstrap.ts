@@ -71,10 +71,10 @@ function copyDirSync(src: string, dest: string, destRoot?: string): void {
  * @param force   Skip version check and always overwrite
  * @returns true if files were copied
  */
-export function bootstrapBrainFiles(
+export async function bootstrapBrainFiles(
   context: vscode.ExtensionContext,
   force = false,
-): boolean {
+): Promise<boolean> {
   const workspaceFolders = vscode.workspace.workspaceFolders;
   if (!workspaceFolders || workspaceFolders.length === 0) {
     vscode.window.showWarningMessage("Alex: Open a workspace folder first.");
@@ -140,9 +140,14 @@ export function bootstrapBrainFiles(
     fs.writeFileSync(versionPath, bundledVersion, "utf-8");
 
     const action = installedVersion ? "updated" : "installed";
-    vscode.window.showInformationMessage(
-      `Alex: Brain ${action} (v${bundledVersion}).`,
+    const settingsChoice = await vscode.window.showInformationMessage(
+      `Alex: Brain ${action} (v${bundledVersion}). Configure recommended settings?`,
+      "Optimize Settings",
+      "Skip",
     );
+    if (settingsChoice === "Optimize Settings") {
+      vscode.commands.executeCommand("alex.optimizeSettings");
+    }
     return true;
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);

@@ -14,7 +14,7 @@ If you discover a security vulnerability in Alex Cognitive Architecture, please 
 
 ### 📧 Contact
 
-**Email**: [Create a private security advisory on GitHub](https://github.com/fabioc-aloha/Alex_Plug_In/security/advisories/new)
+**Email**: [Create a private security advisory on GitHub](https://github.com/fabioc-aloha/alex-cognitive-architecture/security/advisories/new)
 
 ### ⏱️ Response Time
 
