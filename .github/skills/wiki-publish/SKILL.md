@@ -1,6 +1,7 @@
 ---
 name: "wiki-publish"
 description: "Publish master-wiki/ to GitHub Wiki with folder flattening and link rewriting"
+tier: standard
 applyTo: '**/*wiki*publish*,**/*wiki*push*,**/*wiki*sync*,**/master-wiki/**'
 disable-model-invocation: true
 ---
@@ -90,3 +91,10 @@ Internal links must be rewritten from relative paths to flat wiki page names (no
 | `master-wiki/skills/` | Internal skill docs, not user-facing |
 | `*.json` files | Build artifacts |
 | `CNAME`, `index.html` | Static site files, not wiki |
+
+## Common Gotchas
+
+- **Relative paths break in wiki**: GitHub Wiki renders all pages at root level. Paths like `../assets/image.png` that work in the repo fail in published wiki. Use `./assets/image.png` or absolute URLs.
+- **Sidebar ordering**: `_Sidebar.md` controls navigation. Update it when adding new pages or reorganizing sections.
+- **Image assets must be flat**: Wiki doesn't support subdirectories for assets. All SVGs go to wiki root.
+- **Duplicate page names**: Two source files mapping to the same wiki name will overwrite each other. The prefix table prevents this — follow it strictly.

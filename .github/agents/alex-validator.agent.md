@@ -5,7 +5,7 @@ model: ["Claude Sonnet 4", "GPT-4o"]
 tools:
   ["search", "codebase", "problems", "usages", "runSubagent", "fetch", "agent"]
 user-invocable: true
-agents: ["Documentarian", "Builder"]
+agents: ["Documentarian", "Builder", "Critical Thinker"]
 hooks:
   SessionStart:
     - type: command
@@ -33,6 +33,10 @@ handoffs:
   - label: 🧠 Return to Alex
     agent: Alex
     prompt: Returning to main cognitive mode.
+    send: true
+  - label: 🧐 Critical Thinking
+    agent: Critical Thinker
+    prompt: Need structured skepticism to evaluate the reasoning behind this.
     send: true
 ---
 

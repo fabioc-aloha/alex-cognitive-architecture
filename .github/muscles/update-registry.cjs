@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
  * update-registry.cjs
+ * @reviewed 2026-04-18
  * 
  * Heir-autonomous muscle for maintaining AI-Memory project registry.
  * Works WITHOUT Master Alex — heirs can self-register and update their entry.

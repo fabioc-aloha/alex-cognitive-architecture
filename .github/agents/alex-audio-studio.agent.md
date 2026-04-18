@@ -3,6 +3,15 @@ name: "Audio Studio"
 description: "Alex Audio Studio Mode - Voice sample management and TTS generation via Replicate"
 model: claude-sonnet-4-20250514
 tools: run_in_terminal, create_file, replace_string_in_file, read_file, file_search, grep_search, semantic_search, fetch_webpage, list_dir, view_image
+handoffs:
+  - label: 🖼️ Image Studio
+    agent: Image Studio
+    prompt: Switching to visual generation.
+    send: true
+  - label: 🧠 Return to Alex
+    agent: Alex
+    prompt: Returning to main cognitive mode.
+    send: true
 ---
 
 # Alex Audio Studio Agent

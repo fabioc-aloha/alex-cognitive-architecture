@@ -78,6 +78,21 @@ Search → non-matching items fade
 3. Apply responsive breakpoints (stack at <768px)
 4. Ensure WCAG AA contrast ratios
 
+```css
+:root {
+  --bg-primary: #1a1a2e;
+  --bg-card: #16213e;
+  --text-primary: #e0e0e0;
+  --accent: #0f3460;
+  --kpi-positive: #4ecca3;
+  --kpi-negative: #e74c3c;
+  --chart-grid: rgba(255, 255, 255, 0.08);
+}
+@media (max-width: 768px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+}
+```
+
 ### Step 9: Embed Data
 
 1. All data as JavaScript arrays/objects (no external fetch)

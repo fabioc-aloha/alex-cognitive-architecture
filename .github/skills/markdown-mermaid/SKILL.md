@@ -590,12 +590,13 @@ linkStyle default stroke:#57606a,stroke-width:1.5px
 **Complete Example**:
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#57606a', 'primaryColor': '#ddf4ff', 'primaryBorderColor': '#0969da', 'primaryTextColor': '#1f2328', 'edgeLabelBackground': '#ffffff'}}}%%
 flowchart LR
-    A[Source] --> |Transform| B[Target]
-    
-    style A fill:#ddf4ff,color:#0550ae,stroke:#80ccff
-    style B fill:#d3f5db,color:#1a7f37,stroke:#6fdd8b
-    
+    A[Source]:::blue -->|Transform| B[Target]:::green
+
+    classDef blue fill:#ddf4ff,color:#0550ae,stroke:#80ccff
+    classDef green fill:#d3f5db,color:#1a7f37,stroke:#6fdd8b
+
     linkStyle default stroke:#57606a,stroke-width:1.5px
 ```
 

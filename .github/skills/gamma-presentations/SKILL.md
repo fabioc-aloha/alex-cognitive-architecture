@@ -1,9 +1,7 @@
 ---
 name: gamma-presentations
-description: >-
+description: "Generate professional presentations using the Gamma API with expert storytelling consulting based on Duarte methodology."
 tier: standard
-  Generate professional presentations using the Gamma API with expert storytelling consulting based on Duarte
-  methodology.
 applyTo: '**/*presentation*,**/*slides*,**/*deck*,**/*gamma*,**/*pitch*'
 ---
 

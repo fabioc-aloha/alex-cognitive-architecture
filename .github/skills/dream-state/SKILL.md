@@ -96,3 +96,12 @@ Valid relations: `applies-to`, `extends`, `requires`, `contradicts`, `supersedes
 ## Recommendations
 Prioritized list of manual fixes needed.
 ```
+
+## Interpreting Results
+
+| Status | Meaning | Action |
+|--------|---------|--------|
+| HEALTHY | All checks pass, no broken connections | None — architecture is sound |
+| ATTENTION REQUIRED | One or more issues detected | Review issues table, prioritize by severity |
+
+Severity levels: **critical** (broken trifecta), **warning** (missing frontmatter field), **info** (cosmetic).

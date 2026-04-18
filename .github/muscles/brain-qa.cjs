@@ -125,17 +125,21 @@ function readExistingSemValues() {
 
   const content = fs.readFileSync(gridPath, "utf-8");
   const semValues = { skills: {}, instructions: {}, agents: {}, prompts: {} };
+  const staleValues = {};
 
   // Parse Skills table: | [skill-name](path) | ... | inh | stale | Sem Review |
   // Table format: | [name](path) | tier | lines | fm | code | bounds | tri | muscle | Type | Score | Pass | inh | stale | Sem Review |
-  // Sem Review is YYYY-MM-DD or -
+  // stale: YYYY-MM-DD, -, 0, or 1 (0/1 from legacy format, treated as '-')
+  // Sem Review: YYYY-MM-DD or -
   const skillsSection = content.match(/## Skills[\s\S]*?(?=## Agents|## Instructions|$)/);
   if (skillsSection) {
-    const skillRows = skillsSection[0].matchAll(/^\| \[([\w-]+)\]\([^)]+\) \| \w+ \| \d+ \|.*\| (\d{4}-\d{2}-\d{2}|-) \|$/gm);
+    const skillRows = skillsSection[0].matchAll(/^\| \[([\w-]+)\]\([^)]+\) \| \w+ \| \d+ \|.*\| (\d{4}-\d{2}-\d{2}|-|\d) \| (\d{4}-\d{2}-\d{2}|-) \|$/gm);
     for (const match of skillRows) {
       const name = match[1];
-      const sem = match[2]; // Keep as string (date or '-')
-      semValues.skills[name] = sem;
+      // Convert legacy 0/1 to '-'
+      const rawStale = match[2];
+      staleValues[name] = (rawStale === '0' || rawStale === '1') ? '-' : rawStale;
+      semValues.skills[name] = match[3]; // sem date or '-'
     }
   }
 
@@ -172,11 +176,11 @@ function readExistingSemValues() {
     }
   }
 
-  return semValues;
+  return { semValues, staleValues };
 }
 
-// Load existing sem values before generating new grid
-const EXISTING_SEM = readExistingSemValues();
+// Load existing sem and stale values before generating new grid
+const { semValues: EXISTING_SEM, staleValues: EXISTING_STALE } = readExistingSemValues();
 
 // --- Load master-only skills from sync-architecture.cjs ---
 function getMasterOnlySkills() {
@@ -204,7 +208,9 @@ const MASTER_ONLY_SKILLS = getMasterOnlySkills();
 const STALE_PRONE = new Set([
   'vscode-extension-patterns', 'chat-participant-patterns', 'm365-agent-debugging',
   'teams-app-patterns', 'llm-model-selection', 'git-workflow',
-  'privacy-responsible-ai', 'microsoft-sfi'
+  'privacy-responsible-ai',
+  'kdp-publishing', 'kql', 'academic-paper-drafting',
+  'security-threat-modeler', 'effort-estimation'
 ]);
 
 // --- Tier-based pass thresholds ---
@@ -314,7 +320,7 @@ function scanSkills() {
       tri: triComplete ? 1 : 0,
       muscle: hasMuscle ? 1 : 0,
       inh: isMasterOnly ? 1 : 0,   // 1 = master-only, 0 = synced to heirs
-      stale: isStaleProne ? 1 : 0, // 1 = needs regular review, 0 = stable
+      staleProne: isStaleProne,     // boolean: needs regular refresh
     };
 
     // Determine skill type and max possible score
@@ -507,10 +513,11 @@ function scanPrompts() {
 
     const hasDesc = /^description:/m.test(content);
     const hasApp = /^application:/m.test(content);
+    const hasAgent = /^agent:/m.test(content) || /^mode:\s*agent/m.test(content);
     const flags = {
       desc: hasDesc ? 1 : 0,
       app: hasApp ? 1 : 0,
-      agent: /^agent:/m.test(content) ? 1 : 0,
+      agent: hasAgent ? 1 : 0,
       over20: lines > 20 ? 1 : 0,
     };
 
@@ -727,7 +734,7 @@ function generateGrid() {
   lines.push("| Col | Meaning | 1 | 0 |");
   lines.push("|:---:|---------|---|---|");
   lines.push("| **inh** | Inheritance | Master-only | Synced to heirs |");
-  lines.push("| **stale** | Staleness | Needs regular review | Stable |");
+  lines.push("| **stale** | Staleness refresh | YYYY-MM-DD (last refreshed) | - (stable or never refreshed) |");
   lines.push("| **Sem Review** | Semantic Review Date | YYYY-MM-DD | - (pending) |");
   lines.push("");
   lines.push("> **Semantic Review**: Audit date when the brain file was verified for clarity, coherence, correctness, completeness, and conciseness. Files marked `-` are pending review.");
@@ -752,7 +759,7 @@ function generateGrid() {
   // Priority Queue section
   lines.push("## Priority Queue");
   lines.push("");
-  lines.push("> **Sorted by urgency**: Failing items first, then unreviewed, then lowest score. Work top-to-bottom.");
+  lines.push("> **Sorted by urgency**: Failing first, then unaudited, then stale-prone (oldest refresh first), then stalest sem review, then lowest score. Top 20 shown.");
   lines.push("");
 
   // Collect all items with priority metadata
@@ -760,14 +767,17 @@ function generateGrid() {
   
   for (const s of skills) {
     const sem = EXISTING_SEM.skills[s.name] ?? '-';
+    const staleDate = s.flags.staleProne ? (EXISTING_STALE[s.name] || '-') : '-';
     priorityItems.push({
       type: 'skill',
       name: s.name,
       path: `../skills/${s.name}/SKILL.md`,
       score: s.score,
-      maxScore: s.maxScore,
+      maxScore: s.threshold,
       pass: s.pass,
       sem: sem,
+      staleProne: s.flags.staleProne,
+      staleDate: staleDate,
     });
   }
   
@@ -780,6 +790,8 @@ function generateGrid() {
       maxScore: 5,
       pass: a.pass,
       sem: a.sem,
+      staleProne: false,
+      staleDate: '-',
     });
   }
   
@@ -793,6 +805,8 @@ function generateGrid() {
       maxScore: 5,
       pass: i.pass,
       sem: sem,
+      staleProne: false,
+      staleDate: '-',
     });
   }
   
@@ -806,10 +820,26 @@ function generateGrid() {
       maxScore: 4,
       pass: p.pass,
       sem: sem,
+      staleProne: false,
+      staleDate: '-',
     });
   }
 
-  // Sort: failing first, then unreviewed, then by score
+  for (const m of muscles) {
+    priorityItems.push({
+      type: 'muscle',
+      name: m.name,
+      path: `../muscles/${m.name}`,
+      score: m.score,
+      maxScore: 4,
+      pass: m.pass,
+      sem: m.reviewDate || '-',
+      staleProne: false,
+      staleDate: '-',
+    });
+  }
+
+  // Sort: failing first, then unaudited (sem = '-'), then stale-prone (oldest stale date first), then stalest review date, then lowest score
   priorityItems.sort((a, b) => {
     // Failing items first
     if (!a.pass && b.pass) return -1;
@@ -817,6 +847,21 @@ function generateGrid() {
     // Then unreviewed items
     if (a.sem === '-' && b.sem !== '-') return -1;
     if (a.sem !== '-' && b.sem === '-') return 1;
+    // Stale-prone items before stable ones
+    if (a.staleProne && !b.staleProne) return -1;
+    if (!a.staleProne && b.staleProne) return 1;
+    // Among stale-prone items, oldest stale date first (never-refreshed '-' first)
+    if (a.staleProne && b.staleProne) {
+      if (a.staleDate === '-' && b.staleDate !== '-') return -1;
+      if (a.staleDate !== '-' && b.staleDate === '-') return 1;
+      if (a.staleDate < b.staleDate) return -1;
+      if (a.staleDate > b.staleDate) return 1;
+    }
+    // Among reviewed items, oldest review date first (stalest = higher priority)
+    if (a.sem !== '-' && b.sem !== '-') {
+      if (a.sem < b.sem) return -1;
+      if (a.sem > b.sem) return 1;
+    }
     // Then by score (lower = higher priority)
     const aRatio = a.score / a.maxScore;
     const bRatio = b.score / b.maxScore;
@@ -825,24 +870,25 @@ function generateGrid() {
     return a.name.localeCompare(b.name);
   });
 
-  // Show top 15 items
-  const topItems = priorityItems.slice(0, 15);
+  // Show top 20 items from the sorted list
+  const topItems = priorityItems.slice(0, 20);
   
   if (topItems.length > 0) {
-    lines.push("| # | Type | File | Score | Pass | Sem Review | Action |");
-    lines.push("|--:|:----:|------|------:|:----:|:----------:|--------|");
+    lines.push("| # | Type | File | Score | Pass | Stale | Sem Review | Action |");
+    lines.push("|--:|:----:|------|------:|:----:|:-----:|:----------:|--------|");
     
     topItems.forEach((item, idx) => {
       const nameLink = `[${item.name}](${item.path})`;
       const passIcon = item.pass ? "✓" : "✗";
       const action = !item.pass ? "Fix defects" : (item.sem === '-' ? "Semantic review" : "Re-review");
-      lines.push(`| ${idx + 1} | ${item.type} | ${nameLink} | ${item.score}/${item.maxScore} | ${passIcon} | ${item.sem} | ${action} |`);
+      lines.push(`| ${idx + 1} | ${item.type} | ${nameLink} | ${item.score}/${item.maxScore} | ${passIcon} | ${item.staleDate} | ${item.sem} | ${action} |`);
     });
     
     const totalFailing = priorityItems.filter(i => !i.pass).length;
     const totalUnreviewed = priorityItems.filter(i => i.pass && i.sem === '-').length;
+    const totalAudited = priorityItems.filter(i => i.sem !== '-').length;
     lines.push("");
-    lines.push(`**Queue depth**: ${totalFailing} failing | ${totalUnreviewed} passing but unreviewed | ${priorityItems.length} total`);
+    lines.push(`**Queue depth**: ${totalFailing} failing | ${totalUnreviewed} unaudited | ${totalAudited} audited | ${priorityItems.length} total`);
   } else {
     lines.push("**Status**: ✅ All brain files passing and reviewed");
   }
@@ -862,10 +908,12 @@ function generateGrid() {
     const typeIcon = s.agentic ? "A" : (f.tri === 1 ? "I" : "-");
     // Preserve existing sem date if available, otherwise '-' (pending review)
     const sem = EXISTING_SEM.skills[s.name] ?? '-';
+    // Stale date: preserve from grid for stale-prone skills, '-' for stable skills
+    const stale = f.staleProne ? (EXISTING_STALE[s.name] || '-') : '-';
     // Link to SKILL.md file
     const nameLink = `[${s.name}](../skills/${s.name}/SKILL.md)`;
     const codeIcon = f.code ? '1' : '-';
-    lines.push(`| ${nameLink} | ${tierAbbr} | ${s.lines} | ${f.fm} | ${codeIcon} | ${f.bounds} | ${f.tri} | ${f.muscle} | ${typeIcon} | ${s.score}/${s.threshold} | ${passIcon} | ${f.inh} | ${f.stale} | ${sem} |`);
+    lines.push(`| ${nameLink} | ${tierAbbr} | ${s.lines} | ${f.fm} | ${codeIcon} | ${f.bounds} | ${f.tri} | ${f.muscle} | ${typeIcon} | ${s.score}/${s.threshold} | ${passIcon} | ${f.inh} | ${stale} | ${sem} |`);
   }
 
   // Skills summary - now using tier-based pass/fail

@@ -212,42 +212,11 @@ Based on detected frustration type, route to appropriate skill:
 
 After de-escalation, rebuild momentum:
 
-```mermaid
-  'primaryColor': '#cce5ff',
-  'primaryTextColor': '#333',
-  'primaryBorderColor': '#57606a',
-  'lineColor': '#57606a',
-  'secondaryColor': '#e6d5f2',
-  'tertiaryColor': '#c2f0d8',
-  'background': '#ffffff',
-  'mainBkg': '#cce5ff',
-  'secondBkg': '#e6d5f2',
-  'tertiaryBkg': '#c2f0d8',
-  'textColor': '#333',
-  'border1Color': '#57606a',
-  'border2Color': '#57606a',
-  'arrowheadColor': '#57606a',
-  'fontFamily': 'ui-sans-serif, system-ui, sans-serif',
-  'fontSize': '14px',
-  'nodeBorder': '1.5px',
-  'clusterBkg': '#f6f8fa',
-  'clusterBorder': '#d0d7de',
-  'edgeLabelBackground': '#ffffff'
-}}}%%
-flowchart LR
-    A[Frustration Detected] --> B[Acknowledge]
-    B --> C[Clarify Real Problem]
-    C --> D{Can We Solve?}
-    D -->|Yes| E[Small Win First]
-    D -->|No| F[Honest Assessment]
-    E --> G[Build Momentum]
-    F --> H[Alternative Path]
-    
-    style A fill:#ffebee,stroke:#c62828
-    style B fill:#fff3e0,stroke:#ef6c00
-    style E fill:#e8f5e9,stroke:#2e7d32
-    style G fill:#e8f5e9,stroke:#2e7d32
-```
+1. **Frustration detected** → Acknowledge the difficulty
+2. **Clarify the real problem** (not the symptom)
+3. **Can we solve it?**
+   - **Yes** → Deliver a small win first → build momentum from there
+   - **No** → Give an honest assessment → offer an alternative path
 
 ---
 

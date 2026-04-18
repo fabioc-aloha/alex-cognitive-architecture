@@ -36,6 +36,22 @@ Design the contract (OpenAPI) before implementation. Review with consumers.
 - [ ] Rate limits defined
 - [ ] Consistent error format
 - [ ] OpenAPI spec accurate
+- [ ] Input validation at boundaries
+- [ ] Auth on all non-public endpoints
+
+## Pagination
+
+```json
+{
+  "data": [],
+  "pagination": {
+    "page": 1,
+    "pageSize": 20,
+    "total": 142,
+    "totalPages": 8
+  }
+}
+```
 
 ## Anti-Patterns
 

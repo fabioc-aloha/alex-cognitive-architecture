@@ -84,7 +84,7 @@ footer: '© 2026 Alex Cognitive Architecture'
 Use this CSS for consistent Alex branding:
 
 ```css
-/* Alex Brand Marp Theme */
+/* Alex Brand Marp Theme — CorreaX dark palette */
 @import 'default';
 
 section {
@@ -94,7 +94,7 @@ section {
 }
 
 section.title {
-  background: #0550ae;
+  background: #38bdf8;
   color: #ffffff;
 }
 
@@ -104,19 +104,19 @@ section.title h1 {
 }
 
 section.cta {
-  background: linear-gradient(135deg, #0550ae 0%, #6639ba 100%);
+  background: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
   color: #ffffff;
   text-align: center;
 }
 
 h1 {
-  color: #0550ae;
-  border-bottom: 3px solid #1a7f37;
+  color: #38bdf8;
+  border-bottom: 3px solid #f97316;
   padding-bottom: 0.3em;
 }
 
 h2 {
-  color: #6639ba;
+  color: #6366f1;
 }
 
 .columns {
@@ -127,21 +127,19 @@ h2 {
 
 code {
   background: #f6f8fa;
-  color: #0550ae;
+  color: #38bdf8;
 }
 
 blockquote {
-  border-left: 4px solid #6639ba;
+  border-left: 4px solid #6366f1;
   background: #f6f8fa;
 }
 
-/* Chart colors */
+/* Chart colors — CorreaX dark palette */
 :root {
-  --alex-blue: #0550ae;
-  --alex-green: #1a7f37;
-  --alex-purple: #6639ba;
-  --alex-gold: #9a6700;
-  --alex-bronze: #953800;
+  --alex-sky: #38bdf8;
+  --alex-coral: #f97316;
+  --alex-indigo: #6366f1;
 }
 ```
 
@@ -189,6 +187,6 @@ When generating a Marp presentation:
 
 1. Ask about the **audience** and **goal** if not specified
 2. Structure content using the **Duarte sparkline** (what is → what could be)
-3. Apply **Alex brand colors** (blue #0550ae, green #1a7f37, purple #6639ba)
+3. Apply **Alex brand colors** (sky blue #38bdf8, coral #f97316, indigo #6366f1)
 4. Include **speaker notes** for key slides
 5. Save as `.md` file in the workspace with suggested export commands

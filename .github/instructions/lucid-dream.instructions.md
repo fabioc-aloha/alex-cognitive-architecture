@@ -23,6 +23,13 @@ Bridge between automated dream scanning and conscious meditation. Activates when
 
 Run dream protocol normally. Collect all findings.
 
+```bash
+# Run brain-qa to generate findings for lucid review
+node .github/muscles/brain-qa.cjs
+# Review the priority queue for items requiring judgment
+head -60 .github/quality/brain-health-grid.md
+```
+
 ### Phase 2 — Conscious (Interactive)
 
 For each finding requiring judgment:

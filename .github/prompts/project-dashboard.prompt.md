@@ -1,5 +1,7 @@
 ---
+sem: 1
 description: "Generate or update ASCII project dashboard with parallel lanes"
+application: "When creating project trackers, dashboards, or visual progress reports"
 mode: agent
 ---
 

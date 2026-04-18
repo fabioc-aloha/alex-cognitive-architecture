@@ -45,3 +45,20 @@ Sync `master-wiki/` to `AlexMaster.wiki.git`. Source of truth is always `master-
 - Always clone fresh — don't reuse stale clones
 - Review `git status` before committing
 - If wiki has manual edits not in `master-wiki/`, they will be overwritten — check first
+
+## Quick Reference Commands
+
+```bash
+# Clone wiki repo
+git clone https://github.com/fabioc-aloha/AlexMaster.wiki.git /tmp/wiki-staging
+
+# After copying and rewriting, check diff
+cd /tmp/wiki-staging
+git status --short
+git diff --stat
+
+# Commit and push
+git add -A
+git commit -m "Sync from master-wiki $(date +%Y-%m-%d)"
+git push origin master
+```

@@ -64,3 +64,47 @@ This muscle is part of the pre-publish quality gate:
 1. `converter-qa.cjs` runs all 284 assertions
 2. Zero failures required to pass
 3. Skips are tracked but don't block (used for environment-dependent tests)
+
+## Test Patterns
+
+### Assertion Style
+
+Tests use direct boolean assertions with descriptive messages:
+
+```javascript
+suite('preprocessor', () => {
+  const result = preprocessMarkdown(input);
+  assert(result.includes('expected'), 'preprocessor should transform X to Y');
+  assert(!result.includes('bad'), 'preprocessor should strip bad patterns');
+});
+```
+
+### Regression Testing
+
+OOXML tests compare generated Word document XML structure against known-good snapshots:
+
+1. Generate a `.docx` from a known markdown input
+2. Unzip the `.docx` and extract `document.xml`
+3. Assert specific XML elements exist (table styles, heading formats, image references)
+4. Assert element counts match expected values
+
+### Environment-Dependent Skips
+
+Some tests depend on external tools (Pandoc, Mermaid CLI). Use `skip()` when the tool is unavailable:
+
+```javascript
+if (!hasPandoc()) {
+  skip('Pandoc Lua filter syntax (pandoc not installed)');
+} else {
+  suite('Lua filter', () => { /* ... */ });
+}
+```
+
+## Troubleshooting
+
+| Issue | Fix |
+|-------|-----|
+| Assertion count mismatch | New tests added — update the expected count in docs |
+| OOXML regression failure | Intentional style change — regenerate snapshot |
+| Pandoc tests skipped | Install Pandoc: `winget install JohnMacFarlane.Pandoc` |
+| Mermaid render tests fail | Install `@mermaid-js/mermaid-cli` globally |

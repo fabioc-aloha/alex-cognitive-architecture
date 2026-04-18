@@ -85,6 +85,21 @@ Self-contained HTML file:
 - Print-friendly styles
 - Annotations woven into the visual flow
 
+```html
+<div class="story-container">
+  <section class="act act-setup">
+    <div class="kpi-row"><!-- 3-6 KPI cards: baseline context --></div>
+  </section>
+  <section class="act act-conflict">
+    <figure class="hero-chart"><!-- Full-width chart: the surprise --></figure>
+  </section>
+  <section class="act act-resolution">
+    <div class="supporting-grid"><!-- 2-3 evidence charts --></div>
+    <blockquote class="big-idea"><!-- One-sentence takeaway --></blockquote>
+  </section>
+</div>
+```
+
 ## Routing
 
 - Data profiling and insight extraction → `data-analysis` instruction

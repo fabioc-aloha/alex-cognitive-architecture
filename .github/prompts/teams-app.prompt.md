@@ -1,7 +1,8 @@
 ---
+mode: agent
 sem: 1
 description: Scaffold or troubleshoot a Microsoft Teams app or M365 Copilot declarative agent with correct schema, icons, and packaging
-application: "When debugging issues, investigating failures, or root cause analysis"
+application: "When building Microsoft Teams apps, M365 Copilot declarative agents, or troubleshooting Teams manifest and packaging issues"
 ---
 
 # Teams App Development

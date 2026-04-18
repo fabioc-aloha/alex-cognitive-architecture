@@ -394,13 +394,7 @@ LLMs don't "see" diagrams — they process tokens sequentially. When you write:
 
 The LLM sees: `┌─────────┐ ┌─────────┐ │ Start │───▶│ End │ └─────────┘ └─────────┘`
 
-But when you write:
-```mermaid
-graph LR
-    Start --> End
-```
-
-The LLM sees: `graph LR Start --> End` — a parseable, meaningful syntax.
+But when you write `graph LR\n    Start --> End` in a Mermaid block, the LLM sees parseable, meaningful syntax.
 
 ### Application Guidelines
 

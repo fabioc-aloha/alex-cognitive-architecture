@@ -72,6 +72,15 @@ For compact UI icons, do not assume SVG generation is the best fit. `recraft-ai/
 - Prefer the model's `retry_after` hint when Replicate includes it in a 429 response
 - Store generation reports as JSON alongside output files
 
+```javascript
+import Replicate from 'replicate';
+const replicate = new Replicate();
+const output = await replicate.run('black-forest-labs/flux-1.1-pro', {
+  input: { prompt, aspect_ratio: '16:9', output_format: 'png' }
+});
+const url = typeof output.url === 'function' ? output.url().toString() : output;
+```
+
 ## Post-Generation Verification (VS Code 1.112+)
 
 After generating or converting images, use the built-in `view_image` tool to verify output quality:

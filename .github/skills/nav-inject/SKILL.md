@@ -71,3 +71,31 @@ Every target file must contain these markers (added automatically by `md-scaffol
 ```
 
 The injector replaces only the content between sentinels, preserving all other content.
+
+## Output Example
+
+Given a `nav.json` with three files, the injected navigation looks like:
+
+```markdown
+<!-- nav:start -->
+| | Document | Description |
+|---|----------|-------------|
+| 📋 | [Overview](README.md) | Project introduction |
+| 🔧 | [Setup Guide](SETUP.md) | Installation and configuration |
+| 📡 | [API Reference](API.md) | Endpoint documentation |
+<!-- nav:end -->
+```
+
+## Edge Cases
+
+| Scenario | Behavior |
+|----------|----------|
+| File missing sentinels | Skipped with warning — never injects without markers |
+| Empty `files` array | Removes content between sentinels (cleans up) |
+| File listed in nav.json but missing on disk | Included in nav table (link may 404) — warns |
+| Nested directories | Paths are relative to nav.json location |
+| Duplicate entries | Rendered as-is — no deduplication |
+
+## Integration with md-to-word
+
+When converting a doc suite to Word, run `nav-inject` first so the navigation table is included in the converted document. The table renders as a standard markdown table in Word output.

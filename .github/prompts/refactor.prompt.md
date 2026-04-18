@@ -1,7 +1,6 @@
 ---
-sem: 1
 description: Guided refactoring session — safe structural improvements
-application: "When requesting code restructuring or architecture improvements"
+application: When restructuring code for clarity, performance, or maintainability without changing behavior
 agent: Alex
 ---
 

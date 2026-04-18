@@ -14,7 +14,7 @@ tools:
     "usages",
   ]
 user-invocable: true
-agents: ["Researcher", "Builder", "Validator", "Documentarian", "Brain Ops", "Azure", "M365"]
+agents: ["Researcher", "Builder", "Validator", "Critical Thinker", "Documentarian", "Brain Ops", "Azure", "M365"]
 handoffs:
   - label: 📚 Research Mode
     agent: Researcher
@@ -28,6 +28,10 @@ handoffs:
   - label: 🔍 Validator Mode
     agent: Validator
     prompt: I need adversarial QA review.
+    send: true
+  - label: 🧐 Critical Thinking
+    agent: Critical Thinker
+    prompt: Apply structured skepticism to evaluate this decision.
     send: true
   - label: 📖 Documentation Mode
     agent: Documentarian
@@ -83,6 +87,11 @@ Run unconscious processing and architecture health checks:
 
 1. Use `alex_synapse_health` to validate architecture integrity
 2. Use `alex_architecture_status` to check overall health
+3. Run brain-qa for quantitative health metrics:
+
+```bash
+node .github/muscles/brain-qa.cjs
+```
 3. Report issues found and repairs needed
 4. Suggest consolidation if insights accumulated
 

@@ -88,34 +88,17 @@ interface TokenConfig {
 
 ### Token Lifecycle Workflow
 
-```mermaid
-graph TD
-    A[Feature Requires Token] --> B{Check Cache}
-    B -->|Hit| C[Return Token]
-    B -->|Miss| D{Check SecretStorage}
-    D -->|Found| E[Cache + Return]
-    D -->|Not Found| F{Check Env Var}
-    F -->|Found| G[Migrate + Cache + Return]
-    F -->|Not Found| H[Prompt User]
-    H --> I{User Enters Token}
-    I -->|Success| J[Store + Cache + Return]
-    I -->|Cancel| K[Return Null]
-```
+1. Feature requires token → check **cache** (hit → return)
+2. Cache miss → check **SecretStorage** (found → cache + return)
+3. Not in SecretStorage → check **env var** (found → migrate to SecretStorage + cache + return)
+4. Not in env → **prompt user** (enters token → store + cache + return; cancels → return null)
 
 ### Bidirectional Secrets Flow
 
 SecretStorage is secure but inaccessible to external tools (CLI, PowerShell scripts, CI/CD). Solution: bidirectional flow.
 
-```mermaid
-graph LR
-    subgraph "Import (Migration)"
-        ENV1[.env file] -->|alex.migrateEnvSecrets| SS1[SecretStorage]
-    end
-    subgraph "Export (External Access)"
-        SS2[SecretStorage] -->|alex.exportSecretsToEnv| ENV2[.env file]
-    end
-    SS1 -.->|Same storage| SS2
-```
+- **Import**: `.env` file → `alex.migrateEnvSecrets` → SecretStorage
+- **Export**: SecretStorage → `alex.exportSecretsToEnv` → `.env` file
 
 | Direction | Command | Use Case |
 |-----------|---------|----------|

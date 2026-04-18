@@ -1,3 +1,10 @@
+---
+name: project-registration
+description: "Register projects in the fleet registry and track cross-project patterns"
+tier: standard
+applyTo: '**/*registry*,**/*fleet*,**/*project-health*'
+---
+
 # Project Registration Skill
 
 Register and update project metadata in the AI-Memory project registry for fleet-wide visibility and cross-project pattern discovery.

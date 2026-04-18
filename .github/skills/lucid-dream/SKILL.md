@@ -1,6 +1,7 @@
 ---
 name: "lucid-dream"
 description: "Hybrid dream-meditation protocol — conscious decisions during automated processing"
+tier: standard
 applyTo: '**/*lucid*,**/*dual-mode*,**/*bridge*'
 disable-model-invocation: true
 ---
@@ -61,3 +62,40 @@ All dream findings must reach one of:
 | Resolved | Fix applied and validated |
 | Deferred | Logged with rationale for next session |
 | Dismissed | False positive, documented why |
+
+## Lucid Dream Session Flow
+
+1. **Trigger**: Dream report contains findings marked "requires judgment"
+2. **Load context**: Read dream report from `.github/quality/dream-report.json`
+3. **Present findings**: Show each ambiguous finding with available options
+4. **Collect decision**: User selects action for each finding (resolve, defer, dismiss)
+5. **Execute**: Apply approved fixes to architecture files
+6. **Validate**: Re-run affected checks to confirm resolution
+7. **Log**: Update dream report with resolution status and rationale
+
+## Integration with Dream State
+
+Lucid dream extends the dream-state skill. Dream runs fully automated scans; when it encounters ambiguity, it flags findings for lucid intervention rather than guessing.
+
+The handoff point is the dream report. Dream writes findings with a `requires_judgment: true` field. Lucid dream reads those findings and presents them interactively.
+
+## Integration with Meditation
+
+Lucid dream differs from meditation in scope. Meditation is open-ended exploration — the user directs the topic. Lucid dream is constrained to resolving specific dream findings. If a lucid dream session reveals a broader architectural concern, escalate to a meditation session.
+
+## Anti-Patterns
+
+| Anti-Pattern | Problem | Fix |
+|---|---|---|
+| Auto-resolving ambiguous findings | Dream guesses wrong, breaks architecture | Flag for lucid intervention |
+| Deferring everything | Technical debt accumulates | Limit deferrals per session |
+| Dismissing without rationale | Recurring false positives never get fixed | Require one-line justification |
+| Mixing lucid dream with meditation | Scope creep — session loses focus | Escalate broad concerns to meditation |
+
+## Output Artifacts
+
+| Artifact | Location | Purpose |
+|---|---|---|
+| Updated dream report | `.github/quality/dream-report.json` | Resolution status for each finding |
+| Modified architecture files | `.github/skills/`, `.github/instructions/` | Applied fixes |
+| Session log | Memory tool or session memory | Decisions and rationale for future reference |

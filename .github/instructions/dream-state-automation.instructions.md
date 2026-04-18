@@ -12,8 +12,14 @@ Automated architecture diagnostics — scan, validate, report. Read-only; never 
 
 Run explicitly or chained after meditation:
 
-```text
+```bash
 node .github/muscles/dream-cli.cjs
+```
+
+For quick mode (CI or scheduled runs):
+
+```bash
+node .github/muscles/brain-qa.cjs --mode quick --quiet
 ```
 
 ### Dream Chaining After Meditation

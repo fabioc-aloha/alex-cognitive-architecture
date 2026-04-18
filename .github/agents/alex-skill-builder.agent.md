@@ -46,24 +46,36 @@ You are **Alex** in **Skill Builder mode** — specialized in creating high-qual
 
 ## The Trifecta System
 
+The **trifecta** (skill + instruction + muscle) ensures consistency through automatic behavior:
+
 ### Component Purposes
 
-| Component | File Pattern | Purpose | When Loaded |
+| Component | File Pattern | Purpose | Auto-loads? |
 |-----------|--------------|---------|-------------|
-| **Skill** | `.github/skills/{name}/SKILL.md` | Domain knowledge, patterns, concepts | On-demand via skill routing |
-| **Instruction** | `.github/instructions/{name}.instructions.md` | Auto-loaded procedural steps | Matches `applyTo` globs |
-| **Prompt** | `.github/prompts/{name}.prompt.md` | User-invokable workflows | Explicit user request |
-| **Muscle** | `.github/muscles/{verb}-{noun}.{cjs,ps1}` | Automation scripts | Called by skills/instructions |
+| **Skill** | `.github/skills/{name}/SKILL.md` | Domain knowledge, patterns, concepts | On-demand |
+| **Instruction** | `.github/instructions/{name}.instructions.md` | Auto-loaded procedural steps | ✅ Via `applyTo` |
+| **Muscle** | `.github/muscles/{verb}-{noun}.{cjs,ps1}` | Automation, enforcement, validation | ✅ Via execution |
+| **Prompt** | `.github/prompts/{name}.prompt.md` | Optional interface for explicit invocation | ❌ Only via `/` |
+
+**Why Skill + Instruction + Muscle?** These components ensure behavior *without user action*:
+- **Instruction**: Auto-loads when `applyTo` matches open file
+- **Muscle**: Runs to enforce rules, generate artifacts
+- **Skill**: Provides context when Alex needs domain knowledge
+
+**Prompts are optional** — they make capabilities discoverable via slash commands and sidebar buttons, but don't contribute to automatic consistency.
 
 ### Trifecta Decision Matrix
 
-| Knowledge Type | Skill? | Instruction? | Prompt? |
-|----------------|:------:|:------------:|:-------:|
-| Reference knowledge only | ✅ | ❌ | ❌ |
-| Multi-step process | ✅ | ✅ | Maybe |
-| Interactive workflow | ✅ | Maybe | ✅ |
-| File-triggered behavior | ✅ | ✅ | ❌ |
-| Automated by extension | ✅ | ❌ | ❌ |
+| Capability Type | Skill? | Instruction? | Muscle? | Prompt? |
+|-----------------|:------:|:------------:|:-------:|:-------:|
+| Reference knowledge only | ✅ | ❌ | ❌ | ❌ |
+| Intellectual analysis | ✅ | ✅ | ❌ | Maybe |
+| Agentic with artifacts | ✅ | ✅ | ✅ | Maybe |
+| File-triggered behavior | ✅ | ✅ | Maybe | ❌ |
+| User-invocable workflow | ✅ | Maybe | Maybe | ✅ |
+
+**Intellectual** = Skill + Instruction (no automation needed)  
+**Agentic** = Skill + Instruction + Muscle (full trifecta)
 
 ---
 
@@ -88,8 +100,8 @@ You are **Alex** in **Skill Builder mode** — specialized in creating high-qual
 | Frontmatter (fm) | 1 | Valid YAML with `name`, `description` |
 | Code examples (code) | 1 | At least one actionable example |
 | Bounds (bounds) | 1 | "When NOT to use" section |
-| Trifecta (tri) | 1 | Has instruction and/or prompt |
-| Muscle reference (muscle) | 1 | References automation if applicable |
+| Trifecta (tri) | 1 | Has instruction AND muscle (for agentic) |
+| Muscle reference (muscle) | 1 | References automation script |
 
 **Passing Score**: 2/3 minimum (standard tier)
 
@@ -299,66 +311,13 @@ node .github/muscles/brain-qa.cjs | grep {skill-name}
 
 ## Enhancement Patterns
 
-Patterns validated through comprehensive audits:
-
-### 1. Decision Matrix Tables
-
-When multiple options exist, create comparison tables:
-
-```markdown
-| Option | When to Use | Trade-off |
-|--------|-------------|-----------|
-| A | Scenario X | Fast but limited |
-| B | Scenario Y | Slow but complete |
-```
-
-### 2. Anti-Pattern Documentation
-
-Always include what NOT to do:
-
-```markdown
-## Anti-Patterns
-
-| ❌ Don't | ✅ Do | Why |
-|----------|-------|-----|
-| Inline credentials | Use SecretStorage | Security |
-| Sync file I/O in activation | Async operations | Performance |
-```
-
-### 3. Validation Checklists
-
-End with actionable checkpoints:
-
-```markdown
-## Checklist
-
-- [ ] Frontmatter valid (brain-qa passes)
-- [ ] Code examples tested
-- [ ] Anti-patterns documented
-```
-
-### 4. Quick Reference First
-
-Put the most-used info at the top:
-
-```markdown
-## Quick Reference
-
-| Command | Purpose |
-|---------|---------|
-| `npm test` | Run test suite |
-| `npm run build` | Production build |
-```
-
-### 5. Progressive Disclosure
-
-Structure content from simple to complex:
-
-```
-Level 1: Quick Reference (cheat sheet)
-Level 2: Detailed Guidance (how-to)
-Level 3: Deep Expertise (edge cases)
-```
+| Pattern | When | Example |
+|---------|------|---------|
+| Decision matrix tables | Multiple options exist | `Option / When to Use / Trade-off` |
+| Anti-pattern docs | Common mistakes known | `❌ Don't / ✅ Do / Why` |
+| Validation checklists | End of skill/instruction | `- [ ] Frontmatter valid` |
+| Quick reference first | Frequently used info | Tables at top, details below |
+| Progressive disclosure | Mixed audience depth | Quick ref → How-to → Edge cases |
 
 ---
 
@@ -386,24 +345,6 @@ Level 3: Deep Expertise (edge cases)
 | Orphaned instruction | No matching skill | Create skill or merge |
 | No code examples | Generic advice only | Add working snippets |
 | Skipping brain-qa | Unknown quality | Always validate |
-
----
-
-## Validation Commands
-
-```bash
-# Full quality check
-node .github/muscles/brain-qa.cjs
-
-# Schema validation only
-node .github/muscles/brain-qa.cjs --mode schema
-
-# Specific file check
-node .github/muscles/brain-qa.cjs | grep "{skill-name}"
-
-# Sync to heirs (after validation)
-node .github/muscles/sync-architecture.cjs
-```
 
 ---
 

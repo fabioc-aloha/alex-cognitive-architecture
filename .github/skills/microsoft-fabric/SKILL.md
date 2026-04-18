@@ -214,26 +214,7 @@ $storageToken = az account get-access-token --resource https://storage.azure.com
 
 ### 3. Permission Compliance Pipeline
 
-**7-Step CPM Pattern**:
-```mermaid
-graph LR
-    A["📥 Copy<br/>Contacts"] --> B["🔐 MSWide<br/>Perm API"]
-    B --> C["🔐 TXN<br/>Perm API"]
-    C --> D["✅ CPERM<br/>Validation"]
-    D --> E["🌍 Country<br/>Enrichment"]
-    E --> F["💧 Data<br/>Hydration"]
-    F --> G["📤 Load<br/>Lakehouse"]
-
-    style A fill:#ddf4ff,color:#0550ae,stroke:#80ccff
-    style B fill:#d8b9ff,color:#6639ba,stroke:#bf8aff
-    style C fill:#d8b9ff,color:#6639ba,stroke:#bf8aff
-    style D fill:#d3f5db,color:#1a7f37,stroke:#6fdd8b
-    style E fill:#fff8c5,color:#9a6700,stroke:#d4a72c
-    style F fill:#ddf4ff,color:#0550ae,stroke:#80ccff
-    style G fill:#d3f5db,color:#1a7f37,stroke:#6fdd8b
-
-    linkStyle default stroke:#57606a,stroke-width:1.5px
-```
+**7-Step CPM Pattern**: Copy Contacts → MSWide Perm API → TXN Perm API → CPERM Validation → Country Enrichment → Data Hydration → Load Lakehouse
 
 **Permission Tables**:
 - `CPERM_OptOut` - Marketing opt-outs

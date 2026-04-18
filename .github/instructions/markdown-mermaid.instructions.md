@@ -73,6 +73,13 @@ This is the single most common Mermaid mistake. Never use `'transparent'` — al
 - [ ] Colors are pastel (light fills, medium text)
 - [ ] Figure label below diagram
 
+Validation command:
+
+```bash
+# Find mermaid blocks missing init directive
+grep -rn '```mermaid' --include='*.md' -A1 | grep -v 'init:'
+```
+
 ## Do NOT
 
 - Write ANY Mermaid without the init directive template

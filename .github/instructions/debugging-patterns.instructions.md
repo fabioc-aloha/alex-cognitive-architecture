@@ -24,6 +24,17 @@ Activate when: an error occurs, a test fails, or behavior doesn't match expectat
 - Comment out code to narrow the scope
 - Use `git stash` to test against clean state if recent changes may be the cause
 
+```bash
+# Binary search through commits to find the breaking change
+git bisect start
+git bisect bad HEAD
+git bisect good v7.0.0
+# Git checks out midpoint — run your failing test, then:
+git bisect good  # if test passes
+git bisect bad   # if test fails
+git bisect reset # when done
+```
+
 ### Step 3: Read the Error
 
 Stack trace reading pattern:
