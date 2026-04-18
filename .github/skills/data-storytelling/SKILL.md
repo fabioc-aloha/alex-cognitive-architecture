@@ -11,7 +11,7 @@ applyTo: "**/*story*,**/*narrative*,**/*datastory*"
 | ------------ | --------------------------------------------------------------------------- |
 | **Domain**   | Data Analytics                                                              |
 | **Category** | Narrative & Orchestration                                                   |
-| **Trifecta** | SKILL.md + data-storytelling.instructions.md + datastory.prompt.md          |
+| **Components** | SKILL.md + data-storytelling.instructions.md + datastory.prompt.md          |
 | **Depends**  | data-analysis (findings), data-visualization (charts), dashboard-design (layout) |
 
 ## Overview

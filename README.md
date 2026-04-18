@@ -8,7 +8,7 @@ Alex is a VS Code extension that transforms GitHub Copilot into a cognitive lear
 
 ## Features
 
-- 🧠 **Cognitive Architecture** — Skills, instructions, prompts, and agents as interconnected trifectas
+- 🧠 **Cognitive Architecture** — Trifectas (skill + instruction + muscle) with optional prompts for discoverability
 - 💓 **Health Pulse** — Real-time brain health monitoring with ritual tracking
 - 🔄 **Creative Loop** — Ideate→Plan→Build→Test→Release→Improve workflow integration
 - 📚 **Bootstrap Learning** — Learn any domain through conversation

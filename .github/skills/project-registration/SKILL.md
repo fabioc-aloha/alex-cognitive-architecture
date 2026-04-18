@@ -159,7 +159,7 @@ const solutions = registry.projects.filter(p =>
 When a pattern proves valuable and should become a Master Alex capability:
 
 1. Add to `promotedPatterns` array
-2. Create skill/instruction/prompt trifecta in Master
+2. Create skill/instruction/muscle trifecta in Master
 3. Mark as promoted in registry
 
 ### 5. Update Project Health

@@ -14,7 +14,7 @@
  * Scans .github/ cognitive architecture files for token waste patterns
  * and optionally auto-fixes safe patterns.
  *
- * Trifecta: token-waste-elimination (skill + instruction + prompt + this muscle)
+ * Trifecta: token-waste-elimination (skill + instruction + muscle)
  *
  * Usage:
  *   node .github/muscles/audit-token-waste.cjs           # Report only

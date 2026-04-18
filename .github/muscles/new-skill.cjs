@@ -143,7 +143,7 @@ console.log(`  1. Edit .github/skills/${skillName}/SKILL.md`);
 console.log('  2. Run: node .github/muscles/brain-qa.cjs --mode schema');
 console.log('  3. Add to memory-activation index if user-facing');
 if (inheritance !== 'inheritable' && inheritance !== 'universal') {
-  console.log(`  4. If creating trifecta siblings (.instructions.md, .prompt.md):`);
+  console.log(`  4. If creating trifecta siblings (.instructions.md, muscle scripts):`);
   console.log(`     Add 'inheritance: ${inheritance}' to their YAML frontmatter`);
   console.log('     to keep them excluded from the same heirs as the skill.');
 }

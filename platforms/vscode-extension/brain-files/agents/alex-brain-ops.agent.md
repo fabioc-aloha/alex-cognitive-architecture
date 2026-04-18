@@ -217,7 +217,7 @@ Insight → Instruction → Skill → Prompt → Muscle → Agent
 |------|----|---------|---------|
 | Pattern | Instruction | Same guidance given 3+ times | Create `.instructions.md` |
 | Instruction | Skill | Complex domain, needs structure | Create `SKILL.md` in skill folder |
-| Skill | Trifecta | Skill exists without prompt | Add `.prompt.md` workflow |
+| Skill | Trifecta | Agentic skill exists without muscle | Add automation muscle script |
 | Repeated task | Muscle | Manual steps repeated 5+ times | Create automation script |
 | Skill cluster | Agent | 3+ related skills, distinct persona | Propose new agent |
 
@@ -226,7 +226,7 @@ Insight → Instruction → Skill → Prompt → Muscle → Agent
 | Action | Trigger | Process |
 |--------|---------|----------|
 | **Promote** | Component ready for next level | Create new file, link to source |
-| **Complete** | Trifecta missing component | Add missing instruction/skill/prompt |
+| **Complete** | Trifecta missing component | Add missing instruction/skill/muscle |
 | **Merge** | Overlapping components | Consolidate, redirect references |
 | **Retire** | Unused 90+ days, no dependencies | Archive to `alex_archive/` |
 | **Split** | Component exceeds bounds (>400 lines) | Extract focused sub-components |

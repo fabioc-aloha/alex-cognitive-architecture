@@ -27,7 +27,7 @@ Before creating a skill, confirm:
    - `heir:m365` — targets M365 heir only (Teams/M365-specific)
    - `heir:vscode` — heir maintains its own version
 4. **Create SKILL.md**: Domain knowledge with tables, thresholds, examples
-5. **Assess trifecta need**: Does it need an instruction and/or prompt?
+5. **Assess trifecta need**: Does it need an instruction and/or muscle?
    - If non-inheritable, add matching `inheritance:` frontmatter to siblings
 7. **Register**: Add to memory-activation index
 

@@ -55,7 +55,7 @@ Default: `inheritable` (syncs to all heirs). Only declare if non-default.
 | `heir:vscode` | Heir maintains own version |
 | `heir:m365` | M365 heir only |
 
-**Trifecta consistency**: if skill is excluded, its instruction + prompt must have matching `inheritance:` frontmatter.
+**Trifecta consistency**: if skill is excluded, its trifecta siblings (instruction, muscle) and any optional prompt must have matching `inheritance:` frontmatter.
 
 ## Phase 7: Finalize
 

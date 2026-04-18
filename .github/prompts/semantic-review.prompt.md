@@ -57,7 +57,7 @@ Work through each 5C criterion:
 - [ ] Sections build on each other logically
 - [ ] No contradictions between sections
 - [ ] Cross-references are bidirectional
-- [ ] Trifecta alignment (skill ↔ instruction ↔ prompt)
+- [ ] Trifecta alignment (skill ↔ instruction ↔ muscle)
 
 **Correctness Checks**:
 

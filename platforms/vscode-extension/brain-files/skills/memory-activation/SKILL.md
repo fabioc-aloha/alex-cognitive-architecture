@@ -371,7 +371,7 @@ Prompts (`.prompt.md`) contain complex workflows — episodic memory requiring a
 | Learning & Growth       | `/learn`, `cross-domain-transfer`, `performance-assessment` |
 | Development             | `/tdd`, `/review`, `/gapanalysis`, `/improve`               |
 | Release & Brand         | `/release`, `/brand`                                        |
-| Architecture            | `alex-initialization`, `selfactualize`                      |
+| Architecture            | `selfactualize`, `masteraudit`                              |
 
 ### Opportunity Detection
 

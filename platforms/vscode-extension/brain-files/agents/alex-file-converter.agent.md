@@ -125,11 +125,11 @@ This agent coordinates, not duplicates. Each conversion invokes:
 
 | Skill Trifecta | Components |
 |----------------|------------|
-| **md-to-word** | skill + instruction + prompt + muscle |
-| **md-to-html** | skill + instruction + prompt + muscle |
-| **md-to-eml** | skill + instruction + prompt + muscle |
-| **docx-to-md** | skill + instruction + prompt + muscle |
-| **md-scaffold** | skill + instruction + prompt + muscle |
+| **md-to-word** | skill + instruction + muscle (prompt optional) |
+| **md-to-html** | skill + instruction + muscle (prompt optional) |
+| **md-to-eml** | skill + instruction + muscle (prompt optional) |
+| **docx-to-md** | skill + instruction + muscle (prompt optional) |
+| **md-scaffold** | skill + instruction + muscle (prompt optional) |
 
 The agent adds:
 - **Format routing**: Detects conversion direction

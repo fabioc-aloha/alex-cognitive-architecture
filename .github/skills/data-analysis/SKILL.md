@@ -11,7 +11,7 @@ applyTo: "**/*analy*,**/*eda*,**/*profile*,**/*statistic*,**/*correlat*,**/*outl
 | ------------ | -------------------------------------------------------------- |
 | **Domain**   | Data Analytics                                                 |
 | **Category** | Analysis & Insight Extraction                                  |
-| **Trifecta** | SKILL.md + data-analysis.instructions.md + analyze.prompt.md   |
+| **Components** | SKILL.md + data-analysis.instructions.md + analyze.prompt.md   |
 | **Depends**  | data-visualization (chart output), data-ingest.cjs (ingestion) |
 
 ## Overview

@@ -18,7 +18,7 @@ applyTo: "**/*heir*,**/*readiness*,**/*bootstrap*"
 | ----- | ---------------------------------- | ------------------- | ------------------------------------- |
 | **1** | Identify core capabilities         | 15 min              | Candidate list                        |
 | **2** | Run heir Why Test on each          | 20 min              | Trifecta / single-file classification |
-| **3** | Create missing trifecta components | 30 min per trifecta | Instruction + prompt files            |
+| **3** | Create missing trifecta components | 30 min per trifecta | Instruction + muscle files            |
 | **4** | Run 4D gap analysis                | 30 min              | Gap report                            |
 | **5** | Fill gaps (research if needed)     | Variable            | New skills, instructions, prompts     |
 | **6** | Validate with Dream                | 5 min               | 0 architecture issues                 |
@@ -89,7 +89,7 @@ For each candidate, answer four questions:
 | --------- | ------------ | ------------ | ---------- | ----------------------------------- |
 | Daily+    | Deep         | Yes          | 6+ steps   | **Trifecta**                        |
 | Daily+    | Deep         | No           | 6+ steps   | Instruction + Skill                 |
-| Weekly    | Moderate     | Yes          | 3-5 steps  | Instruction + Prompt                |
+| Weekly    | Moderate     | Yes          | 3-5 steps  | Instruction + Skill (prompt optional) |
 | Any       | Shallow      | Any          | 1-2 steps  | **Skill-only** (no trifecta needed) |
 
 ### Step 3: Create Missing Components
@@ -324,7 +324,7 @@ Research-first and trifecta creation work together:
 | **Copy-paste trifecta**      | Skill duplicates instruction content                           | Skill = patterns/why, Instruction = steps/how          |
 | **Skipping research**        | Encoding shallow knowledge produces shallow skills             | Research sprint → validate with examples → then encode |
 | **Skills-only gap analysis** | Misses procedures, roles, workflows                            | Always run all 4 dimensions (GA-S/I/A/P)               |
-| **Inconsistent naming**      | Files exist but Alex can't discover connections                | Use same base name across skill/instruction/prompt     |
+| **Inconsistent naming**      | Files exist but Alex can't discover connections                | Use same base name across skill/instruction/muscle     |
 | **"Just start coding"**      | AI has no context, guesses at patterns                         | Research → Teach → Plan → Execute                      |
 
 ### Mission-Critical Projects (NASA Standards)

@@ -54,7 +54,7 @@ This provides comprehensive architecture maintenance:
 
 - ✅ **Scans** all memory files in `.github/` directories (instructions, prompts, skills)
 - ✅ **Validates** all SKILL.md frontmatter completeness
-- ✅ **Checks** trifecta completeness (skill + instruction + prompt)
+- ✅ **Checks** trifecta completeness (skill + instruction + muscle)
 - ✅ **Reports** detailed health status with statistics
 - ✅ **Documents** results in timestamped `.github/quality/brain-health-*.md` files
 
@@ -146,7 +146,7 @@ Each dream execution generates a comprehensive report including:
 
 ## Trifecta Status
 
-- All skills have matching instruction + prompt ✅
+- All skills have matching instruction + muscle ✅
 
 ## Missing Frontmatter
 
@@ -164,7 +164,7 @@ The dream protocol now provides:
 - **Automatic Execution**: No command-line parameters needed
 - **Visual Progress**: Real-time notifications and status updates
 - **Report Generation**: Timestamped markdown reports in `.github/quality/` folder
-- **Trifecta Validation**: Checks skill + instruction + prompt completeness
+- **Trifecta Validation**: Checks skill + instruction + muscle completeness
 - **Zero Configuration**: Works immediately upon extension installation
 - **Cross-Platform**: Consistent behavior on Windows, macOS, and Linux
 
@@ -224,14 +224,14 @@ These scripts provide CLI and audit capabilities that complement the VS Code dre
 ### **Architecture Health Indicators**
 
 - **Total Memory Files**: Count of all memory files in architecture
-- **Complete Trifectas**: Skills with matching instruction + prompt
+- **Complete Trifectas**: Skills with matching instruction + muscle
 - **Incomplete Skills**: Skills missing trifecta counterparts
 - **Missing Frontmatter**: SKILL.md files without applyTo/description
 - **Health Status**: HEALTHY (0 issues) or ATTENTION REQUIRED (>0 issues)
 
 ### **Performance Optimization Targets**
 
-- **Trifecta completeness**: All skills should have instruction + prompt counterparts
+- **Trifecta completeness**: All skills should have instruction + muscle counterparts
 - **Frontmatter integrity**: All SKILL.md files should have complete metadata
 - **Maintenance efficiency**: Automated validation reduces manual intervention
 - **Report accessibility**: Visual feedback through VS Code editor

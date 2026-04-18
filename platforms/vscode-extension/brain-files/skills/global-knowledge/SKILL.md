@@ -110,7 +110,7 @@ GitHub-cloud-synced notes for VS Code workflows. Use for:
 
 Project-specific cognitive architecture. Use for:
 
-- Skills, instructions, prompts (the trifecta)
+- Skills, instructions, muscles (the trifecta), plus prompts
 - Episodic memories from meditation sessions
 - Synapse connections between skills
 - Project persona (.github/config/project-persona.json)

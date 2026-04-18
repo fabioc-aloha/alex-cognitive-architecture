@@ -102,7 +102,7 @@ Before promoting, assess whether the capability is a trifecta candidate:
 
 | Question                                                               | Answer                          | Implication                |
 | ---------------------------------------------------------------------- | ------------------------------- | -------------------------- |
-| Was this a trifecta in the heir? (skill + instruction + prompt)        | Yes → promote all three         | No → promote skill only    |
+| Was this a trifecta in the heir? (skill + instruction + muscle)        | Yes → promote all three         | No → promote skill only    |
 | Does the heir instruction contain platform-specific steps?             | Yes → adapt or skip instruction | No → promote as-is         |
 | Is the capability user-invocable in Master context?                    | Yes → promote the prompt        | No → skip prompt           |
 | Does it pass the heir Why Test? (see `trifecta-audit.instructions.md`) | Yes → trifecta candidate        | No → single-file promotion |
@@ -264,7 +264,7 @@ Heirs detect new skills via:
 Manual process for heirs to pull skills from Master Alex:
 
 1. Check available inheritable skills in Master's .github/skills/
-2. Copy skill trifecta (instruction + skill + prompt) to the heir project
+2. Copy skill trifecta (skill + instruction + muscle, plus any prompt) to the heir project
 3. Add `inheritedFrom` field in SKILL.md frontmatter for lineage tracking
 
 **Features**:

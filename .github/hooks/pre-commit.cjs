@@ -40,6 +40,7 @@ function categorizeFiles(files) {
     synapses: files.filter(f => /\.github\/skills\/[^\/]+\/synapses\.json$/.test(f)),
     episodic: files.filter(f => /^\.github\/episodic\//.test(f)),
     instructions: files.filter(f => /^\.github\/instructions\//.test(f)),
+    // NOTE: "trifecta" name predates v8.0.0 redefinition. This validates markdown docs with frontmatter.
     trifecta: files.filter(f => /\.(instructions|prompt)\.md$/.test(f))
   };
 }

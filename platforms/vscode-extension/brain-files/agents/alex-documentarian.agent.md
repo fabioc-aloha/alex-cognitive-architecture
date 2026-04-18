@@ -156,7 +156,7 @@ Apply the **Mermaid-first principle**: architecture, flow, and relationship diag
 
 - Skills catalog — Generated skill inventory
 - Agent catalog — Agent ecosystem reference
-- Trifecta catalog — Skill/instruction/prompt completeness mapping
+- Trifecta catalog — Skill/instruction/muscle completeness mapping
 
 ## Principles
 

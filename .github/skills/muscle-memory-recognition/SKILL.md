@@ -135,7 +135,7 @@ When creating a new muscle:
 
 - [ ] Create script in `.github/muscles/`
 - [ ] Add to `inheritance.json` (master-only or inheritable)
-- [ ] Update referencing trifecta files (skills/instructions/prompts)
+- [ ] Update referencing trifecta files (skills/instructions/muscles)
 - [ ] Verify trifecta via brain-qa
 - [ ] Document invocation in referencing files
 - [ ] Test from heir context if inheritable

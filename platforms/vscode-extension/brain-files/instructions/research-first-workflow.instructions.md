@@ -125,7 +125,7 @@ For each **interactive workflow** users will repeat:
 ### 1.5 Ensure Discoverability
 
 **Naming conventions for semantic search:**
-- Every skill → consistent base name across trifecta (skill/instruction/prompt)
+- Every skill → consistent base name across trifecta (skill/instruction/muscle)
 - Every instruction → complete frontmatter (applyTo, description)
 - Every agent → references relevant skills + instructions in system message
 

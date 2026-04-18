@@ -11,7 +11,7 @@ applyTo: "**/*interpret*,**/*read-chart*,**/*chart-review*"
 | ------------ | --------------------------------------------------------------------- |
 | **Domain**   | Data Analytics                                                        |
 | **Category** | Visual Analysis & Insight Extraction                                  |
-| **Trifecta** | SKILL.md + chart-interpretation.instructions.md + interpret.prompt.md |
+| **Components** | SKILL.md + chart-interpretation.instructions.md + interpret.prompt.md |
 | **Depends**  | data-visualization (chart type knowledge), data-analysis (validation) |
 
 ## Overview

@@ -11,7 +11,7 @@ applyTo: "**/*dashboard*,**/*kpi*,**/*panel*,**/*layout*"
 | ------------ | ---------------------------------------------------------------------- |
 | **Domain**   | Data Analytics                                                         |
 | **Category** | Dashboard Architecture & Layout                                        |
-| **Trifecta** | SKILL.md + dashboard-design.instructions.md + dashboard.prompt.md      |
+| **Components** | SKILL.md + dashboard-design.instructions.md + dashboard.prompt.md      |
 | **Depends**  | data-visualization (chart content), data-analysis (KPIs and segments)  |
 
 ## Overview

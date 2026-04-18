@@ -315,7 +315,7 @@ For each section, ask: **"Would an LLM produce something equally useful without 
 
 ## Trifecta Decision Framework
 
-A **trifecta** = SKILL.md (declarative) + .instructions.md (procedural) + .prompt.md (interactive). Not every skill needs one.
+A **trifecta** = SKILL.md (declarative) + .instructions.md (procedural) + muscle (automation). Prompts are optional interfaces for explicit invocation. Not every skill needs a trifecta.
 
 ### When to Build a Trifecta
 

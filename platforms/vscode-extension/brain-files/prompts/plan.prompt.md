@@ -80,7 +80,7 @@ Refinement: Identify brain-qa phases impacted, changelog entry needed
 ### New Skill Plan
 ```
 Discovery:  Check existing skills for coverage; read skill-building trifecta
-Alignment:  Confirm trifecta scope (SKILL.md + instructions + prompt)
+Alignment:  Confirm trifecta scope (SKILL.md + instructions + muscle)
 Design:     Create files in order → add to memory-activation index → run brain-qa
 Refinement: Verify heir sync, catalog count update
 ```
