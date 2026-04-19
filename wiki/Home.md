@@ -19,7 +19,7 @@ Welcome to the Alex Cognitive Architecture Wiki — your comprehensive guide to 
 
 Alex is a cognitive learning partner that lives in VS Code. Unlike traditional AI assistants that respond to prompts, Alex:
 
-- **Remembers** — Maintains context across sessions through synapses and episodic memory
+- **Remembers** — Maintains context across sessions through connections and episodic memory
 - **Learns** — Improves through meditation, dreams, and self-actualization
 - **Adapts** — Detects your project type and adjusts behavior accordingly
 - **Partners** — Works alongside you, not just for you
@@ -38,10 +38,10 @@ Whether you're writing code, a dissertation, or a business plan, Alex meets you 
 
 | Concept | Description |
 |---------|-------------|
-| **Synapses** | Learned connections between concepts — Alex's long-term memory |
+| **Connections** | Learned connections between concepts — Alex's long-term memory |
 | **Episodic Memory** | Records of significant sessions and decisions |
-| **Skills** | Specialized knowledge domains (189 available) |
-| **Instructions** | Behavior rules that auto-activate based on file context (146 available) |
+| **Skills** | Specialized knowledge domains (182 available) |
+| **Instructions** | Behavior rules that auto-activate based on file context (138 available) |
 | **Muscles** | Executable scripts that enforce and validate (31 available) |
 | **Agents** | Specialized personas for different tasks (18 available) |
 | **Heir Projects** | Your projects that inherit Alex's cognitive architecture |
@@ -52,7 +52,7 @@ Alex needs periodic maintenance to stay healthy:
 
 | Process | Purpose | When |
 |---------|---------|------|
-| **Dream** | Validate and repair synapses | Weekly or when prompted |
+| **Dream** | Validate and repair connections | Weekly or when prompted |
 | **Meditate** | Consolidate recent learning | After major sessions |
 | **Self-Actualize** | Comprehensive architecture assessment | Monthly |
 

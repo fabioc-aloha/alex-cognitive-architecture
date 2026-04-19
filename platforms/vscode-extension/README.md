@@ -29,7 +29,7 @@ One-click install deploys the full cognitive architecture into any workspace. Sk
 The Alex sidebar gives you quick access to:
 
 - **Loop Tab** — Creative workflow integration (Ideate → Plan → Build → Test → Release → Improve)
-- **Brain Tab** — Architecture health, skill counts, and maintenance actions
+- **Autopilot Tab** — Scheduled tasks, recurring maintenance, and automation
 - **Setup Tab** — Configure Alex for your project
 
 ### Specialized Agents

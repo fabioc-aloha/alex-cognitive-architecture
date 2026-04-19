@@ -11,7 +11,7 @@ v8.0.0 is a clean-room rebuild. The extension code is entirely new, but your bra
 | **Build system** | webpack | esbuild |
 | **Terminology** | "Neural", "Synapse" | "Architecture", "Connection" |
 | **Architecture model** | Skill + Instruction + Prompt | Skill + Instruction + Muscle (trifecta) |
-| **Sidebar** | Single panel | 3-tab (Loop, Brain, Setup) |
+| **Sidebar** | Single panel | 3-tab (Loop, Autopilot, Setup) |
 | **Health monitoring** | Manual checks | Automatic Health Pulse |
 | **CLI tools** | Imported from extension | Standalone scripts |
 | **Scheduled tasks** | Not available | Autopilot v1 |
@@ -78,8 +78,8 @@ No action needed. Your existing skills and instructions work as before.
 
 After upgrading, verify everything works:
 
-1. Open the Alex sidebar — you should see 3 tabs (Loop, Brain, Setup)
-2. Check the Brain tab — Health Pulse should show "Healthy" with skill counts
+1. Open the Alex sidebar — you should see 3 tabs (Loop, Autopilot, Setup)
+2. Check the Loop tab — Health Pulse should show "Healthy" with skill counts
 3. Run a Dream cycle (`Alex: Dream`) — should complete without errors
 4. Open Copilot Chat — `@alex` should respond normally
 

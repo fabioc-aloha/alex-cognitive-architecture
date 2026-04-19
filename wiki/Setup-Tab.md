@@ -73,7 +73,7 @@ The dream protocol is Alex's primary maintenance process. It validates the entir
 
 **What it does:**
 
-- Validates all synapse connections between skills and instructions
+- Validates all architecture connections between skills and instructions
 - Checks file integrity and frontmatter syntax
 - Detects drift between workspace files and expected state
 - Produces a health report with inventory counts and issue list

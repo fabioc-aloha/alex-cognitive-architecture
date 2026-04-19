@@ -10,7 +10,7 @@ This folder contains the source files for the [Alex Cognitive Architecture Wiki]
 | `Getting-Started.md` | Installation and first-time setup |
 | `User-Manual.md` | Complete command and UI reference |
 | `Loop-Tab.md` | Loop tab — Creative Loop and guided workflows |
-| `Scheduled-Tasks.md` | Schedule tab — Automated recurring tasks |
+| `Autopilot.md` | Autopilot tab — Automated recurring tasks |
 | `Setup-Tab.md` | Setup tab — Workspace config, brain health, memory |
 | `Heir-Project-Setup.md` | Configure Alex for your projects |
 | `FAQ.md` | Frequently asked questions |

@@ -4,9 +4,9 @@
 
 | Version | Supported             |
 | ------- | --------------------- |
-| 7.x.x   | ✅ Actively supported  |
-| 6.x.x   | ⚠️ Security fixes only |
-| < 6.0   | ❌ No longer supported |
+| 8.x.x   | ✅ Actively supported  |
+| 7.x.x   | ⚠️ Security fixes only |
+| < 7.0   | ❌ No longer supported |
 
 ## Reporting a Vulnerability
 
@@ -117,7 +117,7 @@ All safety hooks use `decision: "deny"` (not warn) — they block the action eve
 
 | Workflow                   | Why It's Safe                               | Example                |
 | -------------------------- | ------------------------------------------- | ---------------------- |
-| Dream / Neural Maintenance | Read-only analysis + write to session files | `@alex /dream`         |
+| Dream / Architecture Maintenance | Read-only analysis + write to session files | `@alex /dream`         |
 | Meditation                 | Knowledge consolidation in memory files     | `@alex /meditate`      |
 | Brain QA                   | Read-only architecture health check         | `@alex /brainqa`       |
 | Routine maintenance        | Sync, reindex, validate                     | `@alex reindex skills` |

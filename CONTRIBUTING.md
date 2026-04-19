@@ -22,6 +22,7 @@ alex-cognitive-architecture/
 │       ├── esbuild.mjs                # Build script
 │       └── sync-brain-files.cjs       # Brain → VSIX packaging
 ├── wiki/                              # User documentation (published to GitHub Wiki)
+├── scripts/                           # Automation and build scripts
 ├── assets/                            # Repo-level assets (banner, etc.)
 ├── CHANGELOG.md                       # Release history
 ├── README.md                          # Project overview
@@ -203,7 +204,7 @@ Thank you for your interest in contributing to the Alex Cognitive Architecture p
 - [Architecture Principles](#architecture-principles)
 - [File Naming Conventions](#file-naming-conventions)
 - [Memory File Guidelines](#memory-file-guidelines)
-- [Synaptic Network Integrity](#synaptic-network-integrity)
+- [Connection Integrity](#connection-integrity)
 - [Pull Request Process](#pull-request-process)
 - [Testing and Validation](#testing-and-validation)
 
@@ -274,13 +275,13 @@ Follow the architecture principles and file conventions detailed below.
 ### 5. Test Your Changes
 
 ```
-# Validate synaptic network integrity via VS Code Command Palette
+# Validate architecture integrity via VS Code Command Palette
 Alex: Dream
 
 # Review generated report for:
 # - Network health status (should be HEALTHY)
-# - Broken synapses count (should be 0)
-# - Total synapses (should be 800+)
+# - Broken connections count (should be 0)
+# - Total connections (should be 800+)
 ```
 
 ### 6. Validate with brain-qa
@@ -309,9 +310,9 @@ node .github/muscles/brain-qa.cjs
 - Trigger consolidation when working memory exceeds capacity
 - Use meditation protocols for conscious consolidation
 
-### 4. **Synaptic Network Integrity**
+### 4. **Connection Integrity**
 - All file references must be valid and current
-- Use embedded synapse notation: `[file.md] (strength, type, direction) - "activation condition"`
+- Use embedded connection notation: `[file.md] (strength, type, direction) - "activation condition"`
 - Maintain connection counts and validate regularly
 
 ## File Naming Conventions
@@ -345,7 +346,7 @@ Enumerated list of key principles.
 ## Protocols
 Detailed step-by-step procedures.
 
-## Synaptic Connections
+## Connections
 [related-file.md] (high, bidirectional, procedural) - "when X condition occurs"
 ```
 
@@ -371,19 +372,19 @@ Step-by-step workflows and patterns.
 
 Detailed knowledge, research citations, edge cases.
 
-## Synaptic Connections
+## Connections
 
-Connections encoded in `synapses.json` in the skill folder.
+Connections encoded in the skill folder.
 ```
 
-## Synaptic Network Integrity
+## Connection Integrity
 
-### Embedded Synapse Notation
+### Embedded Connection Notation
 
 When creating connections between files:
 
 ```markdown
-## Synaptic Connections
+## Connections
 [target-file.md] (strength, relationship-type, direction) - "activation condition"
 ```
 
@@ -403,17 +404,17 @@ When creating connections between files:
 Before submitting a pull request:
 
 ```
-# Validate all synaptic connections via VS Code Command Palette
+# Validate all connections via VS Code Command Palette
 Alex: Dream
 
-# Expected: HEALTHY status, 0 broken synapses, 800+ total connections
+# Expected: HEALTHY status, 0 broken connections, 800+ total connections
 ```
 
 ## Pull Request Process
 
 ### 1. Pre-Submission Checklist
 
-- [ ] All synaptic connections validated (0 broken references)
+- [ ] All connections validated (0 broken references)
 - [ ] Version numbers updated following IUPAC convention
 - [ ] Research citations included for new concepts
 - [ ] Dream protocol health check passed
@@ -426,7 +427,7 @@ Alex: Dream
 
 {detailed explanation of changes}
 
-{synaptic impact}:
+{architecture impact}:
 - Files modified: {count}
 - Connections added/updated: {count}
 - Network integrity: {validation result}
@@ -443,7 +444,7 @@ feat: Add lucid dream integration protocols
 Implemented hybrid unconscious-conscious processing bridge
 for enhanced meditation sessions with measurable outcomes.
 
-Synaptic impact:
+Architecture impact:
 - Files modified: 4
 - Connections added/updated: 12
 - Network integrity: 945 connections, 100% valid
@@ -464,11 +465,11 @@ Brief overview of changes
 - [ ] Bug fix (non-breaking change fixing an issue)
 - [ ] Documentation update
 - [ ] Architecture enhancement
-- [ ] Synaptic network optimization
+- [ ] Connection network optimization
 
 ## Architecture Impact
 - **Files Modified**: {count}
-- **Synaptic Connections**: {added/updated/removed}
+- **Connections**: {added/updated/removed}
 - **Network Integrity**: {validation result}
 - **Version Changes**: {if applicable}
 
@@ -484,7 +485,7 @@ Brief overview of changes
 - [ ] Code follows project naming conventions
 - [ ] Documentation updated
 - [ ] All tests passing
-- [ ] No broken synaptic references
+- [ ] No broken references
 - [ ] Commit messages follow format
 ```
 
@@ -506,7 +507,7 @@ node .github/muscles/brain-qa.cjs
 1. **File Reference Check**: Verify all `[file.md]` references point to existing files
 2. **Version Consistency**: Ensure version numbers match IUPAC naming
 3. **Research Citations**: Validate all empirical claims have backing
-4. **Impact Assessment**: Document changes to synaptic network
+4. **Impact Assessment**: Document changes to connection network
 
 ## Questions or Issues?
 
@@ -517,6 +518,6 @@ node .github/muscles/brain-qa.cjs
 
 ## Recognition
 
-Contributors who maintain synaptic network integrity and follow architecture principles will be recognized in project documentation.
+Contributors who maintain connection integrity and follow architecture principles will be recognized in project documentation.
 
 Thank you for contributing to the advancement of empirically-grounded cognitive architectures!

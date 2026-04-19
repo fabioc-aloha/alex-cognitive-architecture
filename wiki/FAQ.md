@@ -14,10 +14,10 @@ Alex is a cognitive learning partner that lives in VS Code. Unlike traditional A
 
 | Feature | Copilot Chat | Alex |
 |---------|--------------|------|
-| **Memory** | Session only | Persistent synapses + episodic |
+| **Memory** | Session only | Persistent connections + episodic |
 | **Learning** | None | Continuous through meditation |
 | **Agents** | Single | 18 specialized agents |
-| **Skills** | Generic | 189 domain-specific |
+| **Skills** | Generic | 182 domain-specific |
 | **Adaptation** | None | Project-aware persona |
 
 ### Does Alex require a separate subscription?
@@ -86,7 +86,7 @@ In agent mode, you can configure Alex as the default Copilot participant. See [U
 | Tab | Purpose | Details |
 |-----|---------|---------|
 | **Loop** | Guided workflows for development | [Loop Tab](Loop-Tab) |
-| **Schedule** | Automated recurring tasks | [Scheduled Tasks](Scheduled-Tasks) |
+| **Autopilot** | Automated recurring tasks | [Autopilot](Autopilot) |
 | **Setup** | Workspace config, brain health, memory | [Setup Tab](Setup-Tab) |
 
 ### Why are my Loop buttons in a different order?
@@ -120,22 +120,22 @@ See [Brain Status](Setup-Tab#brain-status) for details.
 
 ## Memory & Learning
 
-### What are synapses?
+### What are connections?
 
-Synapses are learned connections between concepts — Alex's long-term memory. When Alex discovers a pattern (like "this project uses React with TypeScript"), it creates a synapse to remember that.
+Connections are learned links between concepts — Alex's long-term memory. When Alex discovers a pattern (like "this project uses React with TypeScript"), it creates a connection to remember that.
 
 ### How often should I run dream/meditate?
 
 | Process | Frequency | Purpose |
 |---------|-----------|---------|
-| **Dream** | Weekly | Validate synapse network |
+| **Dream** | Weekly | Validate connection network |
 | **Meditate** | After major sessions | Consolidate learning |
 | **Self-Actualize** | Monthly | Deep architecture review |
 
 ### Can I delete Alex's memories?
 
 Yes:
-- Delete specific synapses: Remove files from `.github/synapses/`
+- Delete specific connections: Remove files from `.github/connections/`
 - Full reset: `@alex reset` in chat
 - Clear episodic memory: Delete `.github/episodic/`
 
@@ -143,7 +143,7 @@ Yes:
 
 Alex has both:
 - **User memory** — Copilot Chat's persistent memory (cloud-synced across workspaces)
-- **Project memory** — In `.github/` (project-specific synapses, episodic memory)
+- **Project memory** — In `.github/` (project-specific connections, episodic memory)
 
 ## Heir Projects
 
@@ -153,7 +153,7 @@ A project that inherits Alex's cognitive architecture. It gets:
 - Project-specific skills
 - Custom instructions
 - Reusable prompts
-- Learned synapses
+- Learned connections
 
 ### How do I set up a heir project?
 
@@ -171,11 +171,11 @@ Yes! Each workspace can be an independent heir project with its own configuratio
 
 ### What are scheduled tasks?
 
-Automated workflows that run on a cron schedule using GitHub Actions. Alex can write blog posts, run audits, check dependencies, and more — all without manual intervention. See [Scheduled Tasks](Scheduled-Tasks) for the full guide.
+Automated workflows that run on a cron schedule using GitHub Actions. Alex can write blog posts, run audits, check dependencies, and more — all without manual intervention. See [Autopilot](Autopilot) for the full guide.
 
 ### How do I set up automation?
 
-1. Open the Alex sidebar → **Schedule** tab
+1. Open the Alex sidebar → **Autopilot** tab
 2. Click **Add Task** and follow the wizard
 3. Enable the task, then click **Generate Workflows**
 4. Commit and push the generated workflow files
@@ -199,12 +199,12 @@ Yes. Go to your repository's **Actions** tab, find the workflow, and click **Run
 
 Check these common causes:
 
-1. **Task not enabled** — Toggle it on in the Schedule tab
+1. **Task not enabled** — Toggle it on in the Autopilot tab
 2. **Workflow not pushed** — Generate workflows, commit, and push to GitHub
 3. **PAT expired** — For agent mode, verify `COPILOT_PAT` hasn't expired
 4. **Cron timing** — GitHub Actions uses UTC and may delay runs by up to 15 minutes
 
-See [Scheduled Tasks — Troubleshooting](Scheduled-Tasks#troubleshooting) for more.
+See [Autopilot — Troubleshooting](Autopilot#troubleshooting) for more.
 
 ## Troubleshooting
 
@@ -233,7 +233,7 @@ Run a dream cycle:
 @alex dream
 ```
 
-This validates and repairs the synapse network.
+This validates and repairs the connection network.
 
 ### Alex is slow
 

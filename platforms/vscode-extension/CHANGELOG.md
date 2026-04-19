@@ -16,11 +16,11 @@ This alpha marks the beginning of the v8.0.0 major release cycle. The extension 
 ### Added
 
 - **Health Pulse System** (`healthPulse.ts`): Real-time brain health monitoring with status computation (healthy/attention/critical), connection health scoring, ritual tracking, and architecture inventory
-- **3-Tab Sidebar Design**: Loop (creative workflow), Brain (architecture visibility), Setup (configuration) — data-driven, declarative button definitions
+- **3-Tab Sidebar Design**: Loop (creative workflow), Autopilot (scheduled maintenance), Setup (configuration) — data-driven, declarative button definitions
 - **Creative Loop Integration**: Ideate→Plan→Build→Test→Release→Improve workflow buttons in sidebar
 - **AI-Generated Extension Icon**: Hand-painted watercolor style icon with neural network motif in teal/amber brand colors
 - **Chat Participant**: `@alex` chat participant with icon integration
-- **Architecture Stats**: Dynamic skill/instruction/prompt/agent counts displayed in Brain tab
+- **Architecture Stats**: Dynamic skill/instruction/prompt/agent counts displayed in Loop tab
 
 ### Changed
 

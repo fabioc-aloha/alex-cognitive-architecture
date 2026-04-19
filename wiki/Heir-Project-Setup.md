@@ -12,7 +12,7 @@ An "heir project" inherits Alex's cognitive architecture:
 - **Instructions** — Behavior rules that auto-activate based on file context
 - **Muscles** — Executable scripts that enforce and validate architecture
 - **Prompts** — Reusable templates for common tasks
-- **Synapses** — Learned connections relevant to your domain
+- **Connections** — Learned connections relevant to your domain
 
 A complete capability is called a **trifecta**: skill + instruction + muscle working together.
 
@@ -256,7 +256,7 @@ The wizard guides you through 10 phases:
 3. **Skill Deployment** — Choose relevant skills
 4. **Instruction Customization** — Project-specific rules
 5. **Prompt Templates** — Common task shortcuts
-6. **Memory Configuration** — Synapse scope settings
+6. **Memory Configuration** — Connection scope settings
 7. **Agent Assignment** — Default agent for project
 8. **Quality Gates** — Pre-commit hooks, linting
 9. **Integration** — CI/CD, testing frameworks

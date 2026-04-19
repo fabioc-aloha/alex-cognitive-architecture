@@ -22,7 +22,7 @@ Alex enhances GitHub Copilot with a **cognitive architecture** — domain knowle
 ## Features
 
 - **Brain Bootstrap** — One-click install of the cognitive architecture into any workspace
-- **3-Tab Sidebar** — Loop (creative workflow), Brain (health monitoring), Setup (configuration)
+- **3-Tab Sidebar** — Loop (creative workflow + health monitoring), Autopilot (scheduled maintenance), Setup (configuration)
 - **Health Pulse** — Real-time brain health monitoring with ritual tracking
 - **Creative Loop** — Ideate → Plan → Build → Test → Release → Improve workflow
 - **Autopilot** — Scheduled task system for recurring brain maintenance

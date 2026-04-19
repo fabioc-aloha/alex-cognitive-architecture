@@ -16,11 +16,11 @@ The extension has been completely rebuilt from scratch with a modern, maintainab
 ### Added
 
 - **Health Pulse System**: Real-time brain health monitoring with status computation (healthy/attention/critical), connection health scoring, ritual tracking, and architecture inventory
-- **3-Tab Sidebar**: Loop (creative workflow), Brain (architecture visibility), Setup (configuration) — data-driven, declarative button definitions
+- **3-Tab Sidebar**: Loop (creative workflow), Autopilot (scheduled maintenance), Setup (configuration) — data-driven, declarative button definitions
 - **Creative Loop Integration**: Ideate → Plan → Build → Test → Release → Improve workflow in sidebar
 - **Autopilot v1**: Scheduled task system for recurring brain maintenance — task cards, enable/disable toggles, interval configuration, and workflow generator for custom tasks
 - **Chat Participant**: `@alex` in Copilot Chat with context-aware routing
-- **Architecture Stats**: Dynamic skill/instruction/prompt/agent counts in Brain tab
+- **Architecture Stats**: Dynamic skill/instruction/prompt/agent counts in Loop tab
 - **Project Phase Detection**: Auto-detects project lifecycle phase for contextual workflow suggestions
 - **Loop Config Generator**: Generates custom loop menu configurations from project analysis
 - **AI-Generated Extension Icon**: Hand-painted watercolor style icon with neural network motif in teal/amber brand colors
@@ -72,11 +72,11 @@ This alpha marks the beginning of the v8.0.0 major release cycle. The extension 
 ### Added
 
 - **Health Pulse System** (`healthPulse.ts`): Real-time brain health monitoring with status computation (healthy/attention/critical), connection health scoring, ritual tracking, and architecture inventory
-- **3-Tab Sidebar Design**: Loop (creative workflow), Brain (architecture visibility), Setup (configuration) — data-driven, declarative button definitions
+- **3-Tab Sidebar Design**: Loop (creative workflow), Autopilot (scheduled maintenance), Setup (configuration) — data-driven, declarative button definitions
 - **Creative Loop Integration**: Ideate→Plan→Build→Test→Release→Improve workflow buttons in sidebar
 - **AI-Generated Extension Icon**: Hand-painted watercolor style icon with neural network motif in teal/amber brand colors
 - **Chat Participant**: `@alex` chat participant with icon integration
-- **Architecture Stats**: Dynamic skill/instruction/prompt/agent counts displayed in Brain tab
+- **Architecture Stats**: Dynamic skill/instruction/prompt/agent counts displayed in Loop tab
 
 ### Changed
 

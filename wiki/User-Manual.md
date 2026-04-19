@@ -29,7 +29,7 @@ Interact with Alex through Copilot Chat using the `@alex` participant.
 |---------|-------------|
 | `@alex help` | List available commands and capabilities |
 | `@alex status` | Show cognitive health and memory stats |
-| `@alex dream` | Run dream cycle (synapse validation) |
+| `@alex dream` | Run dream cycle (connection validation) |
 | `@alex meditate` | Consolidate recent learning |
 | `@alex self-actualize` | Deep architecture assessment |
 
@@ -140,7 +140,7 @@ Or reference the agent directly:
 
 ## Skills
 
-Alex has 189 skills across domains. Skills activate automatically based on context.
+Alex has 182 skills across domains. Skills activate automatically based on context.
 
 ### Skill Categories
 
@@ -170,11 +170,11 @@ Alex has 189 skills across domains. Skills activate automatically based on conte
 
 Alex maintains three types of memory:
 
-### Synapses (Long-term)
+### Connections (Long-term)
 
 Learned connections between concepts. Created when Alex discovers patterns or relationships.
 
-- Stored in `.github/synapses/`
+- Stored in `.github/connections/`
 - Persist across sessions
 - Strengthened through repeated use
 
@@ -202,14 +202,14 @@ Alex needs maintenance to stay healthy. Run these periodically:
 
 ### Dream (Weekly)
 
-Validates and repairs synapse network.
+Validates and repairs connection network.
 
 ```
 @alex dream
 ```
 
 **What it does:**
-- Checks synapse integrity
+- Checks connection integrity
 - Identifies broken connections
 - Proposes repairs
 - Reports health score
@@ -225,7 +225,7 @@ Consolidates recent learning into long-term memory.
 **What it does:**
 - Reviews recent sessions
 - Extracts key insights
-- Creates new synapses
+- Creates new connections
 - Updates skill activations
 
 ### Self-Actualize (Monthly)
