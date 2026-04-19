@@ -249,6 +249,22 @@ For comprehensive setup, run the bootstrap wizard:
 @alex bootstrap this heir
 ```
 
+## Optional VS Code Configuration
+
+### Markdown Preview Styling
+
+Alex includes a GitHub-flavored markdown preview theme. To enable it, add to `.vscode/settings.json`:
+
+```json
+{
+  "markdown.styles": [
+    ".github/config/markdown-light.css"
+  ]
+}
+```
+
+This provides consistent preview styling for your documentation.
+
 The wizard guides you through 10 phases:
 
 1. **Project Analysis** — Detect stack and structure
