@@ -40,8 +40,10 @@ Whether you're writing code, a dissertation, or a business plan, Alex meets you 
 |---------|-------------|
 | **Synapses** | Learned connections between concepts — Alex's long-term memory |
 | **Episodic Memory** | Records of significant sessions and decisions |
-| **Skills** | Specialized knowledge domains (177 available) |
-| **Agents** | Specialized personas for different tasks (Builder, Researcher, etc.) |
+| **Skills** | Specialized knowledge domains (189 available) |
+| **Instructions** | Behavior rules that auto-activate based on file context (146 available) |
+| **Muscles** | Executable scripts that enforce and validate (31 available) |
+| **Agents** | Specialized personas for different tasks (18 available) |
 | **Heir Projects** | Your projects that inherit Alex's cognitive architecture |
 
 ## Health & Maintenance

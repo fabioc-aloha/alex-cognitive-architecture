@@ -12,6 +12,9 @@
 
 - [Chat Commands](User-Manual#chat-commands)
 - [Sidebar Panel](User-Manual#sidebar-panel)
+  - [Loop Tab](Loop-Tab)
+  - [Schedule Tab](Scheduled-Tasks)
+  - [Setup Tab](Setup-Tab)
 - [Agents](User-Manual#agents)
 - [Skills](User-Manual#skills)
 - [Memory System](User-Manual#memory-system)

@@ -8,6 +8,9 @@ Complete reference for Alex commands, UI, and features.
 
 - [Chat Commands](#chat-commands)
 - [Sidebar Panel](#sidebar-panel)
+- [Loop Tab](Loop-Tab)
+- [Schedule Tab](Scheduled-Tasks)
+- [Setup Tab](Setup-Tab)
 - [Agents](#agents)
 - [Skills](#skills)
 - [Memory System](#memory-system)
@@ -53,46 +56,55 @@ Interact with Alex through Copilot Chat using the `@alex` participant.
 
 The Alex sidebar (`Ctrl+Shift+A` or click the Alex icon) contains three tabs:
 
-### Mind Tab
+### Loop Tab
 
-Your window into Alex's cognitive state.
+Your primary workspace — guided workflows for every phase of development.
 
-| Section | Shows |
-|---------|-------|
-| **Health Pulse** | Current cognitive health (0-100) |
-| **Synapses** | Active learned connections |
-| **Skills** | Available knowledge domains |
-| **Memory** | Recent episodic entries |
+| Section | What It Does |
+|---------|-------------|
+| **Health Pulse** | Live status widget showing brain health (Healthy / Attention / Critical) |
+| **Chat with Alex** | Primary button to open a conversation |
+| **Creative Loop** | Six-phase development cycle: Ideate → Plan → Build → Test → Release → Improve |
+| **Build Helpers** | Code review, refactoring, debugging, TDD, diagrams, gap analysis |
+| **Research & Learn** | Socratic learning, deep research, data analysis, literature review |
+| **Communicate** | Presentations, data stories, meeting notes, email drafting |
+| **Project Health** | Vision alignment, health checks, doc audits, security, tech debt, dependencies |
 
-**Actions:**
-- 🧠 **Open Chat Memories** — View Copilot's memory about you
-- 📊 **Memory Audit** — Analyze memory health and efficiency
+Buttons reorder automatically by usage frequency (frecency). See [Loop Tab](Loop-Tab) for full documentation.
 
-### Mission Tab
+### Schedule Tab
 
-Your current focus and session history.
+Manage automated recurring tasks powered by GitHub Actions.
 
-| Section | Shows |
-|---------|-------|
-| **Active Session** | Current conversation context |
-| **Recent Sessions** | Last 5 significant sessions |
-| **Focus Areas** | Auto-detected project domains |
+| Section | What It Does |
+|---------|-------------|
+| **Task Cards** | Configured automations with status, mode, and schedule badges |
+| **Add Task** | Guided wizard for creating new scheduled tasks |
+| **Generate Workflows** | Convert config to GitHub Actions workflow files |
+| **Edit Config** | Open `scheduled-tasks.json` in the editor |
 
-### Journey Tab
+See [Scheduled Tasks](Scheduled-Tasks) for full documentation.
 
-Your learning progress with Alex.
+### Setup Tab
 
-| Section | Shows |
-|---------|-------|
-| **Partnership Level** | How well Alex knows your patterns |
-| **Skills Used** | Most activated skills |
-| **Milestones** | Key learning moments |
+Workspace management, brain maintenance, memory access, and settings.
+
+| Section | What It Does |
+|---------|-------------|
+| **Workspace** | Initialize or upgrade your cognitive architecture |
+| **Brain Status** | Dream protocol, meditation, and self-actualization |
+| **User Memory** | Quick access to memories, agents, instructions, prompts, and MCP config |
+| **Environment** | Extension settings |
+| **Learn** | Wiki and issue tracker links |
+| **About** | Version, publisher, and license |
+
+See [Setup Tab](Setup-Tab) for full documentation.
 
 ---
 
 ## Agents
 
-Alex has specialized agents for different tasks. Each brings focused expertise.
+Alex has 18 specialized agents for different tasks. Here are the most commonly used:
 
 | Agent | Specialty | When to Use |
 |-------|-----------|-------------|
@@ -100,27 +112,38 @@ Alex has specialized agents for different tasks. Each brings focused expertise.
 | **Builder** | Implementation | Writing code, creating features |
 | **Researcher** | Exploration | Learning new domains, investigations |
 | **Validator** | Quality assurance | Code review, testing, audits |
-| **Documentarian** | Documentation | READMEs, wikis, changelogs |
 | **Planner** | Strategy | Architecture, roadmaps, planning |
+| **Documentarian** | Documentation | READMEs, wikis, changelogs |
 | **Presenter** | Communication | Demos, presentations, stakeholder docs |
+| **Frontend** | UI development | React, TypeScript, design systems |
+| **Backend** | API development | FastAPI, Pydantic, data services |
+| **Infrastructure** | Cloud & IaC | Azure, Bicep, Container Apps |
+| **Azure** | Azure services | Azure development with MCP tools |
+| **Critical Thinker** | Analysis | High-stakes decisions, bias detection |
+| **Image Studio** | Visual content | AI image generation via Replicate |
+| **Audio Studio** | Audio content | Voice samples and TTS generation |
+| **Brain Ops** | Maintenance | Cognitive architecture fleet management |
+| **Skill Builder** | Skill creation | Building trifectas (skill + instruction + muscle) |
+| **File Converter** | Format conversion | Document format routing |
+| **M365** | Microsoft 365 | Teams and M365 Copilot development |
 
 ### Switching Agents
 
-In chat:
+In chat, ask Alex to use a specific agent:
 ```
-@alex /builder Create a React component for user profiles
+@alex Use the Builder agent to create a React component for user profiles
 ```
 
-Or explicitly:
+Or reference the agent directly:
 ```
-@alex Use the Researcher agent to investigate OAuth2 best practices
+@alex Use the Researcher to investigate OAuth2 best practices
 ```
 
 ---
 
 ## Skills
 
-Alex has 177 skills across domains. Skills activate automatically based on context.
+Alex has 189 skills across domains. Skills activate automatically based on context.
 
 ### Skill Categories
 
@@ -172,7 +195,7 @@ Copilot Chat's memory about you, accessible to Alex.
 
 - Cloud-synced across workspaces
 - Contains preferences and patterns
-- Managed via Mind tab or `@alex memory audit`
+- Managed via the Setup tab → User Memory, or `@alex memory audit`
 
 ---
 
@@ -226,16 +249,13 @@ Comprehensive architecture assessment.
 
 ## Settings
 
-Configure Alex through VS Code settings (`Ctrl+,`).
+Configure Alex through VS Code settings (`Ctrl+,` → search "alex").
 
 ### Available Settings
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `alex.persona` | `auto` | Your primary persona (Developer/Researcher/Writer/auto) |
-| `alex.verbosity` | `normal` | Response detail level (brief/normal/detailed) |
-| `alex.autoMeditate` | `false` | Auto-meditate after long sessions |
-| `alex.dreamReminder` | `7` | Days between dream reminders |
+| `alex.workspace.protectedMode` | `false` | Prevents brain operations that modify workspace files. Auto-enabled for Master Alex. |
 
 ### Settings File
 
@@ -243,8 +263,7 @@ Create `.vscode/settings.json` in your workspace:
 
 ```json
 {
-  "alex.persona": "developer",
-  "alex.verbosity": "detailed"
+  "alex.workspace.protectedMode": true
 }
 ```
 
@@ -252,11 +271,12 @@ Create `.vscode/settings.json` in your workspace:
 
 ## Keyboard Shortcuts
 
+Alex uses standard VS Code shortcuts:
+
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl+Shift+A` | Toggle Alex sidebar |
 | `Ctrl+Shift+I` | Open Copilot Chat (talk to Alex) |
-| `Ctrl+K Ctrl+A` | Quick Alex command |
+| Click Alex icon in Activity Bar | Toggle Alex sidebar |
 
 ### Custom Shortcuts
 

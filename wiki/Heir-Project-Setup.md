@@ -9,9 +9,12 @@ Configure Alex for your specific project ("heir project"). Alex inherits cogniti
 An "heir project" inherits Alex's cognitive architecture:
 
 - **Skills** — Domain knowledge adapted to your stack
-- **Instructions** — Behavior patterns for your workflow
+- **Instructions** — Behavior rules that auto-activate based on file context
+- **Muscles** — Executable scripts that enforce and validate architecture
 - **Prompts** — Reusable templates for common tasks
 - **Synapses** — Learned connections relevant to your domain
+
+A complete capability is called a **trifecta**: skill + instruction + muscle working together.
 
 ## Quick Setup
 
