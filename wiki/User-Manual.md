@@ -9,7 +9,7 @@ Complete reference for Alex commands, UI, and features.
 - [Chat Commands](#chat-commands)
 - [Sidebar Panel](#sidebar-panel)
 - [Loop Tab](Loop-Tab)
-- [Schedule Tab](Scheduled-Tasks)
+- [Autopilot Tab](Autopilot)
 - [Setup Tab](Setup-Tab)
 - [Agents](#agents)
 - [Skills](#skills)
@@ -70,20 +70,17 @@ Your primary workspace — guided workflows for every phase of development.
 | **Communicate** | Presentations, data stories, meeting notes, email drafting |
 | **Project Health** | Vision alignment, health checks, doc audits, security, tech debt, dependencies |
 
-Buttons reorder automatically by usage frequency (frecency). See [Loop Tab](Loop-Tab) for full documentation.
+Buttons reorder automatically by usage frequency (frecency). The Loop tab is config-driven — its content adapts to your project type and lifecycle phase. See [Loop Tab](Loop-Tab) for full documentation.
 
-### Schedule Tab
+### Autopilot Tab
 
 Manage automated recurring tasks powered by GitHub Actions.
 
 | Section | What It Does |
 |---------|-------------|
-| **Task Cards** | Configured automations with status, mode, and schedule badges |
-| **Add Task** | Guided wizard for creating new scheduled tasks |
-| **Generate Workflows** | Convert config to GitHub Actions workflow files |
-| **Edit Config** | Open `scheduled-tasks.json` in the editor |
+| **Task Cards** | Configured automations with status, mode, schedule, and workflow status badges |\n| **Per-Card Actions** | Edit prompt (agent tasks), Run on GitHub, Delete task |\n| **Add Task** | Guided 5-step wizard for creating new scheduled tasks |\n| **Generate Workflows** | Convert config to GitHub Actions workflow files |\n| **Edit Config** | Open `scheduled-tasks.json` in the editor |\n| **Actions / Agents** | Direct links to the GitHub repo's Actions and Agents pages |
 
-See [Scheduled Tasks](Scheduled-Tasks) for full documentation.
+See [Autopilot](Autopilot) for full documentation.
 
 ### Setup Tab
 

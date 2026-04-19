@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
 import { BRAIN_DIR, TARGET_DIR, VERSION_FILE } from "./shared/constants.js";
+import { writeLoopConfig } from "./sidebar/loopConfigGenerator.js";
 
 /**
  * Brain subdirectories managed by Alex.
@@ -138,6 +139,9 @@ export async function bootstrapBrainFiles(
     // Stamp version
     const versionPath = path.join(workspaceRoot, VERSION_FILE);
     fs.writeFileSync(versionPath, bundledVersion, "utf-8");
+
+    // Generate project-specific loop config
+    writeLoopConfig(workspaceRoot);
 
     const action = installedVersion ? "updated" : "installed";
     const settingsChoice = await vscode.window.showInformationMessage(

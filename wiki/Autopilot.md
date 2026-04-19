@@ -1,4 +1,4 @@
-# Scheduled Tasks
+# Autopilot
 
 Automate recurring work with cron-driven tasks that run via GitHub Actions. Alex can write blog posts, run audits, sync documentation, and more — all on autopilot.
 
@@ -6,8 +6,8 @@ Automate recurring work with cron-driven tasks that run via GitHub Actions. Alex
 
 - [Overview](#overview)
 - [Quick Start](#quick-start)
-- [The Schedule Tab](#the-schedule-tab)
-- [Walkthrough: Your First Scheduled Task](#walkthrough-your-first-scheduled-task)
+- [The Autopilot Tab](#the-autopilot-tab)
+- [Walkthrough: Your First Automated Task](#walkthrough-your-first-automated-task)
 - [Walkthrough: Adding a Direct Task](#walkthrough-adding-a-direct-task)
 - [Execution Modes](#execution-modes)
 - [The Add Task Wizard](#the-add-task-wizard)
@@ -24,13 +24,13 @@ Automate recurring work with cron-driven tasks that run via GitHub Actions. Alex
 
 ## Overview
 
-The scheduling system lets you define tasks that run automatically on a cron schedule. It has three parts:
+The Autopilot system lets you define tasks that run automatically on a cron schedule. It has three parts:
 
 | Part | What | Where |
 |------|------|-------|
 | **Config** | Task definitions | `.github/config/scheduled-tasks.json` |
 | **Workflows** | GitHub Actions YAML | `.github/workflows/scheduled-*.yml` |
-| **Sidebar** | Visual management | Alex sidebar → Schedule tab |
+| **Sidebar** | Visual management | Alex sidebar → Autopilot tab |
 
 Tasks use one of two execution modes:
 
@@ -45,7 +45,7 @@ Tasks use one of two execution modes:
 
 Already familiar with Alex? Here's the 60-second version:
 
-1. Open the Alex sidebar → **Schedule** tab
+1. Open the Alex sidebar → **Autopilot** tab
 2. Click **Add Task** → follow the wizard
 3. Enable the task with the toggle button
 4. Click **Generate Workflows**
@@ -54,9 +54,9 @@ Already familiar with Alex? Here's the 60-second version:
 
 ---
 
-## The Schedule Tab
+## The Autopilot Tab
 
-Open the Alex sidebar (`Ctrl+Shift+A` or click the Alex icon) and click **Schedule**.
+Open the Alex sidebar (`Ctrl+Shift+A` or click the Alex icon) and click **Autopilot**.
 
 ### What You See
 
@@ -67,30 +67,65 @@ Each configured task appears as a card showing:
 - **Mode badge** — "Cloud Agent" or "Direct" with an icon
 - **Schedule badge** — Human-readable frequency (e.g., "Every 6h")
 - **Target badge** — Output directory, if configured
+- **Workflow badge** — Green checkmark if the workflow YAML exists, or a warning icon if the task is enabled but no workflow has been generated yet
 - **Description** — Brief explanation of what the task does
 
-### Action Buttons
+### Per-Card Actions
+
+Each task card has action buttons in the bottom-right corner:
+
+| Button | Icon | When Visible | What It Does |
+|--------|------|-------------|-------------|
+| **Edit Prompt** | Pencil | Agent-mode tasks only | Opens the prompt template `.md` file in the editor |
+| **Run on GitHub** | Play circle | Enabled tasks with a generated workflow | Opens the workflow's dispatch page on GitHub Actions |
+| **Delete** | Trash | Always | Deletes the task from config (with confirmation) |
+
+### Panel Buttons
 
 | Button | Icon | What It Does |
 |--------|------|-------------|
 | **Add Task** | + | Opens the guided wizard to create a new task |
-| **Generate Workflows** | ⚙ | Converts enabled tasks into GitHub Actions YAML files |
-| **Edit Config** | ✏ | Opens `scheduled-tasks.json` in the editor |
-| **Help** | ? | Opens this documentation page |
+| **Generate Workflows** | Gear | Converts enabled tasks into GitHub Actions YAML files |
+| **Edit Config** | Pencil | Opens `scheduled-tasks.json` in the editor |
+| **Help** | Question mark | Opens this documentation page |
+
+### GitHub Links
+
+Below the panel buttons, if the workspace is a GitHub repository, two additional links appear:
+
+| Link | What It Opens |
+|------|---------------|
+| **Actions** | The repository's GitHub Actions page — see workflow runs and history |
+| **Agents** | The repository's `.github/agents/` folder — manage custom Copilot agents |
+
+### Empty State
+
+If no tasks are configured, the Autopilot tab shows a centered message with an **Add Task** button to get started. Tasks are stored in `.github/config/scheduled-tasks.json` — the file is created automatically when you add your first task.
 
 ### Toggling Tasks
 
 Click the play/pause button on any task card to enable or disable it. This writes directly to `scheduled-tasks.json`. After toggling, run **Generate Workflows** to update the workflow files.
 
+### Deleting Tasks
+
+Click the trash icon on any task card. A confirmation dialog appears — click **Delete** to remove the task from `scheduled-tasks.json`. After deleting, run **Generate Workflows** to clean up the stale workflow YAML file.
+
+### Workflow Status Badges
+
+When a task is enabled, the card shows a workflow status badge:
+
+- **Green checkmark** ("Workflow") — The workflow YAML file exists at `.github/workflows/scheduled-{id}.yml`. The task is ready to run.
+- **Warning icon** ("No workflow") — The task is enabled but no workflow file has been generated yet. Click **Generate Workflows** to fix this.
+
 ---
 
-## Walkthrough: Your First Scheduled Task
+## Walkthrough: Your First Automated Task
 
 This walkthrough creates a cloud agent task that writes a weekly project summary.
 
-### Step 1: Open the Schedule Tab
+### Step 1: Open the Autopilot Tab
 
-Click the Alex icon in the sidebar, then click the **Schedule** tab. If no tasks exist yet, you'll see an empty state with an **Add Task** button.
+Click the Alex icon in the sidebar, then click the **Autopilot** tab. If no tasks exist yet, you'll see an empty state with an **Add Task** button.
 
 ### Step 2: Run the Add Task Wizard
 
@@ -127,7 +162,7 @@ The wizard creates:
 - A new entry in `.github/config/scheduled-tasks.json`
 - A prompt template at `.github/config/scheduled-tasks/weekly-project-summary.md`
 
-The task starts **disabled**. You can see it in the Schedule tab as a grayed-out card.
+The task starts **disabled**. You can see it in the Autopilot tab as a grayed-out card.
 
 ### Step 4: Customize the Prompt Template
 
@@ -250,7 +285,7 @@ Or edit `scheduled-tasks.json` directly:
 
 ### Step 3: Enable, Generate, Push
 
-Same as the agent walkthrough: enable → generate workflows → commit → push.
+Same as the agent walkthrough: enable the task, generate workflows, commit, and push.
 
 The generated workflow will run the script, commit changes to a timestamped branch, and open a PR.
 
@@ -379,9 +414,11 @@ A good template has four sections:
 # Task Name
 
 ## Task
+
 One-paragraph description of what to do.
 
 ## Instructions
+
 1. Step-by-step procedure
 2. Be specific about file locations
 3. Include commands to run if needed
@@ -389,11 +426,13 @@ One-paragraph description of what to do.
 5. Say how to create the PR
 
 ## Quality Standards
+
 - What "done right" looks like
 - Style guidelines
 - Things to avoid
 
 ## Context
+
 - Relevant files: `src/components/`, `docs/`
 - Conventions: Follow existing patterns in the codebase
 - References: Link to style guides or standards
@@ -413,7 +452,7 @@ One-paragraph description of what to do.
 
 The workflow generator converts your config into GitHub Actions YAML files.
 
-### From the Schedule Tab
+### From the Autopilot Tab
 
 Click **Generate Workflows**. A terminal opens and runs:
 
@@ -443,6 +482,14 @@ node .github/muscles/generate-scheduled-workflows.cjs --dry-run
 4. Reports what was generated
 
 Disabled tasks are skipped — no workflow is generated for them.
+
+### What the Generator Adds
+
+The generated workflows include features beyond basic cron:
+
+- **Agent mode**: Checks for duplicate open issues before creating a new one (prevents pile-ups). Issues are labeled `automated` and with the task ID for easy filtering.
+- **Direct mode**: PRs include a structured body with the task description and a link to the config file. PRs are labeled `automated` for filtering.
+- **Both modes**: Include `workflow_dispatch` for manual triggering from the GitHub Actions UI.
 
 ### After Generating
 
@@ -493,7 +540,7 @@ GitHub Actions picks up the new cron schedules automatically.
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
 | `id` | string | Yes | — | Unique identifier. Lowercase letters, numbers, hyphens only. |
-| `name` | string | Yes | — | Display name shown in the Schedule tab. |
+| `name` | string | Yes | — | Display name shown in the Autopilot tab. |
 | `description` | string | Yes | — | Brief description of the task's purpose. |
 | `mode` | `"agent"` or `"direct"` | Yes | — | Execution mode. |
 | `schedule` | string | Yes | — | POSIX cron expression (5 fields). |
@@ -534,16 +581,19 @@ Prompt template:
 # Daily Changelog
 
 ## Task
+
 Generate a changelog entry from PRs merged in the last 24 hours.
 
 ## Instructions
-1. List merged PRs since yesterday using `gh pr list --state merged --search "merged:>=$(date -d yesterday +%Y-%m-%d)"`
+
+1. List merged PRs since yesterday
 2. Group by category: Features, Fixes, Maintenance
 3. Write a concise entry in Keep a Changelog format
 4. Append to CHANGELOG.md under the [Unreleased] section
-5. Create a PR titled "docs: daily changelog $(date +%Y-%m-%d)"
+5. Create a PR titled "docs: daily changelog YYYY-MM-DD"
 
 ## Quality Standards
+
 - Use present tense ("Add feature" not "Added feature")
 - Include PR numbers as links
 - Skip dependabot/automated PRs
@@ -599,23 +649,21 @@ Run tests every night and save a summary.
 }
 ```
 
-### Example 5: Blog Writer (Built-in)
+### Built-in Seed Tasks
 
-This task ships with Alex out of the box.
+Alex ships with 7 pre-configured tasks. All start disabled — enable the ones you want.
 
-```json
-{
-  "id": "blog-writer",
-  "name": "Alex Blog Writer",
-  "description": "Write a new blog post from recent brain changes and commits",
-  "skill": "blog-writer",
-  "mode": "agent",
-  "schedule": "0 */6 * * *",
-  "enabled": false,
-  "promptFile": ".github/config/scheduled-tasks/blog-writer.md",
-  "target": "master-wiki/blog/"
-}
-```
+| Task | Mode | Schedule | What It Does |
+|------|------|----------|--------------|
+| **Alex Blog Writer** | Agent | Every 6h | Writes blog posts from recent changes and commits |
+| **Brain Health Audit** | Direct | Daily 8 AM | Runs `brain-qa.cjs` to score architecture health |
+| **Heir Sync Drift Audit** | Direct | Daily 9 AM | Detects drift between master and heir brain files |
+| **Documentation Lint** | Direct | Weekly Mon | Lints markdown docs and validates Mermaid themes |
+| **Token Waste Audit** | Direct | Weekly Wed | Scans for token waste patterns and auto-fixes safe ones |
+| **Skill Compliance Check** | Direct | Weekly Fri | Validates all skills meet the Agent Skills standard |
+| **Weekly Research Digest** | Agent | Weekly Fri noon | Surveys repo activity and web trends to draft a digest |
+
+You can customize any seed task by editing the schedule, description, or prompt template. You can also delete seed tasks you don't need.
 
 ---
 
@@ -634,7 +682,7 @@ This task ships with Alex out of the box.
 
 For cloud agent tasks, you need a Personal Access Token:
 
-1. Go to [GitHub Settings → Developer settings → Personal access tokens → Fine-grained tokens](https://github.com/settings/tokens?type=beta)
+1. Go to [GitHub Settings: Fine-grained tokens](https://github.com/settings/tokens?type=beta)
 2. Click **Generate new token**
 3. Set permissions:
    - **Issues**: Read and write
@@ -691,13 +739,16 @@ Yes. Everything lives in `.github/` — the config, templates, and generated wor
 
 ### Can I edit the generated workflow files?
 
-You can, but changes will be overwritten the next time you run **Generate Workflows**. If you need custom workflow steps, consider creating a separate workflow that's not prefixed with `scheduled-`.
+You can, but changes will be overwritten the next time you run **Generate Workflows**. If you need custom workflow steps, consider creating a separate workflow that isn't prefixed with `scheduled-`.
 
 ### How do I remove a task?
 
-1. Delete the task entry from `scheduled-tasks.json`
-2. Click **Generate Workflows** (this cleans up the stale workflow file)
-3. Commit and push
+Click the **trash icon** on the task card in the Autopilot tab. Confirm the deletion in the dialog. Then:
+
+1. Click **Generate Workflows** (this cleans up the stale workflow file)
+2. Commit and push
+
+Alternatively, you can manually delete the task entry from `scheduled-tasks.json`.
 
 ### Do tasks work in private repositories?
 
@@ -743,9 +794,9 @@ GitHub Actions cron uses UTC. A task scheduled for `0 8 * * *` runs at 8 AM UTC,
 - Check file permissions — the extension needs write access
 - Try clicking **Edit Config** to verify the file is valid JSON
 
-### Schedule Tab Empty
+### Autopilot Tab Empty
 
-- The Schedule tab reads from `.github/config/scheduled-tasks.json`
+- The Autopilot tab reads from `.github/config/scheduled-tasks.json`
 - If the file doesn't exist, you'll see the empty state with an **Add Task** button
 - Run `@alex initialize` to set up the workspace if Alex hasn't been configured yet
 

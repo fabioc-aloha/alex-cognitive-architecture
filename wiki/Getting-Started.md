@@ -33,7 +33,7 @@ When you first install Alex, you'll see the **Alex Welcome** sidebar panel. This
 ### The Welcome Experience
 
 1. **Loop Tab** — Quick actions and prompts organized by category
-2. **Schedule Tab** — Manage [automated tasks](Scheduled-Tasks) that run on cron schedules
+2. **Autopilot Tab** — Manage [automated tasks](Autopilot) that run on cron schedules
 3. **Setup Tab** — First-time configuration and workspace initialization
 
 ### Initial Setup
