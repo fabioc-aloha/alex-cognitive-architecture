@@ -15,7 +15,7 @@ Publish `master-wiki/` to the GitHub Wiki repo (`AlexMaster.wiki.git`). The mast
 | Property | Value |
 |----------|-------|
 | Source | `master-wiki/` in AlexMaster repo |
-| Target | `https://github.com/fabioc-aloha/alex-cognitive-architecture.wiki.git` |
+| Target | `https://github.com/fabioc-aloha/AlexMaster.wiki.git` |
 | Sidebar | `master-wiki/_Sidebar.md` (canonical, synced to wiki) |
 | Footer | `master-wiki/_Footer.md` (canonical, synced to wiki) |
 | Assets | `master-wiki/assets/*.svg` → wiki root as flat files |

@@ -265,8 +265,6 @@ graph(Nodes, Edges)
 | extend anomalies = series_decompose_anomalies(count_)
 ```
 
-For detailed examples and patterns, consult `references/advanced-patterns.md`.
-
 ## 10. Self-Correction Lookup Table
 
 When you encounter an error, look it up here before retrying:

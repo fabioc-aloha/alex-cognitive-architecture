@@ -2,6 +2,7 @@
 // H3: Validator session start
 // Agent-scoped SessionStart hook for Validator mode.
 // Loads adversarial checklist + recent changes summary for faster QA startup.
+// @reviewed: 2026-04-18
 'use strict';
 
 const { execSync } = require('child_process');

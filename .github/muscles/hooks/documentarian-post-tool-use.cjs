@@ -2,6 +2,7 @@
 // H6: Documentarian post-tool -- file change tracker
 // Agent-scoped PostToolUse hook for Documentarian mode.
 // Tracks file modifications and suggests CHANGELOG entries when docs change.
+// @reviewed: 2026-04-18
 'use strict';
 
 const path = require('path');

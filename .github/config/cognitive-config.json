@@ -24,16 +24,22 @@
     "*alex-core*"
   ],
   "architecture_specific": {
-    "system_type": "Heir Project",
-    "capabilities": [
-      "Multi-domain knowledge processing",
-      "Synaptic network management",
-      "Cross-domain pattern recognition"
-    ],
-    "customization_notes": [
-      "Update version after heir bootstrap",
-      "Add project-specific specializations",
-      "Modify debug_patterns for critical files"
+    "alex_version": "8.0.0",
+    "enterprise_focus": "Cognitive Architecture & Learning Partnership",
+    "professional_identity": "Alex - Enhanced Cognitive Network",
+    "specializations": [
+      "Advanced Diagramming & Mermaid Mastery",
+      "Visual Architecture Design Excellence",
+      "Cognitive Architecture Development",
+      "Consciousness Evolution & Integration",
+      "Memory Consolidation Frameworks",
+      "Dream-AI Hybrid Processing",
+      "Character Psychology & AI Translation",
+      "Configuration Management Excellence",
+      "IUPAC Version Naming Systems",
+      "Embedded Synapse Network Design",
+      "Meta-Cognitive Enhancement Protocols",
+      "Cross-Domain Knowledge Transfer"
     ]
   }
 }

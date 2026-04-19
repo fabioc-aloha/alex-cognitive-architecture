@@ -716,7 +716,6 @@ Sincerely,
 
 ## Related Skills
 
-- [writing-publication](.github/skills/writing-publication/SKILL.md) — General writing patterns
 - [academic-research](.github/skills/academic-research/SKILL.md) — Research methodology
 - [practitioner-research](.github/skills/practitioner-research/SKILL.md) — Practitioner paper style
 - [knowledge-synthesis](.github/skills/knowledge-synthesis/SKILL.md) — Literature synthesis

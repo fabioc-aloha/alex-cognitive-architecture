@@ -1,0 +1,33 @@
+{
+  "$schema": "./scheduled-tasks.schema.json",
+  "version": "1.0.0",
+  "tasks": [
+    {
+      "id": "blog-writer",
+      "name": "Alex Blog Writer",
+      "description": "Write a new blog post from recent brain changes and commits",
+      "skill": "blog-writer",
+      "mode": "agent",
+      "schedule": "0 */6 * * *",
+      "enabled": false,
+      "promptFile": ".github/config/scheduled-tasks/blog-writer.md",
+      "target": "master-wiki/blog/"
+    },
+    {
+      "id": "brain-audit",
+      "name": "Brain Health Audit",
+      "description": "Run brain-qa.cjs and report architecture health",
+      "skill": "dream-state",
+      "mode": "direct",
+      "schedule": "0 8 * * *",
+      "enabled": false,
+      "muscle": ".github/muscles/brain-qa.cjs",
+      "muscleArgs": [
+        "--mode",
+        "quick",
+        "--quiet"
+      ],
+      "target": ".github/quality/"
+    }
+  ]
+}

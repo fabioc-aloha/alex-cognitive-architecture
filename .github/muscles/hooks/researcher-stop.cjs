@@ -2,6 +2,7 @@
 // H20: Research continuity
 // Agent-scoped Stop hook for Researcher mode.
 // Reminds to save unanswered questions and partial findings before the session ends.
+// @reviewed: 2026-04-18
 'use strict';
 
 const fs = require('fs');
