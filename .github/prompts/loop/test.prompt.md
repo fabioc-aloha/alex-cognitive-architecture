@@ -1,6 +1,7 @@
 ---
 mode: agent
 description: "Test phase — validate against success criteria with domain-specific methods"
+application: "Run tests, validate success criteria, and verify quality gates"
 tools: ["read_file", "create_file", "list_dir", "run_in_terminal"]
 ---
 

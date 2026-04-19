@@ -50,11 +50,15 @@ Alex is designed for VS Code. Compatibility with forks is not guaranteed.
 
 ### How do I talk to Alex?
 
-Open Copilot Chat (`Ctrl+Shift+I`) and type `@alex` followed by your message:
+Open Copilot Chat (`Ctrl+Shift+I`) and just talk naturally:
 
 ```
-@alex Help me debug this function
+Help me debug this function
 ```
+
+Alex understands context and intent — no special syntax required. For more examples, see [Talking to Alex](User-Manual#talking-to-alex).
+
+> **Tip:** Power users can use `@alex` prefix to explicitly address Alex when multiple participants are installed. See [Advanced Syntax](User-Manual#advanced-syntax).
 
 ### What's the difference between agents?
 
@@ -88,6 +92,26 @@ In agent mode, you can configure Alex as the default Copilot participant. See [U
 | **Loop** | Guided workflows for development | [Loop Tab](Loop-Tab) |
 | **Autopilot** | Automated recurring tasks | [Autopilot](Autopilot) |
 | **Setup** | Workspace config, brain health, memory | [Setup Tab](Setup-Tab) |
+
+### Can I customize which agents appear in VS Code Copilot's @ dropdown?
+
+No — the agent picker in VS Code Copilot Chat is a **VS Code built-in feature**, not part of Alex. VS Code auto-discovers agents from `.github/agents/*.agent.md` files and displays them alphabetically.
+
+What you CAN customize:
+
+| What | Config File | Controls |
+|------|-------------|----------|
+| **Loop tab buttons** | `.github/config/loop-menu.json` | Button groups, labels, prompts |
+| **Autopilot tasks** | `.github/config/scheduled-tasks.json` | Scheduled automation |
+| **Agent definitions** | `.github/agents/*.agent.md` | Agent names, descriptions, instructions |
+
+What you CANNOT customize via Alex:
+
+- Agent ordering in VS Code's @ dropdown
+- Hiding specific agents from the dropdown
+- Grouping agents in the dropdown
+
+If you want only certain agents visible in a project, delete or rename the agent files you don't want. Agents without `.agent.md` files won't appear.
 
 ### Why are my Loop buttons in a different order?
 
@@ -136,7 +160,7 @@ Connections are learned links between concepts — Alex's long-term memory. When
 
 Yes:
 - Delete specific connections: Remove files from `.github/connections/`
-- Full reset: `@alex reset` in chat
+- Full reset: Say "Reset the workspace configuration" in chat
 - Clear episodic memory: Delete `.github/episodic/`
 
 ### Does Alex remember across different projects?
@@ -157,8 +181,10 @@ A project that inherits Alex's cognitive architecture. It gets:
 
 ### How do I set up a heir project?
 
+Say:
+
 ```
-@alex initialize this workspace
+Initialize this workspace
 ```
 
 See [Heir Project Setup](Heir-Project-Setup) for details.

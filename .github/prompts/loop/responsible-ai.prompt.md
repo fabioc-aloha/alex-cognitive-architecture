@@ -1,6 +1,7 @@
 ---
 mode: agent
 description: "Assess project against Microsoft Responsible AI principles"
+application: "Evaluate fairness, reliability, safety, privacy, inclusiveness, transparency, accountability"
 tools: ["codebase", "terminal", "editFiles"]
 ---
 

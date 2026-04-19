@@ -1,6 +1,7 @@
 ---
 mode: agent
 description: "Multi-dimension project health assessment"
+application: "Assess project health across code quality, tests, docs, deps, and architecture"
 tools: ["read_file", "list_dir", "grep_search", "run_in_terminal", "get_errors"]
 ---
 

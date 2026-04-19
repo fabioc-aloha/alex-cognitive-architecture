@@ -121,7 +121,7 @@ if (!fs.existsSync(QUALITY_DIR)) {
 // Values are either YYYY-MM-DD dates or '-' for pending review
 function readExistingSemValues() {
   const gridPath = path.join(QUALITY_DIR, "brain-health-grid.md");
-  if (!fs.existsSync(gridPath)) return { skills: {}, instructions: {}, agents: {}, prompts: {} };
+  if (!fs.existsSync(gridPath)) return { semValues: { skills: {}, instructions: {}, agents: {}, prompts: {} }, staleValues: {} };
 
   const content = fs.readFileSync(gridPath, "utf-8");
   const semValues = { skills: {}, instructions: {}, agents: {}, prompts: {} };

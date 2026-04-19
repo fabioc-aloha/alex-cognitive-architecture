@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.0.1] - 2026-04-19
+
+### Fixed
+
+- **brain-qa.cjs crash on fresh heirs**: Fixed `TypeError: Cannot read properties of undefined (reading 'skills')` when running `brain-qa.cjs` on heir projects without an existing `brain-health-grid.md`. The `readExistingSemValues()` function now returns the correct `{ semValues, staleValues }` structure when the grid file doesn't exist.
+
+### Added
+
+- **Sidebar customization trifecta**: New `sidebar-customization` skill + instruction + `customize-sidebar.prompt.md` teaches heirs how to customize Loop tab buttons (`loop-menu.json`) and Autopilot scheduled tasks (`scheduled-tasks.json`).
+- **Editorial critical thinking guidance**: Added "Editorial Passes Require Critical Thinking" section to `academic-paper-drafting.instructions.md`. Complex style rules (APA7 verb tense, citation format) are judgment tasks, not pattern-matching — now documented with alternative hypotheses, evidence needed, and falsifiability checks.
+- **Thesis/dissertation applyTo**: Expanded `academic-paper-drafting.instructions.md` to trigger on `**/*thesis*,**/*dissertation*` paths.
+- **FAQ: Agent picker clarification**: Added FAQ entry explaining that VS Code Copilot's `@` agent dropdown is a built-in feature — not customizable via Alex. Clarified the difference between Loop tab buttons (customizable via `loop-menu.json`) and the agent picker.
+
+### Changed
+
+- **Documentation: Natural language first**: Revised Getting-Started, User-Manual, and FAQ to use natural language examples throughout. Moved `@alex` prefix and `/slash` command syntax to a new "Advanced Syntax" section at the end of the User Manual for power users.
+- **Heir feedback channel tested**: First production use of `AI-Memory/feedback/` for heir-to-master escalations. Three issues reported and resolved within one session.
+
+---
+
 ## [8.0.0] - 2026-04-19
 
 ### Major Release — Clean-Room Extension Rebuild

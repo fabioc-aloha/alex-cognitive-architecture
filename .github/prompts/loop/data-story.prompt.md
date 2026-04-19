@@ -1,6 +1,7 @@
 ---
 mode: agent
 description: "Data → Analysis → Visualization → Narrative pipeline"
+application: "Transform datasets into compelling data-driven narratives"
 tools: ["read_file", "create_file", "run_in_terminal"]
 ---
 

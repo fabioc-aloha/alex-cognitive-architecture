@@ -1,6 +1,7 @@
 ---
 mode: agent
 description: "Structured meeting capture and organization"
+application: "Capture meeting notes with decisions, actions, and follow-ups"
 tools: ["create_file", "read_file"]
 ---
 

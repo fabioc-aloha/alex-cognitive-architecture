@@ -1,6 +1,7 @@
 ---
 mode: agent
 description: "Systematic debugging — reproduce, isolate, hypothesize, fix, verify"
+application: "Debug errors, crashes, test failures, and unexpected behavior"
 tools: ["read_file", "grep_search", "run_in_terminal", "semantic_search"]
 ---
 

@@ -1,6 +1,7 @@
 ---
 mode: agent
 description: "Ideate phase — scaffold a wiki and explore your idea"
+application: "Brainstorm, scaffold wiki structure, and explore new project ideas"
 tools: ["create_file", "read_file", "list_dir"]
 ---
 

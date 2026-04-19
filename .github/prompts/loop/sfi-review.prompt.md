@@ -1,6 +1,7 @@
 ---
 mode: agent
 description: "Assess project against Microsoft Secure Future Initiative principles"
+application: "Evaluate project against SFI pillars: secure by design, default, and operations"
 tools: ["codebase", "terminal", "editFiles"]
 ---
 

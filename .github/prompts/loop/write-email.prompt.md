@@ -1,6 +1,7 @@
 ---
 mode: agent
 description: "Professional email drafting with proper tone"
+application: "Draft professional emails with appropriate tone, structure, and clarity"
 tools: ["create_file", "read_file"]
 ---
 

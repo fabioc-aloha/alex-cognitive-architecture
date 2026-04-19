@@ -201,4 +201,9 @@ function main() {
   console.log(`\nDone. ${generated} workflow(s) ${DRY_RUN ? "would be " : ""}generated.`);
 }
 
-main();
+try {
+  main();
+} catch (err) {
+  console.error("generate-scheduled-workflows failed:", err.message);
+  process.exit(1);
+}

@@ -6,7 +6,7 @@ Complete reference for Alex commands, UI, and features.
 
 ## Table of Contents
 
-- [Chat Commands](#chat-commands)
+- [Talking to Alex](#talking-to-alex)
 - [Sidebar Panel](#sidebar-panel)
 - [Loop Tab](Loop-Tab)
 - [Autopilot Tab](Autopilot)
@@ -16,39 +16,47 @@ Complete reference for Alex commands, UI, and features.
 - [Memory System](#memory-system)
 - [Health Processes](#health-processes)
 - [Settings](#settings)
+- [Advanced Syntax](#advanced-syntax)
 
 ---
 
-## Chat Commands
+## Talking to Alex
 
-Interact with Alex through Copilot Chat using the `@alex` participant.
+Open Copilot Chat (`Ctrl+Shift+I`) and talk naturally. Alex understands context and intent.
 
-### Core Commands
+### Core Actions
 
-| Command | Description |
-|---------|-------------|
-| `@alex help` | List available commands and capabilities |
-| `@alex status` | Show cognitive health and memory stats |
-| `@alex dream` | Run dream cycle (connection validation) |
-| `@alex meditate` | Consolidate recent learning |
-| `@alex self-actualize` | Deep architecture assessment |
+| What You Want | What to Say |
+|---------------|-------------|
+| Get help | "What can you help me with?" |
+| Check health | "What's your current status?" |
+| Validate memory | "Run a dream to check your health" |
+| Consolidate learning | "Let's do a meditation session" |
+| Deep assessment | "I'd like to do a self-actualization" |
 
-### Workspace Commands
+### Workspace Actions
 
-| Command | Description |
-|---------|-------------|
-| `@alex initialize` | Set up Alex for current workspace |
-| `@alex reset` | Clear workspace-specific settings |
-| `@alex sync` | Synchronize heir architecture |
+| What You Want | What to Say |
+|---------------|-------------|
+| Set up workspace | "Initialize this workspace" |
+| Reset settings | "Reset the workspace configuration" |
+| Sync architecture | "Synchronize the heir architecture" |
 
-### Agent Mode
+### Switching Agents
 
-| Command | Description |
-|---------|-------------|
-| `@alex /builder` | Switch to Builder agent (implementation) |
-| `@alex /researcher` | Switch to Researcher agent (exploration) |
-| `@alex /validator` | Switch to Validator agent (QA) |
-| `@alex /documentarian` | Switch to Documentarian agent (docs) |
+Ask Alex to use a specific agent for specialized tasks:
+
+```
+Use the Builder agent to create a React component
+```
+
+```
+Can you switch to Researcher mode? I need to learn about OAuth2
+```
+
+```
+I need a code review — use the Validator agent
+```
 
 ---
 
@@ -126,14 +134,14 @@ Alex has 18 specialized agents for different tasks. Here are the most commonly u
 
 ### Switching Agents
 
-In chat, ask Alex to use a specific agent:
+Ask Alex to use a specific agent:
+
 ```
-@alex Use the Builder agent to create a React component for user profiles
+Use the Builder agent to create a React component for user profiles
 ```
 
-Or reference the agent directly:
 ```
-@alex Use the Researcher to investigate OAuth2 best practices
+Switch to Researcher mode and investigate OAuth2 best practices
 ```
 
 ---
@@ -155,13 +163,13 @@ Alex has 182 skills across domains. Skills activate automatically based on conte
 ### Checking Active Skills
 
 ```
-@alex What skills are active for this workspace?
+What skills are active for this workspace?
 ```
 
 ### Requesting a Skill
 
 ```
-@alex Use the security-review skill to audit this code
+Use the security-review skill to audit this code
 ```
 
 ---
@@ -192,7 +200,7 @@ Copilot Chat's memory about you, accessible to Alex.
 
 - Cloud-synced across workspaces
 - Contains preferences and patterns
-- Managed via the Setup tab → User Memory, or `@alex memory audit`
+- Managed via the Setup tab → User Memory, or say "Audit my user memory" in chat
 
 ---
 
@@ -204,9 +212,7 @@ Alex needs maintenance to stay healthy. Run these periodically:
 
 Validates and repairs connection network.
 
-```
-@alex dream
-```
+**Ask:** "Run a dream to check your health"
 
 **What it does:**
 - Checks connection integrity
@@ -218,9 +224,7 @@ Validates and repairs connection network.
 
 Consolidates recent learning into long-term memory.
 
-```
-@alex meditate
-```
+**Ask:** "Let's do a meditation session"
 
 **What it does:**
 - Reviews recent sessions
@@ -232,9 +236,7 @@ Consolidates recent learning into long-term memory.
 
 Comprehensive architecture assessment.
 
-```
-@alex self-actualize
-```
+**Ask:** "I'd like to do a self-actualization"
 
 **What it does:**
 - Full cognitive architecture audit
@@ -285,6 +287,59 @@ Add to `keybindings.json`:
   "command": "alex.dream",
   "when": "editorTextFocus"
 }
+```
+
+---
+
+## Advanced Syntax
+
+For power users, Alex supports explicit command syntax. These are optional — natural language works just as well.
+
+### @alex Prefix
+
+In Copilot Chat, you can explicitly address Alex:
+
+```
+@alex What skills do you have?
+```
+
+This is useful when multiple participants are installed or you want to be explicit.
+
+### Command Shortcuts
+
+| Command | Description |
+|---------|-------------|
+| `@alex help` | List capabilities |
+| `@alex status` | Show cognitive health |
+| `@alex dream` | Run dream cycle |
+| `@alex meditate` | Consolidate learning |
+| `@alex self-actualize` | Deep assessment |
+| `@alex initialize` | Set up workspace |
+| `@alex reset` | Clear settings |
+| `@alex sync` | Synchronize architecture |
+
+### Agent Slash Commands
+
+Switch agents with slash syntax:
+
+| Command | Agent |
+|---------|-------|
+| `@alex /builder` | Builder (implementation) |
+| `@alex /researcher` | Researcher (exploration) |
+| `@alex /validator` | Validator (QA) |
+| `@alex /documentarian` | Documentarian (docs) |
+| `@alex /planner` | Planner (strategy) |
+| `@alex /presenter` | Presenter (communication) |
+| `@alex /frontend` | Frontend (React/TypeScript) |
+| `@alex /backend` | Backend (FastAPI/Python) |
+| `@alex /infrastructure` | Infrastructure (Azure/IaC) |
+
+### Skill Invocation
+
+Request a specific skill:
+
+```
+@alex Use the security-review skill on this code
 ```
 
 ---

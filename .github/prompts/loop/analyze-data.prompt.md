@@ -1,6 +1,7 @@
 ---
 mode: agent
 description: "Systematic EDA that produces narrative insights, not just statistics"
+application: "Exploratory data analysis, profiling, distributions, correlations, anomaly detection"
 tools: ["read_file", "run_in_terminal", "create_file"]
 ---
 

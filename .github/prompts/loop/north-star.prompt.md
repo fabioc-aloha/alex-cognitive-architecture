@@ -1,6 +1,7 @@
 ---
 mode: agent
 description: "Check alignment with project north star"
+application: "Verify current work aligns with project vision and guiding principles"
 tools: ["read_file", "semantic_search", "grep_search"]
 ---
 

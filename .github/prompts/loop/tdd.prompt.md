@@ -1,6 +1,7 @@
 ---
 mode: agent
 description: "Test-Driven Development — Red/Green/Refactor cycle"
+application: "Write failing tests first, implement to pass, then refactor"
 tools: ["create_file", "read_file", "run_in_terminal", "replace_string_in_file"]
 ---
 

@@ -1,6 +1,7 @@
 ---
 mode: agent
 description: "Deep research with Researcher mode — breadth before depth"
+application: "Research topics in depth with web search, source gathering, and synthesis"
 tools: ["fetch_webpage", "semantic_search", "read_file", "create_file"]
 ---
 

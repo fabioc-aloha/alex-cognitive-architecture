@@ -1,7 +1,7 @@
 ---
 description: "End-to-end academic paper drafting for journals and conferences with venue-specific templates"
 application: "When writing academic papers, manuscripts, journal submissions, or conference proceedings"
-applyTo: "**/*paper*,**/*manuscript*,**/*journal*,**/*conference*,**/*publication*"
+applyTo: "**/*paper*,**/*manuscript*,**/*journal*,**/*conference*,**/*publication*,**/*thesis*,**/*dissertation*"
 ---
 
 # Academic Paper Drafting
@@ -29,6 +29,20 @@ Turn research into published scholarship — from blank page to accepted manuscr
 - Every claim needs a citation or evidence
 - Figures must be interpretable in grayscale
 - Abstract should work standalone (no forward references)
+
+## Editorial Passes Require Critical Thinking
+
+Complex style rules (APA7 verb tense, citation format, hedge language) are **judgment tasks**, not pattern-matching. Before any editorial pass:
+
+1. **Alternative hypotheses** — "Is this present tense intentional?"
+2. **Evidence needed** — What does APA7 say about *this specific context*?
+3. **Falsifiability** — What would prove this word should stay as-is?
+
+Common nuances that mechanical passes miss:
+- Scale items retain present tense (describing what items *say*)
+- Figure captions use present tense (describing what visuals *show*)
+- Cross-references to completed chapters need past tense
+- "Suggests" in findings sections needs past tense — but requires critical analysis to recognize
 
 ## Skill Reference
 

@@ -46,21 +46,37 @@ Alex will prompt you to:
 
 ## Your First Conversation
 
-Open Copilot Chat (`Ctrl+Shift+I`) and type:
+Open Copilot Chat (`Ctrl+Shift+I`) and just talk naturally:
 
 ```
-@alex What can you help me with?
+What can you help me with?
 ```
 
-Alex will introduce available capabilities based on your workspace.
+Alex will introduce available capabilities based on your workspace. You can ask follow-up questions like a normal conversation:
 
-## Try These Commands
+```
+Can you explain the Creative Loop workflow?
+```
 
-| Command | What It Does |
-|---------|--------------|
-| `@alex dream` | Validates and repairs Alex's memory |
-| `@alex meditate` | Consolidates recent learning |
-| `@alex status` | Shows current cognitive health |
+```
+Help me debug this function
+```
+
+```
+What skills do you have for code review?
+```
+
+## Common Tasks
+
+Here are some things you can ask Alex to do:
+
+| What You Want | What to Say |
+|---------------|-------------|
+| Check brain health | "Run a dream to check your health" |
+| Consolidate learning | "Let's do a meditation session" |
+| See current status | "What's your current cognitive status?" |
+| Set up workspace | "Initialize this workspace for Alex" |
+| Learn about project | "What do you know about this codebase?" |
 
 ## Configure Your Workspace
 
@@ -71,10 +87,10 @@ For Alex to work best in your project, create a `copilot-instructions.md` file:
 echo "# Project Instructions\n\nThis is a TypeScript project using React." > .github/copilot-instructions.md
 ```
 
-Or let Alex do it:
+Or just ask Alex:
 
 ```
-@alex initialize this workspace
+Initialize this workspace and create project instructions
 ```
 
 ## What's Next?
