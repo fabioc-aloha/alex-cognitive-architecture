@@ -18,31 +18,41 @@ Publish `master-wiki/` to the GitHub Wiki repo (`AlexMaster.wiki.git`). The mast
 | Target | `https://github.com/fabioc-aloha/AlexMaster.wiki.git` |
 | Sidebar | `master-wiki/_Sidebar.md` (canonical, synced to wiki) |
 | Footer | `master-wiki/_Footer.md` (canonical, synced to wiki) |
-| Assets | `master-wiki/assets/*.svg` → wiki root as flat files |
+| Assets | All image/SVG files from asset dirs → wiki root (flat) |
+
+## Automation
+
+```bash
+node scripts/publish-master-wiki.cjs              # full publish
+node scripts/publish-master-wiki.cjs --dry-run    # preview mapping
+node scripts/publish-master-wiki.cjs --no-push    # flatten to .wiki-publish-tmp/
+node scripts/publish-master-wiki.cjs --message "docs: v8.0.0"
+```
+
+The script handles folder-to-prefix mapping, link rewriting, and asset flattening.
 
 ## Folder-to-Prefix Mapping
 
 GitHub Wiki is flat. Files in subfolders get a prefix derived from the folder name.
 
-| Source Folder | Wiki Prefix | Example |
-|---------------|-------------|---------|
-| `master-wiki/` (root) | _(none)_ | `README.md` → `Home.md` |
-| `master-wiki/architecture/` | _(none)_ | Already flat names |
-| `master-wiki/blog/` | `BLOG-` | `001-HELLO-WORLD.md` → `BLOG-001-HELLO-WORLD.md` |
-| `master-wiki/blog/README.md` | — | → `BLOG-HOME.md` |
-| `master-wiki/brand/` | _(none)_ | Already flat names |
-| `master-wiki/cowork/` | `Cowork-` | `OVERVIEW.md` → `Cowork-OVERVIEW.md` |
-| `master-wiki/cowork/README.md` | — | → `Cowork-README.md` |
-| `master-wiki/decisions/` | _(none)_ | Already flat names |
-| `master-wiki/guides/` | _(none)_ | Already flat names |
-| `master-wiki/heirs/` | _(none)_ | Already flat names, except README |
-| `master-wiki/heirs/README.md` | — | → `HEIR-SYSTEM.md` |
-| `master-wiki/platforms/m365/` | _(none)_ | Already flat names |
-| `master-wiki/research/` | _(none)_ | Already flat names |
-| `master-wiki/rituals/` | `RITUALS-` | `DREAM.md` → `RITUALS-DREAM.md` |
-| `master-wiki/rituals/README.md` | — | → `RITUALS.md` |
-| `master-wiki/safety/` | _(none)_ | Already flat names |
-| `master-wiki/vscode/` | _(none)_ | Already flat names |
+| Source Folder | Wiki Prefix | README Target |
+|---------------|-------------|---------------|
+| `master-wiki/` (root) | _(none)_ | `Home.md` |
+| `master-wiki/architecture/` | _(none)_ | — |
+| `master-wiki/blog/` | `BLOG-` | `BLOG-HOME.md` |
+| `master-wiki/brand/` | _(none)_ | — |
+| `master-wiki/cowork/` | `COWORK-` | `COWORK-README.md` |
+| `master-wiki/critical-thinking/` | `CRITICAL-THINKING-` | `CRITICAL-THINKING-README.md` |
+| `master-wiki/decisions/` | _(none)_ | — |
+| `master-wiki/guides/` | _(none)_ | — |
+| `master-wiki/heirs/` | _(none)_ | `HEIR-SYSTEM.md` |
+| `master-wiki/platforms/m365/` | _(none)_ | — |
+| `master-wiki/portraits/` | _(none)_ | `PORTRAITS.md` |
+| `master-wiki/research/` | _(none)_ | — |
+| `master-wiki/rituals/` | _(none)_ | `RITUALS-OVERVIEW.md` |
+| `master-wiki/safety/` | _(none)_ | — |
+| `master-wiki/ui-ux/` | _(none)_ | — |
+| `master-wiki/vscode/` | _(none)_ | — |
 | `master-wiki/assets/` | _(none)_ | SVGs copied flat to wiki root |
 
 ## Special File Mappings
@@ -59,29 +69,20 @@ Internal links must be rewritten from relative paths to flat wiki page names (no
 
 | Source Link Pattern | Wiki Link |
 |---------------------|-----------|
-| `./MEDITATION.md` | `RITUALS-MEDITATION` |
+| `./MEDITATION.md` | `MEDITATION` |
 | `../architecture/COGNITIVE-ARCHITECTURE.md` | `COGNITIVE-ARCHITECTURE` |
 | `../assets/banner-rituals.svg` | `banner-rituals.svg` |
-| `../../.github/prompts/dream.prompt.md` | _(remove or note as source-only)_ |
+| `../../.github/prompts/dream.prompt.md` | Full GitHub repo URL |
 | `./README.md` (within a folder) | Mapped per folder prefix table above |
 
-### Link Rewriting Procedure
-
-1. Strip `../` path traversals
-2. Strip folder prefixes that match the mapping table
-3. Apply the folder prefix if the source folder uses one
-4. Remove `.md` extension
-5. Leave anchor fragments (`#section`) intact
+Link rewriting is handled by `scripts/publish-master-wiki.cjs`.
 
 ## Publish Checklist
 
-1. Clone `AlexMaster.wiki.git` to temp dir
-2. Copy all `.md` and `.svg` files, applying name mapping
-3. Rewrite internal links in copied files
-4. Sync `_Sidebar.md` and `_Footer.md`
-5. `git add -A && git status` — review changes
-6. `git commit -m "docs: sync from master-wiki"` and push
-7. Remove temp clone
+1. `node scripts/publish-master-wiki.cjs --dry-run` — verify mapping
+2. `node scripts/publish-master-wiki.cjs` — publish
+
+The script handles clone, flatten, link-rewrite, commit, push, and cleanup.
 
 ## What NOT to Publish
 

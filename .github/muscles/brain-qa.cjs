@@ -168,7 +168,7 @@ function readExistingSemValues() {
   // Parse Prompts table: | [prompt-name](path) | lines | ... | Sem Review |
   const promptsSection = content.match(/## Prompts[\s\S]*?(?=## Muscles|## Overall|$)/);
   if (promptsSection) {
-    const promptRows = promptsSection[0].matchAll(/^\| \[([\w-]+)\]\([^)]+\) \| \d+ \|.*\| (\d{4}-\d{2}-\d{2}|-) \|$/gm);
+    const promptRows = promptsSection[0].matchAll(/^\| \[([\w-]+)\]\(\.\.\/prompts\/(?:[\w-]+\/)?\1\.prompt\.md\) \| \d+ \|.*\| (\d{4}-\d{2}-\d{2}|-) \|$/gm);
     for (const match of promptRows) {
       const name = match[1];
       const sem = match[2];
@@ -504,10 +504,33 @@ function scanPrompts() {
   if (!fs.existsSync(promptsDir)) return [];
 
   const results = [];
-  const files = fs.readdirSync(promptsDir).filter(f => f.endsWith(".prompt.md"));
 
-  for (const file of files) {
-    const content = fs.readFileSync(path.join(promptsDir, file), "utf-8");
+  // Collect prompt files from root and subdirectories (e.g., loop/)
+  const entries = fs.readdirSync(promptsDir, { withFileTypes: true });
+  const promptFiles = [];
+
+  // Root-level prompts
+  for (const e of entries) {
+    if (e.isFile() && e.name.endsWith(".prompt.md")) {
+      promptFiles.push({ file: e.name, subdir: null });
+    }
+  }
+
+  // Subdirectory prompts (e.g., prompts/loop/*.prompt.md)
+  for (const e of entries) {
+    if (!e.isDirectory()) continue;
+    const subPath = path.join(promptsDir, e.name);
+    const subFiles = fs.readdirSync(subPath).filter(f => f.endsWith(".prompt.md"));
+    for (const sf of subFiles) {
+      promptFiles.push({ file: sf, subdir: e.name });
+    }
+  }
+
+  for (const { file, subdir } of promptFiles) {
+    const fullPath = subdir
+      ? path.join(promptsDir, subdir, file)
+      : path.join(promptsDir, file);
+    const content = fs.readFileSync(fullPath, "utf-8");
     const lines = content.split("\n").length;
     const name = file.replace(".prompt.md", "");
 
@@ -524,7 +547,7 @@ function scanPrompts() {
     const score = flags.desc + flags.app + flags.agent + flags.over20;
     // desc + app are GATES - prompts need both for discoverability and routing
     const pass = hasDesc && hasApp && (score >= 3);
-    results.push({ name, lines, flags, score, maxScore: 4, pass });
+    results.push({ name, lines, flags, score, maxScore: 4, pass, subdir });
   }
 
   // Sort: worst score first, then unreviewed first, then alphabetically
@@ -1146,8 +1169,11 @@ function generateGrid() {
     const passIcon = p.pass ? "✓" : "✗";
     // Preserve existing sem date if available, otherwise '-' (pending review)
     const sem = EXISTING_SEM.prompts[p.name] ?? '-';
-    // Link to prompt file
-    const nameLink = `[${p.name}](../prompts/${p.name}.prompt.md)`;
+    // Link to prompt file — include subdir path if present
+    const relPath = p.subdir
+      ? `../prompts/${p.subdir}/${p.name}.prompt.md`
+      : `../prompts/${p.name}.prompt.md`;
+    const nameLink = `[${p.name}](${relPath})`;
     lines.push(`| ${nameLink} | ${p.lines} | ${f.desc} | ${f.app} | ${f.agent} | ${f.over20} | ${p.score}/4 | ${passIcon} | ${sem} |`);
   }
 

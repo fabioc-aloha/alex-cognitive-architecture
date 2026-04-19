@@ -28,6 +28,71 @@
         "--quiet"
       ],
       "target": ".github/quality/"
+    },
+    {
+      "id": "heir-sync-audit",
+      "name": "Heir Sync Drift Audit",
+      "description": "Detect drift between master and heir brain files",
+      "skill": "heir-sync-management",
+      "mode": "direct",
+      "schedule": "0 9 * * *",
+      "enabled": false,
+      "muscle": "scripts/audit-heir-sync-drift.cjs",
+      "muscleArgs": [
+        "--json"
+      ],
+      "target": "heir/"
+    },
+    {
+      "id": "docs-lint",
+      "name": "Documentation Lint",
+      "description": "Lint markdown docs and validate Mermaid diagram themes",
+      "skill": "lint-clean-markdown",
+      "mode": "direct",
+      "schedule": "0 10 * * 1",
+      "enabled": false,
+      "muscle": "scripts/lint-docs.cjs",
+      "muscleArgs": [
+        "--json"
+      ],
+      "target": "master-wiki/"
+    },
+    {
+      "id": "token-waste-audit",
+      "name": "Token Waste Audit",
+      "description": "Scan cognitive architecture for token waste patterns and auto-fix safe ones",
+      "skill": "token-waste-elimination",
+      "mode": "direct",
+      "schedule": "0 10 * * 3",
+      "enabled": false,
+      "muscle": ".github/muscles/audit-token-waste.cjs",
+      "muscleArgs": [
+        "--fix"
+      ],
+      "target": ".github/"
+    },
+    {
+      "id": "skill-validation",
+      "name": "Skill Compliance Check",
+      "description": "Validate all skills meet VS Code Agent Skills standard",
+      "skill": "skill-building",
+      "mode": "direct",
+      "schedule": "0 10 * * 5",
+      "enabled": false,
+      "muscle": ".github/muscles/validate-skills.cjs",
+      "muscleArgs": [],
+      "target": ".github/skills/"
+    },
+    {
+      "id": "research-digest",
+      "name": "Weekly Research Digest",
+      "description": "Survey recent commits, research docs, and web trends to draft a weekly digest",
+      "skill": "research-first-development",
+      "mode": "agent",
+      "schedule": "0 12 * * 5",
+      "enabled": false,
+      "promptFile": ".github/config/scheduled-tasks/research-digest.md",
+      "target": "master-wiki/research/"
     }
   ]
 }

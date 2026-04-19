@@ -7,6 +7,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.0.0] - 2026-04-19
+
+### Major Release — Clean-Room Extension Rebuild
+
+The extension has been completely rebuilt from scratch with a modern, maintainable architecture. Every line of TypeScript is new. The cognitive architecture has been modernized with consistent terminology and a trifecta-based design.
+
+### Added
+
+- **Health Pulse System**: Real-time brain health monitoring with status computation (healthy/attention/critical), connection health scoring, ritual tracking, and architecture inventory
+- **3-Tab Sidebar**: Loop (creative workflow), Brain (architecture visibility), Setup (configuration) — data-driven, declarative button definitions
+- **Creative Loop Integration**: Ideate → Plan → Build → Test → Release → Improve workflow in sidebar
+- **Autopilot v1**: Scheduled task system for recurring brain maintenance — task cards, enable/disable toggles, interval configuration, and workflow generator for custom tasks
+- **Chat Participant**: `@alex` in Copilot Chat with context-aware routing
+- **Architecture Stats**: Dynamic skill/instruction/prompt/agent counts in Brain tab
+- **Project Phase Detection**: Auto-detects project lifecycle phase for contextual workflow suggestions
+- **Loop Config Generator**: Generates custom loop menu configurations from project analysis
+- **AI-Generated Extension Icon**: Hand-painted watercolor style icon with neural network motif in teal/amber brand colors
+
+### Changed
+
+- **Complete Terminology Modernization**: "Neural" → "Architecture", "Synapse" → "Connection" across 28 skills, 7 prompts, and all documentation
+- **Ritual Hierarchy Clarified**: Meditation (foundational) → Dream (diagnostic) → Self-Actualize (deep assessment)
+- **Cognitive Architecture v3**: Modern trifecta-based design (skill + instruction + muscle = atomic capability)
+- **Muscles Decoupled**: CLI tools (dream-cli.cjs, pptxgen-cli.cjs) rewritten as standalone — no extension dependencies
+- **Repo Refactor**: Mono-repo structure with private master brain and public heir distribution
+
+### Removed
+
+- **Neural Terminology**: All references to "neural maintenance", "synapses" replaced with modern equivalents
+- **Broken Import Dependencies**: CLI tools no longer import from extension codebase
+- **Legacy Build System**: Replaced webpack with esbuild
+
+### Documentation
+
+- **Wiki**: Getting Started, User Manual, Heir Project Setup, FAQ, Autopilot — all published to GitHub Wiki
+- **Blog #7**: "Every Age I'll Never Be" published with portrait gallery
+- **Migration Guide**: v7 → v8 upgrade instructions for existing users
+
+### Technical
+
+- **esbuild**: Modern build system (49KB bundle)
+- **TypeScript Strict**: Clean compilation with zero errors
+- **Zero Runtime Dependencies**: Extension uses only VS Code API and Node.js built-ins
+- **97 Tests**: Full test coverage for Health Pulse, frecency, taglines, nudge engine
+
+### Brain Inventory (v8.0.0)
+
+| Component | Count |
+|-----------|-------|
+| Skills | 182 |
+| Instructions | 138 |
+| Prompts | 61 |
+| Agents | 18 |
+
+---
+
 ## [8.0.0-alpha.0] - 2026-04-16
 
 ### 🚀 Major Release — Clean-Room Extension Rebuild

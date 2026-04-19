@@ -13,10 +13,10 @@ Alex enhances GitHub Copilot with a **cognitive architecture** — a structured 
 
 | What You Get | How It Works |
 |--------------|--------------|
-| **177 Skills** | Domain knowledge for security, API design, testing, debugging, and more |
-| **136 Instructions** | Behavior rules that auto-load based on file patterns |
-| **31 Prompts** | Reusable workflow templates for common tasks |
-| **17 Agents** | Specialized personas: Builder, Researcher, Validator, Documentarian, and more |
+| **182 Skills** | Domain knowledge for security, API design, testing, debugging, and more |
+| **138 Instructions** | Behavior rules that auto-load based on file patterns |
+| **61 Prompts** | Reusable workflow templates for common tasks |
+| **18 Agents** | Specialized personas: Builder, Researcher, Validator, Documentarian, and more |
 
 ## Features
 
@@ -53,6 +53,15 @@ Keep the brain healthy with built-in maintenance rituals:
 - **Dream** — Validate and repair the architecture (weekly)
 - **Meditate** — Consolidate recent learning (after major sessions)
 - **Self-Actualize** — Deep architecture assessment (monthly)
+
+### Autopilot
+
+Schedule recurring brain maintenance tasks that run automatically:
+
+- **Task Cards** — Visual dashboard of scheduled and one-time tasks
+- **Enable/Disable Toggles** — Control which tasks run automatically
+- **Interval Configuration** — Set frequency per task
+- **Workflow Generator** — Create custom scheduled workflows from project analysis
 
 ### Settings Optimization
 
@@ -147,46 +156,4 @@ Contributions are welcome! See [CONTRIBUTING.md](https://github.com/fabioc-aloha
 
 ## License
 
-[MIT](https://github.com/fabioc-aloha/alex-cognitive-architecture/blob/main/LICENSE.md)
-# Alex Cognitive Architecture
-
-Your cognitive learning partner for VS Code. Alex installs a living brain of **skills**, **instructions**, and **prompts** that makes GitHub Copilot dramatically smarter in any project.
-
-## Features
-
-- **Brain Bootstrap** — One-click install of the cognitive architecture into any workspace
-- **Sidebar Dashboard** — Brain status, quick actions, and documentation links
-- **Dream State** — Knowledge consolidation and architecture maintenance
-- **Settings Optimization** — Auto-configure VS Code for the best AI experience
-- **Protected Mode** — Safety guard for Master Alex (source of truth) workspaces
-
-## Getting Started
-
-1. Install the extension
-2. Click the Alex icon in the Activity Bar
-3. Click **Install Brain** to set up the cognitive architecture
-4. Open GitHub Copilot Chat and start collaborating
-
-## Commands
-
-| Command | Description |
-|---------|-------------|
-| `Alex: Install / Update Brain` | Install or update brain files in the workspace |
-| `Alex: Dream` | Run a knowledge consolidation session |
-| `Alex: Show Status` | View brain health and version info |
-| `Alex: Optimize Settings` | Configure VS Code settings for optimal AI use |
-| `Alex: Open Documentation` | Open the documentation wiki |
-
-## Extension Pack
-
-This extension recommends these companions:
-
-- GitHub Copilot Chat
-- PowerShell
-- YAML
-- Markdown Mermaid
-- markdownlint
-
-## License
-
-MIT
+[PolyForm Noncommercial 1.0.0](https://github.com/fabioc-aloha/alex-cognitive-architecture/blob/main/LICENSE.md)

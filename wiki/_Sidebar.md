@@ -33,6 +33,7 @@
 ### Help
 
 - [FAQ](FAQ)
+- [Migration: v7 → v8](Migration-v7-to-v8)
 - [Troubleshooting](FAQ#troubleshooting)
 - [GitHub Issues](https://github.com/fabioc-aloha/alex-cognitive-architecture/issues)
 
