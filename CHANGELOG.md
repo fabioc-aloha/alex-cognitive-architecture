@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Run Now button**: Autopilot task cards now have a 🚀 button to execute any task immediately — reads the prompt template, strips YAML frontmatter, and sends it directly to Copilot Chat.
+- **Run Now button**: Autopilot task cards now have a 🚀 button that opens the GitHub Actions workflow dispatch page — run tasks in the cloud on demand, same as the scheduled execution.
 - **Last-run tracking**: Each Autopilot task displays when it was last executed. Timestamps persist in `.github/config/.scheduled-tasks-state.json` and survive extension reloads.
 - **Toggle as pause/resume**: Enabled tasks show a pause button; disabled tasks show a resume button — clearer intent than a generic toggle.
 

@@ -81,11 +81,11 @@ Each task card has action buttons in the bottom row:
 
 | Button | Icon | When Visible | What It Does |
 |--------|------|-------------|-------------|
-| **Run Now** | 🚀 | Always | Executes the task immediately — reads the prompt template, strips YAML frontmatter, and sends it to Copilot Chat. Records a last-run timestamp. |
+| **Run Now** | 🚀 | Agent-mode tasks | Opens the GitHub Actions workflow dispatch page — runs the task in the cloud, same as the scheduled execution. Records a last-run timestamp. Requires a generated workflow. |
 | **Edit Prompt** | Pencil | Agent-mode tasks only | Opens the prompt template `.md` file in the editor |
 | **Pause** | Pause | Enabled tasks | Disables the task (writes to config) |
 | **Resume** | Play | Disabled tasks | Enables the task (writes to config) |
-| **Run on GitHub** | Play circle | Enabled tasks with a generated workflow | Opens the workflow's dispatch page on GitHub Actions |
+
 | **Delete** | Trash | Always | Deletes the task from config (with confirmation) |
 
 ### Panel Buttons
@@ -127,7 +127,7 @@ When a task is enabled, the card shows a workflow status badge:
 
 ### Last-Run Tracking
 
-When you use the **Run Now** button, Alex records a timestamp in `.github/config/.scheduled-tasks-state.json`. The last-run time appears on the task card (e.g., "Last run: 2 hours ago"). This file is workspace-local and persists across extension reloads. Cloud runs via GitHub Actions are not tracked here — check the Actions tab on GitHub for cloud execution history.
+When you use the **Run Now** button, Alex records a timestamp in `.github/config/.scheduled-tasks-state.json` and opens the workflow dispatch page on GitHub Actions. The last-run time appears on the task card (e.g., "Last run: 2 hours ago"). This file is workspace-local and persists across extension reloads. If the workflow hasn't been generated yet, you'll see a warning — click **Generate Workflows** first.
 
 ---
 
