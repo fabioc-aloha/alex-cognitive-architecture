@@ -1,5 +1,5 @@
 # Tutorial: AI-Assisted Teaching
-
+![AI teaching](images/tutorial-ai-teaching.png)
 *25 minutes · For Educators*
 
 ---

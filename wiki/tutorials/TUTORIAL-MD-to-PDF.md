@@ -1,5 +1,7 @@
 # Tutorial: Markdown to PDF
 
+![Markdown to PDF](images/tutorial-md-to-pdf.png)
+
 *15 minutes · Beginner*
 
 ---

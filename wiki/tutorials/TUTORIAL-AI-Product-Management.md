@@ -1,5 +1,5 @@
 # Tutorial: AI-Assisted Product Management
-
+![AI product management](images/tutorial-ai-product-management.png)
 *30 minutes · For Product Managers*
 
 ---

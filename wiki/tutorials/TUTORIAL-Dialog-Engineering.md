@@ -1,5 +1,7 @@
 # Tutorial: Dialog Engineering Fundamentals
 
+![Dialog engineering](images/tutorial-dialog-engineering.png)
+
 *30 minutes · Foundation*
 
 ---

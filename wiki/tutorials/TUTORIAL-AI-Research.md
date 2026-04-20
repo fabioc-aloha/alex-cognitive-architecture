@@ -1,5 +1,7 @@
 # Tutorial: AI-Assisted Academic Research
 
+![AI research](images/tutorial-ai-research.png)
+
 *35 minutes · For Researchers*
 
 ---

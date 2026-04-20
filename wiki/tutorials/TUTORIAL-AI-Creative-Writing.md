@@ -1,5 +1,5 @@
 # Tutorial: AI-Assisted Creative Writing
-
+![AI creative writing](images/tutorial-ai-creative-writing.png)
 *30 minutes · For Writers*
 
 ---
