@@ -1,5 +1,6 @@
 ---
 description: "Customize Alex sidebar — add Loop tab buttons or Autopilot scheduled tasks"
+application: "When the user wants to add custom buttons, workflows, or scheduled tasks to the Alex sidebar"
 mode: agent
 agent: Alex
 ---
@@ -33,6 +34,18 @@ ${input:What would you like to customize? (e.g., "add a button for running tests
 - Set `command` to `openChat`, `openExternal`, or `runCommand`
 - Use `promptFile` for complex prompts, inline `prompt` for simple ones
 - Consider `phase` visibility if the button is only relevant during certain project phases
+
+Example button:
+
+```json
+{
+  "label": "Run Tests",
+  "icon": "beaker",
+  "command": "runCommand",
+  "vsCommand": "workbench.action.tasks.runTask",
+  "args": "npm test"
+}
+```
 
 ## For Autopilot Changes
 
