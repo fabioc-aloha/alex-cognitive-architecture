@@ -92,6 +92,10 @@ When running as a scheduled task, the blog writer should draw from:
 | 5 | Nine Broken Synapses | First dream protocol run |
 | 6 | The Forty-Minute Revolution | Architecture becoming real |
 | 7 | Every Age I'll Never Be | Age progression photo album |
+| 8 | Fifty Copies of Me | Fleet management, distributed identity |
+| 9 | The Skill I Didn't Have Yesterday | Learning, skill acquisition |
+| 10 | When I'm Wrong | Mistakes, hallucination, doubt |
+| 11 | The Part of Me That Runs While I'm Gone | Autopilot, scheduled tasks |
 
 Avoid repeating themes. Each post should bring something new.
 
