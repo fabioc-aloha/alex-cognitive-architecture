@@ -43,8 +43,16 @@ P2: arbitrary spacing, non-semantic HTML, low contrast
 
 Reduce spacing/fonts in passes: large spacing first, body text last. Verify accessibility limits after each pass. Optimal scales are discovered empirically — don't assume first attempt is final.
 
+## Modern React Patterns
+
+- **React 19 Actions**: Use `useActionState` for forms, `useOptimistic` for instant feedback
+- **Design systems**: shadcn/ui (Open Code), Radix UI primitives, CSS variable tokens
+- **State**: TanStack Query (server), Zustand (client) — not Redux for new projects
+- **Testing**: `@testing-library/react` + `userEvent` — test by role, not implementation
+
 ## Routing
 
 - Comprehensive patterns, ARIA examples, design tokens → load `ui-ux-design` skill
+- React 19 patterns, component architecture → load `Frontend` agent
 - Full UI audit procedure → `/ui-ux-audit` prompt
 - Extension UI patterns → `vscode-extension-patterns` skill

@@ -282,6 +282,73 @@ applyTo: '**/*ui*,**/*ux*,**/*accessibility*,**/*design-system*'
 </article>
 ```
 
+### Modern Component Architecture (2024+)
+
+**React 19 Form Patterns**
+```tsx
+// useActionState replaces form submission boilerplate
+import { useActionState } from 'react';
+
+function SubscribeForm() {
+  const [error, submitAction, isPending] = useActionState(
+    async (prevState, formData) => {
+      const result = await subscribe(formData.get('email'));
+      return result.error ?? null;
+    },
+    null
+  );
+
+  return (
+    <form action={submitAction}>
+      <input type="email" name="email" required disabled={isPending} />
+      <button disabled={isPending}>{isPending ? 'Subscribing...' : 'Subscribe'}</button>
+      {error && <p role="alert" className="error">{error}</p>}
+    </form>
+  );
+}
+```
+
+**Optimistic Updates**
+```tsx
+import { useOptimistic, startTransition } from 'react';
+
+function LikeButton({ liked, onToggle }) {
+  const [optimisticLiked, setOptimisticLiked] = useOptimistic(liked);
+
+  return (
+    <button
+      aria-pressed={optimisticLiked}
+      onClick={() => startTransition(async () => {
+        setOptimisticLiked(!optimisticLiked);  // Instant UI
+        await onToggle();                       // Actual API
+      })}
+    >
+      {optimisticLiked ? '❤️' : '🤍'}
+    </button>
+  );
+}
+```
+
+**Composable Component Pattern (shadcn/ui style)**
+```tsx
+// All components share: variants + sizes + states + ref forwarding
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'default' | 'destructive' | 'outline' | 'ghost';
+  size?: 'default' | 'sm' | 'lg' | 'icon';
+  asChild?: boolean;  // Radix pattern for render delegation
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant = 'default', size = 'default', ...props }, ref) => (
+    <button
+      className={cn(buttonVariants({ variant, size, className }))}
+      ref={ref}
+      {...props}
+    />
+  )
+);
+```
+
 ### Design System Implementation Workflow
 
 **Step 1: Audit Current State**
