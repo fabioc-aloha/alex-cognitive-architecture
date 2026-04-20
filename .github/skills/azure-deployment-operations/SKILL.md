@@ -17,19 +17,32 @@ currency: 2025-01-01
 
 ## Azure Static Web Apps (SWA)
 
-### Environment Deployment
+### Deployment Method
 
-SWA defaults to **preview** environments. Always specify production explicitly:
+**Prefer GitHub Actions over SWA CLI.** SWA CLI v2.0.8 silently fails deploys (reports success, uploads nothing). Use `Azure/static-web-apps-deploy@v1`:
 
-```bash
-# Anti-pattern: deploys to preview environment
-swa deploy
-
-# Correct: explicitly target production
-swa deploy --env production
+```yaml
+- uses: Azure/static-web-apps-deploy@v1
+  with:
+    azure_static_web_apps_api_token: ${{ secrets.SWA_DEPLOY_TOKEN }}
+    repo_token: ${{ secrets.GITHUB_TOKEN }}
+    action: upload
+    app_location: dist          # adjust to your output folder
+    skip_app_build: true        # if pre-built
+    skip_api_build: true        # if using linked backend
 ```
 
-**Rule**: Every SWA deployment command in CI/CD and scripts MUST include `--env production` unless creating a preview intentionally.
+**Critical**: If the SWA has a linked backend (Azure Functions via `az staticwebapp backends link`), do NOT include `api_location` — it creates embedded functions that override the linked backend.
+
+Get the deploy token: `az staticwebapp secrets list --name <name> --query "properties.apiKey" -o tsv`
+
+### Environment Deployment
+
+SWA defaults to **preview** environments. Always specify production explicitly in any CLI fallback:
+
+```bash
+swa deploy --env production
+```
 
 ### Custom Domain Registration
 
