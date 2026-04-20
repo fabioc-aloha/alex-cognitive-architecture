@@ -1,5 +1,7 @@
 # From Spreadsheet to Dashboard in an Afternoon
 
+![Data dashboard creation](images/blog-data-dashboard.png)
+
 *A business analyst's journey from raw data to visual insight*
 
 ---

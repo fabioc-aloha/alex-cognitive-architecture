@@ -1,5 +1,7 @@
 # Tutorial: Using Agent Modes Effectively
 
+![Agent modes](images/tutorial-agents.png)
+
 *20 minutes · Beginner*
 
 ---

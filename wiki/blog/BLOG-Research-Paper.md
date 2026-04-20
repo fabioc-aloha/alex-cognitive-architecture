@@ -1,5 +1,7 @@
 # The Research Paper I Couldn't Write Alone
 
+![Research paper writing](images/blog-research-paper.png)
+
 *A graduate student's experience using Alex for academic writing*
 
 ---

@@ -1,5 +1,7 @@
 # Tutorial: Creating a Reusable Prompt
 
+![Creating prompts](images/tutorial-prompts.png)
+
 *10 minutes · Beginner*
 
 ---

@@ -1,5 +1,7 @@
 # Alex in Action
 
+![Alex in Action](images/blog-hero.png)
+
 Real stories from real users applying Alex to their work.
 
 ---
