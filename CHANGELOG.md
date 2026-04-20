@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Signal-driven autopilot mechanism**: New two-phase pattern for heirs to consume external signals (search logs, analytics, feedback) in autopilots. Scheduled collector task queries signal source daily → writes `.github/signals/suggestions.json` → SessionStart hook reads local cache (fast, 5s timeout safe). Full implementation guide in `sidebar-customization` skill.
+- **Markdown preview CSS**: Added `.github/config/markdown-light.css` — GitHub-flavored markdown preview theme that syncs to heirs. Heirs opt-in via `.vscode/settings.json` `markdown.styles` setting.
 - **Sidebar customization trifecta**: New `sidebar-customization` skill + instruction + `customize-sidebar.prompt.md` teaches heirs how to customize Loop tab buttons (`loop-menu.json`) and Autopilot scheduled tasks (`scheduled-tasks.json`).
 - **Editorial critical thinking guidance**: Added "Editorial Passes Require Critical Thinking" section to `academic-paper-drafting.instructions.md`. Complex style rules (APA7 verb tense, citation format) are judgment tasks, not pattern-matching — now documented with alternative hypotheses, evidence needed, and falsifiability checks.
 - **Thesis/dissertation applyTo**: Expanded `academic-paper-drafting.instructions.md` to trigger on `**/*thesis*,**/*dissertation*` paths.
