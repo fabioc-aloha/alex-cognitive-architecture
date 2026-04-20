@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.0.3] - 2026-04-20
+
+### Added
+
+- **Run Now button**: Autopilot task cards now have a 🚀 button to execute any task immediately — reads the prompt template, strips YAML frontmatter, and sends it directly to Copilot Chat.
+- **Last-run tracking**: Each Autopilot task displays when it was last executed. Timestamps persist in `.github/config/.scheduled-tasks-state.json` and survive extension reloads.
+- **Toggle as pause/resume**: Enabled tasks show a pause button; disabled tasks show a resume button — clearer intent than a generic toggle.
+
+### Changed
+
+- **Brand-aligned UI across all three tabs**: Every color in the sidebar now uses the Alex brand palette — Indigo 500 (`#6366f1`) as the primary accent, with brand green (`#22c55e`), yellow (`#eab308`), red (`#ef4444`), and blue (`#3b82f6`) for semantic indicators.
+- **Autopilot card redesign**: Status pills (Active/Paused) replace status dots; action buttons grouped at card bottom with semantic hover colors (green for run/resume, orange for pause, red for delete); hover box-shadow on cards; mode icons tint indigo when active; description line-clamped to 2 lines.
+- **Loop tab polish**: "Chat with Alex" CTA button uses brand indigo instead of VS Code default blue; Health Pulse status dot, nudge, and action button colors aligned to brand palette; expanded groups tint their icon to indigo; button hover shows subtle indigo left-border indicator.
+- **Setup tab polish**: Same group and button polish as Loop — consistent indigo accent, expanded icon tint, and button hover indicators across all six groups.
+- **Active tab indicator**: Selected tab now has a subtle indigo background tint in addition to the bottom border.
+- **Accent-tinted scrollbar**: Sidebar scrollbar uses indigo-tinted track for brand cohesion.
+
+---
+
 ## [8.0.2] - 2026-04-20
 
 ### Fixed

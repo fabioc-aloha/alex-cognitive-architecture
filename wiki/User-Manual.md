@@ -86,7 +86,12 @@ Manage automated recurring tasks powered by GitHub Actions.
 
 | Section | What It Does |
 |---------|-------------|
-| **Task Cards** | Configured automations with status, mode, schedule, and workflow status badges |\n| **Per-Card Actions** | Edit prompt (agent tasks), Run on GitHub, Delete task |\n| **Add Task** | Guided 5-step wizard for creating new scheduled tasks |\n| **Generate Workflows** | Convert config to GitHub Actions workflow files |\n| **Edit Config** | Open `scheduled-tasks.json` in the editor |\n| **Actions / Agents** | Direct links to the GitHub repo's Actions and Agents pages |
+| **Task Cards** | Configured automations with status pills, mode, schedule, last-run time, and workflow badges |
+| **Per-Card Actions** | Run Now, Edit prompt (agent tasks), Toggle (pause/resume), Run on GitHub, Delete |
+| **Add Task** | Guided 5-step wizard for creating new scheduled tasks |
+| **Generate Workflows** | Convert config to GitHub Actions workflow files |
+| **Edit Config** | Open `scheduled-tasks.json` in the editor |
+| **Actions / Agents** | Direct links to the GitHub repo's Actions and Agents pages |
 
 See [Autopilot](Autopilot) for full documentation.
 

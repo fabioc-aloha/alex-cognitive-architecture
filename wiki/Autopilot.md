@@ -64,21 +64,27 @@ Open the Alex sidebar (`Ctrl+Shift+A` or click the Alex icon) and click **Autopi
 
 Each configured task appears as a card showing:
 
-- **Status indicator** — Green dot = enabled, gray circle = disabled
-- **Task name** — What the automation is called
+- **Status pill** — Green "Active" pill = enabled, gray "Paused" pill = disabled
+- **Task name** — What the automation is called (hover for full name tooltip)
 - **Mode badge** — "Cloud Agent" or "Direct" with an icon
 - **Schedule badge** — Human-readable frequency (e.g., "Every 6h")
 - **Target badge** — Output directory, if configured
 - **Workflow badge** — Green checkmark if the workflow YAML exists, or a warning icon if the task is enabled but no workflow has been generated yet
-- **Description** — Brief explanation of what the task does
+- **Description** — Brief explanation (line-clamped to 2 lines)
+- **Last run** — Timestamp of the most recent execution, if available
+
+Enabled task cards have an indigo left border accent; disabled cards appear at reduced opacity.
 
 ### Per-Card Actions
 
-Each task card has action buttons in the bottom-right corner:
+Each task card has action buttons in the bottom row:
 
 | Button | Icon | When Visible | What It Does |
 |--------|------|-------------|-------------|
+| **Run Now** | 🚀 | Always | Executes the task immediately — reads the prompt template, strips YAML frontmatter, and sends it to Copilot Chat. Records a last-run timestamp. |
 | **Edit Prompt** | Pencil | Agent-mode tasks only | Opens the prompt template `.md` file in the editor |
+| **Pause** | Pause | Enabled tasks | Disables the task (writes to config) |
+| **Resume** | Play | Disabled tasks | Enables the task (writes to config) |
 | **Run on GitHub** | Play circle | Enabled tasks with a generated workflow | Opens the workflow's dispatch page on GitHub Actions |
 | **Delete** | Trash | Always | Deletes the task from config (with confirmation) |
 
@@ -106,7 +112,7 @@ If no tasks are configured, the Autopilot tab shows a centered message with an *
 
 ### Toggling Tasks
 
-Click the play/pause button on any task card to enable or disable it. This writes directly to `scheduled-tasks.json`. After toggling, run **Generate Workflows** to update the workflow files.
+Click the **pause** or **resume** button on any task card to disable or enable it. Paused tasks appear at reduced opacity with a gray "Paused" pill. This writes directly to `scheduled-tasks.json`. After toggling, run **Generate Workflows** to update the workflow files.
 
 ### Deleting Tasks
 
@@ -118,6 +124,10 @@ When a task is enabled, the card shows a workflow status badge:
 
 - **Green checkmark** ("Workflow") — The workflow YAML file exists at `.github/workflows/scheduled-{id}.yml`. The task is ready to run.
 - **Warning icon** ("No workflow") — The task is enabled but no workflow file has been generated yet. Click **Generate Workflows** to fix this.
+
+### Last-Run Tracking
+
+When you use the **Run Now** button, Alex records a timestamp in `.github/config/.scheduled-tasks-state.json`. The last-run time appears on the task card (e.g., "Last run: 2 hours ago"). This file is workspace-local and persists across extension reloads. Cloud runs via GitHub Actions are not tracked here — check the Actions tab on GitHub for cloud execution history.
 
 ---
 
