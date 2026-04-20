@@ -215,21 +215,34 @@ Location: `src/components/{{COMPONENT_NAME}}/`
 @alex Run the new-component prompt for UserAvatar
 ```
 
-## Synchronizing with Master Alex
+## Receiving Updates
 
-Your heir project can receive updates from Master Alex:
+Your heir project receives cognitive architecture updates automatically through VS Code extension upgrades.
 
-### Pull Updates
+### How Updates Arrive
+
+When you update the Alex Cognitive Architecture extension:
+
+1. **New skills** — Additional capabilities for your domain
+2. **Refined instructions** — Improved behavior rules
+3. **Bug fixes** — Corrections to existing functionality
+4. **New prompts** — Fresh workflow templates
+
+### Version Check
+
+```
+@alex what version are you running?
+```
+
+### Manual Sync (Within Session)
+
+To refresh architecture within a session:
 
 ```
 @alex sync architecture
 ```
 
-This will:
-1. Check for new skills in Master
-2. Update inherited instructions
-3. Merge new prompts
-4. Report what changed
+This reloads the current brain without requiring an extension update.
 
 ### Push Insights
 

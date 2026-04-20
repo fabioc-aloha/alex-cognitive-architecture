@@ -28,6 +28,7 @@
 - [Inheriting Skills](Heir-Project-Setup#inheriting-skills)
 - [Creating Instructions](Heir-Project-Setup#creating-project-specific-instructions)
 - [Creating Prompts](Heir-Project-Setup#creating-project-prompts)
+- [Receiving Updates](Heir-Project-Setup#receiving-updates)
 - [Bootstrap Wizard](Heir-Project-Setup#heir-bootstrap-wizard)
 
 ### Help
