@@ -5,7 +5,7 @@
  * @description Generate brain health quality grid for cognitive architecture
  * @version 1.0.0
  * @skill brain-qa
- * @reviewed 2026-04-15
+ * @currency 2026-04-20
  * @platform windows,macos,linux
  * @requires node
  *
@@ -15,51 +15,16 @@
  * Single responsibility: Scan cognitive architecture, output quality grid.
  * Other trifectas handle fixing issues identified in the grid.
  * 
- * Scored dimensions (0 = defect, 1 = good):
- *   fm     - Frontmatter (applyTo, description) makes it visible to the brain
- *   bounds - Within line bounds (skills: 100-500, agents: 50-400)
- *   tri    - Trifecta complete (if workflow skill, has .instructions.md)
- *   muscle - Has automation component (script or pseudocode.md)
+ * Pass criteria (all types):
+ *   fm       - Frontmatter complete (type-specific required fields)
+ *   currency - Updated within CURRENCY_MAX_DAYS (90 days)
  * 
- * Informational dimensions (not scored):
- *   code   - Has pseudocode (excludes mermaid/ascii/diagrams)
+ * Informational dimensions (shown in grid, not scored):
+ *   tri    - Trifecta complete (if workflow skill, has .instructions.md)
  *   inh    - Inheritance (1 = master-only, 0 = synced to heirs)
+ *            Validated during currency audits to ensure master-only items don't leak
  *   cur    - Currency date (YYYY-MM-DD) when content was last researched & updated
  * 
- * Quality Philosophy:
- *   fm      → Visibility to the brain (discoverable via applyTo/description)
- *   bounds  → Memory has structural merit (not too thin, not too bloated)
- *   tri + muscle → Goal for ANY skill (trifecta alignment + automation)
- * 
- * Skill Types:
- *   Intellectual Skill: Trifecta only (tri=1, muscle=0) - max 3/3
- *     - Requires thinking but no action (reasoning, analysis, judgment)
- *     - Examples: code-review, root-cause-analysis, security-review
- * 
- *   Agentic Skill: Trifecta + Muscle (tri=1, muscle=1) - max 4/4
- *     - Autonomous execution capability (knows AND does)
- *     - Examples: md-to-word, brain-qa, docx-to-md
- * 
- * Muscle Philosophy:
- *   Every skill should aspire to have a "muscle" (automation component):
- *   - Cross-platform possible (Node.js) → actual .cjs/.js script
- *   - Cross-platform challenging → pseudocode .md describing what to do
- *   - Intellectual skills legitimately have no muscle (tri without muscle)
- * 
- * Modern Synapses (enforced via existing dimensions):
- *   - applyTo in frontmatter → file pattern activation (part of fm)
- *   - description in frontmatter → semantic matching (part of fm)
- *   - trifecta naming → skill X links to X.instructions.md (tri)
- *   - handoffs in agents → explicit routing (agents scoring)
- * 
- * DEPRECATED: synapses.json files are no longer required.
- * Copilot's semantic search + applyTo patterns replace static connection graphs.
- * 
- * Tier-based pass thresholds (good is good enough):
- *   core      - 0 defects (must be perfect)
- *   standard  - 1 defect allowed
- *   extended  - 2 defects allowed
- *   specialist- 3 defects allowed
  * 
  * Usage:
  *   node brain-qa.cjs              # Generate grid to .github/quality/
@@ -138,19 +103,16 @@ function getMasterOnlySkills() {
 
 const MASTER_ONLY_SKILLS = getMasterOnlySkills();
 
-// --- Tier-based pass thresholds ---
-// "Good is good enough" - higher tiers require higher quality
-// Max score is 5 (fm, code, bounds, tri, muscle)
-const TIER_THRESHOLDS = {
-  core: 5,       // Must be perfect
-  standard: 4,   // One defect allowed
-  extended: 3,   // Two defects allowed
-  specialist: 2, // Three defects allowed
-};
-const DEFAULT_TIER = 'standard';
+// --- Currency freshness ---
+// Pass requires currency updated within this many days
+const CURRENCY_MAX_DAYS = 90;
 
-function getPassThreshold(tier) {
-  return TIER_THRESHOLDS[tier] || TIER_THRESHOLDS[DEFAULT_TIER];
+function isCurrencyRecent(currency) {
+  if (currency === '-') return false;
+  const currDate = new Date(currency);
+  if (isNaN(currDate.getTime())) return false;
+  const daysSince = Math.floor((Date.now() - currDate) / (1000 * 60 * 60 * 24));
+  return daysSince <= CURRENCY_MAX_DAYS;
 }
 
 // --- Check if skill has corresponding instruction (for trifecta) ---
@@ -161,29 +123,14 @@ function hasMatchingInstruction(skillName) {
 
 // --- Check if skill describes a workflow (needs trifecta) ---
 function isWorkflowSkill(content) {
-  // Workflow indicators: numbered steps, phase/step terminology, procedural language
+  // Workflow indicators: phase/step/stage headings, workflow/procedure/process sections
   const workflowPatterns = [
     /(?:^|\n)##?\s*(?:phase|step|stage)\s*\d/i,  // Phase 1, Step 2, etc.
-    /(?:^|\n)\d+\.\s+\*\*[^*]+\*\*/,              // 1. **Bold step**
     /(?:^|\n)##?\s*workflow/i,                    // ## Workflow section
     /(?:^|\n)##?\s*procedure/i,                   // ## Procedure section
     /(?:^|\n)##?\s*process/i,                     // ## Process section
   ];
   return workflowPatterns.some(p => p.test(content));
-}
-
-// --- Check if skill has corresponding muscle (automation component) ---
-// Muscle = either a script (.cjs/.js) or pseudocode markdown (.md)
-// Pseudocode.md is for cross-platform challenges; script is preferred when possible
-function hasMatchingMuscle(skillName) {
-  const musclesDir = path.join(GH, "muscles");
-  // Check for script versions (preferred: cross-platform Node.js)
-  const cjsPath = path.join(musclesDir, `${skillName}.cjs`);
-  const jsPath = path.join(musclesDir, `${skillName}.js`);
-  // Check for pseudocode md version (for cross-platform challenges)
-  const mdPath = path.join(musclesDir, `${skillName}.md`);
-  
-  return fs.existsSync(cjsPath) || fs.existsSync(jsPath) || fs.existsSync(mdPath);
 }
 
 // --- Skill Quality Scanner ---
@@ -210,76 +157,40 @@ function scanSkills() {
     const hasTier = /^tier:/m.test(content);
     const fmComplete = hasName && hasDesc && hasApplyTo && hasTier;
 
-    // Extract tier value
+    // Extract tier value (informational)
     const tierMatch = content.match(/^tier:\s*(\w+)/m);
-    const tier = tierMatch ? tierMatch[1].toLowerCase() : DEFAULT_TIER;
-
-    // Check code blocks (exclude mermaid, ascii, text, diagram-type languages)
-    const hasCode = /```(?!mermaid|ascii|text|txt|diagram|plantuml|graphviz|dot|chart|diff)\w+/i.test(content);
-
-    // Check bounds (not too thin, not too bloated)
-    const withinBounds = lines >= MIN_SKILL_LINES && lines <= MAX_SKILL_LINES;
+    const tier = tierMatch ? tierMatch[1].toLowerCase() : 'standard';
 
     // Check trifecta (only flag if workflow skill missing instruction)
     const isWorkflow = isWorkflowSkill(content);
     const hasInstr = hasMatchingInstruction(name);
-    // tri=1 means "no defect": either not a workflow, or workflow with instruction
     const triComplete = !isWorkflow || hasInstr;
-
-    // Check muscle (automation component: script or pseudocode.md)
-    const hasMuscle = hasMatchingMuscle(name);
 
     // Check inheritance (master-only)
     const isMasterOnly = MASTER_ONLY_SKILLS.has(name);
 
-    // Extract currency date from frontmatter (when content was last researched)
+    // Extract currency date from frontmatter
     const currencyMatch = content.match(/^currency:\s*(\d{4}-\d{2}-\d{2})/m);
     const currency = currencyMatch ? currencyMatch[1] : '-';
 
-    // Quality flags (0 = defect, 1 = good)
-    // Scored: fm, code, bounds, tri, muscle (max 5)
-    // Informational: inh, currency
+    // Quality flags (informational)
     const flags = {
       fm: fmComplete ? 1 : 0,
-      code: hasCode ? 1 : 0,
-      bounds: withinBounds ? 1 : 0,
       tri: triComplete ? 1 : 0,
-      muscle: hasMuscle ? 1 : 0,
-      inh: isMasterOnly ? 1 : 0,   // 1 = master-only, 0 = synced to heirs
+      inh: isMasterOnly ? 1 : 0,
     };
 
-    // Determine skill type and max possible score
-    // Code is informational only (not scored) - just indicates pseudocode presence
-    // Intellectual skills (tri=1, muscle=0): max score is 3 (fm, bounds, tri)
-    // Agentic skills (tri=1, muscle=1): max score is 4 (fm, bounds, tri, muscle)
-    // Incomplete skills (tri=0): max score is 4 but likely won't pass
-    const agentic = triComplete && hasMuscle;
-    const intellectual = triComplete && !hasMuscle;
-    const maxScore = intellectual ? 3 : 4;
+    // Pass = frontmatter complete AND currency recent
+    const pass = fmComplete && isCurrencyRecent(currency);
 
-    // Score: sum of scored flags (code is informational, not scored)
-    const score = flags.fm + flags.bounds + flags.tri + flags.muscle;
-    
-    // Adjust score for intellectual skills (don't penalize missing muscle)
-    const adjustedScore = intellectual ? (flags.fm + flags.bounds + flags.tri) : score;
-
-    // Tier-based pass/fail - fm is a GATE (broken without frontmatter)
-    // Threshold is relative to max possible score:
-    // core: max - 0 (perfect), standard: max - 1, extended: max - 2, specialist: max - 3
-    const allowedDefects = { core: 0, standard: 1, extended: 2, specialist: 3 }[tier] ?? 1;
-    const threshold = maxScore - allowedDefects;
-    const pass = fmComplete && (adjustedScore >= threshold);
-
-    // Token waste detection (Mermaid diagrams, style lines)
     const waste = detectTokenWaste(content);
 
-    results.push({ name, lines, flags, score: adjustedScore, tier, threshold, pass, isWorkflow, agentic, maxScore, waste, currency });
+    results.push({ name, lines, flags, tier, pass, isWorkflow, waste, currency });
   }
 
-  // Sort: worst score first, then oldest currency first, then alphabetically
+  // Sort: failing first, then oldest currency, then alphabetically
   return results.sort((a, b) => {
-    if (a.score !== b.score) return a.score - b.score;
-    // Oldest currency date first (no date = highest priority)
+    if (a.pass !== b.pass) return a.pass ? 1 : -1;
     if (a.currency === '-' && b.currency !== '-') return -1;
     if (a.currency !== '-' && b.currency === '-') return 1;
     if (a.currency < b.currency) return -1;
@@ -287,12 +198,6 @@ function scanSkills() {
     return a.name.localeCompare(b.name);
   });
 }
-
-// Line bounds: minimum to justify existence, maximum for token efficiency
-const MIN_SKILL_LINES = 100;
-const MAX_SKILL_LINES = 500;
-const MIN_AGENT_LINES = 50;
-const MAX_AGENT_LINES = 400;
 
 // --- Agent Scanner ---
 function scanAgents() {
@@ -317,14 +222,8 @@ function scanAgents() {
     // Check handoffs
     const hasHandoffs = /^handoffs:/m.test(content);
 
-    // Check bounds (not too thin, not too bloated)
-    const withinBounds = lines >= MIN_AGENT_LINES && lines <= MAX_AGENT_LINES;
-
     // Check persona (has mental model / when to use / persona section)
     const hasPersona = /##\s*(mental model|when to use|persona|mindset|core directive|core identity)/i.test(content);
-
-    // Check code examples (exclude mermaid, ascii, text, diagram-type languages)
-    const hasCode = /```(?!mermaid|ascii|text|txt|diagram|plantuml|graphviz|dot|chart|diff)\w+/i.test(content);
 
     // Extract currency date from frontmatter
     const currencyMatch = content.match(/^currency:\s*(\d{4}-\d{2}-\d{2})/m);
@@ -336,20 +235,17 @@ function scanAgents() {
     const flags = {
       fm: fmComplete ? 1 : 0,
       handoffs: hasHandoffs ? 1 : 0,
-      bounds: withinBounds ? 1 : 0,
       persona: hasPersona ? 1 : 0,
-      code: hasCode ? 1 : 0,
     };
 
-    const score = flags.fm + flags.handoffs + flags.bounds + flags.persona + flags.code;
-    // fm is a GATE - agents without frontmatter are broken
-    const pass = fmComplete && (score >= 4);
-    results.push({ name, lines, flags, score, maxScore: 5, pass, currency, waste });
+    // Pass = frontmatter complete AND currency recent
+    const pass = fmComplete && isCurrencyRecent(currency);
+    results.push({ name, lines, flags, pass, currency, waste });
   }
 
-  // Sort: worst score first, then oldest currency first, then alphabetically
+  // Sort: failing first, then oldest currency, then alphabetically
   return results.sort((a, b) => {
-    if (a.score !== b.score) return a.score - b.score;
+    if (a.pass !== b.pass) return a.pass ? 1 : -1;
     if (a.currency === '-' && b.currency !== '-') return -1;
     if (a.currency !== '-' && b.currency === '-') return 1;
     if (a.currency < b.currency) return -1;
@@ -392,9 +288,6 @@ function scanInstructions() {
     const sectionCount = (content.match(/^##\s+/gm) || []).length;
     const hasStructure = sectionCount >= 2;
 
-    // Check code examples (exclude mermaid, ascii, text, diagram-type languages)
-    const hasCode = /```(?!mermaid|ascii|text|txt|diagram|plantuml|graphviz|dot|chart|diff)\w+/i.test(content);
-
     // Check trifecta (has matching skill)
     const hasSkill = existingSkills.has(name);
 
@@ -406,23 +299,21 @@ function scanInstructions() {
       fm: fmComplete ? 1 : 0,
       depth: hasDepth ? 1 : 0,
       sect: hasStructure ? 1 : 0,
-      code: hasCode ? 1 : 0,
       skill: hasSkill ? 1 : 0,
     };
 
-    const score = flags.fm + flags.depth + flags.sect + flags.code + flags.skill;
-    // fm is a GATE - instructions without frontmatter won't be discoverable
-    const pass = fmComplete && (score >= 3);
+    // Pass = frontmatter complete AND currency recent
+    const pass = fmComplete && isCurrencyRecent(currency);
 
     // Token waste detection (Mermaid diagrams, style lines)
     const waste = detectTokenWaste(content);
 
-    results.push({ name, lines, flags, score, maxScore: 5, pass, waste, currency });
+    results.push({ name, lines, flags, pass, waste, currency });
   }
 
-  // Sort: worst score first, then oldest currency first, then alphabetically
+  // Sort: failing first, then oldest currency, then alphabetically
   return results.sort((a, b) => {
-    if (a.score !== b.score) return a.score - b.score;
+    if (a.pass !== b.pass) return a.pass ? 1 : -1;
     if (a.currency === '-' && b.currency !== '-') return -1;
     if (a.currency !== '-' && b.currency === '-') return 1;
     if (a.currency < b.currency) return -1;
@@ -483,14 +374,14 @@ function scanPrompts() {
     };
 
     const score = flags.desc + flags.app + flags.agent + flags.over20;
-    // desc + app are GATES - prompts need both for discoverability and routing
-    const pass = hasDesc && hasApp && (score >= 3);
-    results.push({ name, lines, flags, score, maxScore: 4, pass, subdir, currency });
+    // desc + app are GATES (prompt fm) AND currency recent
+    const pass = hasDesc && hasApp && isCurrencyRecent(currency);
+    results.push({ name, lines, flags, pass, subdir, currency });
   }
 
-  // Sort: worst score first, then oldest currency first, then alphabetically
+  // Sort: failing first, then oldest currency, then alphabetically
   return results.sort((a, b) => {
-    if (a.score !== b.score) return a.score - b.score;
+    if (a.pass !== b.pass) return a.pass ? 1 : -1;
     if (a.currency === '-' && b.currency !== '-') return -1;
     if (a.currency !== '-' && b.currency === '-') return 1;
     if (a.currency < b.currency) return -1;
@@ -561,9 +452,6 @@ function scanMuscles() {
     const psErrorPatterns = /\$ErrorActionPreference|\-ErrorAction|try\s*\{/i.test(content);
     const hasErrorHandling = lang === 'ps' ? psErrorPatterns : jsErrorPatterns;
 
-    // Check bounds (reasonable size: 50-1000 lines)
-    const withinBounds = lineCount >= 50 && lineCount <= 1000;
-
     // Check cross-platform compatibility (Windows/macOS)
     // JS: use path.join/path.resolve, avoid hardcoded separators
     // PS: use Join-Path/Split-Path, avoid hardcoded separators
@@ -579,10 +467,6 @@ function scanMuscles() {
       const hasHardcodedSeparators = /['"][^'"]*[\\/][^'"]*['"]/.test(content) && !/\\n|\\r|\\t|https?:|file:|\/\//.test(content);
       isCrossPlatform = usesPathModule || !hasHardcodedSeparators;
     }
-
-    // Extract code review date (format: @reviewed YYYY-MM-DD or @lastReview YYYY-MM-DD)
-    const reviewMatch = content.match(/@(?:reviewed|lastReview|review)\s*:?\s*(\d{4}-\d{2}-\d{2})/i);
-    const reviewDate = reviewMatch ? reviewMatch[1] : null;
 
     // Extract currency date (when content was last researched against latest practices)
     const currencyMatch = content.match(/@currency\s*:?\s*(\d{4}-\d{2}-\d{2})/i);
@@ -600,15 +484,13 @@ function scanMuscles() {
       muscle: extractTag('muscle'),           // Canonical muscle name
       description: extractTag('description'), // What it does
       skill: extractTag('skill'),             // Linked skill name
-      version: extractTag('version'),         // Version number
       platform: extractTag('platform'),       // Supported platforms (windows,macos,linux)
       requires: extractTag('requires'),       // External dependencies
-      reviewed: extractTag('reviewed'),       // Code review date YYYY-MM-DD
     };
     
     // Check if muscle has standard header (all required tags present)
-    // Required: @muscle, @description, @reviewed, @platform, @requires
-    const hasStandardHeader = !!(meta.muscle && meta.description && meta.reviewed && meta.platform && meta.requires);
+    // Required: @muscle, @description, @platform, @requires
+    const hasStandardHeader = !!(meta.muscle && meta.description && meta.platform && meta.requires);
 
     // Get category
     const category = categorize(file);
@@ -616,22 +498,22 @@ function scanMuscles() {
     const flags = {
       comments: isWellDocumented ? 1 : 0,
       err: hasErrorHandling ? 1 : 0,
-      bounds: withinBounds ? 1 : 0,
       compat: isCrossPlatform ? 1 : 0,
     };
 
-    const score = flags.comments + flags.err + flags.bounds + flags.compat;
-    // err is GATE - muscles without error handling are fragile
-    const pass = flags.err === 1 && (score >= 3);
+    // Pass = standard header (muscle fm) AND currency recent
+    const pass = hasStandardHeader && isCurrencyRecent(currency);
 
-    results.push({ name, lines: lineCount, lang, category, inh, flags, score, maxScore: 4, pass, reviewDate, meta, hasStandardHeader, currency });
+    results.push({ name, lines: lineCount, lang, category, inh, flags, pass, meta, hasStandardHeader, currency });
   }
 
-  // Sort: worst score first, then unreviewed first, then alphabetically
+  // Sort: failing first, then oldest currency, then alphabetically
   return results.sort((a, b) => {
-    if (a.score !== b.score) return a.score - b.score;
-    if (!a.reviewDate && b.reviewDate) return -1;
-    if (a.reviewDate && !b.reviewDate) return 1;
+    if (a.pass !== b.pass) return a.pass ? 1 : -1;
+    if (a.currency === '-' && b.currency !== '-') return -1;
+    if (a.currency !== '-' && b.currency === '-') return 1;
+    if (a.currency < b.currency) return -1;
+    if (a.currency > b.currency) return 1;
     return a.name.localeCompare(b.name);
   });
 }
@@ -663,17 +545,10 @@ function scanHooks() {
     // Check for error handling (try/catch around stdin parse or main logic)
     const hasErrorHandling = /try\s*\{[\s\S]*?catch/i.test(content);
 
-    // Check for bounds (hooks should be 30-300 lines)
-    const withinBounds = lineCount >= 30 && lineCount <= 300;
-
     // Determine hook event from filename or content
     const eventMatch = content.match(/hook_event_name.*?["'](.*?)["']/i) ||
                        content.match(/@hook\s+(\S+)/i);
     const event = eventMatch ? eventMatch[1] : name.replace('.cjs', '').replace('.js', '');
-
-    // Extract @reviewed date
-    const reviewMatch = content.match(/@(?:reviewed|lastReview|review)\s*:?\s*(\d{4}-\d{2}-\d{2})/i);
-    const reviewDate = reviewMatch ? reviewMatch[1] : null;
 
     // Extract @currency date
     const currencyMatch = content.match(/@currency\s*:?\s*(\d{4}-\d{2}-\d{2})/i);
@@ -684,19 +559,21 @@ function scanHooks() {
       stdin: hasStdinParse ? 1 : 0,
       stdout: hasStdoutJson ? 1 : 0,
       err: hasErrorHandling ? 1 : 0,
-      bounds: withinBounds ? 1 : 0,
     };
 
-    const score = flags.header + flags.stdin + flags.stdout + flags.err + flags.bounds;
-    // stdin is GATE — hooks that don't parse stdin are broken
-    const pass = flags.stdin === 1 && (score >= 4);
+    // Pass = header (hook fm) AND currency recent
+    const pass = hasHeader && isCurrencyRecent(currency);
 
-    results.push({ name, lines: lineCount, event, flags, score, maxScore: 5, pass, reviewDate, currency });
+    results.push({ name, lines: lineCount, event, flags, pass, currency });
   }
 
-  // Sort: worst score first, then alphabetically
+  // Sort: failing first, then oldest currency, then alphabetically
   return results.sort((a, b) => {
-    if (a.score !== b.score) return a.score - b.score;
+    if (a.pass !== b.pass) return a.pass ? 1 : -1;
+    if (a.currency === '-' && b.currency !== '-') return -1;
+    if (a.currency !== '-' && b.currency === '-') return 1;
+    if (a.currency < b.currency) return -1;
+    if (a.currency > b.currency) return 1;
     return a.name.localeCompare(b.name);
   });
 }
@@ -717,81 +594,53 @@ function generateGrid() {
   lines.push("");
   lines.push(`Generated: ${date}`);
   lines.push("");
-  lines.push("> **Scope**: This is a **structural linter**, not a content quality gate. It validates frontmatter, bounds, trifecta binding, and file presence — not whether advice is correct, examples are current, or skills conflict. Content accuracy requires semantic review (see below).");
+  lines.push("> **Scope**: This is a **structural linter**, not a content quality gate. It validates frontmatter and currency freshness — not whether advice is correct, examples are current, or skills conflict. Content accuracy requires semantic review (see below).");
   lines.push("");
-  lines.push("## Scoring Criteria");
+  lines.push("## Pass Criteria");
   lines.push("");
-  lines.push("Each dimension is scored **0** (defect) or **1** (good). Score = sum of dimensions.");
+  lines.push("All brain file types use the same two-gate pass model:");
   lines.push("");
-  lines.push("| Dim | Name | 1 (good) | 0 (defect) | Fix |");
-  lines.push("|:---:|------|----------|------------|-----|");
-  lines.push("| **fm** | Frontmatter | Has `name`, `description`, `applyTo`, and `tier` | Missing any required field | Auto |");
-  lines.push("| **code** | Code Examples | Has pseudocode (excludes mermaid/ascii/diagrams) | No code blocks | Info |");
-  lines.push(`| **bounds** | Bounds | ${MIN_SKILL_LINES}–${MAX_SKILL_LINES} lines | <${MIN_SKILL_LINES} (stub) or >${MAX_SKILL_LINES} (bloated) | Manual |`);
-  lines.push("| **tri** | Trifecta | Not a workflow skill, OR has matching `.instructions.md` | Workflow skill missing instruction file | Manual |");
-  lines.push("| **muscle** | Muscle | Has `.cjs`/`.js` script OR pseudocode `.md` in muscles/ | No automation component | Manual |");
+  lines.push("| Gate | Requirement | Meaning |");
+  lines.push("|------|-------------|---------|");
+  lines.push(`| **fm** | Frontmatter complete | Type-specific required fields present (visibility to the brain) |`);
+  lines.push(`| **currency** | Updated within ${CURRENCY_MAX_DAYS} days | Content researched against current external developments |`);
   lines.push("");
-  lines.push("## Modern Synapses");
+  lines.push("**Pass = fm AND currency**. Other dimensions (tri, handoffs, persona, etc.) are shown as informational columns but do not affect pass/fail.");
   lines.push("");
-  lines.push("Static `synapses.json` files are **deprecated**. Copilot's semantic search + these mechanisms replace connection graphs:");
+  lines.push("### Type-Specific fm Requirements");
   lines.push("");
-  lines.push("| Mechanism | Where | Purpose |");
-  lines.push("|-----------|-------|---------|");
-  lines.push("| `applyTo` | Frontmatter | Pattern-based activation (e.g., `**/*.ts`) |");
-  lines.push("| `description` | Frontmatter | Semantic matching by Copilot |");
-  lines.push("| Trifecta naming | Convention | `skill-name` → `skill-name.instructions.md` |");
-  lines.push("| `handoffs` | Agent files | Explicit routing to specialists |");
+  lines.push("| Type | Required Fields |");
+  lines.push("|------|----------------|");
+  lines.push("| Skills | `name`, `description`, `applyTo`, `tier` |");
+  lines.push("| Agents | `description`, `name`, `model`, `tools` |");
+  lines.push("| Instructions | `description`, `application` |");
+  lines.push("| Prompts | `description`, `application` |");
+  lines.push("| Muscles | Standard header: `@muscle`, `@description`, `@platform`, `@requires` |");
+  lines.push("| Hooks | JSDoc header block |");
   lines.push("");
-  lines.push("## Tier-Based Pass Thresholds");
+  lines.push("### Informational Columns");
   lines.push("");
-  lines.push("\"Good is good enough\" — higher tiers require higher quality. Max score depends on skill type:");
-  lines.push("- **Agentic** (tri+muscle): 4/4 (fm, bounds, tri, muscle)");
-  lines.push("- **Intellectual** (tri only): 3/3 (fm, bounds, tri)");
-  lines.push("");
-  lines.push("| Tier | Allowed Defects | Rationale |");
-  lines.push("|------|:---------------:|-----------|");
-  lines.push("| **core** | 0 | Foundation skills must be perfect |");
-  lines.push("| **standard** | 1 | One defect allowed |");
-  lines.push("| **extended** | 2 | Two defects allowed |");
-  lines.push("| **specialist** | 3 | Niche skills, three defects allowed |");
-  lines.push("");
-  lines.push("**Gate requirement**: `fm=1` is mandatory for all memory types. Without frontmatter, the file is **broken** (invisible to activation), not just low quality.");
-  lines.push("");
-  lines.push("## Skill Types");
-  lines.push("");
-  lines.push("| Type | Components | Nature | Example |");
-  lines.push("|------|------------|--------|--------|");
-  lines.push("| **Intellectual** | tri=1, muscle=0 | Reasoning, analysis, judgment — no action | code-review, security-review |");
-  lines.push("| **Agentic** | tri=1, muscle=1 | Autonomous execution — knows AND does | md-to-word, brain-qa |");
-  lines.push("");
-  lines.push("**Informational columns** (not scored):");
   lines.push("| Col | Meaning | Value |");
   lines.push("|:---:|---------|-------|");
+  lines.push("| **tri** | Trifecta | 1 = workflow skill has matching `.instructions.md` |");
   lines.push("| **inh** | Inheritance | 1 = Master-only, 0 = Synced to heirs |");
-  lines.push("| **Currency** | Currency date | YYYY-MM-DD (when content was last researched against latest practices) |");
+  lines.push("| **Currency** | Currency date | YYYY-MM-DD (when content was last researched) |");
   lines.push("");
-  lines.push("> **Currency**: The date when a brain file was last researched against current external developments (API changes, library updates, best-practice evolution). Set `currency: YYYY-MM-DD` in YAML frontmatter or `@currency YYYY-MM-DD` in muscle headers. Files with old dates are prioritized for a currency sweep.");
+  lines.push("> **inh validation**: During currency audits, verify that master-only items (`inh=1`) have not leaked to heir projects. The inheritance flag is confirmed by cross-referencing the master-only skills list in `.github/config/MASTER-ALEX-PROTECTED.json`.");
   lines.push("");
 
-  // Currency Sweep Process section
-  lines.push("## Currency Sweep Process");
+  // Currency Audit Process section
+  lines.push("## Currency Audit Process");
   lines.push("");
-  lines.push("A currency sweep validates that brain file content reflects the latest external knowledge:");
+  lines.push(`Files pass when \`currency\` is within ${CURRENCY_MAX_DAYS} days. A currency audit verifies content against current external knowledge (Research → Compare → Audit → Update → Stamp).`);
   lines.push("");
-  lines.push("| Step | Action | Fix |");
-  lines.push("|------|--------|-----|");
-  lines.push("| **Research** | Check latest docs, changelogs, and releases for the file's domain | Note what changed |");
-  lines.push("| **Compare** | Diff current content against latest practices | Identify stale advice |");
-  lines.push("| **Update** | Revise outdated patterns, APIs, versions, or recommendations | Apply fixes |");
-  lines.push("| **Stamp** | Set `currency: YYYY-MM-DD` in frontmatter to today's date | Mark as current |");
-  lines.push("");
-  lines.push("**Frequency**: Target a full sweep every 6 months. Prioritize files with oldest currency dates.");
+  lines.push("Full checklist and type-specific guidance: `.github/skills/currency-audit/SKILL.md`");
   lines.push("");
 
   // Priority Queue section
   lines.push("## Priority Queue");
   lines.push("");
-  lines.push("> **Sorted by urgency**: Failing first, then oldest currency date, then lowest score. Top 20 shown.");
+  lines.push("> **Sorted by urgency**: Failing first, then no currency date, then oldest currency. Top 20 shown.");
   lines.push("");
 
   // Collect all items with priority metadata
@@ -802,8 +651,6 @@ function generateGrid() {
       type: 'skill',
       name: s.name,
       path: `../skills/${s.name}/SKILL.md`,
-      score: s.score,
-      maxScore: s.threshold,
       pass: s.pass,
       currency: s.currency,
     });
@@ -814,8 +661,6 @@ function generateGrid() {
       type: 'agent',
       name: a.name,
       path: `../agents/${a.name}.agent.md`,
-      score: a.score,
-      maxScore: 5,
       pass: a.pass,
       currency: a.currency,
     });
@@ -826,8 +671,6 @@ function generateGrid() {
       type: 'instruction',
       name: i.name,
       path: `../instructions/${i.name}.instructions.md`,
-      score: i.score,
-      maxScore: 5,
       pass: i.pass,
       currency: i.currency,
     });
@@ -838,8 +681,6 @@ function generateGrid() {
       type: 'prompt',
       name: p.name,
       path: `../prompts/${p.name}.prompt.md`,
-      score: p.score,
-      maxScore: 4,
       pass: p.pass,
       currency: p.currency,
     });
@@ -850,8 +691,6 @@ function generateGrid() {
       type: 'muscle',
       name: m.name,
       path: `../muscles/${m.name}`,
-      score: m.score,
-      maxScore: 4,
       pass: m.pass,
       currency: m.currency,
     });
@@ -862,31 +701,21 @@ function generateGrid() {
       type: 'hook',
       name: h.name,
       path: `../muscles/hooks/${h.name}`,
-      score: h.score,
-      maxScore: 5,
       pass: h.pass,
       currency: h.currency,
     });
   }
 
-  // Sort: failing first, then no currency date, then oldest currency, then lowest score
+  // Sort: failing first, then no currency date, then oldest currency, then alphabetical
   priorityItems.sort((a, b) => {
-    // Failing items first
     if (!a.pass && b.pass) return -1;
     if (a.pass && !b.pass) return 1;
-    // Then items without currency date
     if (a.currency === '-' && b.currency !== '-') return -1;
     if (a.currency !== '-' && b.currency === '-') return 1;
-    // Oldest currency date first
     if (a.currency !== '-' && b.currency !== '-') {
       if (a.currency < b.currency) return -1;
       if (a.currency > b.currency) return 1;
     }
-    // Then by score (lower = higher priority)
-    const aRatio = a.score / a.maxScore;
-    const bRatio = b.score / b.maxScore;
-    if (aRatio !== bRatio) return aRatio - bRatio;
-    // Finally alphabetical
     return a.name.localeCompare(b.name);
   });
 
@@ -894,14 +723,14 @@ function generateGrid() {
   const topItems = priorityItems.slice(0, 20);
   
   if (topItems.length > 0) {
-    lines.push("| # | Type | File | Score | Pass | Currency | Action |");
-    lines.push("|--:|:----:|------|------:|:----:|:--------:|--------|");
+    lines.push("| # | Type | File | Pass | Currency | Action |");
+    lines.push("|--:|:----:|------|:----:|:--------:|--------|");
     
     topItems.forEach((item, idx) => {
       const nameLink = `[${item.name}](${item.path})`;
       const passIcon = item.pass ? "✓" : "✗";
-      const action = !item.pass ? "Fix defects" : (item.currency === '-' ? "Currency sweep" : "Re-sweep");
-      lines.push(`| ${idx + 1} | ${item.type} | ${nameLink} | ${item.score}/${item.maxScore} | ${passIcon} | ${item.currency} | ${action} |`);
+      const action = !item.pass ? "Fix defects" : (item.currency === '-' ? "Currency audit" : "Re-audit");
+      lines.push(`| ${idx + 1} | ${item.type} | ${nameLink} | ${passIcon} | ${item.currency} | ${action} |`);
     });
     
     const totalFailing = priorityItems.filter(i => !i.pass).length;
@@ -920,7 +749,7 @@ function generateGrid() {
     lines.push("");
     lines.push(`**Queue depth**: ${totalFailing} failing | ${totalNoCurrency} no currency | ${totalWithCurrency} with currency | ${priorityItems.length} total`);
     if (staleItems.length > 0) {
-      lines.push(`**Stale currency**: ${staleItems.length} items have currency dates older than ${STALE_DAYS} days — sweep recommended`);
+      lines.push(`**Stale currency**: ${staleItems.length} items have currency dates older than ${STALE_DAYS} days — audit recommended`);
     }
   } else {
     lines.push("**Status**: ✅ All brain files passing and reviewed");
@@ -930,249 +759,117 @@ function generateGrid() {
   // Skills table
   lines.push("## Skills");
   lines.push("");
-  lines.push("| Skill | Tier | Lines | fm | code | bounds | tri | muscle | Type | Score | Pass | inh | Currency |");
-  lines.push("|-------|:----:|------:|:--:|:----:|:------:|:---:|:------:|:----:|------:|:----:|:---:|:--------:|");
+  lines.push("| Skill | Tier | Lines | fm | tri | Pass | inh | Currency |");
+  lines.push("|-------|:----:|------:|:--:|:---:|:----:|:---:|:--------:|");
 
   for (const s of skills) {
     const f = s.flags;
-    const tierAbbr = s.tier.substring(0, 4);  // core, stan, exte, spec
+    const tierAbbr = s.tier.substring(0, 4);
     const passIcon = s.pass ? "✓" : "✗";
-    // Type: A = Agentic (tri+muscle), I = Intellectual (tri only), - = incomplete
-    const typeIcon = s.agentic ? "A" : (f.tri === 1 ? "I" : "-");
-    // Link to SKILL.md file
     const nameLink = `[${s.name}](../skills/${s.name}/SKILL.md)`;
-    const codeIcon = f.code ? '1' : '-';
-    lines.push(`| ${nameLink} | ${tierAbbr} | ${s.lines} | ${f.fm} | ${codeIcon} | ${f.bounds} | ${f.tri} | ${f.muscle} | ${typeIcon} | ${s.score}/${s.threshold} | ${passIcon} | ${f.inh} | ${s.currency} |`);
+    lines.push(`| ${nameLink} | ${tierAbbr} | ${s.lines} | ${f.fm} | ${f.tri} | ${passIcon} | ${f.inh} | ${s.currency} |`);
   }
 
-  // Skills summary - now using tier-based pass/fail
+  // Skills summary
   const passing = skills.filter(s => s.pass).length;
   const failing = skills.filter(s => !s.pass).length;
-  const perfect = skills.filter(s => s.score === s.maxScore).length;
-  const agenticCount = skills.filter(s => s.agentic).length;
-  const intellectualCount = skills.filter(s => s.flags.tri === 1 && s.flags.muscle === 0).length;
-
-  // Defect counts per dimension
-  const defects = {
-    fm: skills.filter(s => s.flags.fm === 0).length,
-    code: skills.filter(s => s.flags.code === 0).length,
-    bounds: skills.filter(s => s.flags.bounds === 0).length,
-    tri: skills.filter(s => s.flags.tri === 0).length,
-    muscle: skills.filter(s => s.flags.muscle === 0).length,
-  };
 
   lines.push("");
-  lines.push(`**Summary**: ${skills.length} skills | Passing: ${passing} | Failing: ${failing} | Perfect: ${perfect}`);
-  lines.push("");
-  lines.push(`**Skill Types**: Agentic(A): ${agenticCount} | Intellectual(I): ${intellectualCount} | Incomplete(-): ${skills.length - agenticCount - intellectualCount}`);
-  lines.push("");
-  lines.push("**Defects by dimension (informational)**:");
-  lines.push(`| fm | code | bounds | tri | muscle |`);
-  lines.push(`|:--:|:----:|:------:|:---:|:------:|`);
-  lines.push(`| ${defects.fm} | ${defects.code} | ${defects.bounds} | ${defects.tri} | ${defects.muscle} |`);
+  lines.push(`**Summary**: ${skills.length} skills | Passing: ${passing} | Failing: ${failing}`);
   lines.push("");
 
   // Agents table
   lines.push("## Agents");
   lines.push("");
-  lines.push("**Scoring Criteria**:");
-  lines.push("| Dim | Name | 1 (good) | 0 (defect) |");
-  lines.push("|:---:|------|----------|------------|");
-  lines.push("| **fm** | Frontmatter | Has `description`, `name`, `model`, `tools` | Missing any |");
-  lines.push("| **handoffs** | Handoffs | Has `handoffs:` for agent orchestration | No handoffs |");
-  lines.push(`| **bounds** | Bounds | ${MIN_AGENT_LINES}–${MAX_AGENT_LINES} lines | <${MIN_AGENT_LINES} (stub) or >${MAX_AGENT_LINES} (bloated) |`);
-  lines.push("| **persona** | Persona | Has `## Mental Model`, `## Core Identity`, or similar | No persona section |");
-  lines.push("| **code** | Examples | Has pseudocode, templates, or diagrams | No examples |");
-  lines.push("");
-  lines.push("> **Code policy**: Agent examples should use **pseudocode** (language-agnostic patterns), **templates** (markdown output formats), or **diagrams** (Mermaid). Avoid language-specific syntax — agents teach patterns, not syntax.");
-  lines.push("");
-  lines.push("**Pass criteria**: fm=1 (gate) AND score ≥4/5");
-  lines.push("");
-  lines.push("| Agent | Lines | fm | handoffs | bounds | persona | code | Score | Pass | Currency |");
-  lines.push("|-------|------:|:--:|:--------:|:------:|:-------:|:----:|------:|:----:|:--------:|");
+  lines.push("| Agent | Lines | fm | handoffs | persona | Pass | Currency |");
+  lines.push("|-------|------:|:--:|:--------:|:-------:|:----:|:--------:|");
 
   for (const a of agents) {
     const f = a.flags;
     const passIcon = a.pass ? "✓" : "✗";
-    // Link to agent file
     const nameLink = `[${a.name}](../agents/${a.name}.agent.md)`;
-    lines.push(`| ${nameLink} | ${a.lines} | ${f.fm} | ${f.handoffs} | ${f.bounds} | ${f.persona} | ${f.code} | ${a.score}/5 | ${passIcon} | ${a.currency} |`);
+    lines.push(`| ${nameLink} | ${a.lines} | ${f.fm} | ${f.handoffs} | ${f.persona} | ${passIcon} | ${a.currency} |`);
   }
 
   // Agents summary
   const agentsPassing = agents.filter(a => a.pass).length;
   const agentsFailing = agents.filter(a => !a.pass).length;
-  const agentsPerfect = agents.filter(a => a.score === 5).length;
   lines.push("");
-  lines.push(`**Summary**: ${agents.length} agents | Passing: ${agentsPassing} | Failing: ${agentsFailing} | Perfect(5/5): ${agentsPerfect}`);
+  lines.push(`**Summary**: ${agents.length} agents | Passing: ${agentsPassing} | Failing: ${agentsFailing}`);
 
   lines.push("");
 
   // Instructions table
   lines.push("## Instructions");
   lines.push("");
-  lines.push("> **Design**: Instructions are **discoverable knowledge modules** that can serve multiple skills. Frontmatter enables routing without reading the full document.");
-  lines.push("");
-  lines.push("**Scoring Criteria**:");
-  lines.push("| Dim | Name | 1 (good) | 0 (defect) |");
-  lines.push("|:---:|------|----------|------------|");
-  lines.push("| **fm** | Frontmatter | Has `description` AND `application` | Missing either |");
-  lines.push("| **depth** | Depth | >50 lines | ≤50 lines |");
-  lines.push("| **sect** | Sections | ≥2 `##` headers | Flat structure |");
-  lines.push("| **code** | Code | Has code block | No examples |");
-  lines.push("| **skill** | Trifecta | Has matching skill | Standalone instruction |");
-  lines.push("");
-  lines.push("> **Frontmatter fields**: `description` (what it does) + `application` (when/why to use). Optional: `applyTo` (Copilot file-pattern activation).");
-  lines.push("");
-  lines.push("**Pass criteria**: fm=1 (gate) AND score ≥3/5");
-  lines.push("");
-  lines.push("| Instruction | Lines | fm | depth | sect | code | skill | Score | Pass | Currency |");
-  lines.push("|-------------|------:|:--:|:-----:|:----:|:----:|:-----:|------:|:----:|:--------:|");
+  lines.push("| Instruction | Lines | fm | depth | sect | skill | Pass | Currency |");
+  lines.push("|-------------|------:|:--:|:-----:|:----:|:-----:|:----:|:--------:|");
 
   for (const i of instructions) {
     const f = i.flags;
     const passIcon = i.pass ? "✓" : "✗";
-    // Link to instruction file
     const nameLink = `[${i.name}](../instructions/${i.name}.instructions.md)`;
-    lines.push(`| ${nameLink} | ${i.lines} | ${f.fm} | ${f.depth} | ${f.sect} | ${f.code} | ${f.skill} | ${i.score}/5 | ${passIcon} | ${i.currency} |`);
+    lines.push(`| ${nameLink} | ${i.lines} | ${f.fm} | ${f.depth} | ${f.sect} | ${f.skill} | ${passIcon} | ${i.currency} |`);
   }
 
   // Instructions summary
   const instrPassing = instructions.filter(i => i.pass).length;
   const instrFailing = instructions.filter(i => !i.pass).length;
-  const instrPerfect = instructions.filter(i => i.score === 5).length;
   lines.push("");
-  lines.push(`**Summary**: ${instructions.length} instructions | Passing: ${instrPassing} | Failing: ${instrFailing} | Perfect(5/5): ${instrPerfect}`);
+  lines.push(`**Summary**: ${instructions.length} instructions | Passing: ${instrPassing} | Failing: ${instrFailing}`);
 
   lines.push("");
 
   // Prompts table
   lines.push("## Prompts");
   lines.push("");
-  lines.push("> **Design**: Prompts are **agent-loaded workflows** — user says \"run brain-qa\" and the agent matches by name/description. `application` declares WHEN to suggest this workflow.");
-  lines.push("");
-  lines.push("**Scoring Criteria**:");
-  lines.push("| Dim | Name | 1 (good) | 0 (defect) |");
-  lines.push("|:---:|------|----------|------------|");
-  lines.push("| **desc** | Description | Has `description:` in frontmatter | Missing description |");
-  lines.push("| **app** | Application | Has `application:` with WHEN hint | Missing application |");
-  lines.push("| **agent** | Agent Routing | Has `agent:` field | No agent routing |");
-  lines.push("| **>20L** | Content | >20 lines | ≤20 lines (stub) |");
-  lines.push("");
-  lines.push("**Pass criteria**: desc=1 AND app=1 (gates) AND score ≥3/4");
-  lines.push("");
-  lines.push("| Prompt | Lines | desc | app | agent | >20L | Score | Pass | Currency |");
-  lines.push("|--------|------:|:----:|:---:|:-----:|:----:|------:|:----:|:--------:|");
+  lines.push("| Prompt | Lines | desc | app | agent | >20L | Pass | Currency |");
+  lines.push("|--------|------:|:----:|:---:|:-----:|:----:|:----:|:--------:|");
 
   for (const p of prompts) {
     const f = p.flags;
     const passIcon = p.pass ? "✓" : "✗";
-    // Link to prompt file — include subdir path if present
     const relPath = p.subdir
       ? `../prompts/${p.subdir}/${p.name}.prompt.md`
       : `../prompts/${p.name}.prompt.md`;
     const nameLink = `[${p.name}](${relPath})`;
-    lines.push(`| ${nameLink} | ${p.lines} | ${f.desc} | ${f.app} | ${f.agent} | ${f.over20} | ${p.score}/4 | ${passIcon} | ${p.currency} |`);
+    lines.push(`| ${nameLink} | ${p.lines} | ${f.desc} | ${f.app} | ${f.agent} | ${f.over20} | ${passIcon} | ${p.currency} |`);
   }
 
   // Prompts summary
   const promptsPassing = prompts.filter(p => p.pass).length;
   const promptsFailing = prompts.filter(p => !p.pass).length;
-  const promptsPerfect = prompts.filter(p => p.score === 4).length;
   lines.push("");
-  lines.push(`**Summary**: ${prompts.length} prompts | Passing: ${promptsPassing} | Failing: ${promptsFailing} | Perfect(4/4): ${promptsPerfect}`);
-
-  // Prompts criterion validity
-  const promptDescPass = prompts.filter(p => p.flags.desc === 1).length;
-  const promptAppPass = prompts.filter(p => p.flags.app === 1).length;
-  const promptAgentPass = prompts.filter(p => p.flags.agent === 1).length;
-  const promptOver20Pass = prompts.filter(p => p.flags.over20 === 1).length;
-  lines.push("");
-  lines.push("### Criterion Validity");
-  lines.push("");
-  lines.push("| Criterion | Pass | Rate | Validity |");
-  lines.push("|-----------|-----:|-----:|----------|");
-  lines.push(`| desc | ${promptDescPass}/${prompts.length} | ${Math.round(promptDescPass/prompts.length*100)}% | ✓ Valid — required for discoverability |`);
-  lines.push(`| app | ${promptAppPass}/${prompts.length} | ${Math.round(promptAppPass/prompts.length*100)}% | ✓ Valid — tells agent WHEN to suggest |`);
-  lines.push(`| agent | ${promptAgentPass}/${prompts.length} | ${Math.round(promptAgentPass/prompts.length*100)}% | ✓ Valid — identifies routing prompts |`);
-  lines.push(`| >20L | ${promptOver20Pass}/${prompts.length} | ${Math.round(promptOver20Pass/prompts.length*100)}% | ✓ Valid — identifies workflow content |`);
+  lines.push(`**Summary**: ${prompts.length} prompts | Passing: ${promptsPassing} | Failing: ${promptsFailing}`);
 
   lines.push("");
 
   // Muscles table
   lines.push("## Muscles");
   lines.push("");
-  lines.push("> **Design**: Muscles are **execution scripts** that convert cognitive decisions into real-world output. Memory files define *what* and *how*; muscles *do*.");
-  lines.push("");
-  lines.push("**Scoring Criteria**:");
-  lines.push("| Dim | Name | 1 (good) | 0 (defect) |");
-  lines.push("|:---:|------|----------|------------|");
-  lines.push("| **comments** | Well Documented | Header block + ≥5 inline comments | Missing header or insufficient comments |");
-  lines.push("| **err** | Error Handling | try/catch, .catch(), $ErrorActionPreference | No error handling (fragile) |");
-  lines.push("| **bounds** | Bounds | 50–1000 lines | <50 (stub) or >1000 (bloated) |");
-  lines.push("| **compat** | Cross-Platform | path.join/Join-Path, no hardcoded separators | Hardcoded path separators |");
-  lines.push("");
-  lines.push("**Pass criteria**: err=1 (gate) AND score ≥3/4");
-  lines.push("");
-  lines.push("**Review Date**: Add `@reviewed: YYYY-MM-DD` comment to track code review currency.");
-  lines.push("**Currency Date**: Add `@currency: YYYY-MM-DD` comment to track knowledge freshness.");
-  lines.push("");
-  lines.push("### Standard Muscle Header");
-  lines.push("");
-  lines.push("Muscles SHOULD use the standard header format for discoverability:");
-  lines.push("");
-  lines.push("```javascript");
-  lines.push("#!/usr/bin/env node");
-  lines.push("/**");
-  lines.push(" * @muscle muscle-name");
-  lines.push(" * @description What this muscle does");
-  lines.push(" * @version 1.0.0");
-  lines.push(" * @skill linked-skill-name");
-  lines.push(" * @reviewed 2026-04-15");
-  lines.push(" * @currency 2025-01-01");
-  lines.push(" * @platform windows,macos,linux");
-  lines.push(" * @requires pandoc, mermaid-cli");
-  lines.push(" */");
-  lines.push("```");
-  lines.push("");
-  lines.push("| Tag | Required | Purpose |");
-  lines.push("|-----|:--------:|---------|");
-  lines.push("| `@muscle` | ✓ | Canonical muscle name |");
-  lines.push("| `@description` | ✓ | What it does (for search/display) |");
-  lines.push("| `@version` | | Semantic version |");
-  lines.push("| `@skill` | | Linked skill name for trifecta binding |");
-  lines.push("| `@reviewed` | | Code review date (YYYY-MM-DD) |");
-  lines.push("| `@currency` | | Currency sweep date (YYYY-MM-DD) |");
-  lines.push("| `@platform` | | Supported platforms (windows,macos,linux) |");
-  lines.push("| `@requires` | | External dependencies |");
-  lines.push("");
-  lines.push("| Muscle | Lines | Lang | Category | comments | err | bounds | compat | Score | Pass | inh | Reviewed | Currency |");
-  lines.push("|--------|------:|:----:|----------|:--------:|:---:|:------:|:------:|------:|:----:|:---:|----------|:--------:|");
+  lines.push("| Muscle | Lines | Lang | Category | comments | err | compat | Pass | inh | Currency |");
+  lines.push("|--------|------:|:----:|----------|:--------:|:---:|:------:|:----:|:---:|:--------:|");
 
   for (const m of muscles) {
     const f = m.flags;
     const passIcon = m.pass ? "✓" : "✗";
-    const reviewedDate = m.reviewDate || "—";
-    // Link to muscle file
     const nameLink = `[${m.name}](../muscles/${m.name})`;
-    lines.push(`| ${nameLink} | ${m.lines} | ${m.lang} | ${m.category} | ${f.comments} | ${f.err} | ${f.bounds} | ${f.compat} | ${m.score}/4 | ${passIcon} | ${m.inh} | ${reviewedDate} | ${m.currency} |`);
+    lines.push(`| ${nameLink} | ${m.lines} | ${m.lang} | ${m.category} | ${f.comments} | ${f.err} | ${f.compat} | ${passIcon} | ${m.inh} | ${m.currency} |`);
   }
 
   // Muscles summary
   const musclesPassing = muscles.filter(m => m.pass).length;
   const musclesFailing = muscles.filter(m => !m.pass).length;
-  const musclesPerfect = muscles.filter(m => m.score === 4).length;
-  const musclesReviewed = muscles.filter(m => m.reviewDate).length;
   const musclesMasterOnly = muscles.filter(m => m.inh === 1).length;
   const musclesInheritable = muscles.filter(m => m.inh === 0).length;
   const musclesWithStdHeader = muscles.filter(m => m.hasStandardHeader).length;
   const musclesWithSkillLink = muscles.filter(m => m.meta && m.meta.skill).length;
   lines.push("");
-  lines.push(`**Summary**: ${muscles.length} muscles | Passing: ${musclesPassing} | Failing: ${musclesFailing} | Perfect(4/4): ${musclesPerfect}`);
+  lines.push(`**Summary**: ${muscles.length} muscles | Passing: ${musclesPassing} | Failing: ${musclesFailing}`);
   lines.push("");
   lines.push(`**Inheritance**: Master-only(1): ${musclesMasterOnly} | Inheritable(0): ${musclesInheritable}`);
   lines.push("");
-  lines.push(`**Metadata Adoption**: ${musclesWithStdHeader}/${muscles.length} have standard header | ${musclesWithSkillLink}/${muscles.length} linked to skills | ${musclesReviewed}/${muscles.length} have review dates`);
+  lines.push(`**Metadata Adoption**: ${musclesWithStdHeader}/${muscles.length} have standard header | ${musclesWithSkillLink}/${muscles.length} linked to skills`);
 
   // Muscles by category
   const categories = [...new Set(muscles.map(m => m.category))];
@@ -1187,38 +884,21 @@ function generateGrid() {
   lines.push("");
   lines.push("## Hooks");
   lines.push("");
-  lines.push("> **Design**: Hooks are **event-driven scripts** invoked by the VS Code agent platform at lifecycle boundaries. They read JSON from stdin and emit JSON to stdout.");
-  lines.push("");
-  lines.push("**Scoring Criteria**:");
-  lines.push("| Dim | Name | 1 (good) | 0 (defect) |");
-  lines.push("|:---:|------|----------|------------|");
-  lines.push("| **header** | Documentation | Has JSDoc header block | Missing documentation |");
-  lines.push("| **stdin** | Stdin Parse | Reads JSON from fd 0 / process.stdin | Missing stdin parse (broken hook) |");
-  lines.push("| **stdout** | Stdout JSON | Emits JSON.stringify to stdout | No structured output |");
-  lines.push("| **err** | Error Handling | try/catch around main logic | No error handling |");
-  lines.push("| **bounds** | Bounds | 30–300 lines | <30 (stub) or >300 (bloated) |");
-  lines.push("");
-  lines.push("**Pass criteria**: stdin=1 (gate) AND score ≥4/5");
-  lines.push("");
-  lines.push("| Hook | Lines | Event | header | stdin | stdout | err | bounds | Score | Pass | Reviewed | Currency |");
-  lines.push("|------|------:|-------|:------:|:-----:|:------:|:---:|:------:|------:|:----:|----------|:--------:|");
+  lines.push("| Hook | Lines | Event | header | stdin | stdout | err | Pass | Currency |");
+  lines.push("|------|------:|-------|:------:|:-----:|:------:|:---:|:----:|:--------:|");
 
   for (const h of hooks) {
     const f = h.flags;
     const passIcon = h.pass ? "✓" : "✗";
-    const reviewedDate = h.reviewDate || "—";
     const nameLink = `[${h.name}](../muscles/hooks/${h.name})`;
-    lines.push(`| ${nameLink} | ${h.lines} | ${h.event} | ${f.header} | ${f.stdin} | ${f.stdout} | ${f.err} | ${f.bounds} | ${h.score}/5 | ${passIcon} | ${reviewedDate} | ${h.currency} |`);
+    lines.push(`| ${nameLink} | ${h.lines} | ${h.event} | ${f.header} | ${f.stdin} | ${f.stdout} | ${f.err} | ${passIcon} | ${h.currency} |`);
   }
 
   // Hooks summary
   const hooksPassing = hooks.filter(h => h.pass).length;
   const hooksFailing = hooks.filter(h => !h.pass).length;
-  const hooksPerfect = hooks.filter(h => h.score === 5).length;
-  const hooksReviewed = hooks.filter(h => h.reviewDate).length;
   lines.push("");
-  lines.push(`**Summary**: ${hooks.length} hooks | Passing: ${hooksPassing} | Failing: ${hooksFailing} | Perfect(5/5): ${hooksPerfect}`);
-  lines.push(`**Reviewed**: ${hooksReviewed}/${hooks.length} have review dates`);
+  lines.push(`**Summary**: ${hooks.length} hooks | Passing: ${hooksPassing} | Failing: ${hooksFailing}`);
 
   // Overall summary
   const totalItems = skills.length + agents.length + instructions.length + prompts.length + muscles.length + hooks.length;
@@ -1252,17 +932,6 @@ function generateGrid() {
         name: s.name,
         path: `../skills/${s.name}/SKILL.md`,
         ...s.waste
-      });
-    }
-  }
-  
-  for (const a of agents) {
-    if (a.waste && a.waste.mermaidBlocks > 0) {
-      wasteFindings.push({
-        type: 'agent',
-        name: a.name,
-        path: `../agents/${a.name}.agent.md`,
-        ...a.waste
       });
     }
   }
@@ -1313,8 +982,7 @@ if (typeof module !== 'undefined') {
     detectTokenWaste,
     isWorkflowSkill,
     hasMatchingInstruction,
-    hasMatchingMuscle,
-    getPassThreshold,
+    isCurrencyRecent,
     scanSkills,
     scanAgents,
     scanInstructions,
@@ -1322,11 +990,7 @@ if (typeof module !== 'undefined') {
     scanMuscles,
     scanHooks,
     generateGrid,
-    TIER_THRESHOLDS,
-    MIN_SKILL_LINES,
-    MAX_SKILL_LINES,
-    MIN_AGENT_LINES,
-    MAX_AGENT_LINES,
+    CURRENCY_MAX_DAYS,
   };
 }
 

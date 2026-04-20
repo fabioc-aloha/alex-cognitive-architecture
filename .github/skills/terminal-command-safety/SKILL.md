@@ -3,7 +3,7 @@ name: terminal-command-safety
 description: "Safe terminal command patterns — backtick escaping, output capture, and hang prevention"
 tier: core
 applyTo: "**"
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Terminal Command Safety

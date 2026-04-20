@@ -4,7 +4,7 @@ description: Iterative quality improvement — generate, evaluate, feedback, re-
 applyTo: '**/*quality*,**/*eval*,**/*iterate*,**/*ralph*'
 domain: Quality Engineering
 category: Iterative Improvement
-tier: advanced
+tier: standard
 dependencies:
   - testing-strategies
   - code-review

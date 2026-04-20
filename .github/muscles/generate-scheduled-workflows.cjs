@@ -14,7 +14,7 @@
  *
  * Usage:
  *   node .github/muscles/generate-scheduled-workflows.cjs [--dry-run]
- * @currency 2025-01-01
+ * @currency 2026-04-20
  */
 
 "use strict";

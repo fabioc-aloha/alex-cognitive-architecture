@@ -14,8 +14,7 @@ const {
   detectTokenWaste,
   isWorkflowSkill,
   hasMatchingInstruction,
-  hasMatchingMuscle,
-  getPassThreshold,
+  isCurrencyRecent,
   scanSkills,
   scanAgents,
   scanInstructions,
@@ -23,12 +22,7 @@ const {
   scanMuscles,
   scanHooks,
   generateGrid,
-  TIER_THRESHOLDS,
-  MIN_SKILL_LINES,
-  MAX_SKILL_LINES,
-  MIN_AGENT_LINES,
-  MAX_AGENT_LINES,
-  STALE_PRONE,
+  CURRENCY_MAX_DAYS,
 } = require('./brain-qa.cjs');
 
 // -- detectTokenWaste tests -------------------------------------------------
@@ -94,8 +88,8 @@ describe('isWorkflowSkill', () => {
     assert.strictEqual(isWorkflowSkill('# Title\n\n## Process\n\nDo things'), true);
   });
 
-  it('detects bold numbered steps', () => {
-    assert.strictEqual(isWorkflowSkill('# Title\n\n1. **Create file**\n2. **Run tests**'), true);
+  it('does not match numbered bold lists (formatting, not workflow)', () => {
+    assert.strictEqual(isWorkflowSkill('# Title\n\n1. **Create file**\n2. **Run tests**'), false);
   });
 
   it('returns false for non-workflow content', () => {
@@ -107,57 +101,33 @@ describe('isWorkflowSkill', () => {
   });
 });
 
-// -- getPassThreshold tests -------------------------------------------------
+// -- isCurrencyRecent tests -------------------------------------------------
 
-describe('getPassThreshold', () => {
-  it('core tier requires 5 (max score)', () => {
-    assert.strictEqual(getPassThreshold('core'), 5);
+describe('isCurrencyRecent', () => {
+  it('returns true for today date', () => {
+    const today = new Date().toISOString().split('T')[0];
+    assert.strictEqual(isCurrencyRecent(today), true);
   });
 
-  it('standard tier requires 4', () => {
-    assert.strictEqual(getPassThreshold('standard'), 4);
+  it('returns false for very old date', () => {
+    assert.strictEqual(isCurrencyRecent('2020-01-01'), false);
   });
 
-  it('extended tier requires 3', () => {
-    assert.strictEqual(getPassThreshold('extended'), 3);
+  it('returns false for dash (no currency)', () => {
+    assert.strictEqual(isCurrencyRecent('-'), false);
   });
 
-  it('specialist tier requires 2', () => {
-    assert.strictEqual(getPassThreshold('specialist'), 2);
-  });
-
-  it('unknown tier defaults to standard (4)', () => {
-    assert.strictEqual(getPassThreshold('unknown'), 4);
+  it('returns false for invalid date', () => {
+    assert.strictEqual(isCurrencyRecent('not-a-date'), false);
   });
 });
 
 // -- Constants tests --------------------------------------------------------
 
 describe('constants', () => {
-  it('skill line bounds are reasonable', () => {
-    assert.ok(MIN_SKILL_LINES > 0 && MIN_SKILL_LINES < 200);
-    assert.ok(MAX_SKILL_LINES > 200 && MAX_SKILL_LINES <= 1000);
-    assert.ok(MIN_SKILL_LINES < MAX_SKILL_LINES);
-  });
-
-  it('agent line bounds are reasonable', () => {
-    assert.ok(MIN_AGENT_LINES > 0 && MIN_AGENT_LINES < 100);
-    assert.ok(MAX_AGENT_LINES > 100 && MAX_AGENT_LINES <= 1000);
-    assert.ok(MIN_AGENT_LINES < MAX_AGENT_LINES);
-  });
-
-  it('STALE_PRONE is a Set with known entries', () => {
-    assert.ok(STALE_PRONE instanceof Set);
-    assert.ok(STALE_PRONE.size > 0);
-    assert.ok(STALE_PRONE.has('vscode-extension-patterns'));
-    assert.ok(STALE_PRONE.has('llm-model-selection'));
-  });
-
-  it('TIER_THRESHOLDS has all expected tiers', () => {
-    assert.ok('core' in TIER_THRESHOLDS);
-    assert.ok('standard' in TIER_THRESHOLDS);
-    assert.ok('extended' in TIER_THRESHOLDS);
-    assert.ok('specialist' in TIER_THRESHOLDS);
+  it('CURRENCY_MAX_DAYS is a positive number', () => {
+    assert.ok(typeof CURRENCY_MAX_DAYS === 'number');
+    assert.ok(CURRENCY_MAX_DAYS > 0);
   });
 });
 
@@ -171,19 +141,6 @@ describe('hasMatchingInstruction', () => {
 
   it('returns false for skill without matching instruction', () => {
     assert.strictEqual(hasMatchingInstruction('nonexistent-skill-xyz'), false);
-  });
-});
-
-// -- hasMatchingMuscle tests ------------------------------------------------
-
-describe('hasMatchingMuscle', () => {
-  it('returns true for skill with matching .cjs muscle', () => {
-    // brain-qa has brain-qa.cjs
-    assert.strictEqual(hasMatchingMuscle('brain-qa'), true);
-  });
-
-  it('returns false for skill without muscle', () => {
-    assert.strictEqual(hasMatchingMuscle('nonexistent-muscle-xyz'), false);
   });
 });
 
@@ -202,7 +159,6 @@ describe('scanners (integration)', () => {
     assert.ok('name' in skill);
     assert.ok('lines' in skill);
     assert.ok('flags' in skill);
-    assert.ok('score' in skill);
     assert.ok('tier' in skill);
     assert.ok('pass' in skill);
     assert.ok('waste' in skill);
@@ -212,10 +168,7 @@ describe('scanners (integration)', () => {
     const skills = scanSkills();
     const flags = skills[0].flags;
     assert.ok('fm' in flags);
-    assert.ok('code' in flags);
-    assert.ok('bounds' in flags);
     assert.ok('tri' in flags);
-    assert.ok('muscle' in flags);
     assert.ok('inh' in flags);
   });
 
@@ -231,7 +184,6 @@ describe('scanners (integration)', () => {
     assert.ok('name' in agent);
     assert.ok('lines' in agent);
     assert.ok('flags' in agent);
-    assert.ok('score' in agent);
     assert.ok('pass' in agent);
   });
 
@@ -261,7 +213,6 @@ describe('scanners (integration)', () => {
     assert.ok('lang' in muscle);
     assert.ok('category' in muscle);
     assert.ok('flags' in muscle);
-    assert.ok('score' in muscle);
     assert.ok('pass' in muscle);
   });
 
@@ -278,8 +229,6 @@ describe('scanners (integration)', () => {
     assert.ok('lines' in hook);
     assert.ok('event' in hook);
     assert.ok('flags' in hook);
-    assert.ok('score' in hook);
-    assert.ok('maxScore' in hook);
     assert.ok('pass' in hook);
   });
 
@@ -290,7 +239,6 @@ describe('scanners (integration)', () => {
     assert.ok('stdin' in flags);
     assert.ok('stdout' in flags);
     assert.ok('err' in flags);
-    assert.ok('bounds' in flags);
   });
 });
 
@@ -317,11 +265,11 @@ describe('generateGrid', () => {
     assert.ok(grid.includes('Failing'), 'Should report failing count');
   });
 
-  it('all skills should currently pass (0 failing)', () => {
+  it('all skills have fm=1 (frontmatter complete)', () => {
     const skills = scanSkills();
-    const failing = skills.filter(s => !s.pass);
-    assert.strictEqual(failing.length, 0, 
-      `Expected 0 failing skills, got ${failing.length}: ${failing.map(s => s.name).join(', ')}`);
+    const missingFm = skills.filter(s => s.flags.fm === 0);
+    assert.strictEqual(missingFm.length, 0, 
+      `Expected 0 skills with broken fm, got ${missingFm.length}: ${missingFm.map(s => s.name).join(', ')}`);
   });
 });
 

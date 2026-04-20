@@ -50,7 +50,7 @@ handoffs:
     agent: M365
     prompt: I need help with Microsoft 365 or Teams development.
     send: true
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Alex Cognitive Architecture

@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
  * @muscle curate-upgrade
+ * @description Curate project-specific content from .github-backup-* after brain upgrade
+ * @platform node
+ * @requires fs, path
  * @inheritance inheritable
- * @reviewed 2026-04-19
- *
- * Curate project-specific content from .github-backup-* after brain upgrade.
  *
  * After upgrade-brain.ps1 renames .github/ to .github-backup-YYYYMMDD/ and installs
  * a fresh v8 brain, some project-specific content may not have been auto-restored.
@@ -16,7 +16,7 @@
  *   node .github/muscles/curate-upgrade.cjs --mode AutoRestore --dry-run
  *   node .github/muscles/curate-upgrade.cjs --mode Curate --include "CorreaX"
  *   node .github/muscles/curate-upgrade.cjs --mode Clean --include "ChessCoach,AlexBooks"
- * @currency 2025-01-01
+ * @currency 2026-04-20
  */
 
 'use strict';

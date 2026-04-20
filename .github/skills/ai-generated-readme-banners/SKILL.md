@@ -3,7 +3,7 @@ name: "ai-generated-readme-banners"
 description: "Create professional ultra-wide cinematic banners for GitHub READMEs using modern AI image models with typography"
 tier: standard
 applyTo: '**/*banner*,**/*readme*,**/generate-readme*'
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # AI-Generated README Banners

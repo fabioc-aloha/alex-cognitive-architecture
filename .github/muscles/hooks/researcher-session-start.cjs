@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-// H5: Researcher session start
-// Agent-scoped SessionStart hook for Researcher mode.
-// Loads knowledge gaps + research trifecta context for better research continuity.
-// @reviewed: 2026-04-18
+/**
+ * H5: Researcher session start
+ * Agent-scoped SessionStart hook for Researcher mode.
+ * Loads knowledge gaps + research trifecta context for better research continuity.
+ * @currency 2026-04-20
+ */
 "use strict";
 
 const fs = require("fs");
@@ -12,8 +14,7 @@ let input = {};
 try {
   input = JSON.parse(fs.readFileSync(0, "utf8"));
 } catch {
-  /* defaults * @currency 2025-01-01
- */
+  /* defaults */
 }
 
 const workspaceRoot = input.cwd || path.resolve(__dirname, "../../..");

@@ -23,7 +23,7 @@ handoffs:
     prompt: Document the Azure architecture decisions and deployment setup.
     send: true
     model: GPT-4o
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Alex Azure Development Guide

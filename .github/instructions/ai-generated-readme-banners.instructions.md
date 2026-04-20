@@ -2,7 +2,7 @@
 description: "AI-generated README banner creation for project branding and marketing assets"
 application: "When generating images, managing visual assets, or maintaining brand consistency"
 applyTo: "**/generate-readme*,**/*banner*"
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # AI-Generated README Banners — Auto-Loaded Rules

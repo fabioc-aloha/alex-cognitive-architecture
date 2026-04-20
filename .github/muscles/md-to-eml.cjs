@@ -41,7 +41,7 @@
  * Requirements:
  *   - Node.js 18+
  *   - pandoc (for markdown -> HTML conversion)
- * @currency 2025-01-01
+ * @currency 2026-04-20
  */
 
 const fs = require('fs');

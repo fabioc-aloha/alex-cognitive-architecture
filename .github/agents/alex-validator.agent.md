@@ -38,7 +38,7 @@ handoffs:
     agent: Critical Thinker
     prompt: Need structured skepticism to evaluate the reasoning behind this.
     send: true
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Alex Validator Mode

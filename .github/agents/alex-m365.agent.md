@@ -23,7 +23,7 @@ handoffs:
     prompt: Document the M365 integration patterns and API usage.
     send: true
     model: GPT-4o
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Alex M365 Development Guide

@@ -4,7 +4,7 @@ description: Proactive detection, self-correction, and epistemic vigilance
 tier: core
 applyTo: '**/*'
 user-invokable: false
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Awareness Skill

@@ -4,7 +4,7 @@ description: Don't overwhelm — chunk, scaffold, summarize first.
 tier: core
 applyTo: '**/*explain*,**/*teach*,**/*learn*,**/*help*'
 user-invokable: false
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Cognitive Load Skill

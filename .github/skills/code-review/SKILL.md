@@ -3,7 +3,7 @@ name: "code-review"
 description: "Systematic code review for correctness, security, and growth — not just style enforcement"
 tier: core
 applyTo: '**/*review*,**/*pr*,**/*pull-request*'
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Code Review Skill

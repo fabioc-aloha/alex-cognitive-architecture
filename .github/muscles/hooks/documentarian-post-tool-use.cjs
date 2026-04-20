@@ -1,8 +1,14 @@
 #!/usr/bin/env node
-// H6: Documentarian post-tool -- file change tracker
-// Agent-scoped PostToolUse hook for Documentarian mode.
-// Tracks file modifications and suggests CHANGELOG entries when docs change.
-// @reviewed: 2026-04-18
+/**
+ * H6: Documentarian post-tool -- file change tracker
+ * Agent-scoped PostToolUse hook for Documentarian mode.
+ * Tracks file modifications and suggests CHANGELOG entries when docs change.
+ *
+ * Input:  JSON via stdin (tool_name, tool_input)
+ * Output: JSON to stdout with CHANGELOG suggestion if docs modified.
+ *
+ * @currency 2026-04-20
+ */
 'use strict';
 
 const path = require('path');

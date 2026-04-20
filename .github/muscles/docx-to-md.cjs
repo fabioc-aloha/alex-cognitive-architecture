@@ -33,7 +33,7 @@
  * Requirements:
  *   - Node.js 18+
  *   - pandoc (Windows: winget install pandoc | macOS: brew install pandoc | Linux: apt install pandoc)
- * @currency 2025-01-01
+ * @currency 2026-04-20
  */
 
 "use strict";

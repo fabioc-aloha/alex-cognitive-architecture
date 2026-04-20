@@ -1,8 +1,14 @@
 #!/usr/bin/env node
-// H2: Validator read-only enforcement
-// Agent-scoped PreToolUse hook for Validator mode.
-// Blocks write operations -- Validator reviews, it does not modify.
-// @reviewed: 2026-04-18
+/**
+ * H2: Validator read-only enforcement
+ * Agent-scoped PreToolUse hook for Validator mode.
+ * Blocks write operations -- Validator reviews, it does not modify.
+ *
+ * Input:  JSON via stdin (tool_name, tool_input)
+ * Output: JSON to stdout with permissionDecision: 'deny' for write tools.
+ *
+ * @currency 2026-04-20
+ */
 'use strict';
 
 const WRITE_TOOLS = new Set([

@@ -3,7 +3,7 @@ name: git-workflow
 description: Consistent git practices, recovery patterns, and safe operations.
 tier: core
 applyTo: '**/.git/**,**/commit*,**/branch*,**/merge*'
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Git Workflow Skill

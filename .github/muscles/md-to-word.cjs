@@ -39,7 +39,7 @@
  *   node md-to-word.cjs thesis.md --page-size a4 --style academic --debug
  *   node md-to-word.cjs report.md --reference-doc corporate-template.docx
  *   node md-to-word.cjs draft.md --watch
- * @currency 2025-01-01
+ * @currency 2026-04-20
  */
 
 const fs = require('fs');

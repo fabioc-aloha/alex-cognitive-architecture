@@ -2,7 +2,7 @@
 description: "Mandatory adversarial review protocols for quality-critical operations"
 application: "When following adversarial oversight workflows or troubleshooting related issues"
 applyTo: "**/*review*,**/*audit*,**/*release*,**/*qa*,**/*validation*"
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Adversarial Oversight Protocol
@@ -147,7 +147,7 @@ Domain-specific checklist based on operation type:
 - [ ] Examples include code
 
 **Code Review:**
-- [ ] See [.github/instructions/code-review-guidelines.instructions.md] checklist
+- [ ] See [.github/instructions/code-review.instructions.md] checklist
 
 ---
 
@@ -227,7 +227,7 @@ If score ≥ 12 AND trifecta complete:
 ```
 
 ### Code Review
-From [.github/instructions/code-review-guidelines.instructions.md]:
+From [.github/instructions/code-review.instructions.md]:
 
 **Add to High Priority reviews**:
 ```text

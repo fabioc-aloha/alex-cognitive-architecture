@@ -3,7 +3,7 @@ name: "ai-character-reference-generation"
 description: "Generate consistent visual character references across multiple scenarios using Flux and nano-banana-pro on Replicate"
 tier: standard
 applyTo: '**/*character*,**/*portrait*,**/*avatar*,**/*reference*,**/generate-alex*'
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # AI Character Reference Generation

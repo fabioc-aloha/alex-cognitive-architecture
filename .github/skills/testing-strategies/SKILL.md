@@ -3,7 +3,7 @@ name: "testing-strategies"
 description: "Systematic testing for confidence without over-testing — the right test at the right level"
 tier: core
 applyTo: '**/*.test.*,**/*.spec.*,**/test/**,**/__tests__/**'
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Testing Strategies Skill

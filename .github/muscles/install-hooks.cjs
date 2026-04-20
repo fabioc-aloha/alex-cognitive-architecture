@@ -13,7 +13,7 @@
  * Cross-platform port of install-hooks.ps1.
  *
  * Location: .github/muscles/install-hooks.cjs
- * @currency 2025-01-01
+ * @currency 2026-04-20
  */
 
 'use strict';

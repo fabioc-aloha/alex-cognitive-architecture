@@ -56,47 +56,9 @@ Before any documentation audit, ask these questions **in order**:
 | **Version mismatch** | Regex for version patterns, compare to source of truth | Align all occurrences |
 | **Model/API hallucination** | Verify external references against official docs | Correct or remove |
 
-## The Count Problem (P3)
+## Count Drift & Docs-as-Architecture (P3)
 
-Hardcoded counts in documentation drift silently:
-
-| Document Says | Reality | Impact |
-|--------------|---------|--------|
-| "109 skills" | 119 skills (10 added) | Undermines credibility |
-| "7 agents" | 8 agents (1 added) | Users miss new capability |
-| "28 instructions" | 30 instructions | Stale architecture picture |
-
-### Count Elimination Rules
-
-| Instead of | Write | Why |
-|-----------|-------|-----|
-| "Alex has 109 skills" | "Alex has N skills" (computed) | Auto-correct |
-| "We support 7 agents" | "See Agent Catalog for current list" | Delegate to source |
-| Inline number | Cross-reference to canonical source | Single source of truth |
-
-### Canonical Count Sources
-
-When a count is needed, always derive it from the file system:
-
-| Metric | Source | Method |
-|--------|--------|--------|
-| Skill count | `.github/skills/` | Count subdirectories |
-| Agent count | `.github/agents/` | Count `*.agent.md` files |
-| Instruction count | `.github/instructions/` | Count `*.instructions.md` files |
-| Prompt count | `.github/prompts/` | Count `*.prompt.md` files |
-| Muscle count | `.github/muscles/` | Count script files |
-
-## Docs-as-Architecture
-
-Documentation is a load-bearing part of the system, not a separate artifact:
-
-| Principle | Meaning |
-|-----------|---------|
-| **Docs are code** | Same review rigor as source code |
-| **Docs have tests** | Preflight validation catches errors |
-| **Docs have dependencies** | Cross-references create a dependency graph |
-| **Docs can break** | Stale docs actively mislead users |
-| **Docs need maintenance** | Schedule regular audits like code refactoring |
+Count elimination rules, canonical sources, and docs-as-architecture principles are defined in [doc-hygiene](../doc-hygiene/SKILL.md). Apply those rules during Pass 5 (Lint) of the quality pipeline below.
 
 ## Document Header Pattern
 

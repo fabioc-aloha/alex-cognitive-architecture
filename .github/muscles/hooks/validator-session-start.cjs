@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-// H3: Validator session start
-// Agent-scoped SessionStart hook for Validator mode.
-// Loads adversarial checklist + recent changes summary for faster QA startup.
-// @reviewed: 2026-04-18
+/**
+ * H3: Validator session start
+ * Agent-scoped SessionStart hook for Validator mode.
+ * Loads adversarial checklist + recent changes summary for faster QA startup.
+ * @currency 2026-04-20
+ */
 'use strict';
 
 const { execSync } = require('child_process');
@@ -12,8 +14,7 @@ const path = require('path');
 let input = {};
 try {
   input = JSON.parse(fs.readFileSync(0, 'utf8'));
-} catch { /* defaults * @currency 2025-01-01
- */ }
+} catch { /* defaults */ }
 
 const workspaceRoot = input.cwd || path.resolve(__dirname, '../../..');
 const lines = ['[Validator SessionStart] Adversarial review mode active.'];

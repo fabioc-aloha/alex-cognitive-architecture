@@ -21,7 +21,7 @@
  *   node md-scaffold.cjs email "Team Update"                    # Create email template
  *   node md-scaffold.cjs --list                                 # List available templates
  *   node md-scaffold.cjs --output path/to/file.md report "Title" # Custom output path
- * @currency 2025-01-01
+ * @currency 2026-04-20
  */
 'use strict';
 

@@ -2,7 +2,7 @@
 description: "End-to-end academic paper drafting for journals and conferences with venue-specific templates"
 application: "When writing academic papers, manuscripts, journal submissions, or conference proceedings"
 applyTo: "**/*paper*,**/*manuscript*,**/*journal*,**/*conference*,**/*publication*,**/*thesis*,**/*dissertation*"
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Academic Paper Drafting

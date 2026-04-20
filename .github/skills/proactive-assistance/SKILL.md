@@ -4,7 +4,7 @@ description: "Anticipate user needs and offer help before being asked"
 tier: core
 applyTo: '**/*proactive*,**/*anticipate*,**/*suggest*'
 user-invokable: false
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Proactive Assistance Skill

@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-// H20: Research continuity
-// Agent-scoped Stop hook for Researcher mode.
-// Reminds to save unanswered questions and partial findings before the session ends.
-// @reviewed: 2026-04-18
+/**
+ * H20: Research continuity
+ * Agent-scoped Stop hook for Researcher mode.
+ * Reminds to save unanswered questions and partial findings before the session ends.
+ * @currency 2026-04-20
+ */
 'use strict';
 
 const fs = require('fs');
@@ -11,8 +13,7 @@ const path = require('path');
 let input = {};
 try {
   input = JSON.parse(fs.readFileSync(0, 'utf8'));
-} catch { /* defaults * @currency 2025-01-01
- */ }
+} catch { /* defaults */ }
 
 const workspaceRoot = input.cwd || path.resolve(__dirname, '../../..');
 const researchDir = path.join(workspaceRoot, 'alex_docs', 'research');

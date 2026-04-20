@@ -1,18 +1,20 @@
 #!/usr/bin/env node
 /**
- * update-registry.cjs
- * @reviewed 2026-04-18
- * 
- * Heir-autonomous muscle for maintaining AI-Memory project registry.
+ * @muscle update-registry
+ * @description Heir-autonomous muscle for maintaining AI-Memory project registry
+ * @platform node
+ * @requires fs, path, os
+ * @inheritance inheritable
+ *
  * Works WITHOUT Master Alex — heirs can self-register and update their entry.
- * 
+ *
  * Usage:
  *   node .github/muscles/update-registry.cjs              # Update health metrics
  *   node .github/muscles/update-registry.cjs --register   # First-time registration
  *   node .github/muscles/update-registry.cjs --pattern "webview-state"  # Add successful pattern
  *   node .github/muscles/update-registry.cjs --friction "msal-token-refresh"  # Add friction point
  *   node .github/muscles/update-registry.cjs --meditated  # Record meditation completion
- * @currency 2025-01-01
+ * @currency 2026-04-20
  */
 
 const fs = require('fs');

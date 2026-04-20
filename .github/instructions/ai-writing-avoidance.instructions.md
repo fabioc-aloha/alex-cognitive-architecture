@@ -1,7 +1,8 @@
 ---
 description: "Rules for producing authentically human writing by avoiding telltale AI-generated text patterns"
 application: "When implementing ai writing avoidance or reviewing code that uses these patterns"
-currency: 2025-01-01
+applyTo: "**/*.md,**/*writing*,**/*content*,**/*blog*"
+currency: 2026-04-20
 ---
 
 # AI Writing Avoidance — Auto-Loaded Rules
