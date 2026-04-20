@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.0.2] - 2026-04-20
+
+### Fixed
+
+- **Sidebar UI polish**: Design tokens, 44px touch targets for accessibility, vertical button stacking, visible backgrounds and borders on task buttons. Multiple iterations to restore Autopilot card clarity — readable schedules, consistent descriptions.
+- **Learn section URLs**: Corrected broken links and added `learnai` domain to URL allowlist in sidebar.
+- **Empty autopilot on fresh heirs**: Heirs now ship with empty autopilot task list instead of erroring.
+- **Sync exclusions**: `visual-memory/`, `audio-memory/`, and `examples/` subdirectories excluded from heir brain sync — reduces heir payload size.
+- **upgrade-brain version detection**: Reads version from `package.json` instead of hardcoded value.
+
+### Added
+
+- **News feed monitoring**: Autopilot task for competition and ecosystem news tracking with structured watch format.
+- **Competition analysis**: Feature comparison matrix (16 capabilities × 9 tools), critical analysis with bias disclosure, unique differentiators table. Archived at `master-wiki/news-feed/competition/`.
+- **RAI privacy audit**: `RAI-AUDIT-v8.1.0.md` — data flow analysis across 9 memory tiers, PII exposure assessment, behavioral profiling risks, and remediation roadmap.
+- **v8.1.0 plan**: 12-lane parallel development plan (83 tasks) covering heir slim, AFCP leverage, proactive awareness, knowledge scoring, fleet intel, brain evolution, RAI safety, privacy governance, docs, autopilot v2, extension polish, and competition response.
+- **Brain currency audit**: 22 core skills stamped with 2026-04-20 currency dates.
+- **Blog posts #8-#11**: Four new posts with header images.
+- **Heir wiki tutorials**: 5 new tutorials with hero images, LearnAI domain tutorials, sidebar links.
+- **Documentation count sync**: Updated brain inventory counts (194 skills, 150 instructions, 64 prompts) across 8+ documentation surfaces.
+
+### Changed
+
+- **Sidebar modernization**: WelcomeViewProvider and scheduledTasks rewritten with design token system — CSS custom properties for colors, spacing, and typography. Autopilot task cards simplified from verbose badge layout to clean card format.
+
+---
+
 ## [8.0.1] - 2026-04-19
 
 ### Fixed
