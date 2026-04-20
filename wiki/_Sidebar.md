@@ -31,6 +31,23 @@
 - [Receiving Updates](Heir-Project-Setup#receiving-updates)
 - [Bootstrap Wizard](Heir-Project-Setup#heir-bootstrap-wizard)
 
+### Blog
+
+Real-world stories of working with Alex:
+
+- [Writing a Research Paper](blog/BLOG-Research-Paper)
+- [Building a Data Dashboard](blog/BLOG-Data-Dashboard)
+- [My First API](blog/BLOG-First-API)
+- [Documentation Nobody Wanted](blog/BLOG-Documentation)
+
+### Tutorials
+
+Step-by-step guides:
+
+- [Your First Custom Instruction](tutorials/TUTORIAL-First-Instruction)
+- [Creating a Reusable Prompt](tutorials/TUTORIAL-First-Prompt)
+- [Using Agent Modes](tutorials/TUTORIAL-Agent-Modes)
+
 ### Help
 
 - [FAQ](FAQ)
