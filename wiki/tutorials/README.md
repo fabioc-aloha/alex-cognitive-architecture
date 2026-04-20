@@ -16,6 +16,12 @@ Each tutorial takes you from start to finish on a specific task. They assume you
 
 ## Available Tutorials
 
+### Foundation
+
+| Tutorial | Time | What You'll Learn |
+|----------|------|-------------------|
+| [Dialog Engineering Fundamentals](TUTORIAL-Dialog-Engineering.md) | 30 min | The five conversation patterns that make every AI interaction better |
+
 ### Getting Productive
 
 | Tutorial | Time | What You'll Build |
@@ -31,6 +37,20 @@ Each tutorial takes you from start to finish on a specific task. They assume you
 | [Markdown to PDF](TUTORIAL-MD-to-PDF.md) | 15 min | Convert a document with proper formatting |
 | [Analyzing a Dataset](TUTORIAL-Data-Analysis.md) | 30 min | Profile, clean, and visualize data |
 | [Writing a Technical Document](TUTORIAL-Technical-Writing.md) | 25 min | Structure, draft, and review technical content |
+
+### By Discipline
+
+Tutorials aligned with [LearnAI Playbooks](https://learnai.correax.com/):
+
+| Tutorial | Time | For |
+|----------|------|-----|
+| [AI-Assisted Code Review](TUTORIAL-AI-Code-Review.md) | 25 min | Software Developers |
+| [AI-Assisted Research](TUTORIAL-AI-Research.md) | 35 min | Academic Researchers |
+| [AI-Assisted Marketing](TUTORIAL-AI-Marketing.md) | 25 min | Marketing Professionals |
+| [AI-Assisted Job Search](TUTORIAL-AI-Job-Search.md) | 30 min | Job Seekers |
+| [AI-Assisted Teaching](TUTORIAL-AI-Teaching.md) | 25 min | Teachers & Educators |
+| [AI-Assisted Product Management](TUTORIAL-AI-Product-Management.md) | 30 min | Product Managers |
+| [AI-Assisted Creative Writing](TUTORIAL-AI-Creative-Writing.md) | 30 min | Writers & Authors |
 
 ### Advanced
 
