@@ -93,6 +93,21 @@
       "enabled": false,
       "promptFile": ".github/config/scheduled-tasks/research-digest.md",
       "target": "master-wiki/research/"
+    },
+    {
+      "id": "fleet-health",
+      "name": "Fleet Health Check",
+      "description": "Audit fleet brain versions and detect drift from Master Alex",
+      "skill": "fleet-management",
+      "mode": "direct",
+      "schedule": "0 8 * * 1",
+      "enabled": false,
+      "muscle": "scripts/upgrade-brain.ps1",
+      "muscleArgs": [
+        "-Mode",
+        "Audit"
+      ],
+      "target": "scripts/"
     }
   ]
 }
