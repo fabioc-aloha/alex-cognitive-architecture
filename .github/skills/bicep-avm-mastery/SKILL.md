@@ -4,6 +4,7 @@ description: Azure Verified Modules (AVM), Bicep best practices, and MCP-powered
 tier: extended
 applyTo: '**/*.bicep,**/*avm*,**/*infrastructure*'
 user-invokable: false
+currency: 2025-01-01
 ---
 
 # Skill: Bicep AVM Mastery

@@ -4,6 +4,7 @@ description: "Publish master-wiki/ to GitHub Wiki with folder flattening and lin
 tier: standard
 applyTo: '**/*wiki*publish*,**/*wiki*push*,**/*wiki*sync*,**/master-wiki/**'
 disable-model-invocation: true
+currency: 2025-01-01
 ---
 
 # Wiki Publish Skill

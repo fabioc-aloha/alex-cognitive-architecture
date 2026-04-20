@@ -3,6 +3,7 @@ name: api-design
 description: Design APIs that developers love to use.
 tier: standard
 applyTo: '**/*api*,**/*rest*,**/*endpoint*,**/*route*,**/*schema*'
+currency: 2025-01-01
 ---
 
 # API Design Skill
@@ -58,7 +59,7 @@ A good API is intuitive, consistent, and hard to misuse. Design for the consumer
 5. **Validate responses** against contract
 
 ```yaml
-openapi: 3.0.3
+openapi: 3.1.0  # 3.1.0 aligns with JSON Schema 2020-12
 info:
   title: My API
   version: 1.0.0

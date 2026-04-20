@@ -2,6 +2,7 @@
 description: "Convert Markdown to RFC 5322 email (.eml) with inline CSS and embedded images"
 application: "When converting Markdown to email format for newsletters, governance, or stakeholder communication"
 applyTo: "**/*.md,**/*email*,**/*newsletter*"
+currency: 2025-01-01
 ---
 
 # Markdown to Email Conversion

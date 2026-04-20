@@ -3,6 +3,7 @@ name: azure-openai-patterns
 description: Azure OpenAI API patterns for rate limiting, function calling, error handling, and token optimization
 tier: standard
 applyTo: "**/*openai*,**/*chat*,**/*llm*,**/*gpt*"
+currency: 2025-01-01
 ---
 
 # Azure OpenAI Patterns
@@ -11,7 +12,7 @@ applyTo: "**/*openai*,**/*chat*,**/*llm*,**/*gpt*"
 
 > **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
 
-**Version**: 1.0.0
+**Version**: 1.1.0 | **Last validated**: April 2026 (GPT-5.x, Responses API, Structured Outputs)
 
 ---
 
@@ -21,11 +22,18 @@ Azure OpenAI uses **dual rate limits**: Tokens Per Minute (TPM) and Requests Per
 
 ### TPM vs RPM Relationship
 
-| Model | Tier | TPM | RPM | Ratio |
+| Model | Tier | TPM | RPM | Notes |
 |-------|------|-----|-----|-------|
-| gpt-4o | Default | 450K | 2.7K | 6 RPM/1K TPM |
-| gpt-4o-mini | Default | 2M | 12K | 6 RPM/1K TPM |
-| gpt-4o | Enterprise | 30M | 180K | 6 RPM/1K TPM |
+| gpt-5.4-mini | Default | 2M | 12K | Latest flagship (mini) |
+| gpt-5.2 | Default | 1M | 6K | Reasoning model |
+| gpt-4.1 | Default | 1M | 6K | 1M context, structured outputs |
+| gpt-4.1-mini | Default | 2M | 12K | Cost-efficient 1M context |
+| o4-mini | Default | 200K | 1.2K | Reasoning (o-series) |
+| o3 | Default | 200K | 1.2K | Advanced reasoning |
+| gpt-4o | Default | 450K | 2.7K | Legacy — prefer gpt-4.1+ |
+| gpt-4o-mini | Default | 2M | 12K | Legacy — prefer gpt-4.1-mini |
+
+> **Migration**: gpt-4o → gpt-4.1 (same API, larger context, better quality). gpt-4o-mini → gpt-4.1-mini or gpt-4.1-nano (cost savings).
 
 ### How TPM is Calculated
 
@@ -46,6 +54,74 @@ RPM is enforced over **small time windows** (1-10 seconds):
 If you send 15 requests in 1 second → 429 error
 Even though 15/min < 600/min
 ```
+
+---
+
+## Responses API (New Standard)
+
+GPT-5.x and newer models support the **Responses API** alongside Chat Completions. The Responses API is the recommended API for new development — it supports stateful conversations, built-in tools (web search, code interpreter, file search, computer use), and simpler multi-turn management.
+
+```typescript
+// Responses API — simpler multi-turn
+const response = await client.responses.create({
+  model: "gpt-5.2",
+  input: "Summarize Q3 results from the uploaded file",
+  tools: [{ type: "file_search" }],  // built-in tools
+});
+
+// Multi-turn: pass previous response ID
+const followUp = await client.responses.create({
+  model: "gpt-5.2",
+  input: "What were the key risks mentioned?",
+  previous_response_id: response.id,
+});
+```
+
+> **When to use which**: Responses API for new projects. Chat Completions API remains fully supported and required for fine-tuned models and some legacy patterns.
+
+## Structured Outputs
+
+Request guaranteed JSON Schema conformance with `strict: true`. Eliminates JSON parsing failures.
+
+```typescript
+const response = await client.chat.completions.create({
+  model: "gpt-4.1",
+  messages: [{ role: "user", content: "Extract name and age from: John is 30" }],
+  response_format: {
+    type: "json_schema",
+    json_schema: {
+      name: "person",
+      strict: true,
+      schema: {
+        type: "object",
+        properties: {
+          name: { type: "string" },
+          age: { type: "integer" }
+        },
+        required: ["name", "age"],
+        additionalProperties: false
+      }
+    }
+  }
+});
+// Guaranteed valid JSON matching the schema — no parsing errors
+```
+
+> Supported by gpt-4.1, gpt-4o, gpt-5.x, and o-series models. Also works with function calling (`strict: true` in function definitions).
+
+## Reasoning Models (o-series, GPT-5.x)
+
+o3, o4-mini, and GPT-5.x models support `reasoning_effort` (`low`, `medium`, `high`). GPT-5.1+ defaults `reasoning_effort` to `none` — you must explicitly set it if you want reasoning.
+
+```typescript
+const response = await client.chat.completions.create({
+  model: "o4-mini",
+  messages: [{ role: "user", content: "Prove the Pythagorean theorem" }],
+  reasoning_effort: "high",  // low | medium | high
+});
+```
+
+> Reasoning models do NOT support `temperature`, `top_p`, `presence_penalty`, or `frequency_penalty`. Remove these when migrating from GPT-4o to reasoning models.
 
 ---
 

@@ -2,6 +2,7 @@
 description: "Universal deployment patterns for any project type"
 application: "When deploying applications, setting up CI/CD, or managing release environments"
 applyTo: "**/*deploy*,**/*cicd*,**/*pipeline*,**/*release*"
+currency: 2025-01-01
 ---
 
 # Project Deployment

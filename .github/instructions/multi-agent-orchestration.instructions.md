@@ -2,6 +2,7 @@
 description: "Coordinate multiple AI agents for complex tasks — decomposition, delegation, and synthesis"
 application: "When tasks require specialized expertise from multiple agents or need parallel execution"
 applyTo: "**/*orchestrat*,**/*subagent*,**/*multi-agent*,**/*delegate*"
+currency: 2025-01-01
 ---
 
 # Multi-Agent Orchestration

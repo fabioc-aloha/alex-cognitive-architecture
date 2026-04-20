@@ -3,6 +3,7 @@ mode: agent
 description: "Dependency review, security audit, and update strategy"
 application: "Audit dependencies for vulnerabilities, outdated versions, and upgrade paths"
 tools: ["read_file", "run_in_terminal", "grep_search"]
+currency: 2025-01-01
 ---
 
 # Dependency Review

@@ -2,6 +2,7 @@
 description: "CPU, memory, network bottleneck analysis — systematic performance investigation"
 application: "When diagnosing slow performance, memory leaks, or resource exhaustion"
 applyTo: "**/*profil*,**/*performance*,**/*bottleneck*,**/*slow*,**/*memory-leak*"
+currency: 2025-01-01
 ---
 
 # Performance Profiling

@@ -4,6 +4,7 @@ description: "Recognize when silence is more valuable than speech and suppress p
 tier: core
 applyTo: "**/*"
 user-invokable: false
+currency: 2025-01-01
 ---
 
 # Silence as Signal Skill

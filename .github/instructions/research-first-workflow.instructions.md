@@ -2,6 +2,7 @@
 description: "Research-first development workflow — pre-project knowledge encoding and 4-dimension gap analysis"
 application: "When analyzing data, building visualizations, or creating reports"
 applyTo: "**/research/**,**/*research*,**/*gap-analysis*"
+currency: 2025-01-01
 ---
 
 # Research-First Workflow

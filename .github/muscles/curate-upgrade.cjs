@@ -16,6 +16,7 @@
  *   node .github/muscles/curate-upgrade.cjs --mode AutoRestore --dry-run
  *   node .github/muscles/curate-upgrade.cjs --mode Curate --include "CorreaX"
  *   node .github/muscles/curate-upgrade.cjs --mode Clean --include "ChessCoach,AlexBooks"
+ * @currency 2025-01-01
  */
 
 'use strict';

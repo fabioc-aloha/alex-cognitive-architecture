@@ -3,6 +3,7 @@ name: project-risk-analysis
 description: "Systematic methodology for identifying, categorizing, and mitigating software project risks before implementation"
 applyTo: "**/*risk*,**/*plan*,**/*assessment*"
 tier: extended
+currency: 2025-01-01
 ---
 
 # Domain Knowledge: Project Risk Analysis Methodology

@@ -2,6 +2,7 @@
 description: "Agenda design, time boxing, decision capture, async alternatives, and productive facilitation"
 application: "When planning meetings, facilitating discussions, or designing async alternatives"
 applyTo: "**/*meeting*,**/*agenda*,**/*facilitat*,**/*standup*"
+currency: 2025-01-01
 ---
 
 # Meeting Efficiency

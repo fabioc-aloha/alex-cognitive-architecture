@@ -2,6 +2,7 @@
 description: "Prevent terminal command failures from shell metacharacter interpretation, output capture issues, and hanging commands"
 application: "When running terminal commands, especially those with special characters or long output"
 applyTo: "**"
+currency: 2025-01-01
 ---
 
 # Terminal Command Safety

@@ -2,6 +2,7 @@
 description: Explain how code works
 application: When you need a clear explanation of unfamiliar code, algorithms, or patterns
 agent: Alex
+currency: 2025-01-01
 ---
 
 

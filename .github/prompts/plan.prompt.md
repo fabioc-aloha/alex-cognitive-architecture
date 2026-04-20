@@ -3,6 +3,7 @@ sem: 1
 description: Run a structured 4-phase implementation plan using the VS Code Plan Agent
 application: "When planning implementation, creating project plans, or organizing tasks"
 agent: Alex
+currency: 2025-01-01
 ---
 
 # /plan — Structured Implementation Planning

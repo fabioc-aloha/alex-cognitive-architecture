@@ -2,6 +2,7 @@
 description: "Brand asset deployment, visual identity guidelines, and logo management"
 application: "During deployment, release preparation, or publishing workflows"
 applyTo: "**/assets/**,**/*.svg,**/*.png,**/*.ico"
+currency: 2025-01-01
 ---
 
 # Brand Asset Management — Enforcement Rules

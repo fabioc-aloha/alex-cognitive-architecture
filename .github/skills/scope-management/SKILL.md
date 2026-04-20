@@ -3,6 +3,7 @@ name: "scope-management"
 description: "Recognize scope creep, suggest MVP cuts, and manage project boundaries"
 tier: standard
 applyTo: '**/*scope*,**/*mvp*,**/*boundary*,**/*creep*'
+currency: 2025-01-01
 ---
 
 # Scope Management Skill

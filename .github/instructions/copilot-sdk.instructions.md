@@ -2,6 +2,7 @@
 description: "VS Code Copilot SDK patterns for building AI-powered extensions"
 application: "When building extensions that use VS Code's Copilot APIs"
 applyTo: "**/*copilot-sdk*,**/*language-model*,**/*chat-request*"
+currency: 2025-01-01
 ---
 
 # Copilot SDK Patterns

@@ -2,6 +2,7 @@
 description: "Copilot Chat action button patterns for interactive follow-up actions in chat responses"
 application: "When implementing copilot chat buttons or reviewing code that uses these patterns"
 applyTo: "**/chat/**/*.ts,**/*participant*.ts"
+currency: 2025-01-01
 ---
 
 # Copilot Chat Action Buttons Pattern

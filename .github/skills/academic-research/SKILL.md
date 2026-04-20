@@ -4,6 +4,7 @@ description: Research project scaffolding, thesis/dissertation writing, literatu
 tier: extended
 category: documentation
 applyTo: '**/*paper*,**/*manuscript*,**/*journal*,**/*thesis*,**/*dissertation*,**/*research*,**/*academic*'
+currency: 2025-01-01
 ---
 
 # Academic Research

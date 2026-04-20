@@ -2,6 +2,7 @@
 description: "Microsoft Graph API integration — endpoint calls, MSAL/OAuth authentication, and M365 service patterns"
 application: "When implementing microsoft graph api or reviewing code that uses these patterns"
 applyTo: "**/*graph*,**/*msal*,**/*oauth*,**/*entra*"
+currency: 2025-01-01
 ---
 
 # Microsoft Graph API — Auto-Loaded Rules

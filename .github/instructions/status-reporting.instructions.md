@@ -2,6 +2,7 @@
 description: "Create stakeholder-friendly project status updates and progress reports"
 application: "When writing status reports, progress updates, or executive summaries"
 applyTo: "**/*status*,**/*report*,**/*progress*,**/*update*"
+currency: 2025-01-01
 ---
 
 # Status Reporting

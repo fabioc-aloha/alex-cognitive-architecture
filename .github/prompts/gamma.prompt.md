@@ -3,6 +3,7 @@ sem: 1
 mode: agent
 description: Generate AI-powered presentations using the Gamma API with Duarte methodology consulting and PPTX/PDF export
 application: "When creating presentations, slides, or visual storytelling content"
+currency: 2025-01-01
 ---
 
 # Generate Gamma Presentation

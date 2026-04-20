@@ -3,6 +3,7 @@ name: data-analysis
 description: "Exploratory data analysis patterns -- profiling, distributions, correlations, segmentation, anomaly detection, and translating statistics into narrative insights"
 tier: standard
 applyTo: "**/*analy*,**/*eda*,**/*profile*,**/*statistic*,**/*correlat*,**/*outlier*"
+currency: 2025-01-01
 ---
 
 # Data Analysis

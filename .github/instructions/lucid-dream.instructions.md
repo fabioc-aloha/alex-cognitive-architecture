@@ -2,6 +2,7 @@
 applyTo: "**/*lucid*,**/*dual-mode*"
 description: "Hybrid dream-meditation protocol — conscious decisions during automated processing"
 application: "When dream diagnostics surface issues requiring human judgment"
+currency: 2025-01-01
 ---
 
 # Lucid Dream Protocol

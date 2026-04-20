@@ -2,6 +2,7 @@
 description: "Test quality analysis — detect coverage-only tests, test smells, and low-value assertions"
 application: "When auditing test suite quality, identifying test smells, or evaluating test value before a release"
 applyTo: "**/*.test.*,**/*.spec.*,**/test/**,**/__tests__/**"
+currency: 2025-01-01
 ---
 
 # Test Quality Analysis

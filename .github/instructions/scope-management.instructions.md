@@ -2,6 +2,7 @@
 description: "Recognize scope creep, suggest MVP cuts, and manage project boundaries"
 application: "When projects expand beyond original scope or need prioritization"
 applyTo: "**/*scope*,**/*mvp*,**/*priorit*,**/*backlog*"
+currency: 2025-01-01
 ---
 
 # Scope Management

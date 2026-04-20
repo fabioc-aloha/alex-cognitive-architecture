@@ -3,6 +3,7 @@ name: muscle-memory-recognition
 description: Identify opportunities to build automation scripts (muscles) from repetitive or heavy-lifting tasks
 tier: standard
 applyTo: '**/*muscle*,**/*automat*,**/*script*,**/*repetitive*'
+currency: 2025-01-01
 ---
 
 # Muscle Memory Recognition

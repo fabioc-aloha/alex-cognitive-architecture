@@ -18,6 +18,7 @@
  *   node data-profile.cjs --json <ingest.json>     # Profile pre-ingested JSON
  *   node data-profile.cjs <path> --format json     # Output as JSON (default: text)
  *   node data-profile.cjs <path> --output report.md # Write to file
+ * @currency 2025-01-01
  */
 'use strict';
 

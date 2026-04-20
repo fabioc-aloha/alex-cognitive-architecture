@@ -3,6 +3,7 @@ name: ai-agent-design
 description: Design autonomous AI agents that reason, plan, and execute tasks
 tier: standard
 applyTo: '**/*agent*,**/*ai-agent*,**/*orchestrat*,**/*multi-agent*'
+currency: 2025-01-01
 ---
 
 # AI Agent Design Skill

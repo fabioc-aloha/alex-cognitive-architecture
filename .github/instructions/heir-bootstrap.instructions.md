@@ -2,6 +2,7 @@
 description: "Post-Initialize wizard that tailors Alex's cognitive architecture to a specific heir project"
 application: "When bootstrapping new heir projects with Alex's cognitive architecture"
 applyTo: "**/*heir*,**/*bootstrap*,**/*initialize*"
+currency: 2025-01-01
 ---
 
 # Heir Bootstrap Protocol

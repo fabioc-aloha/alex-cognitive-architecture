@@ -2,6 +2,7 @@
 description: "AI music generation via Replicate — model selection, lyrics format, and production patterns"
 application: "When generating AI music, soundtracks, or background audio"
 applyTo: "**/*music*,**/*soundtrack*,**/*score*"
+currency: 2025-01-01
 ---
 
 # Music Generation

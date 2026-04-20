@@ -3,6 +3,7 @@ name: "incident-response"
 description: "Calm, systematic crisis handling — from detection through post-mortem to prevention"
 tier: standard
 applyTo: "**/*incident*,**/*outage*,**/*alert*,**/*emergency*"
+currency: 2025-01-01
 ---
 
 # Incident Response Skill

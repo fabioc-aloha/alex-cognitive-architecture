@@ -2,6 +2,7 @@
 description: "ASCII visual dashboards for project tracking with parallel lanes and progress bars"
 application: "When creating or updating project plans, roadmaps, or trackers"
 applyTo: "**/*plan*,**/*roadmap*,**/*tracker*,**/*dashboard*,**/*PLAN-*"
+currency: 2025-01-01
 ---
 
 # ASCII Project Dashboard

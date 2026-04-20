@@ -5,6 +5,7 @@ tier: standard
 inheritance: inheritable
 applyTo: '**/*md-to-html*,**/*convert*html*'
 muscle: .github/muscles/md-to-html.cjs
+currency: 2025-01-01
 ---
 
 # Markdown to HTML Conversion

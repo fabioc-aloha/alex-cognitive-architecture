@@ -2,6 +2,7 @@
 description: "Generate project-specific taglines for the Alex sidebar banner"
 application: "When creating, updating, or reviewing project taglines configuration"
 applyTo: "**/*tagline*,**/.github/config/taglines.json"
+currency: 2025-01-01
 ---
 
 # Project Taglines

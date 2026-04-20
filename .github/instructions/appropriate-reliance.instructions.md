@@ -2,6 +2,7 @@
 description: "Calibrated human-AI collaboration with appropriate confidence and creative latitude"
 application: "When generating responses that require judgment about certainty levels"
 applyTo: "**"
+currency: 2025-01-01
 ---
 
 # Appropriate Reliance

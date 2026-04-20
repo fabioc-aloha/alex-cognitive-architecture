@@ -2,6 +2,7 @@
 description: "Procedural guidance for Azure Synapse PySpark notebook development patterns"
 application: "When implementing synapse notebook patterns or reviewing code that uses these patterns"
 applyTo: "**/notebook/*.json,**/*.ipynb,**/*synapse*notebook*,**/*pyspark*"
+currency: 2025-01-01
 ---
 
 # Synapse Notebook Development Instructions

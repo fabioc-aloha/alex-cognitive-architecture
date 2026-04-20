@@ -3,6 +3,7 @@ mode: agent
 description: "Technical debt identification, categorization, and prioritization"
 application: "Find TODOs, code smells, outdated deps, and prioritize payoff"
 tools: ["read_file", "grep_search", "semantic_search", "list_dir"]
+currency: 2025-01-01
 ---
 
 # Technical Debt Audit

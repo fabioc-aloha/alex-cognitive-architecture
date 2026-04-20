@@ -3,6 +3,7 @@ mode: agent
 description: "Plan phase — scope, success criteria, risks, and research-first discovery"
 application: "Define scope, success criteria, risks, and research gaps before building"
 tools: ["read_file", "create_file", "list_dir", "semantic_search"]
+currency: 2025-01-01
 ---
 
 # ② Plan

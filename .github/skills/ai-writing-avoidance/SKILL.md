@@ -3,6 +3,7 @@ name: ai-writing-avoidance
 description: "Help writers produce content that sounds genuinely human by avoiding telltale AI-generated text patterns"
 tier: standard
 applyTo: '**/*writing*,**/*content*,**/*policy*,**/*document*'
+currency: 2025-01-01
 ---
 
 # AI Writing Avoidance

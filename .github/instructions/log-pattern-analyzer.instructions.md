@@ -2,6 +2,7 @@
 description: "Log pattern analysis for coverage gaps, level misuse, sensitive data exposure, and structured logging compliance"
 application: "When implementing log pattern analyzer or reviewing code that uses these patterns"
 applyTo: "**/*log*,**/*logger*,**/*observability*,**/*telemetry*"
+currency: 2025-01-01
 ---
 
 # Log Pattern Analyzer

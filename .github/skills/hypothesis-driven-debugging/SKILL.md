@@ -3,6 +3,7 @@ name: hypothesis-driven-debugging
 description: 'Investigate build failures, test errors, runtime crashes, or unexpected behavior through systematic minimal reproduction, multi-hypothesis testing, and evidence-based verification. Use when asked to "debug", "investigate a failure", "find root cause", "troubleshoot", "fix a failing test", or "diagnose an issue". Always re-run builds and tests after changes.'
 applyTo: "**/*debug*,**/*bug*,**/*error*,**/*fix*"
 tier: standard
+currency: 2025-01-01
 ---
 
 # Hypothesis-Driven Debugging

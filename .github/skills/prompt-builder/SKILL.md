@@ -3,6 +3,7 @@ name: prompt-builder
 description: Create and validate .prompt.md files that pass brain-qa on first attempt
 tier: standard
 applyTo: '**/*.prompt.md,**/*prompt*'
+currency: 2025-01-01
 ---
 
 # Prompt Builder

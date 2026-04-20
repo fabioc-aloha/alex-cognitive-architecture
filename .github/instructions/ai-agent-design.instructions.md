@@ -2,6 +2,7 @@
 description: "Design autonomous AI agents that reason, plan, and execute tasks"
 application: "When building AI agents, multi-agent systems, or tool-using LLM applications"
 applyTo: "**/*agent*,**/*orchestrat*,**/*multi-agent*"
+currency: 2025-01-01
 ---
 
 # AI Agent Design

@@ -3,6 +3,7 @@ name: "sidebar-customization"
 description: "Customize the Alex sidebar — Loop tab buttons, Autopilot tasks, and project-specific workflows"
 tier: standard
 applyTo: '**/.github/config/loop-menu.json,**/.github/config/scheduled-tasks.json,**/*sidebar*config*'
+currency: 2025-01-01
 ---
 
 # Sidebar Customization

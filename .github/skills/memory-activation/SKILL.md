@@ -4,6 +4,7 @@ description: "Internal metacognitive skill for automatic capability and workflow
 tier: core
 applyTo: '**/*memory*,**/*skill*,**/*prompt*,**/*activation*'
 user-invokable: false
+currency: 2025-01-01
 ---
 
 # Memory Activation

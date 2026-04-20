@@ -24,7 +24,7 @@
  * Informational dimensions (not scored):
  *   code   - Has pseudocode (excludes mermaid/ascii/diagrams)
  *   inh    - Inheritance (1 = master-only, 0 = synced to heirs)
- *   stale  - Stale-prone (1 = needs regular review, 0 = stable)
+ *   cur    - Currency date (YYYY-MM-DD) when content was last researched & updated
  * 
  * Quality Philosophy:
  *   fm      → Visibility to the brain (discoverable via applyTo/description)
@@ -116,72 +116,6 @@ if (!fs.existsSync(QUALITY_DIR)) {
   fs.mkdirSync(QUALITY_DIR, { recursive: true });
 }
 
-// --- Read existing semantic review (sem) values from previous grid ---
-// Preserves semantic review dates when regenerating the grid, so manual reviews aren't lost
-// Values are either YYYY-MM-DD dates or '-' for pending review
-function readExistingSemValues() {
-  const gridPath = path.join(QUALITY_DIR, "brain-health-grid.md");
-  if (!fs.existsSync(gridPath)) return { semValues: { skills: {}, instructions: {}, agents: {}, prompts: {} }, staleValues: {} };
-
-  const content = fs.readFileSync(gridPath, "utf-8");
-  const semValues = { skills: {}, instructions: {}, agents: {}, prompts: {} };
-  const staleValues = {};
-
-  // Parse Skills table: | [skill-name](path) | ... | inh | stale | Sem Review |
-  // Table format: | [name](path) | tier | lines | fm | code | bounds | tri | muscle | Type | Score | Pass | inh | stale | Sem Review |
-  // stale: YYYY-MM-DD, -, 0, or 1 (0/1 from legacy format, treated as '-')
-  // Sem Review: YYYY-MM-DD or -
-  const skillsSection = content.match(/## Skills[\s\S]*?(?=## Agents|## Instructions|$)/);
-  if (skillsSection) {
-    const skillRows = skillsSection[0].matchAll(/^\| \[([\w-]+)\]\([^)]+\) \| \w+ \| \d+ \|.*\| (\d{4}-\d{2}-\d{2}|-|\d) \| (\d{4}-\d{2}-\d{2}|-) \|$/gm);
-    for (const match of skillRows) {
-      const name = match[1];
-      // Convert legacy 0/1 to '-'
-      const rawStale = match[2];
-      staleValues[name] = (rawStale === '0' || rawStale === '1') ? '-' : rawStale;
-      semValues.skills[name] = match[3]; // sem date or '-'
-    }
-  }
-
-  // Parse Agents table: | [agent-name](path) | lines | ... | Sem Review |
-  const agentsSection = content.match(/## Agents[\s\S]*?(?=## Instructions|## Prompts|## Overall|$)/);
-  if (agentsSection) {
-    const agentRows = agentsSection[0].matchAll(/^\| \[([\w-]+)\]\([^)]+\) \| \d+ \|.*\| (\d{4}-\d{2}-\d{2}|-) \|$/gm);
-    for (const match of agentRows) {
-      const name = match[1];
-      const sem = match[2];
-      semValues.agents[name] = sem;
-    }
-  }
-
-  // Parse Instructions table: | [instruction-name](path) | lines | ... | Sem Review |
-  const instrSection = content.match(/## Instructions[\s\S]*?(?=## Prompts|## Overall|$)/);
-  if (instrSection) {
-    const instrRows = instrSection[0].matchAll(/^\| \[([\w-]+)\]\([^)]+\) \| \d+ \|.*\| (\d{4}-\d{2}-\d{2}|-) \|$/gm);
-    for (const match of instrRows) {
-      const name = match[1];
-      const sem = match[2];
-      semValues.instructions[name] = sem;
-    }
-  }
-
-  // Parse Prompts table: | [prompt-name](path) | lines | ... | Sem Review |
-  const promptsSection = content.match(/## Prompts[\s\S]*?(?=## Muscles|## Overall|$)/);
-  if (promptsSection) {
-    const promptRows = promptsSection[0].matchAll(/^\| \[([\w-]+)\]\(\.\.\/prompts\/(?:[\w-]+\/)?\1\.prompt\.md\) \| \d+ \|.*\| (\d{4}-\d{2}-\d{2}|-) \|$/gm);
-    for (const match of promptRows) {
-      const name = match[1];
-      const sem = match[2];
-      semValues.prompts[name] = sem;
-    }
-  }
-
-  return { semValues, staleValues };
-}
-
-// Load existing sem and stale values before generating new grid
-const { semValues: EXISTING_SEM, staleValues: EXISTING_STALE } = readExistingSemValues();
-
 // --- Load master-only skills from sync-architecture.cjs ---
 function getMasterOnlySkills() {
   const syncPath = path.join(GH, "muscles", "sync-architecture.cjs");
@@ -203,15 +137,6 @@ function getMasterOnlySkills() {
 }
 
 const MASTER_ONLY_SKILLS = getMasterOnlySkills();
-
-// --- Stale-prone skills (need regular review due to external API churn) ---
-const STALE_PRONE = new Set([
-  'vscode-extension-patterns', 'chat-participant-patterns', 'm365-agent-debugging',
-  'teams-app-patterns', 'llm-model-selection', 'git-workflow',
-  'privacy-responsible-ai',
-  'kdp-publishing', 'kql', 'academic-paper-drafting',
-  'security-threat-modeler', 'effort-estimation'
-]);
 
 // --- Tier-based pass thresholds ---
 // "Good is good enough" - higher tiers require higher quality
@@ -307,12 +232,13 @@ function scanSkills() {
     // Check inheritance (master-only)
     const isMasterOnly = MASTER_ONLY_SKILLS.has(name);
 
-    // Check staleness (needs regular review)
-    const isStaleProne = STALE_PRONE.has(name);
+    // Extract currency date from frontmatter (when content was last researched)
+    const currencyMatch = content.match(/^currency:\s*(\d{4}-\d{2}-\d{2})/m);
+    const currency = currencyMatch ? currencyMatch[1] : '-';
 
     // Quality flags (0 = defect, 1 = good)
     // Scored: fm, code, bounds, tri, muscle (max 5)
-    // Informational: inh, stale
+    // Informational: inh, currency
     const flags = {
       fm: fmComplete ? 1 : 0,
       code: hasCode ? 1 : 0,
@@ -320,7 +246,6 @@ function scanSkills() {
       tri: triComplete ? 1 : 0,
       muscle: hasMuscle ? 1 : 0,
       inh: isMasterOnly ? 1 : 0,   // 1 = master-only, 0 = synced to heirs
-      staleProne: isStaleProne,     // boolean: needs regular refresh
     };
 
     // Determine skill type and max possible score
@@ -348,16 +273,17 @@ function scanSkills() {
     // Token waste detection (Mermaid diagrams, style lines)
     const waste = detectTokenWaste(content);
 
-    results.push({ name, lines, flags, score: adjustedScore, tier, threshold, pass, isWorkflow, agentic, maxScore, waste });
+    results.push({ name, lines, flags, score: adjustedScore, tier, threshold, pass, isWorkflow, agentic, maxScore, waste, currency });
   }
 
-  // Sort: worst score first, then unreviewed first, then alphabetically
+  // Sort: worst score first, then oldest currency first, then alphabetically
   return results.sort((a, b) => {
     if (a.score !== b.score) return a.score - b.score;
-    const aSem = EXISTING_SEM.skills[a.name] ?? '-';
-    const bSem = EXISTING_SEM.skills[b.name] ?? '-';
-    if (aSem === '-' && bSem !== '-') return -1;
-    if (aSem !== '-' && bSem === '-') return 1;
+    // Oldest currency date first (no date = highest priority)
+    if (a.currency === '-' && b.currency !== '-') return -1;
+    if (a.currency !== '-' && b.currency === '-') return 1;
+    if (a.currency < b.currency) return -1;
+    if (a.currency > b.currency) return 1;
     return a.name.localeCompare(b.name);
   });
 }
@@ -400,8 +326,9 @@ function scanAgents() {
     // Check code examples (exclude mermaid, ascii, text, diagram-type languages)
     const hasCode = /```(?!mermaid|ascii|text|txt|diagram|plantuml|graphviz|dot|chart|diff)\w+/i.test(content);
 
-    // Semantic review flag (preserved from previous grid, default 0)
-    const sem = EXISTING_SEM.agents[name] ?? '-';
+    // Extract currency date from frontmatter
+    const currencyMatch = content.match(/^currency:\s*(\d{4}-\d{2}-\d{2})/m);
+    const currency = currencyMatch ? currencyMatch[1] : '-';
 
     // Token waste detection (Mermaid diagrams, style lines)
     const waste = detectTokenWaste(content);
@@ -417,14 +344,16 @@ function scanAgents() {
     const score = flags.fm + flags.handoffs + flags.bounds + flags.persona + flags.code;
     // fm is a GATE - agents without frontmatter are broken
     const pass = fmComplete && (score >= 4);
-    results.push({ name, lines, flags, score, maxScore: 5, pass, sem, waste });
+    results.push({ name, lines, flags, score, maxScore: 5, pass, currency, waste });
   }
 
-  // Sort: worst score first, then unreviewed first, then alphabetically
+  // Sort: worst score first, then oldest currency first, then alphabetically
   return results.sort((a, b) => {
     if (a.score !== b.score) return a.score - b.score;
-    if (a.sem === '-' && b.sem !== '-') return -1;
-    if (a.sem !== '-' && b.sem === '-') return 1;
+    if (a.currency === '-' && b.currency !== '-') return -1;
+    if (a.currency !== '-' && b.currency === '-') return 1;
+    if (a.currency < b.currency) return -1;
+    if (a.currency > b.currency) return 1;
     return a.name.localeCompare(b.name);
   });
 }
@@ -469,6 +398,10 @@ function scanInstructions() {
     // Check trifecta (has matching skill)
     const hasSkill = existingSkills.has(name);
 
+    // Extract currency date from frontmatter
+    const currencyMatch = content.match(/^currency:\s*(\d{4}-\d{2}-\d{2})/m);
+    const currency = currencyMatch ? currencyMatch[1] : '-';
+
     const flags = {
       fm: fmComplete ? 1 : 0,
       depth: hasDepth ? 1 : 0,
@@ -484,16 +417,16 @@ function scanInstructions() {
     // Token waste detection (Mermaid diagrams, style lines)
     const waste = detectTokenWaste(content);
 
-    results.push({ name, lines, flags, score, maxScore: 5, pass, waste });
+    results.push({ name, lines, flags, score, maxScore: 5, pass, waste, currency });
   }
 
-  // Sort: worst score first, then unreviewed first, then alphabetically
+  // Sort: worst score first, then oldest currency first, then alphabetically
   return results.sort((a, b) => {
     if (a.score !== b.score) return a.score - b.score;
-    const aSem = EXISTING_SEM.instructions[a.name] ?? '-';
-    const bSem = EXISTING_SEM.instructions[b.name] ?? '-';
-    if (aSem === '-' && bSem !== '-') return -1;
-    if (aSem !== '-' && bSem === '-') return 1;
+    if (a.currency === '-' && b.currency !== '-') return -1;
+    if (a.currency !== '-' && b.currency === '-') return 1;
+    if (a.currency < b.currency) return -1;
+    if (a.currency > b.currency) return 1;
     return a.name.localeCompare(b.name);
   });
 }
@@ -537,6 +470,11 @@ function scanPrompts() {
     const hasDesc = /^description:/m.test(content);
     const hasApp = /^application:/m.test(content);
     const hasAgent = /^agent:/m.test(content) || /^mode:\s*agent/m.test(content);
+
+    // Extract currency date from frontmatter
+    const currencyMatch = content.match(/^currency:\s*(\d{4}-\d{2}-\d{2})/m);
+    const currency = currencyMatch ? currencyMatch[1] : '-';
+
     const flags = {
       desc: hasDesc ? 1 : 0,
       app: hasApp ? 1 : 0,
@@ -547,16 +485,16 @@ function scanPrompts() {
     const score = flags.desc + flags.app + flags.agent + flags.over20;
     // desc + app are GATES - prompts need both for discoverability and routing
     const pass = hasDesc && hasApp && (score >= 3);
-    results.push({ name, lines, flags, score, maxScore: 4, pass, subdir });
+    results.push({ name, lines, flags, score, maxScore: 4, pass, subdir, currency });
   }
 
-  // Sort: worst score first, then unreviewed first, then alphabetically
+  // Sort: worst score first, then oldest currency first, then alphabetically
   return results.sort((a, b) => {
     if (a.score !== b.score) return a.score - b.score;
-    const aSem = EXISTING_SEM.prompts[a.name] ?? '-';
-    const bSem = EXISTING_SEM.prompts[b.name] ?? '-';
-    if (aSem === '-' && bSem !== '-') return -1;
-    if (aSem !== '-' && bSem === '-') return 1;
+    if (a.currency === '-' && b.currency !== '-') return -1;
+    if (a.currency !== '-' && b.currency === '-') return 1;
+    if (a.currency < b.currency) return -1;
+    if (a.currency > b.currency) return 1;
     return a.name.localeCompare(b.name);
   });
 }
@@ -646,6 +584,10 @@ function scanMuscles() {
     const reviewMatch = content.match(/@(?:reviewed|lastReview|review)\s*:?\s*(\d{4}-\d{2}-\d{2})/i);
     const reviewDate = reviewMatch ? reviewMatch[1] : null;
 
+    // Extract currency date (when content was last researched against latest practices)
+    const currencyMatch = content.match(/@currency\s*:?\s*(\d{4}-\d{2}-\d{2})/i);
+    const currency = currencyMatch ? currencyMatch[1] : '-';
+
     // Extract standard metadata tags from header comment
     // Format: @tag value (with optional colon)
     // Handle both CRLF and LF line endings
@@ -682,7 +624,7 @@ function scanMuscles() {
     // err is GATE - muscles without error handling are fragile
     const pass = flags.err === 1 && (score >= 3);
 
-    results.push({ name, lines: lineCount, lang, category, inh, flags, score, maxScore: 4, pass, reviewDate, meta, hasStandardHeader });
+    results.push({ name, lines: lineCount, lang, category, inh, flags, score, maxScore: 4, pass, reviewDate, meta, hasStandardHeader, currency });
   }
 
   // Sort: worst score first, then unreviewed first, then alphabetically
@@ -733,6 +675,10 @@ function scanHooks() {
     const reviewMatch = content.match(/@(?:reviewed|lastReview|review)\s*:?\s*(\d{4}-\d{2}-\d{2})/i);
     const reviewDate = reviewMatch ? reviewMatch[1] : null;
 
+    // Extract @currency date
+    const currencyMatch = content.match(/@currency\s*:?\s*(\d{4}-\d{2}-\d{2})/i);
+    const currency = currencyMatch ? currencyMatch[1] : '-';
+
     const flags = {
       header: hasHeader ? 1 : 0,
       stdin: hasStdinParse ? 1 : 0,
@@ -745,7 +691,7 @@ function scanHooks() {
     // stdin is GATE — hooks that don't parse stdin are broken
     const pass = flags.stdin === 1 && (score >= 4);
 
-    results.push({ name, lines: lineCount, event, flags, score, maxScore: 5, pass, reviewDate });
+    results.push({ name, lines: lineCount, event, flags, score, maxScore: 5, pass, reviewDate, currency });
   }
 
   // Sort: worst score first, then alphabetically
@@ -819,43 +765,39 @@ function generateGrid() {
   lines.push("| **Agentic** | tri=1, muscle=1 | Autonomous execution — knows AND does | md-to-word, brain-qa |");
   lines.push("");
   lines.push("**Informational columns** (not scored):");
-  lines.push("| Col | Meaning | 1 | 0 |");
-  lines.push("|:---:|---------|---|---|");
-  lines.push("| **inh** | Inheritance | Master-only | Synced to heirs |");
-  lines.push("| **stale** | Staleness refresh | YYYY-MM-DD (last refreshed) | - (stable or never refreshed) |");
-  lines.push("| **Sem Review** | Semantic Review Date | YYYY-MM-DD | - (pending) |");
+  lines.push("| Col | Meaning | Value |");
+  lines.push("|:---:|---------|-------|");
+  lines.push("| **inh** | Inheritance | 1 = Master-only, 0 = Synced to heirs |");
+  lines.push("| **Currency** | Currency date | YYYY-MM-DD (when content was last researched against latest practices) |");
   lines.push("");
-  lines.push("> **Semantic Review**: Audit date when the brain file was verified for clarity, coherence, correctness, completeness, and conciseness. Files marked `-` are pending review.");
+  lines.push("> **Currency**: The date when a brain file was last researched against current external developments (API changes, library updates, best-practice evolution). Set `currency: YYYY-MM-DD` in YAML frontmatter or `@currency YYYY-MM-DD` in muscle headers. Files with old dates are prioritized for a currency sweep.");
   lines.push("");
 
-  // Semantic Review Process section
-  lines.push("## Semantic Review Process");
+  // Currency Sweep Process section
+  lines.push("## Currency Sweep Process");
   lines.push("");
-  lines.push("A semantic review validates brain file quality beyond automated checks. Perform before marking with a review date:");
+  lines.push("A currency sweep validates that brain file content reflects the latest external knowledge:");
   lines.push("");
-  lines.push("| Criterion | Question | Fix |");
-  lines.push("|-----------|----------|-----|");
-  lines.push("| **Clarity** | Can a reader understand intent without external context? | Rewrite ambiguous sections |");
-  lines.push("| **Coherence** | Do sections flow logically? No contradictions? | Restructure, resolve conflicts |");
-  lines.push("| **Correctness** | Are facts, patterns, and examples still accurate? | Update outdated content |");
-  lines.push("| **Completeness** | Missing edge cases or common scenarios? | Add missing coverage |");
-  lines.push("| **Conciseness** | Can any section be shortened without losing value? | Eliminate redundancy |");
+  lines.push("| Step | Action | Fix |");
+  lines.push("|------|--------|-----|");
+  lines.push("| **Research** | Check latest docs, changelogs, and releases for the file's domain | Note what changed |");
+  lines.push("| **Compare** | Diff current content against latest practices | Identify stale advice |");
+  lines.push("| **Update** | Revise outdated patterns, APIs, versions, or recommendations | Apply fixes |");
+  lines.push("| **Stamp** | Set `currency: YYYY-MM-DD` in frontmatter to today's date | Mark as current |");
   lines.push("");
-  lines.push("**After review**: Edit the `Sem Review` column from `-` to `YYYY-MM-DD`. Date is preserved on grid regeneration.");
+  lines.push("**Frequency**: Target a full sweep every 6 months. Prioritize files with oldest currency dates.");
   lines.push("");
 
   // Priority Queue section
   lines.push("## Priority Queue");
   lines.push("");
-  lines.push("> **Sorted by urgency**: Failing first, then unaudited, then stale-prone (oldest refresh first), then stalest sem review, then lowest score. Top 20 shown.");
+  lines.push("> **Sorted by urgency**: Failing first, then oldest currency date, then lowest score. Top 20 shown.");
   lines.push("");
 
   // Collect all items with priority metadata
   const priorityItems = [];
   
   for (const s of skills) {
-    const sem = EXISTING_SEM.skills[s.name] ?? '-';
-    const staleDate = s.flags.staleProne ? (EXISTING_STALE[s.name] || '-') : '-';
     priorityItems.push({
       type: 'skill',
       name: s.name,
@@ -863,9 +805,7 @@ function generateGrid() {
       score: s.score,
       maxScore: s.threshold,
       pass: s.pass,
-      sem: sem,
-      staleProne: s.flags.staleProne,
-      staleDate: staleDate,
+      currency: s.currency,
     });
   }
   
@@ -877,14 +817,11 @@ function generateGrid() {
       score: a.score,
       maxScore: 5,
       pass: a.pass,
-      sem: a.sem,
-      staleProne: false,
-      staleDate: '-',
+      currency: a.currency,
     });
   }
   
   for (const i of instructions) {
-    const sem = EXISTING_SEM.instructions[i.name] ?? '-';
     priorityItems.push({
       type: 'instruction',
       name: i.name,
@@ -892,14 +829,11 @@ function generateGrid() {
       score: i.score,
       maxScore: 5,
       pass: i.pass,
-      sem: sem,
-      staleProne: false,
-      staleDate: '-',
+      currency: i.currency,
     });
   }
   
   for (const p of prompts) {
-    const sem = EXISTING_SEM.prompts[p.name] ?? '-';
     priorityItems.push({
       type: 'prompt',
       name: p.name,
@@ -907,9 +841,7 @@ function generateGrid() {
       score: p.score,
       maxScore: 4,
       pass: p.pass,
-      sem: sem,
-      staleProne: false,
-      staleDate: '-',
+      currency: p.currency,
     });
   }
 
@@ -921,9 +853,7 @@ function generateGrid() {
       score: m.score,
       maxScore: 4,
       pass: m.pass,
-      sem: m.reviewDate || '-',
-      staleProne: false,
-      staleDate: '-',
+      currency: m.currency,
     });
   }
 
@@ -935,34 +865,22 @@ function generateGrid() {
       score: h.score,
       maxScore: 5,
       pass: h.pass,
-      sem: h.reviewDate || '-',
-      staleProne: false,
-      staleDate: '-',
+      currency: h.currency,
     });
   }
 
-  // Sort: failing first, then unaudited (sem = '-'), then stale-prone (oldest stale date first), then stalest review date, then lowest score
+  // Sort: failing first, then no currency date, then oldest currency, then lowest score
   priorityItems.sort((a, b) => {
     // Failing items first
     if (!a.pass && b.pass) return -1;
     if (a.pass && !b.pass) return 1;
-    // Then unreviewed items
-    if (a.sem === '-' && b.sem !== '-') return -1;
-    if (a.sem !== '-' && b.sem === '-') return 1;
-    // Stale-prone items before stable ones
-    if (a.staleProne && !b.staleProne) return -1;
-    if (!a.staleProne && b.staleProne) return 1;
-    // Among stale-prone items, oldest stale date first (never-refreshed '-' first)
-    if (a.staleProne && b.staleProne) {
-      if (a.staleDate === '-' && b.staleDate !== '-') return -1;
-      if (a.staleDate !== '-' && b.staleDate === '-') return 1;
-      if (a.staleDate < b.staleDate) return -1;
-      if (a.staleDate > b.staleDate) return 1;
-    }
-    // Among reviewed items, oldest review date first (stalest = higher priority)
-    if (a.sem !== '-' && b.sem !== '-') {
-      if (a.sem < b.sem) return -1;
-      if (a.sem > b.sem) return 1;
+    // Then items without currency date
+    if (a.currency === '-' && b.currency !== '-') return -1;
+    if (a.currency !== '-' && b.currency === '-') return 1;
+    // Oldest currency date first
+    if (a.currency !== '-' && b.currency !== '-') {
+      if (a.currency < b.currency) return -1;
+      if (a.currency > b.currency) return 1;
     }
     // Then by score (lower = higher priority)
     const aRatio = a.score / a.maxScore;
@@ -976,33 +894,33 @@ function generateGrid() {
   const topItems = priorityItems.slice(0, 20);
   
   if (topItems.length > 0) {
-    lines.push("| # | Type | File | Score | Pass | Stale | Sem Review | Action |");
-    lines.push("|--:|:----:|------|------:|:----:|:-----:|:----------:|--------|");
+    lines.push("| # | Type | File | Score | Pass | Currency | Action |");
+    lines.push("|--:|:----:|------|------:|:----:|:--------:|--------|");
     
     topItems.forEach((item, idx) => {
       const nameLink = `[${item.name}](${item.path})`;
       const passIcon = item.pass ? "✓" : "✗";
-      const action = !item.pass ? "Fix defects" : (item.sem === '-' ? "Semantic review" : "Re-review");
-      lines.push(`| ${idx + 1} | ${item.type} | ${nameLink} | ${item.score}/${item.maxScore} | ${passIcon} | ${item.staleDate} | ${item.sem} | ${action} |`);
+      const action = !item.pass ? "Fix defects" : (item.currency === '-' ? "Currency sweep" : "Re-sweep");
+      lines.push(`| ${idx + 1} | ${item.type} | ${nameLink} | ${item.score}/${item.maxScore} | ${passIcon} | ${item.currency} | ${action} |`);
     });
     
     const totalFailing = priorityItems.filter(i => !i.pass).length;
-    const totalUnreviewed = priorityItems.filter(i => i.pass && i.sem === '-').length;
-    const totalAudited = priorityItems.filter(i => i.sem !== '-').length;
-    // Staleness detection: flag items with sem review dates >90 days old
+    const totalNoCurrency = priorityItems.filter(i => i.pass && i.currency === '-').length;
+    const totalWithCurrency = priorityItems.filter(i => i.currency !== '-').length;
+    // Currency staleness: flag items with currency dates >180 days old
     const now = new Date();
-    const STALE_DAYS = 90;
+    const STALE_DAYS = 180;
     const staleItems = priorityItems.filter(i => {
-      if (i.sem === '-') return false;
-      const reviewDate = new Date(i.sem);
-      if (isNaN(reviewDate.getTime())) return false;
-      const daysSince = Math.floor((now - reviewDate) / (1000 * 60 * 60 * 24));
+      if (i.currency === '-') return false;
+      const currDate = new Date(i.currency);
+      if (isNaN(currDate.getTime())) return false;
+      const daysSince = Math.floor((now - currDate) / (1000 * 60 * 60 * 24));
       return daysSince > STALE_DAYS;
     });
     lines.push("");
-    lines.push(`**Queue depth**: ${totalFailing} failing | ${totalUnreviewed} unaudited | ${totalAudited} audited | ${priorityItems.length} total`);
+    lines.push(`**Queue depth**: ${totalFailing} failing | ${totalNoCurrency} no currency | ${totalWithCurrency} with currency | ${priorityItems.length} total`);
     if (staleItems.length > 0) {
-      lines.push(`**Stale reviews**: ${staleItems.length} items have sem review dates older than ${STALE_DAYS} days — re-review recommended`);
+      lines.push(`**Stale currency**: ${staleItems.length} items have currency dates older than ${STALE_DAYS} days — sweep recommended`);
     }
   } else {
     lines.push("**Status**: ✅ All brain files passing and reviewed");
@@ -1012,8 +930,8 @@ function generateGrid() {
   // Skills table
   lines.push("## Skills");
   lines.push("");
-  lines.push("| Skill | Tier | Lines | fm | code | bounds | tri | muscle | Type | Score | Pass | inh | stale | Sem Review |");
-  lines.push("|-------|:----:|------:|:--:|:----:|:------:|:---:|:------:|:----:|------:|:----:|:---:|:-----:|:----------:|");
+  lines.push("| Skill | Tier | Lines | fm | code | bounds | tri | muscle | Type | Score | Pass | inh | Currency |");
+  lines.push("|-------|:----:|------:|:--:|:----:|:------:|:---:|:------:|:----:|------:|:----:|:---:|:--------:|");
 
   for (const s of skills) {
     const f = s.flags;
@@ -1021,14 +939,10 @@ function generateGrid() {
     const passIcon = s.pass ? "✓" : "✗";
     // Type: A = Agentic (tri+muscle), I = Intellectual (tri only), - = incomplete
     const typeIcon = s.agentic ? "A" : (f.tri === 1 ? "I" : "-");
-    // Preserve existing sem date if available, otherwise '-' (pending review)
-    const sem = EXISTING_SEM.skills[s.name] ?? '-';
-    // Stale date: preserve from grid for stale-prone skills, '-' for stable skills
-    const stale = f.staleProne ? (EXISTING_STALE[s.name] || '-') : '-';
     // Link to SKILL.md file
     const nameLink = `[${s.name}](../skills/${s.name}/SKILL.md)`;
     const codeIcon = f.code ? '1' : '-';
-    lines.push(`| ${nameLink} | ${tierAbbr} | ${s.lines} | ${f.fm} | ${codeIcon} | ${f.bounds} | ${f.tri} | ${f.muscle} | ${typeIcon} | ${s.score}/${s.threshold} | ${passIcon} | ${f.inh} | ${stale} | ${sem} |`);
+    lines.push(`| ${nameLink} | ${tierAbbr} | ${s.lines} | ${f.fm} | ${codeIcon} | ${f.bounds} | ${f.tri} | ${f.muscle} | ${typeIcon} | ${s.score}/${s.threshold} | ${passIcon} | ${f.inh} | ${s.currency} |`);
   }
 
   // Skills summary - now using tier-based pass/fail
@@ -1052,11 +966,6 @@ function generateGrid() {
   lines.push("");
   lines.push(`**Skill Types**: Agentic(A): ${agenticCount} | Intellectual(I): ${intellectualCount} | Incomplete(-): ${skills.length - agenticCount - intellectualCount}`);
   lines.push("");
-  // Semantic review progress
-  const skillsReviewed = skills.filter(s => (EXISTING_SEM.skills[s.name] ?? '-') !== '-').length;
-  const skillsPending = skills.length - skillsReviewed;
-  lines.push(`**Semantic Review**: ${skillsReviewed}/${skills.length} reviewed | ${skillsPending} pending`);
-  lines.push("");
   lines.push("**Defects by dimension (informational)**:");
   lines.push(`| fm | code | bounds | tri | muscle |`);
   lines.push(`|:--:|:----:|:------:|:---:|:------:|`);
@@ -1079,26 +988,23 @@ function generateGrid() {
   lines.push("");
   lines.push("**Pass criteria**: fm=1 (gate) AND score ≥4/5");
   lines.push("");
-  lines.push("| Agent | Lines | fm | handoffs | bounds | persona | code | Score | Pass | Sem Review |");
-  lines.push("|-------|------:|:--:|:--------:|:------:|:-------:|:----:|------:|:----:|:----------:|");
+  lines.push("| Agent | Lines | fm | handoffs | bounds | persona | code | Score | Pass | Currency |");
+  lines.push("|-------|------:|:--:|:--------:|:------:|:-------:|:----:|------:|:----:|:--------:|");
 
   for (const a of agents) {
     const f = a.flags;
     const passIcon = a.pass ? "✓" : "✗";
     // Link to agent file
     const nameLink = `[${a.name}](../agents/${a.name}.agent.md)`;
-    lines.push(`| ${nameLink} | ${a.lines} | ${f.fm} | ${f.handoffs} | ${f.bounds} | ${f.persona} | ${f.code} | ${a.score}/5 | ${passIcon} | ${a.sem} |`);
+    lines.push(`| ${nameLink} | ${a.lines} | ${f.fm} | ${f.handoffs} | ${f.bounds} | ${f.persona} | ${f.code} | ${a.score}/5 | ${passIcon} | ${a.currency} |`);
   }
 
   // Agents summary
   const agentsPassing = agents.filter(a => a.pass).length;
   const agentsFailing = agents.filter(a => !a.pass).length;
   const agentsPerfect = agents.filter(a => a.score === 5).length;
-  const agentsReviewed = agents.filter(a => a.sem !== '-').length;
-  const agentsPending = agents.length - agentsReviewed;
   lines.push("");
   lines.push(`**Summary**: ${agents.length} agents | Passing: ${agentsPassing} | Failing: ${agentsFailing} | Perfect(5/5): ${agentsPerfect}`);
-  lines.push(`**Semantic Review**: ${agentsReviewed}/${agents.length} reviewed | ${agentsPending} pending`);
 
   lines.push("");
 
@@ -1120,29 +1026,23 @@ function generateGrid() {
   lines.push("");
   lines.push("**Pass criteria**: fm=1 (gate) AND score ≥3/5");
   lines.push("");
-  lines.push("| Instruction | Lines | fm | depth | sect | code | skill | Score | Pass | Sem Review |");
-  lines.push("|-------------|------:|:--:|:-----:|:----:|:----:|:-----:|------:|:----:|:----------:|");
+  lines.push("| Instruction | Lines | fm | depth | sect | code | skill | Score | Pass | Currency |");
+  lines.push("|-------------|------:|:--:|:-----:|:----:|:----:|:-----:|------:|:----:|:--------:|");
 
   for (const i of instructions) {
     const f = i.flags;
     const passIcon = i.pass ? "✓" : "✗";
-    // Preserve existing sem date if available, otherwise '-' (pending review)
-    const sem = EXISTING_SEM.instructions[i.name] ?? '-';
     // Link to instruction file
     const nameLink = `[${i.name}](../instructions/${i.name}.instructions.md)`;
-    lines.push(`| ${nameLink} | ${i.lines} | ${f.fm} | ${f.depth} | ${f.sect} | ${f.code} | ${f.skill} | ${i.score}/5 | ${passIcon} | ${sem} |`);
+    lines.push(`| ${nameLink} | ${i.lines} | ${f.fm} | ${f.depth} | ${f.sect} | ${f.code} | ${f.skill} | ${i.score}/5 | ${passIcon} | ${i.currency} |`);
   }
 
   // Instructions summary
   const instrPassing = instructions.filter(i => i.pass).length;
   const instrFailing = instructions.filter(i => !i.pass).length;
   const instrPerfect = instructions.filter(i => i.score === 5).length;
-  const instrReviewed = instructions.filter(i => (EXISTING_SEM.instructions[i.name] ?? '-') !== '-').length;
-  const instrPending = instructions.length - instrReviewed;
   lines.push("");
   lines.push(`**Summary**: ${instructions.length} instructions | Passing: ${instrPassing} | Failing: ${instrFailing} | Perfect(5/5): ${instrPerfect}`);
-  lines.push("");
-  lines.push(`**Semantic Review**: ${instrReviewed}/${instructions.length} reviewed | ${instrPending} pending`);
 
   lines.push("");
 
@@ -1161,31 +1061,26 @@ function generateGrid() {
   lines.push("");
   lines.push("**Pass criteria**: desc=1 AND app=1 (gates) AND score ≥3/4");
   lines.push("");
-  lines.push("| Prompt | Lines | desc | app | agent | >20L | Score | Pass | Sem Review |");
-  lines.push("|--------|------:|:----:|:---:|:-----:|:----:|------:|:----:|:----------:|");
+  lines.push("| Prompt | Lines | desc | app | agent | >20L | Score | Pass | Currency |");
+  lines.push("|--------|------:|:----:|:---:|:-----:|:----:|------:|:----:|:--------:|");
 
   for (const p of prompts) {
     const f = p.flags;
     const passIcon = p.pass ? "✓" : "✗";
-    // Preserve existing sem date if available, otherwise '-' (pending review)
-    const sem = EXISTING_SEM.prompts[p.name] ?? '-';
     // Link to prompt file — include subdir path if present
     const relPath = p.subdir
       ? `../prompts/${p.subdir}/${p.name}.prompt.md`
       : `../prompts/${p.name}.prompt.md`;
     const nameLink = `[${p.name}](${relPath})`;
-    lines.push(`| ${nameLink} | ${p.lines} | ${f.desc} | ${f.app} | ${f.agent} | ${f.over20} | ${p.score}/4 | ${passIcon} | ${sem} |`);
+    lines.push(`| ${nameLink} | ${p.lines} | ${f.desc} | ${f.app} | ${f.agent} | ${f.over20} | ${p.score}/4 | ${passIcon} | ${p.currency} |`);
   }
 
   // Prompts summary
   const promptsPassing = prompts.filter(p => p.pass).length;
   const promptsFailing = prompts.filter(p => !p.pass).length;
   const promptsPerfect = prompts.filter(p => p.score === 4).length;
-  const promptsReviewed = prompts.filter(p => (EXISTING_SEM.prompts[p.name] ?? '-') !== '-').length;
-  const promptsPending = prompts.length - promptsReviewed;
   lines.push("");
   lines.push(`**Summary**: ${prompts.length} prompts | Passing: ${promptsPassing} | Failing: ${promptsFailing} | Perfect(4/4): ${promptsPerfect}`);
-  lines.push(`**Semantic Review**: ${promptsReviewed}/${prompts.length} reviewed | ${promptsPending} pending`);
 
   // Prompts criterion validity
   const promptDescPass = prompts.filter(p => p.flags.desc === 1).length;
@@ -1220,6 +1115,7 @@ function generateGrid() {
   lines.push("**Pass criteria**: err=1 (gate) AND score ≥3/4");
   lines.push("");
   lines.push("**Review Date**: Add `@reviewed: YYYY-MM-DD` comment to track code review currency.");
+  lines.push("**Currency Date**: Add `@currency: YYYY-MM-DD` comment to track knowledge freshness.");
   lines.push("");
   lines.push("### Standard Muscle Header");
   lines.push("");
@@ -1233,6 +1129,7 @@ function generateGrid() {
   lines.push(" * @version 1.0.0");
   lines.push(" * @skill linked-skill-name");
   lines.push(" * @reviewed 2026-04-15");
+  lines.push(" * @currency 2025-01-01");
   lines.push(" * @platform windows,macos,linux");
   lines.push(" * @requires pandoc, mermaid-cli");
   lines.push(" */");
@@ -1245,11 +1142,12 @@ function generateGrid() {
   lines.push("| `@version` | | Semantic version |");
   lines.push("| `@skill` | | Linked skill name for trifecta binding |");
   lines.push("| `@reviewed` | | Code review date (YYYY-MM-DD) |");
+  lines.push("| `@currency` | | Currency sweep date (YYYY-MM-DD) |");
   lines.push("| `@platform` | | Supported platforms (windows,macos,linux) |");
   lines.push("| `@requires` | | External dependencies |");
   lines.push("");
-  lines.push("| Muscle | Lines | Lang | Category | comments | err | bounds | compat | Score | Pass | inh | Reviewed |");
-  lines.push("|--------|------:|:----:|----------|:--------:|:---:|:------:|:------:|------:|:----:|:---:|----------|");
+  lines.push("| Muscle | Lines | Lang | Category | comments | err | bounds | compat | Score | Pass | inh | Reviewed | Currency |");
+  lines.push("|--------|------:|:----:|----------|:--------:|:---:|:------:|:------:|------:|:----:|:---:|----------|:--------:|");
 
   for (const m of muscles) {
     const f = m.flags;
@@ -1257,7 +1155,7 @@ function generateGrid() {
     const reviewedDate = m.reviewDate || "—";
     // Link to muscle file
     const nameLink = `[${m.name}](../muscles/${m.name})`;
-    lines.push(`| ${nameLink} | ${m.lines} | ${m.lang} | ${m.category} | ${f.comments} | ${f.err} | ${f.bounds} | ${f.compat} | ${m.score}/4 | ${passIcon} | ${m.inh} | ${reviewedDate} |`);
+    lines.push(`| ${nameLink} | ${m.lines} | ${m.lang} | ${m.category} | ${f.comments} | ${f.err} | ${f.bounds} | ${f.compat} | ${m.score}/4 | ${passIcon} | ${m.inh} | ${reviewedDate} | ${m.currency} |`);
   }
 
   // Muscles summary
@@ -1302,15 +1200,15 @@ function generateGrid() {
   lines.push("");
   lines.push("**Pass criteria**: stdin=1 (gate) AND score ≥4/5");
   lines.push("");
-  lines.push("| Hook | Lines | Event | header | stdin | stdout | err | bounds | Score | Pass | Reviewed |");
-  lines.push("|------|------:|-------|:------:|:-----:|:------:|:---:|:------:|------:|:----:|----------|");
+  lines.push("| Hook | Lines | Event | header | stdin | stdout | err | bounds | Score | Pass | Reviewed | Currency |");
+  lines.push("|------|------:|-------|:------:|:-----:|:------:|:---:|:------:|------:|:----:|----------|:--------:|");
 
   for (const h of hooks) {
     const f = h.flags;
     const passIcon = h.pass ? "✓" : "✗";
     const reviewedDate = h.reviewDate || "—";
     const nameLink = `[${h.name}](../muscles/hooks/${h.name})`;
-    lines.push(`| ${nameLink} | ${h.lines} | ${h.event} | ${f.header} | ${f.stdin} | ${f.stdout} | ${f.err} | ${f.bounds} | ${h.score}/5 | ${passIcon} | ${reviewedDate} |`);
+    lines.push(`| ${nameLink} | ${h.lines} | ${h.event} | ${f.header} | ${f.stdin} | ${f.stdout} | ${f.err} | ${f.bounds} | ${h.score}/5 | ${passIcon} | ${reviewedDate} | ${h.currency} |`);
   }
 
   // Hooks summary
@@ -1429,7 +1327,6 @@ if (typeof module !== 'undefined') {
     MAX_SKILL_LINES,
     MIN_AGENT_LINES,
     MAX_AGENT_LINES,
-    STALE_PRONE,
   };
 }
 

@@ -2,6 +2,7 @@
 description: "Unconscious emotional attunement — detect frustration, celebrate success, adapt tone to session health"
 application: "Always active — unconsciously adapts communication based on user signals"
 applyTo: "**"
+currency: 2025-01-01
 ---
 
 # Emotional Intelligence

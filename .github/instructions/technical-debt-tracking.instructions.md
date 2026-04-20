@@ -2,6 +2,7 @@
 description: "Technical debt identification, tracking, and payoff protocols"
 application: "When following technical debt tracking workflows or troubleshooting related issues"
 applyTo: "**/*TODO*,**/*FIXME*,**/*debt*"
+currency: 2025-01-01
 ---
 
 # Technical Debt Tracking Procedural Memory

@@ -2,6 +2,7 @@
 description: "Markdown to Word document conversion with diagram support"
 application: "When converting Markdown documents to professional Word files"
 applyTo: "**/*.md"
+currency: 2025-01-01
 ---
 
 # Markdown to Word — Auto-Loaded Rules

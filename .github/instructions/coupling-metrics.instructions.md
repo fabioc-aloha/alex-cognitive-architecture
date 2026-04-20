@@ -2,6 +2,7 @@
 description: "Structural coupling metrics for architecture audits: afferent/efferent coupling, instability, hub risk detection"
 application: "During code reviews, quality audits, or when assessing coupling metrics"
 applyTo: "**/*coupling*,**/*architecture*audit*,**/*dependency*graph*"
+currency: 2025-01-01
 ---
 
 # Coupling Metrics

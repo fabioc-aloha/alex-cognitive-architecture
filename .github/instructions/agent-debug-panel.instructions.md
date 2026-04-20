@@ -2,6 +2,7 @@
 description: "Debug skill/hook/agent loading issues using VS Code's Agent Debug Panel"
 application: "When diagnosing why skills don't activate or hooks don't fire"
 applyTo: "**/*debug*,**/*agent*,**/*skill*,**/*hook*"
+currency: 2025-01-01
 ---
 
 # Agent Debug Panel

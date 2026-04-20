@@ -4,6 +4,7 @@ description: Seamless notebook publishing from VS Code to Microsoft Fabric via A
 tier: extended
 applyTo: '**/*fabric*,**/*notebook*,**/*publish*'
 user-invokable: false
+currency: 2025-01-01
 ---
 
 # Fabric Notebook Publish Skill

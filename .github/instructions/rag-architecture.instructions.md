@@ -2,6 +2,7 @@
 description: "Build retrieval-augmented generation systems that ground LLMs in your data"
 application: "When building RAG pipelines, vector search, or document-grounded AI"
 applyTo: "**/*rag*,**/*retrieval*,**/*embedding*,**/*vector*,**/*semantic-search*"
+currency: 2025-01-01
 ---
 
 # RAG Architecture

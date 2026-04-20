@@ -2,6 +2,7 @@
 description: "Dependency security, version management, and upgrade protocols"
 application: "When following dependency management workflows or troubleshooting related issues"
 applyTo: "**/*package*.json,**/requirements*.txt,**/Cargo.toml,**/go.mod,**/pom.xml"
+currency: 2025-01-01
 ---
 
 # Dependency Management Procedural Memory

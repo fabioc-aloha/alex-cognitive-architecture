@@ -2,6 +2,7 @@
 description: "Build and deploy MCP servers with tool registration, handler patterns, and transport configuration"
 application: "When creating MCP servers, registering tools, or configuring MCP transports"
 applyTo: "**/*mcp*,**/*mcp-server*,**/*mcp-tool*"
+currency: 2025-01-01
 ---
 
 # MCP Builder Patterns

@@ -12,6 +12,7 @@
  *   node .github/muscles/update-registry.cjs --pattern "webview-state"  # Add successful pattern
  *   node .github/muscles/update-registry.cjs --friction "msal-token-refresh"  # Add friction point
  *   node .github/muscles/update-registry.cjs --meditated  # Record meditation completion
+ * @currency 2025-01-01
  */
 
 const fs = require('fs');

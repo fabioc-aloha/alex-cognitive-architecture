@@ -4,6 +4,7 @@ description: Microsoft Fabric workspace management, governance, REST API pattern
 tier: standard
 applyTo: '**/*fabric*,**/*lakehouse*,**/*medallion*'
 user-invokable: false
+currency: 2025-01-01
 ---
 
 # Microsoft Fabric Governance Skill

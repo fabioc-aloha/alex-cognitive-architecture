@@ -3,6 +3,7 @@ name: academic-paper-drafting
 description: "End-to-end academic paper drafting for CHI, HBR, journals, and conferences with venue-specific templates, drafting workflows, and revision strategies."
 applyTo: "**/*paper*,**/*manuscript*,**/*journal*,**/*conference*,**/*CHI*,**/*HBR*,**/*publication*"
 tier: extended
+currency: 2025-01-01
 ---
 
 # Academic Paper Drafting Skill

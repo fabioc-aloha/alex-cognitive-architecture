@@ -2,6 +2,7 @@
 description: "Scientific method for debugging — observe, hypothesize, experiment, conclude"
 application: "When investigating build failures, test errors, runtime crashes, or unexpected behavior through systematic reproduction"
 applyTo: "**/*debug*,**/*bug*,**/*error*,**/*fix*"
+currency: 2025-01-01
 ---
 
 # Hypothesis-Driven Debugging

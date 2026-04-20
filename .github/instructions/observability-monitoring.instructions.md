@@ -2,6 +2,7 @@
 description: "Production visibility through logs, metrics, traces, and alerting — the three pillars of observability"
 application: "When designing monitoring, investigating production issues, or implementing logging"
 applyTo: "**/*observ*,**/*monitor*,**/*telemetry*,**/*logging*,**/*metric*"
+currency: 2025-01-01
 ---
 
 # Observability Principles

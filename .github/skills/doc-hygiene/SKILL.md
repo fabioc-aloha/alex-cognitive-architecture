@@ -3,6 +3,7 @@ name: doc-hygiene
 description: Documentation hygiene — anti-drift rules, count elimination, and living document maintenance
 tier: core
 applyTo: '**/*doc*,**/*readme*,**/*changelog*,**/*drift*'
+currency: 2025-01-01
 ---
 
 # Documentation Hygiene

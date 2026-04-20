@@ -2,6 +2,7 @@
 description: "Two-phase skill telemetry protocol for tracking activation, outcomes, and usage patterns"
 application: "When following skill telemetry workflows or troubleshooting related issues"
 applyTo: "**/.github/skills/**,**/*telemetry*,**/*skill-signal*"
+currency: 2025-01-01
 ---
 
 # Skill Telemetry Protocol

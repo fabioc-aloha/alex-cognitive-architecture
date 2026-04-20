@@ -2,6 +2,7 @@
 description: "Practical guide for heirs to create project trifectas and apply research-first development"
 application: "When exploring new domains, synthesizing knowledge, or building expertise"
 applyTo: "**/*heir*,**/*readiness*,**/*bootstrap*"
+currency: 2025-01-01
 ---
 
 # Heir Project Improvement

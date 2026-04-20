@@ -3,6 +3,7 @@ name: "knowledge-synthesis"
 description: "Cross-project pattern recognition — abstract, generalize, connect, store at the highest true level"
 tier: standard
 applyTo: "**/*knowledge*,**/*insight*,**/*pattern*,**/*global*"
+currency: 2025-01-01
 ---
 
 # Knowledge Synthesis Skill

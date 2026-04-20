@@ -17,6 +17,7 @@
  *
  * Usage:
  *   node normalize-paths.cjs [--target <all|instructions|skills|synapses>]
+ * @currency 2025-01-01
  */
 
 'use strict';

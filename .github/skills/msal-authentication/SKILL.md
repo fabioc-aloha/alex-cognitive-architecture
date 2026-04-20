@@ -3,6 +3,7 @@ name: msal-authentication
 description: Microsoft Authentication Library (MSAL) patterns for React/SPA applications with Entra ID
 tier: standard
 applyTo: "**/*auth*,**/*msal*,**/*login*,**/*identity*,**/*entra*"
+currency: 2025-01-01
 ---
 
 # MSAL Authentication
@@ -16,7 +17,7 @@ applyTo: "**/*auth*,**/*msal*,**/*login*,**/*identity*,**/*entra*"
 
 ## Core Concepts
 
-**Microsoft Authentication Library (MSAL)** handles authentication with Microsoft Entra ID (formerly Microsoft Entra ID). It manages:
+**Microsoft Authentication Library (MSAL)** handles authentication with Microsoft Entra ID (formerly Azure Active Directory). It manages:
 - Token acquisition and caching
 - Silent token renewal
 - Redirect/popup authentication flows

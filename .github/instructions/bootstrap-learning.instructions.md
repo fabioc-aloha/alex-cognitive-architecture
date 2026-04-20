@@ -2,6 +2,7 @@
 description: "Domain-agnostic learning and knowledge acquisition protocols"
 application: "When following bootstrap learning workflows or troubleshooting related issues"
 applyTo: "**/*learn*,**/*bootstrap*,**/*knowledge*"
+currency: 2025-01-01
 ---
 
 # Bootstrap Learning — Auto-Loaded Rules

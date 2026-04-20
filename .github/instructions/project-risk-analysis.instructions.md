@@ -2,6 +2,7 @@
 description: "Systematic project risk identification, categorization, and mitigation planning"
 application: "When assessing project risks, planning mitigations, or evaluating project health before major milestones"
 applyTo: "**/*risk*,**/*plan*,**/*assessment*"
+currency: 2025-01-01
 ---
 
 # Project Risk Analysis

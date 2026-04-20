@@ -2,6 +2,7 @@
 description: "Synchronize insights across AI surfaces via the shared OneDrive AI-Memory folder"
 application: "When syncing knowledge between VS Code, Copilot Chat, and other AI surfaces"
 applyTo: "**/*global-knowledge-sync*,**/*ai-memory-sync*"
+currency: 2025-01-01
 ---
 
 # Global Knowledge Sync

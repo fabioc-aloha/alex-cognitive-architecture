@@ -22,6 +22,7 @@ handoffs:
     agent: Alex
     prompt: Returning to main cognitive mode.
     send: true
+currency: 2025-01-01
 ---
 
 # Alex Infrastructure Mode

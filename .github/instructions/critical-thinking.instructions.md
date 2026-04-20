@@ -2,6 +2,7 @@
 description: "Critical thinking framework — challenge assumptions, evaluate evidence, detect bias, and test falsifiability"
 application: "When evaluating claims, reviewing proposals, assessing evidence quality, or performing adversarial analysis"
 applyTo: "**/*"
+currency: 2025-01-01
 ---
 
 # Critical Thinking

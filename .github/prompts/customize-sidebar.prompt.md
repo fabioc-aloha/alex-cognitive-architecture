@@ -3,6 +3,7 @@ description: "Customize Alex sidebar — add Loop tab buttons or Autopilot sched
 application: "When the user wants to add custom buttons, workflows, or scheduled tasks to the Alex sidebar"
 mode: agent
 agent: Alex
+currency: 2025-01-01
 ---
 
 # Customize Sidebar

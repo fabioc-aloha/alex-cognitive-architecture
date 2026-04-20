@@ -11,7 +11,8 @@ const path = require('path');
 let input = {};
 try {
   input = JSON.parse(fs.readFileSync(0, 'utf8'));
-} catch { /* defaults */ }
+} catch { /* defaults * @currency 2025-01-01
+ */ }
 
 const workspaceRoot = input.cwd || path.resolve(__dirname, '../../..');
 const researchDir = path.join(workspaceRoot, 'alex_docs', 'research');

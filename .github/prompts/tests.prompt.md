@@ -2,6 +2,7 @@
 description: Generate unit tests for selected code
 application: When you need comprehensive test coverage for a module, function, or class
 agent: Alex
+currency: 2025-01-01
 ---
 
 

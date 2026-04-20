@@ -3,6 +3,7 @@ name: entra-agent-id
 description: Microsoft Entra Agent ID (preview) — create OAuth2-capable AI agent identities via Microsoft Graph beta API
 tier: standard
 applyTo: '**/entra*,**/*agent-id*,**/*agent-identity*,**/*blueprint*'
+currency: 2025-01-01
 ---
 
 # Microsoft Entra Agent ID

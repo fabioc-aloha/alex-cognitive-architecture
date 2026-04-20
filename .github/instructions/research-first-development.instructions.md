@@ -2,6 +2,7 @@
 description: "Build knowledge bases that build software — research before code, teach before execute"
 application: "When starting new projects, domains, or features requiring research foundation"
 applyTo: "**/*research*,**/*knowledge-base*,**/*domain-learning*"
+currency: 2025-01-01
 ---
 
 # Research-First Development

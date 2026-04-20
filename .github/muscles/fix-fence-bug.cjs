@@ -14,6 +14,7 @@
  *
  * Usage:
  *   node fix-fence-bug.cjs [--fix] [--full-repo] [--path <file>]
+ * @currency 2025-01-01
  */
 
 'use strict';

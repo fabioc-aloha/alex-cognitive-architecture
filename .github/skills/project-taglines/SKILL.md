@@ -4,6 +4,7 @@ description: "Generate and configure project-specific taglines for the Alex side
 tier: standard
 applyTo: '**/*tagline*,**/.github/config/taglines.json'
 disable-model-invocation: false
+currency: 2025-01-01
 ---
 
 # Project Taglines Skill

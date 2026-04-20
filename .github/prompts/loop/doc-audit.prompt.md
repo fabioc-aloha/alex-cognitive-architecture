@@ -3,6 +3,7 @@ mode: agent
 description: "Documentation accuracy and drift audit"
 application: "Audit docs for accuracy, completeness, staleness, and code drift"
 tools: ["read_file", "grep_search", "list_dir", "semantic_search"]
+currency: 2025-01-01
 ---
 
 # Documentation Audit

@@ -2,6 +2,7 @@
 description: "Cloud TTS via Replicate — 15 models, emotion control, and voice cloning"
 application: "When generating speech from text or selecting TTS models"
 applyTo: '**/*tts*,**/*speech*,**/*narrat*,**/*audiobook*'
+currency: 2025-01-01
 ---
 
 # Text-to-Speech

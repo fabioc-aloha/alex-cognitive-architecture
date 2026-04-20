@@ -3,6 +3,7 @@ name: "global-knowledge-sync"
 description: "Synchronize insights across AI surfaces via the shared OneDrive AI-Memory folder"
 tier: standard
 applyTo: '**/*sync*,**/*ai-memory*,**/*onedrive*'
+currency: 2025-01-01
 ---
 
 # Global Knowledge Sync Skill

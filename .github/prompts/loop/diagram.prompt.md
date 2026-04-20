@@ -3,6 +3,7 @@ mode: agent
 description: "Create Mermaid diagrams using ATACCU methodology"
 application: "Generate flowcharts, sequence diagrams, architecture diagrams in Mermaid"
 tools: ["create_file", "read_file"]
+currency: 2025-01-01
 ---
 
 # Diagramming

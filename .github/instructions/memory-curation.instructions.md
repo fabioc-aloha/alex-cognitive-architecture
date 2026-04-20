@@ -2,6 +2,7 @@
 description: "Monitor, audit, and curate VS Code user memory for token efficiency and value density"
 application: "When reviewing or cleaning /memories/ user memory"
 applyTo: "**/*memory*,**/*curation*"
+currency: 2025-01-01
 ---
 
 # Memory Curation

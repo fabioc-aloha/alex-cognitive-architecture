@@ -2,6 +2,7 @@
 description: Start a testing workflow — TDD, test strategy, coverage analysis, or flaky test triage
 application: When starting test-driven development, auditing test coverage, or triaging flaky tests
 agent: Alex
+currency: 2025-01-01
 ---
 
 # /tdd - Testing Strategies

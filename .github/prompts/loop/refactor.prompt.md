@@ -3,6 +3,7 @@ mode: agent
 description: "Safe refactoring — same behavior, better structure"
 application: "Restructure code while preserving behavior with test verification"
 tools: ["read_file", "replace_string_in_file", "grep_search", "run_in_terminal"]
+currency: 2025-01-01
 ---
 
 # Refactor

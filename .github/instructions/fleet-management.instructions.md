@@ -2,6 +2,7 @@
 description: "Fleet-wide brain synchronization — audit, upgrade, verify, rollback across heir projects"
 application: "When managing multiple heir projects or synchronizing brain updates across the fleet"
 applyTo: "**/*upgrade*brain*,**/*fleet*,**/*heir*sync*"
+currency: 2025-01-01
 ---
 
 # Fleet Management

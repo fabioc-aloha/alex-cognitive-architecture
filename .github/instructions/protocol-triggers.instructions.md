@@ -2,6 +2,7 @@
 applyTo: "**/*dream*,**/*meditation*,**/*consolidation*"
 description: "Detailed protocol triggers for dream, meditation, and knowledge consolidation"
 application: "When following protocol triggers workflows or troubleshooting related issues"
+currency: 2025-01-01
 ---
 
 # Protocol Triggers Reference

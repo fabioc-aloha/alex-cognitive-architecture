@@ -27,6 +27,7 @@
  *
  * Output (JSON):
  *   {"name":"devops: deploy to azure","tags":["devops"],"confidence":0.85}
+ * @currency 2025-01-01
  */
 
 "use strict";

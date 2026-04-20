@@ -33,6 +33,7 @@
  *   node data-ingest.cjs <path> --limit 5000       # Limit output rows
  *   node data-ingest.cjs <path> --preview          # Show first 5 rows only
  *   node data-ingest.cjs <path> --output out.json  # Write to file instead of stdout
+ * @currency 2025-01-01
  */
  */
 'use strict';

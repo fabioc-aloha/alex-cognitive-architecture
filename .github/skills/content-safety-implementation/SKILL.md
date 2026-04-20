@@ -10,11 +10,14 @@ metadata:
     triggers: [content safety, guardrail, input defense, output validation, content filter, kill switch, safety layer, responsible AI implementation]
     context: Working on content safety implementation, guardrails, or Azure Content Safety API integration
   prerequisites: []
+currency: 2025-01-01
 ---
 
 # Content Safety Implementation
 
 Implementation patterns for Azure Content Safety API integration, multi-layer defense pipelines, and operational safety controls for AI-facing applications.
+
+> **Last validated**: April 2026 (Prompt Shields GA, Groundedness Detection, Custom Categories)
 
 ---
 
@@ -61,6 +64,56 @@ async function analyzeContent(text: string, config: ContentSafetyConfig): Promis
   };
 }
 ```
+
+---
+
+## Prompt Shields
+
+Prompt Shields detect **two attack types** that bypass basic content filters:
+
+### User Prompt Attacks
+
+Direct injection in user messages — role override, encoding tricks, conversation mockup, role-play manipulation.
+
+```typescript
+const shieldResult = await client.path("/text:shieldPrompt").post({
+  body: {
+    userPrompt: userMessage,
+    documents: retrievedDocs  // RAG context
+  }
+});
+
+// Check for attacks
+const { userPromptAnalysis, documentsAnalysis } = shieldResult.body;
+if (userPromptAnalysis.attackDetected) {
+  // Block: user prompt contains injection attempt
+}
+```
+
+### Document Attacks (Indirect Injection)
+
+Malicious instructions embedded in retrieved documents, emails, or web content — data theft commands, availability disruption, fraud instructions, malware delivery.
+
+```typescript
+// documentsAnalysis is an array — one result per document
+for (const [i, doc] of documentsAnalysis.entries()) {
+  if (doc.attackDetected) {
+    // Remove poisoned document from RAG context
+    retrievedDocs.splice(i, 1);
+  }
+}
+```
+
+> **Critical for RAG**: Always shield retrieved documents before injecting into prompts. An attacker can poison indexed content to hijack your agent.
+
+## Additional Safety APIs
+
+| API | Status | Purpose |
+|-----|--------|---------|
+| **Groundedness Detection** | GA | Detect hallucinated claims not grounded in source documents |
+| **Protected Material Detection** | GA | Detect known copyrighted text in outputs |
+| **Custom Categories** | GA (standard), Preview (rapid) | Define domain-specific content policies beyond the 4 built-in categories |
+| **Task Adherence** | Preview | Verify model output follows the system prompt's instructions |
 
 ---
 
@@ -207,9 +260,10 @@ const KILL_SWITCH_BEHAVIORS: Record<KillSwitchLevel, KillSwitchBehavior> = {
 | # | Layer | Components | Purpose |
 |---|-------|-----------|---------|
 | 1 | **Input Defense** | Sanitizer, InjectionDetector, RateLimiter | Block bad input |
+| 1.5 | **Prompt Shields** | UserPromptShield, DocumentShield | Detect injection + indirect injection |
 | 2 | **Prompt Hardening** | System prompt anchoring, role separation | Prevent manipulation |
 | 3 | **Model Controls** | Azure OpenAI content filters, temperature limits | Platform-level safety |
-| 4 | **Output Validation** | ContentFilter, SensitiveDataGuard | Block bad output |
+| 4 | **Output Validation** | ContentFilter, SensitiveDataGuard, GroundednessCheck | Block bad output |
 | 5 | **Session Monitoring** | BehaviorTracker, EscalationMonitor | Detect abuse patterns |
 | 6 | **Evolution Safety** | PromptRollback, QualityGate | Prevent regression |
 | 7 | **Operational** | KillSwitch, IncidentManager, AuditLog | Emergency controls |

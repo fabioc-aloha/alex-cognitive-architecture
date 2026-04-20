@@ -2,6 +2,7 @@
 description: "VS Code extension development patterns — activation, commands, webviews, configuration, TreeView, Agent Platform"
 application: "When implementing vscode extension patterns or reviewing code that uses these patterns"
 applyTo: "**/src/**/*.ts,**/extension.ts,**/*.vsix"
+currency: 2025-01-01
 ---
 
 # VS Code Extension Patterns — Enforcement Rules

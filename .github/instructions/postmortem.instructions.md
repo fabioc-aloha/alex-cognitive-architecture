@@ -2,6 +2,7 @@
 description: "Structured postmortem writing for production incidents — root cause, timeline, and prevention"
 application: "When documenting production incidents, regressions, or outages that escaped to users"
 applyTo: "**/*incident*,**/*postmortem*,**/*outage*"
+currency: 2025-01-01
 ---
 
 # Postmortem Writing

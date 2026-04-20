@@ -2,6 +2,7 @@
 description: Guided refactoring session — safe structural improvements
 application: When restructuring code for clarity, performance, or maintainability without changing behavior
 agent: Alex
+currency: 2025-01-01
 ---
 
 # /refactor - Guided Refactoring

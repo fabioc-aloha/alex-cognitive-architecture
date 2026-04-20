@@ -2,6 +2,7 @@
 description: "Finalize brain upgrades by curating project-specific content from .github-backup-* directories"
 application: "After running upgrade-brain.ps1 or extension Initialize, when .github-backup-* directories exist"
 applyTo: "**/*upgrade*,**/*curat*,**/*backup*,**/*finalize*"
+currency: 2025-01-01
 ---
 
 # Upgrade Curation

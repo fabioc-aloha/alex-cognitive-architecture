@@ -2,6 +2,7 @@
 description: "Synchronize cognitive architecture changes between Master Alex and heir projects"
 application: "When syncing skills, instructions, or config between Master and heirs"
 applyTo: "**/*heir-sync*,**/*sync-heir*,**/*architecture-sync*"
+currency: 2025-01-01
 ---
 
 # Heir Sync Management

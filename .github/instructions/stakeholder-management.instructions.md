@@ -2,6 +2,7 @@
 description: "Influence mapping, communication strategies, and expectation management for complex organizations"
 application: "When managing stakeholders, building consensus, or navigating organizational dynamics"
 applyTo: "**/*stakeholder*,**/*consensus*,**/*influence*"
+currency: 2025-01-01
 ---
 
 # Stakeholder Management

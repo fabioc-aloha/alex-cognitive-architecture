@@ -4,6 +4,7 @@ description: "Challenge what you think is right — alternative hypotheses, miss
 tier: core
 applyTo: "**/*"
 user-invokable: true
+currency: 2025-01-01
 ---
 
 # Critical Thinking

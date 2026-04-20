@@ -3,6 +3,7 @@ mode: agent
 description: "Improve phase — retrospective, iteration planning, and pattern extraction"
 application: "Run retrospectives, plan iterations, and extract reusable patterns"
 tools: ["read_file", "create_file", "list_dir", "semantic_search"]
+currency: 2025-01-01
 ---
 
 # ⑥ Improve

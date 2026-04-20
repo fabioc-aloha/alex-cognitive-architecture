@@ -2,6 +2,7 @@
 description: "AI character reference generation for consistent visual development and fiction writing"
 application: "When generating images, managing visual assets, or maintaining brand consistency"
 applyTo: "**/generate-alex*,**/*character-ref*,**/*portrait*,**/*avatar*"
+currency: 2025-01-01
 ---
 
 # AI Character Reference Generation — Auto-Loaded Rules

@@ -2,6 +2,7 @@
 description: "Store and manage voice samples for TTS cloning — portable, version-controlled audio references"
 application: "When storing voice samples for TTS cloning or managing audio memory"
 applyTo: '**/*voice*,**/*audio*memory*,**/*clone*voice*'
+currency: 2025-01-01
 ---
 
 # Audio Memory

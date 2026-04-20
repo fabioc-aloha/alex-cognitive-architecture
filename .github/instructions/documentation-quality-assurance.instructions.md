@@ -2,6 +2,7 @@
 description: "Systematic documentation audit, drift detection, preflight validation, and multi-pass quality pipelines"
 application: "When auditing documentation accuracy, detecting drift, or validating docs before release"
 applyTo: "**/*doc*audit*,**/*doc*quality*,**/*drift*,**/*preflight*"
+currency: 2025-01-01
 ---
 
 # Documentation Quality Assurance

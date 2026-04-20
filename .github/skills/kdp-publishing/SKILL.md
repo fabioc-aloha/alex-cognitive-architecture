@@ -3,6 +3,7 @@ name: kdp-publishing
 description: "Amazon KDP self-publishing specs — cover requirements, interior formatting, spine formulas, ink options, and pricing tiers"
 applyTo: "**/*kdp*,**/*publish*,**/*book*"
 tier: extended
+currency: 2025-01-01
 ---
 
 # Domain Knowledge: Amazon KDP Self-Publishing

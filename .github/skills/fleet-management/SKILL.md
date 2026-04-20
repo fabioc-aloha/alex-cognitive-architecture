@@ -3,6 +3,7 @@ name: "fleet-management"
 description: "Keep heir projects synchronized with Master Alex brain updates — audit drift, upgrade brains, verify deployments"
 tier: standard
 applyTo: '**/*fleet*,**/*upgrade*brain*,**/*heir*sync*'
+currency: 2025-01-01
 ---
 
 # Fleet Management

@@ -19,6 +19,7 @@
  *
  * Environment:
  *   GAMMA_API_KEY - Required API key from gamma.app/settings
+ * @currency 2025-01-01
  */
 
 const fs = require('fs');

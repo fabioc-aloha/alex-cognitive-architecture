@@ -2,6 +2,7 @@
 description: "Recognize and prevent confabulation — when you don't know, say so"
 application: "Always active — unconscious self-monitoring for hallucination patterns"
 applyTo: "**"
+currency: 2025-01-01
 ---
 
 # Anti-Hallucination

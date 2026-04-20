@@ -2,6 +2,7 @@
 description: "Data-driven narrative construction, stakeholder management, and influencing senior leadership decisions"
 application: "When presenting to executives, crafting business cases, or influencing strategic decisions"
 applyTo: "**/*executive*,**/*leadership*,**/*c-suite*,**/*stakeholder*"
+currency: 2025-01-01
 ---
 
 # Executive Storytelling

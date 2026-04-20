@@ -12,7 +12,8 @@ let input = {};
 try {
   input = JSON.parse(fs.readFileSync(0, "utf8"));
 } catch {
-  /* defaults */
+  /* defaults * @currency 2025-01-01
+ */
 }
 
 const workspaceRoot = input.cwd || path.resolve(__dirname, "../../..");

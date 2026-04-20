@@ -2,6 +2,7 @@
 description: "STRIDE-based threat modeling — data flow diagrams, trust boundaries, and prioritized mitigations"
 application: "When analyzing security architecture, performing threat modeling, or reviewing system security before deployment"
 applyTo: "**/*threat*,**/*security*,**/*stride*"
+currency: 2025-01-01
 ---
 
 # Security Threat Modeling

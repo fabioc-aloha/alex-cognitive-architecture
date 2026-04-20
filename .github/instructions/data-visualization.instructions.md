@@ -2,6 +2,7 @@
 description: "Auto-loaded when generating charts: select type by story intent, apply palette, annotate insight, declutter"
 application: "When interpreting charts, building dashboards, or visualizing data"
 applyTo: "**/*chart*,**/*visual*,**/*plot*,**/*graph*"
+currency: 2025-01-01
 ---
 
 # Data Visualization Procedure

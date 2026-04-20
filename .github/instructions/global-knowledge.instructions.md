@@ -2,6 +2,7 @@
 description: "Cross-project knowledge search, pattern recognition, and insight management via unified AI-Memory"
 application: "When searching for reusable patterns, applying lessons learned, or managing knowledge across projects"
 applyTo: "**/*knowledge*,**/*insight*,**/*pattern*,**/*ai-memory*"
+currency: 2025-01-01
 ---
 
 # Global Knowledge Management

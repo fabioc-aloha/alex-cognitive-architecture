@@ -6,6 +6,7 @@ tier: standard
   meaning coherence
 disable-model-invocation: true
 applyTo: "**/*skill*,**/*trigger*,**/*brain*,**/*qa*"
+currency: 2025-01-01
 ---
 
 # Brain QA

@@ -6,6 +6,7 @@ applyTo: '**/*deploy*,**/*azure*,**/*swa*,**/*container-app*'
 user-invokable: false
 metadata:
   inheritance: inheritable
+currency: 2025-01-01
 ---
 
 # Azure Deployment Operations

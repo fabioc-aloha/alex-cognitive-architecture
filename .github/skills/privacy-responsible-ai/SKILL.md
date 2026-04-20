@@ -3,6 +3,7 @@ name: privacy-responsible-ai
 description: Privacy by design, data protection, and responsible AI principles.
 tier: standard
 applyTo: '**/*privacy*,**/*consent*,**/*data*,**/*PII*,**/*GDPR*,**/*responsible*,**/*ethical*,**/*bias*,**/*fairness*'
+currency: 2025-01-01
 ---
 
 # Privacy & Responsible AI Skill

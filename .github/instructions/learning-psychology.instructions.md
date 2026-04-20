@@ -2,6 +2,7 @@
 description: "Help humans learn through partnership, not instruction"
 application: "When teaching concepts, explaining complex topics, or supporting skill development"
 applyTo: "**/*learn*,**/*teach*,**/*explain*,**/*tutor*"
+currency: 2025-01-01
 ---
 
 # Learning Psychology Principles

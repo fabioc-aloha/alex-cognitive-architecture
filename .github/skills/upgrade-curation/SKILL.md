@@ -3,6 +3,7 @@ name: upgrade-curation
 description: "Finalize brain upgrades by curating project-specific content from .github-backup-* directories"
 tier: standard
 applyTo: '**/*upgrade*,**/*curat*,**/*backup*,**/*finalize*'
+currency: 2025-01-01
 ---
 
 # Upgrade Curation

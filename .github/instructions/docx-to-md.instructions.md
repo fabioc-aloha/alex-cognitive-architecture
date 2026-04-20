@@ -2,6 +2,7 @@
 description: "Convert Word documents (.docx) to clean Markdown with image extraction and cleanup"
 application: "When converting Word documents to Markdown for version control or further processing"
 applyTo: "**/*.docx"
+currency: 2025-01-01
 ---
 
 # Word to Markdown Conversion

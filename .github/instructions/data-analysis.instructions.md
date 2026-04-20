@@ -2,6 +2,7 @@
 description: "Auto-loaded for data analysis: profile first, explore distributions, find patterns, translate to narrative insights"
 application: "When implementing data analysis or reviewing code that uses these patterns"
 applyTo: "**/*analy*,**/*eda*,**/*profile*,**/*statistic*"
+currency: 2025-01-01
 ---
 
 # Data Analysis Procedure

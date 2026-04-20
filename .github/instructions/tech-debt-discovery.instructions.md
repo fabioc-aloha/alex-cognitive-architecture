@@ -2,6 +2,7 @@
 description: "Systematic technical debt discovery, inventory, and prioritization"
 application: "When auditing codebase health, finding code smells, or planning cleanup sprints"
 applyTo: "**/*debt*,**/*TODO*,**/*FIXME*,**/*smell*"
+currency: 2025-01-01
 ---
 
 # Tech Debt Discovery

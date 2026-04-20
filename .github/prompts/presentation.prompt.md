@@ -3,6 +3,7 @@ sem: 1
 mode: agent
 description: Generate professional presentations via Gamma API, Marp markdown, or native PPTX
 application: "When creating presentations, slides, or visual storytelling content"
+currency: 2025-01-01
 ---
 
 # Presentation Generator

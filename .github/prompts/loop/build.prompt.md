@@ -3,6 +3,7 @@ mode: agent
 description: "Build phase — domain-specific implementation with wiki documentation"
 application: "Implement features guided by plan and wiki documentation"
 tools: ["read_file", "create_file", "list_dir", "semantic_search", "grep_search"]
+currency: 2025-01-01
 ---
 
 # ③ Build

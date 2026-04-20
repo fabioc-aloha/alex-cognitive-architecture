@@ -2,6 +2,7 @@
 description: "Semantic, logic, code, and architectural consistency audit procedure — the mental layer on top of automated scripts"
 application: "When following semantic audit workflows or troubleshooting related issues"
 applyTo: "**/*audit*,**/*qa*"
+currency: 2025-01-01
 ---
 
 # Semantic Audit Procedure

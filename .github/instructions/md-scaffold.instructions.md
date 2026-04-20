@@ -2,6 +2,7 @@
 description: "Scaffold properly structured Markdown files from templates for clean first-pass conversion"
 application: "When creating new documents that will be converted to other formats"
 applyTo: "**/*scaffold*,**/*template*.md"
+currency: 2025-01-01
 ---
 
 # Markdown Scaffolding

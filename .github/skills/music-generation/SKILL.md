@@ -4,6 +4,7 @@ description: "AI music generation via Replicate — 5 models for background trac
 tier: extended
 applyTo: '**/*music*,**/*soundtrack*,**/*audio*,**/*score*'
 $schema: ../SKILL-SCHEMA.json
+currency: 2025-01-01
 ---
 
 # Music Generation Skill

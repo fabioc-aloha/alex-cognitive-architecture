@@ -2,6 +2,7 @@
 description: "Schema design, normalization, query optimization, and data modeling patterns"
 application: "When designing database schemas, optimizing queries, or modeling data relationships"
 applyTo: "**/*schema*,**/*database*,**/*table*,**/*query*,**/*sql*"
+currency: 2025-01-01
 ---
 
 # Database Design Principles

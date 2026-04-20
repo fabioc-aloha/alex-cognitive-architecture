@@ -3,6 +3,7 @@ name: debugging-patterns
 description: Systematic problem-solving and error analysis.
 tier: core
 applyTo: '**/*debug*,**/*error*,**/*fix*,**/*issue*'
+currency: 2025-01-01
 ---
 
 # Debugging Patterns Skill

@@ -3,6 +3,7 @@ description: "Microsoft Teams app patterns — bots, tabs, M365 Copilot agents, 
 application: "When implementing teams app patterns or reviewing code that uses these patterns"
 applyTo: "**/*teams*,**/*m365*"
 inheritance: heir:m365
+currency: 2025-01-01
 ---
 
 # Teams App Patterns — Auto-Loaded Rules

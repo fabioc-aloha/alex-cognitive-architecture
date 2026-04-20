@@ -2,6 +2,7 @@
 description: "Write markdown that passes linting on first attempt"
 application: "When writing or editing markdown documentation"
 applyTo: "**/*.md"
+currency: 2025-01-01
 ---
 
 # Lint-Clean Markdown

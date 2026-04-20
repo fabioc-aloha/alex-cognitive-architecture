@@ -4,6 +4,7 @@ description: Debug non-functional M365 Copilot declarative agents.
 tier: standard
 applyTo: '**/*m365*,**/*copilot*,**/*declarative*agent*'
 user-invokable: false
+currency: 2025-01-01
 ---
 
 # M365 Declarative Agent Debugging Skill

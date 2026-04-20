@@ -2,6 +2,7 @@
 description: "Well-Architected Framework principles and Azure best practices"
 application: "When designing Azure solutions or reviewing cloud architectures"
 applyTo: "**/*azure*,**/*cloud*,**/infrastructure/**"
+currency: 2025-01-01
 ---
 
 # Azure Architecture Principles

@@ -3,6 +3,7 @@ mode: agent
 description: "Academic literature review workflow"
 application: "Search, synthesize, and organize academic papers and references"
 tools: ["fetch_webpage", "create_file", "read_file"]
+currency: 2025-01-01
 ---
 
 # Literature Review

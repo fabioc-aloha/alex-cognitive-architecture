@@ -2,6 +2,7 @@
 description: "Mandatory adversarial review protocols for quality-critical operations"
 application: "When following adversarial oversight workflows or troubleshooting related issues"
 applyTo: "**/*review*,**/*audit*,**/*release*,**/*qa*,**/*validation*"
+currency: 2025-01-01
 ---
 
 # Adversarial Oversight Protocol

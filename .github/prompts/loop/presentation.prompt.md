@@ -3,6 +3,7 @@ mode: agent
 description: "Create presentation slides for any audience"
 application: "Build slide decks with storytelling structure for any audience"
 tools: ["create_file", "read_file", "view_image"]
+currency: 2025-01-01
 ---
 
 # Create Presentation

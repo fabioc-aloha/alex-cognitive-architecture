@@ -5,6 +5,7 @@ tier: standard
 category: heir-management
 applyTo: "**/*copilot-instructions*,**/*identity*,**/*persona*"
 triggers: ["customize identity", "project persona", "customize brain", "project identity", "customize copilot-instructions"]
+currency: 2025-01-01
 ---
 
 # Identity Customization

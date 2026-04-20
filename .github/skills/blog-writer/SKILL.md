@@ -4,6 +4,7 @@ description: "Write Alex blog posts from recent brain changes, commits, and expe
 tier: standard
 applyTo: "**/master-wiki/blog/**,**/*blog*write*"
 allowed-tools: ["shell"]
+currency: 2025-01-01
 ---
 
 # Blog Writer Skill

@@ -2,6 +2,7 @@
 description: "UI/UX accessibility compliance and design system consistency for UI code"
 application: "When building or reviewing UI components, webviews, or front-end code"
 applyTo: "**/*.{html,jsx,tsx,vue,svelte,css,scss}"
+currency: 2025-01-01
 ---
 
 # UI/UX Design — Enforcement Rules

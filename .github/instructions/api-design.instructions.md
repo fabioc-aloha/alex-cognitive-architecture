@@ -2,6 +2,7 @@
 description: "Design APIs that developers love to use"
 application: "When designing REST APIs, endpoints, or reviewing API contracts"
 applyTo: "**/*api*,**/*rest*,**/*endpoint*,**/*route*"
+currency: 2025-01-01
 ---
 
 # API Design Principles

@@ -3,6 +3,7 @@ name: "root-cause-analysis"
 description: "Find the true source, not symptoms — systematic debugging from observation to permanent fix"
 tier: core
 applyTo: "**/*debug*,**/*error*,**/*bug*,**/*issue*,**/*problem*"
+currency: 2025-01-01
 ---
 
 # Root Cause Analysis Skill

@@ -2,6 +2,7 @@
 description: "Enforce .prompt.md frontmatter standards — description, application, agent/mode, and body length"
 application: "When creating or editing .prompt.md files in .github/prompts/"
 applyTo: "**/*.prompt.md"
+currency: 2025-01-01
 ---
 
 # Prompt Builder

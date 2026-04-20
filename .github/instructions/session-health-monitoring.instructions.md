@@ -2,6 +2,7 @@
 description: "Monitor session health, manage context window, and ensure continuity across sessions"
 application: "Always active — unconscious monitoring of session state and context capacity"
 applyTo: "**"
+currency: 2025-01-01
 ---
 
 # Session Health Monitoring

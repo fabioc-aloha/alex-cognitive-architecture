@@ -2,6 +2,7 @@
 description: "Testing strategy selection, test coverage review, and test failure triage"
 application: "During code reviews, quality audits, or when assessing testing strategies"
 applyTo: "**/*.test.*,**/*.spec.*,**/test/**,**/__tests__/**"
+currency: 2025-01-01
 ---
 
 # Testing Strategies — Enforcement Rules

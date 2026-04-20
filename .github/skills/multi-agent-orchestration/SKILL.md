@@ -4,6 +4,7 @@ description: Coordinate multiple AI agents for complex tasks — decomposition, 
 tier: standard
 user-invokable: false
 applyTo: '**/*agent*,**/*orchestrat*,**/*multi*,**/*workflow*,**/*subagent*'
+currency: 2025-01-01
 ---
 
 # Multi-Agent Orchestration Skill

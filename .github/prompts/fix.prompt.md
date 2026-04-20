@@ -2,6 +2,7 @@
 description: Fix an issue in code
 application: When you have a known bug or error to resolve in existing code
 agent: Alex
+currency: 2025-01-01
 ---
 
 

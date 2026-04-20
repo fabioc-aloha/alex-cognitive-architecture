@@ -2,6 +2,7 @@
 description: "AI video generation via Replicate — 17 models, editing, and production workflows"
 application: "When generating videos from text or images using AI models"
 applyTo: '**/*video*,**/*animate*,**/*clip*'
+currency: 2025-01-01
 ---
 
 # Video Generation

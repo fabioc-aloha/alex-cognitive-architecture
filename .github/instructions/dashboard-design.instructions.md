@@ -2,6 +2,7 @@
 description: "Auto-loaded for dashboards: define audience, pick KPIs, arrange panels, wire interactions, validate story flow"
 application: "When interpreting charts, building dashboards, or visualizing data"
 applyTo: "**/*dashboard*,**/*kpi*,**/*panel*"
+currency: 2025-01-01
 ---
 
 # Dashboard Design Procedure

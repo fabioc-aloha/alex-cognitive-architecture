@@ -2,6 +2,7 @@
 mode: 'agent'
 description: 'Upgrade brain across all fleet heir projects with pre-flight checks and verification'
 application: "When synchronizing Master Alex brain updates to all heir projects in the fleet"
+currency: 2025-01-01
 ---
 
 # Fleet Upgrade

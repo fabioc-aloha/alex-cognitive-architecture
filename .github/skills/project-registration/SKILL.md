@@ -3,6 +3,7 @@ name: project-registration
 description: "Register projects in the fleet registry and track cross-project patterns"
 tier: standard
 applyTo: '**/*registry*,**/*fleet*,**/*project-health*'
+currency: 2025-01-01
 ---
 
 # Project Registration Skill

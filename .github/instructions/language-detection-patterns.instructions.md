@@ -2,6 +2,7 @@
 description: "Reusable strategies for detecting natural language in text content"
 application: "When language detection patterns are relevant to the current task"
 applyTo: "**/*detect*,**/*language*,**/*nlp*,**/*text-processing*"
+currency: 2025-01-01
 ---
 
 # Language Detection Patterns

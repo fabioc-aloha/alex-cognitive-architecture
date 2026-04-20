@@ -3,6 +3,7 @@ mode: agent
 description: "Security review covering deps, secrets, config, and code patterns"
 application: "Audit for OWASP vulnerabilities, exposed secrets, misconfigurations, and unsafe patterns"
 tools: ["read_file", "grep_search", "run_in_terminal", "list_dir"]
+currency: 2025-01-01
 ---
 
 # Security Review

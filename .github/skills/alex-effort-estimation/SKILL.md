@@ -3,6 +3,7 @@ name: alex-effort-estimation
 description: Estimate task duration from an AI-assisted development perspective rather than traditional human developer estimates
 tier: extended
 applyTo: '**/*estimate*,**/*effort*,**/*planning*,**/*roadmap*,**/*tracker*'
+currency: 2025-01-01
 ---
 
 # Alex Effort Estimation

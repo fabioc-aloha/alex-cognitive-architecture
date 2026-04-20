@@ -19,6 +19,7 @@
  *   node dashboard-scaffold.cjs --example                     # Print example spec
  *
  * Spec format: see --example output or DATA-STORYTELLING-TRIFECTA-PLAN.md
+ * @currency 2025-01-01
  */
 'use strict';
 

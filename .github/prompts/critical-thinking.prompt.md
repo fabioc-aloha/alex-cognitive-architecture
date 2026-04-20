@@ -3,6 +3,7 @@ description: "Apply structured skepticism to a problem, decision, or project"
 application: "Evaluate decisions, challenge assumptions, detect bias, stress-test reasoning"
 mode: agent
 agent: Critical Thinker
+currency: 2025-01-01
 ---
 
 # Critical Thinking Analysis

@@ -21,6 +21,7 @@
  *   --inheritance TYPE   Inheritance: inheritable (default), universal, master-only, heir:vscode, heir:m365
  *   --description DESC   Skill description
  *   --domain DOMAIN      Skill domain
+ * @currency 2025-01-01
  */
 
 'use strict';

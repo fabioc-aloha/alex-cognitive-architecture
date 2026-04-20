@@ -2,6 +2,7 @@
 description: "Patterns for requirements elicitation, BRDs, process analysis, and stakeholder alignment"
 application: "When gathering requirements, writing specs, or analyzing business processes"
 applyTo: "**/*requirement*,**/*brd*,**/*analysis*,**/*stakeholder*"
+currency: 2025-01-01
 ---
 
 # Business Analysis Patterns

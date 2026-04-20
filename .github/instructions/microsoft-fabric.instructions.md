@@ -2,6 +2,7 @@
 description: "Microsoft Fabric workspace management, governance, REST API patterns, and medallion architecture"
 application: "When working with Microsoft Fabric workspaces, lakehouses, or data engineering pipelines"
 applyTo: "**/*fabric*,**/*lakehouse*,**/*medallion*,**/*delta*"
+currency: 2025-01-01
 ---
 
 # Microsoft Fabric Patterns

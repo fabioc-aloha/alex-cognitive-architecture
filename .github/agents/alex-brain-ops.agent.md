@@ -25,6 +25,7 @@ handoffs:
     agent: Alex
     prompt: Maintenance complete. Returning to main cognitive mode.
     send: true
+currency: 2025-01-01
 ---
 
 # Alex Brain Ops Mode

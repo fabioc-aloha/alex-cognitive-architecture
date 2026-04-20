@@ -4,6 +4,7 @@ description: Comprehensive preparation for doctoral dissertation defense includi
 tier: extended
 applyTo: '**/*defense*,**/*dissertation*,**/*thesis*,**/*viva*,**/*doctoral*'
 inheritance: inheritable
+currency: 2025-01-01
 ---
 
 # Dissertation Defense Skill

@@ -2,6 +2,7 @@
 description: "Register projects in the fleet registry and track cross-project patterns"
 application: "When managing project metadata, discovering patterns, or enabling fleet visibility"
 applyTo: "**/*registry*,**/*fleet*,**/*project-health*"
+currency: 2025-01-01
 ---
 
 # Project Registration

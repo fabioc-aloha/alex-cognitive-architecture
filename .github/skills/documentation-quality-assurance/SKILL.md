@@ -5,6 +5,7 @@ tier: standard
 applyTo: '**/*doc*,**/*audit*,**/*preflight*,**/*quality*'
 metadata:
   inheritance: inheritable
+currency: 2025-01-01
 ---
 
 # Documentation Quality Assurance

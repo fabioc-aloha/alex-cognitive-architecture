@@ -4,6 +4,7 @@ description: "Hybrid dream-meditation protocol — conscious decisions during au
 tier: standard
 applyTo: '**/*lucid*,**/*dual-mode*,**/*bridge*'
 disable-model-invocation: true
+currency: 2025-01-01
 ---
 
 # Lucid Dream Skill

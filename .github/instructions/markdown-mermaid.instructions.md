@@ -2,6 +2,7 @@
 description: "Mermaid diagram creation, technical documentation visuals, diagram type selection, and rendering troubleshooting"
 application: "When writing or reviewing documentation, or ensuring docs stay current"
 applyTo: "**/*.md,**/*mermaid*,**/*diagram*"
+currency: 2025-01-01
 ---
 
 # Markdown & Mermaid — Auto-Loaded Rules

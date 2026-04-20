@@ -2,6 +2,7 @@
 description: "Microsoft Entra ID (Azure AD) app registration, authentication flows, and agent identity patterns"
 application: "When configuring Entra ID apps, service principals, or managed identities"
 applyTo: "**/*entra*,**/*azure-ad*,**/*app-registration*,**/*service-principal*"
+currency: 2025-01-01
 ---
 
 # Entra Agent ID Patterns

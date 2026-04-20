@@ -4,6 +4,7 @@ description: "Inject cross-document navigation tables into multi-file Markdown d
 tier: extended
 applyTo: '**/*nav*,**/*navigation*,**/nav.json'
 muscle: .github/muscles/nav-inject.cjs
+currency: 2025-01-01
 ---
 
 # Navigation Injector

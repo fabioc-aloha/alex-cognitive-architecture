@@ -2,6 +2,7 @@
 applyTo: "**/*empirical*,**/*evidence*,**/research/**"
 description: "Research foundation and empirical validation protocols"
 application: "When following empirical validation workflows or troubleshooting related issues"
+currency: 2025-01-01
 ---
 
 # Empirical Validation Excellence

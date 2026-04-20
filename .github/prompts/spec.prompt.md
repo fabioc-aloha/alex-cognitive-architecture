@@ -2,6 +2,7 @@
 description: Generate a technical specification for a feature
 application: When planning a new feature or system component before implementation
 agent: Alex
+currency: 2025-01-01
 ---
 
 

@@ -3,6 +3,7 @@ mode: agent
 description: "Socratic method learning session"
 application: "Learn new topics through guided Socratic questioning and exploration"
 tools: ["read_file", "semantic_search", "fetch_webpage"]
+currency: 2025-01-01
 ---
 
 # Learn

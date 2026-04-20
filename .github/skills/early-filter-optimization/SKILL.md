@@ -3,6 +3,7 @@ name: early-filter-optimization
 description: "Cross-domain early-filtering paradigm for reducing cognitive and computational load in data pipelines, AI context, and human attention"
 applyTo: "**/*optimi*,**/*performance*,**/*cognitive*"
 tier: extended
+currency: 2025-01-01
 ---
 
 # Domain Knowledge: Early Filter Optimization

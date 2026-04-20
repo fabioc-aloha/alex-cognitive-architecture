@@ -2,6 +2,7 @@
 description: "Secure credential storage, VS Code SecretStorage API, token management, environment variable migration"
 application: "When managing secrets, tokens, credentials, or API keys in VS Code extensions"
 applyTo: "**/secrets*.ts,**/credentials*.ts,**/tokens*.ts,**/*Secret*.ts"
+currency: 2025-01-01
 ---
 
 # Secrets Management — Enforcement Rules

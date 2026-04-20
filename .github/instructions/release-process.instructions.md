@@ -2,6 +2,7 @@
 description: "Version control, changelog generation, and publish workflows for software releases"
 application: "When preparing releases, managing versions, or publishing packages"
 applyTo: "**/*release*,**/*publish*,**/*version*,**/*changelog*"
+currency: 2025-01-01
 ---
 
 # Release Process

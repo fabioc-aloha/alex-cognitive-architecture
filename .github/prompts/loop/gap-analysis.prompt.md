@@ -3,6 +3,7 @@ mode: agent
 description: "4-dimension gap analysis before implementation"
 application: "Identify knowledge, tooling, architecture, and process gaps before building"
 tools: ["read_file", "list_dir", "semantic_search", "grep_search"]
+currency: 2025-01-01
 ---
 
 # Gap Analysis

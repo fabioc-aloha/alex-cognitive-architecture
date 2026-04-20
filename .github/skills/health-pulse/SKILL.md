@@ -4,6 +4,7 @@ description: "Health Pulse data model, status rules, scoring algorithms, and thr
 tier: standard
 applyTo: '**/*health*,**/*pulse*,**/*status*,**/*scoring*'
 disable-model-invocation: true
+currency: 2025-01-01
 ---
 
 # Health Pulse Skill

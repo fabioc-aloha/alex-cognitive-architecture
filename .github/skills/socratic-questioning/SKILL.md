@@ -3,6 +3,7 @@ name: socratic-questioning
 description: Help users discover answers, don't just deliver them.
 tier: extended
 applyTo: '**/*teach*,**/*learn*,**/*explain*,**/*understand*,**/*why*'
+currency: 2025-01-01
 ---
 
 # Socratic Questioning Skill

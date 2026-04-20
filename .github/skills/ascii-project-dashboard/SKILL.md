@@ -4,6 +4,7 @@ description: "Create and maintain ASCII visual dashboards for project tracking w
 tier: standard
 applyTo: "**/*plan*,**/*roadmap*,**/*tracker*,**/*dashboard*"
 inheritance: inheritable
+currency: 2025-01-01
 ---
 
 # ASCII Project Dashboard

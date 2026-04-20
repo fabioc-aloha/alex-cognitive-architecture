@@ -3,6 +3,7 @@ mode: agent
 description: "Release phase — pre-release audit, documentation, and shipping"
 application: "Run pre-release checks, update changelogs, and ship releases"
 tools: ["read_file", "create_file", "list_dir", "grep_search"]
+currency: 2025-01-01
 ---
 
 # ⑤ Release

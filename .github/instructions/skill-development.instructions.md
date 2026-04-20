@@ -2,6 +2,7 @@
 description: "Track desired capabilities and proactively acquire them through user collaboration"
 application: "When identifying skill gaps, planning learning, or expanding capabilities"
 applyTo: "**/*skill-dev*,**/*capability*,**/*learning*"
+currency: 2025-01-01
 ---
 
 # Skill Development Protocol

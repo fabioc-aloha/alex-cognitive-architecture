@@ -5,6 +5,7 @@ tier: extended
 applyTo: '**/*lora*,**/*finetune*,**/*fine-tune*,**/*flux*'
 metadata:
   inheritance: inheritable
+currency: 2025-01-01
 ---
 
 # FLUX Brand Fine-Tune

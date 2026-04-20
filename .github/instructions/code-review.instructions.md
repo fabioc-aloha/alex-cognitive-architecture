@@ -2,6 +2,7 @@
 description: "Code review quality gate protocols and feedback guidelines"
 application: "When following code review guidelines workflows or troubleshooting related issues"
 applyTo: "**/*.{ts,js,tsx,jsx,py,ps1,cs,java,go,rs,rb}"
+currency: 2025-01-01
 ---
 
 # Code Review Guidelines Procedural Memory

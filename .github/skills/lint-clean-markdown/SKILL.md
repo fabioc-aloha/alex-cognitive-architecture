@@ -3,6 +3,7 @@ name: lint-clean-markdown
 description: Write markdown that passes linting on first attempt by internalizing common rules.
 tier: core
 applyTo: '**/*.md,**/*markdown*,**/*lint*'
+currency: 2025-01-01
 ---
 
 # Lint-Clean Markdown Skill

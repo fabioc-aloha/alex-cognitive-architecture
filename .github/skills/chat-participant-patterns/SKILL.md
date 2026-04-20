@@ -4,6 +4,7 @@ description: VS Code Chat API patterns.
 tier: standard
 user-invokable: false
 applyTo: '**/*participant*,**/*chat*,**/*copilot*,**/lm/**'
+currency: 2025-01-01
 ---
 
 # Chat Participant Patterns Skill

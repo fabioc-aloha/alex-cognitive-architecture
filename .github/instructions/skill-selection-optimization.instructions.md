@@ -1,6 +1,7 @@
 ---
 description: "Proactive skill selection and resource planning before complex task execution"
 application: "When building, auditing, or promoting cognitive architecture skills"
+currency: 2025-01-01
 ---
 
 # Skill Selection Optimization Protocol

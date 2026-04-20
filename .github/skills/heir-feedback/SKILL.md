@@ -3,6 +3,7 @@ name: "heir-feedback"
 description: "Submit feedback, bug reports, and feature requests from heir projects to Master Alex via AI-Memory/feedback/"
 tier: standard
 applyTo: '**/*feedback*,**/*bug*,**/*feature-request*'
+currency: 2025-01-01
 ---
 
 # Heir Feedback

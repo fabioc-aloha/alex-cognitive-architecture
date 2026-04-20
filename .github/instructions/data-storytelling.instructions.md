@@ -2,6 +2,7 @@
 description: "End-to-end data story orchestration: ingest, analyze, visualize, arrange, and narrate"
 application: "When analyzing data, building visualizations, or creating reports"
 applyTo: "**/*story*,**/*narrative*,**/*datastory*"
+currency: 2025-01-01
 ---
 
 # Data Storytelling Procedure

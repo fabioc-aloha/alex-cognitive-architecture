@@ -21,6 +21,7 @@
  *   node visual-memory.cjs add-subject <name> --photos <folder> [--skill <skill-name>]
  *   node visual-memory.cjs encode-photos <folder> [--output <file>]
  *   node visual-memory.cjs verify [--skill <skill-name>]
+ * @currency 2025-01-01
  */
 
 const fs = require("fs");

@@ -2,6 +2,7 @@
 description: "Craft effective prompts that get the best results from language models"
 application: "When writing prompts, designing system instructions, or optimizing LLM interactions"
 applyTo: "**/*prompt*,**/*system-message*,**/*instruction*"
+currency: 2025-01-01
 ---
 
 # Prompt Engineering Principles

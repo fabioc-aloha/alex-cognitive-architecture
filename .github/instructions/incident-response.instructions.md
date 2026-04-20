@@ -2,6 +2,7 @@
 description: "Calm, systematic crisis handling — from detection through post-mortem to prevention"
 application: "When production issues occur, outages are detected, or urgent problems require immediate response"
 applyTo: "**/*incident*,**/*outage*,**/*alert*,**/*page*"
+currency: 2025-01-01
 ---
 
 # Incident Response Protocol

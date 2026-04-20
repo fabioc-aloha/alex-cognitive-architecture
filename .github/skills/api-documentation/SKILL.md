@@ -3,6 +3,7 @@ name: api-documentation
 description: Technical documentation, API references, user guides, and docs-as-code workflows.
 tier: standard
 applyTo: '**/*doc*,**/*api*,**/*readme*,**/*guide*'
+currency: 2025-01-01
 ---
 
 # API Documentation Skill

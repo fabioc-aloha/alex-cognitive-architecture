@@ -2,6 +2,7 @@
 description: "Manage VS Code's global AI configuration — user memories, custom agents, user prompts, and MCP servers"
 application: "When reviewing, organizing, or troubleshooting user-level Copilot configuration"
 applyTo: "**/*memory*,**/*agent*,**/*prompt*,**/*mcp*,**/*user-config*"
+currency: 2025-01-01
 ---
 
 # User Config Management

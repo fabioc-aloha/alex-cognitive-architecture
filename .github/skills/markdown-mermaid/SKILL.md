@@ -4,6 +4,7 @@ description: "Clear documentation through visual excellence"
 tier: standard
 inheritance: inheritable
 applyTo: '**/*.md,**/*mermaid*,**/*diagram*'
+currency: 2025-01-01
 ---
 
 # Markdown & Mermaid

@@ -2,6 +2,7 @@
 description: "Procedure for publishing master-wiki/ to the GitHub Wiki with folder flattening and link rewriting"
 application: "When syncing master-wiki/ to the AlexMaster GitHub Wiki"
 applyTo: "**/*wiki*publish*,**/*wiki*push*,**/*wiki*sync*"
+currency: 2025-01-01
 ---
 
 # Wiki Publish Procedure

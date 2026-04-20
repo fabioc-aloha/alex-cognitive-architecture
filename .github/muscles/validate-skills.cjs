@@ -16,6 +16,7 @@
  *
  * Usage:
  *   node validate-skills.cjs [skills-path] [--fix]
+ * @currency 2025-01-01
  */
 
 'use strict';

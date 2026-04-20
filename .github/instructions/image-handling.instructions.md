@@ -2,6 +2,7 @@
 applyTo: "**/*.png,**/*.jpg,**/*.jpeg,**/*.webp,**/*.svg,**/*.ico,**/*image*,**/*banner*,**/*icon*,**/*avatar*,**/*photo*,**/generate-*.js,**/generate-*.ts"
 description: "Image format selection, conversion rules, and Replicate model selection for AI image/video generation"
 application: "When generating images, managing visual assets, or maintaining brand consistency"
+currency: 2025-01-01
 ---
 
 # Image Handling Instructions

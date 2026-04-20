@@ -2,6 +2,7 @@
 description: "Convert Markdown to standalone HTML with embedded CSS, images, and Mermaid diagrams"
 application: "When converting Markdown files to HTML for sharing, print, or offline viewing"
 applyTo: "**/*.md"
+currency: 2025-01-01
 ---
 
 # Markdown to HTML Conversion

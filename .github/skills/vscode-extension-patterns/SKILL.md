@@ -3,6 +3,7 @@ name: "vscode-extension-patterns"
 description: "Reusable patterns for VS Code extension development."
 tier: core
 applyTo: '**/extension.ts,**/src/**/*.ts,**/*.vsix'
+currency: 2025-01-01
 ---
 
 # VS Code Extension Patterns

@@ -3,6 +3,7 @@ description: "M365 Copilot declarative agent debugging — manifest validation, 
 application: "When writing tests, validating implementations, or ensuring quality gates pass"
 applyTo: "**/*m365*,**/*teams*,**/*declarative*agent*"
 inheritance: heir:m365
+currency: 2025-01-01
 ---
 
 # M365 Agent Debugging — Auto-Loaded Rules

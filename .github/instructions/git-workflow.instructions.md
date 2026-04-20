@@ -2,6 +2,7 @@
 description: "Consistent git practices, recovery patterns, and safe operations"
 application: "When performing git operations, recovering from mistakes, or maintaining branch hygiene"
 applyTo: "**/.*git*,**/.github/**"
+currency: 2025-01-01
 ---
 
 # Git Workflow

@@ -16,6 +16,7 @@
  *
  * Usage:
  *   node .github/muscles/analyze-assignments.cjs
+ * @currency 2025-01-01
  */
 
 "use strict";
