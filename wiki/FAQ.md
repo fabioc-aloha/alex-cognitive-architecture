@@ -17,7 +17,7 @@ Alex is a cognitive learning partner that lives in VS Code. Unlike traditional A
 | **Memory** | Session only | Persistent connections + episodic |
 | **Learning** | None | Continuous through meditation |
 | **Agents** | Single | 18 specialized agents |
-| **Skills** | Generic | 182 domain-specific |
+| **Skills** | Generic | 194 domain-specific |
 | **Adaptation** | None | Project-aware persona |
 
 ### Does Alex require a separate subscription?

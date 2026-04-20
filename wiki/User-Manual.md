@@ -148,7 +148,7 @@ Switch to Researcher mode and investigate OAuth2 best practices
 
 ## Skills
 
-Alex has 182 skills across domains. Skills activate automatically based on context.
+Alex has 194 skills across domains. Skills activate automatically based on context.
 
 ### Skill Categories
 
