@@ -64,7 +64,7 @@ jobs:
       - name: Check for duplicate open issues
         id: check
         env:
-          GH_TOKEN: \${{ secrets.COPILOT_PAT }}
+          GH_TOKEN: \${{ github.token }}
         run: |
           OPEN=$(gh issue list --label automated,${task.id} --state open --json number --jq 'length')
           echo "open=$OPEN" >> $GITHUB_OUTPUT
@@ -72,7 +72,7 @@ jobs:
       - name: Create issue for Copilot
         if: steps.check.outputs.open == '0'
         env:
-          GH_TOKEN: \${{ secrets.COPILOT_PAT }}
+          GH_TOKEN: \${{ github.token }}
         run: |
           gh issue create \\
             --title "${task.name}: $(date -u +%Y-%m-%d-%H%M)" \\
