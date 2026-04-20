@@ -1,5 +1,7 @@
 # Setup Tab
 
+![Setup Tab](./assets/banner-setup-tab.svg)
+
 The Setup tab contains workspace management, brain health tools, memory access, extension settings, and documentation links. It's the place to go for configuring Alex, running maintenance, and accessing your personal AI memory.
 
 ## Table of Contents

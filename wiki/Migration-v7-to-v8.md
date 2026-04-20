@@ -1,5 +1,7 @@
 # Migration Guide: v7 → v8
 
+![Migration](./assets/banner-migration.svg)
+
 This guide covers upgrading from Alex v7.x to v8.0.0.
 
 ## What Changed

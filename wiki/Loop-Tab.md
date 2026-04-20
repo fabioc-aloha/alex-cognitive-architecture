@@ -1,5 +1,7 @@
 # Loop Tab
 
+![Loop Tab](./assets/banner-loop-tab.svg)
+
 The Loop tab is your primary workspace in the Alex sidebar. It provides one-click access to guided workflows for every phase of software development — from ideation through release and beyond.
 
 ## Table of Contents
@@ -479,34 +481,6 @@ No. Skill partials only append — they never remove or override existing button
 ---
 
 *Need help with a specific workflow? Ask Alex: `@alex help me with [workflow name]`*
-# Loop Tab
-
-The Loop tab is your primary workspace in the Alex sidebar. It provides one-click access to guided workflows for every phase of software development — from ideation through release and beyond.
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Health Pulse](#health-pulse)
-- [Chat with Alex](#chat-with-alex)
-- [Creative Loop](#creative-loop)
-- [Build Helpers](#build-helpers)
-- [Research and Learn](#research-and-learn)
-- [Communicate](#communicate)
-- [Project Health](#project-health)
-- [Frecency Sorting](#frecency-sorting)
-- [How Buttons Work](#how-buttons-work)
-- [Customizing Prompts](#customizing-prompts)
-- [FAQ](#faq)
-
----
-
-## Overview
-
-The Loop tab contains:
-
-1. **Health Pulse** — A live status widget showing your brain's health
-2. **Chat with Alex** — Primary call-to-action to start a conversation
-3. **Five collapsible groups** — 28 guided workflows organized by category
 
 Each button opens Copilot Chat with a pre-written prompt that guides Alex through a specific task. You don't need to remember commands or write detailed prompts — just click and go.
 

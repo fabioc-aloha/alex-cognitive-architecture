@@ -1,5 +1,7 @@
 # Autopilot
 
+![Autopilot](./assets/banner-autopilot.svg)
+
 Automate recurring work with cron-driven tasks that run via GitHub Actions. Alex can write blog posts, run audits, sync documentation, and more — all on autopilot.
 
 ## Table of Contents
