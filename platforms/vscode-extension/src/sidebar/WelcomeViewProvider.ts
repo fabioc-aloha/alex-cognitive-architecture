@@ -654,9 +654,6 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     const codiconsUri = webview.asWebviewUri(
       vscode.Uri.joinPath(
         this.extensionUri,
-        "node_modules",
-        "@vscode",
-        "codicons",
         "dist",
         "codicon.css",
       ),

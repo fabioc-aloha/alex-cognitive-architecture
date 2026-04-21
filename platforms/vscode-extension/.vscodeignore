@@ -3,6 +3,8 @@
 
 # Bundled output
 !dist/extension.js
+!dist/codicon.css
+!dist/codicon.ttf
 
 # Assets
 !assets/icon.png

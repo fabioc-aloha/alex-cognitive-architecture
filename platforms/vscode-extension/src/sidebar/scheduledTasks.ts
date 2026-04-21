@@ -616,7 +616,14 @@ jobs:
         env:
           GH_TOKEN: \${{ github.token }}
         run: |
-          gh issue edit "\${{ steps.create.outputs.issue_url }}" --add-assignee copilot
+          ISSUE_NUM=$(echo "\${{ steps.create.outputs.issue_url }}" | grep -oE '[0-9]+$')
+          gh api --method POST \\
+            -H "Accept: application/vnd.github+json" \\
+            -H "X-GitHub-Api-Version: 2022-11-28" \\
+            "/repos/\${{ github.repository }}/issues/\${ISSUE_NUM}/assignees" \\
+            -f 'assignees[]=copilot-swe-agent[bot]' \\
+            -f 'agent_assignment[target_repo]=\${{ github.repository }}' \\
+            -f 'agent_assignment[base_branch]=main'
 `;
 }
 
