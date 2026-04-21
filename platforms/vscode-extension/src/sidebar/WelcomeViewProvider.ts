@@ -885,19 +885,22 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     /* Health pulse refresh button — 36px touch target (compact context) */
     .refresh-btn {
       margin-left: auto;
-      background: none;
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
       border: none;
       cursor: pointer;
       color: var(--vscode-descriptionForeground);
-      font-size: 14px;
+      font-size: 16px;
       width: var(--touch-target-sm);
       height: var(--touch-target-sm);
       padding: 0;
       border-radius: var(--radius-sm);
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       transition: background 0.15s, color 0.15s, transform 0.2s;
+      flex-shrink: 0;
     }
     .refresh-btn:hover {
       color: var(--vscode-foreground);

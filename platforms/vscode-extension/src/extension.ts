@@ -94,6 +94,13 @@ function activateInternal(context: vscode.ExtensionContext): void {
     }),
   );
 
+  // Refresh Welcome sidebar
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.refreshWelcome", () => {
+      welcomeProvider.refresh();
+    }),
+  );
+
   // Show Status
   context.subscriptions.push(
     vscode.commands.registerCommand("alex.showStatus", () => {

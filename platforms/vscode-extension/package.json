@@ -108,8 +108,23 @@
       {
         "command": "alex.setupAIMemory",
         "title": "Alex: Setup AI-Memory"
+      },
+      {
+        "command": "alex.refreshWelcome",
+        "title": "Refresh Welcome",
+        "category": "Alex",
+        "icon": "$(refresh)"
       }
     ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "alex.refreshWelcome",
+          "when": "view == alex.welcomeView",
+          "group": "navigation"
+        }
+      ]
+    },
     "walkthroughs": [
       {
         "id": "alex.welcome",
