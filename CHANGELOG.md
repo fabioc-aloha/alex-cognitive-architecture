@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.1.6] - 2026-04-21
+
+### Added
+
+- **Quality tooling**: Brain activation tracking in post-tool-use hook, token cost measurement muscle, cross-reference validation in brain-qa
+
+### Fixed
+
+- **Marketplace icon**: Replaced old rocket icon with Alex brand icon
+- **Marketplace tagline**: Updated description to reflect actual value proposition
+
+---
+
 ## [8.1.5] - 2026-04-21
 
 ### Added

@@ -97,6 +97,157 @@ function detectTokenWaste(content) {
   return { mermaidBlocks, mermaidLines, styleLines, wasteScore };
 }
 
+// --- Cross-Reference Validation (QA3) ---
+// Scans brain files for references to other brain files and checks targets exist.
+// Detects: skill→skill, skill→instruction, instruction→skill, agent→skill references.
+
+function scanCrossReferences() {
+  const brokenRefs = [];
+
+  // Build inventory of existing brain files
+  const skillsDir = path.join(GH, "skills");
+  const instrDir = path.join(GH, "instructions");
+  const agentsDir = path.join(GH, "agents");
+  const promptsDir = path.join(GH, "prompts");
+  const musclesDir = path.join(GH, "muscles");
+
+  const existingSkills = new Set();
+  if (fs.existsSync(skillsDir)) {
+    fs.readdirSync(skillsDir, { withFileTypes: true })
+      .filter(d => d.isDirectory() && fs.existsSync(path.join(skillsDir, d.name, "SKILL.md")))
+      .forEach(d => existingSkills.add(d.name));
+  }
+
+  const existingInstructions = new Set();
+  if (fs.existsSync(instrDir)) {
+    fs.readdirSync(instrDir)
+      .filter(f => f.endsWith(".instructions.md"))
+      .forEach(f => existingInstructions.add(f.replace(".instructions.md", "")));
+  }
+
+  const existingAgents = new Set();
+  if (fs.existsSync(agentsDir)) {
+    fs.readdirSync(agentsDir)
+      .filter(f => f.endsWith(".agent.md"))
+      .forEach(f => existingAgents.add(f.replace(".agent.md", "")));
+  }
+
+  const existingPrompts = new Set();
+  if (fs.existsSync(promptsDir)) {
+    // Root-level prompts
+    fs.readdirSync(promptsDir)
+      .filter(f => f.endsWith(".prompt.md"))
+      .forEach(f => existingPrompts.add(f.replace(".prompt.md", "")));
+    // Subdirectory prompts
+    fs.readdirSync(promptsDir, { withFileTypes: true })
+      .filter(d => d.isDirectory())
+      .forEach(d => {
+        const sub = path.join(promptsDir, d.name);
+        fs.readdirSync(sub)
+          .filter(f => f.endsWith(".prompt.md"))
+          .forEach(f => existingPrompts.add(f.replace(".prompt.md", "")));
+      });
+  }
+
+  const existingMuscles = new Set();
+  if (fs.existsSync(musclesDir)) {
+    fs.readdirSync(musclesDir)
+      .filter(f => f.endsWith(".cjs") || f.endsWith(".js") || f.endsWith(".ps1"))
+      .forEach(f => existingMuscles.add(f));
+  }
+
+  // Reference patterns to detect in brain file content
+  // Matches: skills/name, skill-name (when preceded by skill-related context),
+  // .instructions.md file refs, .agent.md file refs, SKILL.md paths
+
+  const SKILL_PATH_RE = /(?:skills\/|skills\\)([\w-]+)(?:\/|\\)SKILL\.md/g;
+  const INSTR_PATH_RE = /(?:instructions\/|instructions\\)([\w-]+)\.instructions\.md/g;
+  const AGENT_PATH_RE = /(?:agents\/|agents\\)([\w-]+)\.agent\.md/g;
+  const PROMPT_PATH_RE = /(?:prompts\/|prompts\\)(?:[\w-]+\/)?([\w-]+)\.prompt\.md/g;
+  const MUSCLE_PATH_RE = /(?:muscles\/|muscles\\)([\w-]+\.(?:cjs|js|ps1))/g;
+
+  // Scan a directory of brain files for cross-references
+  function scanDir(dir, fileFilter, sourceLabel) {
+    if (!fs.existsSync(dir)) return;
+
+    const entries = fileFilter(dir);
+    for (const { name, content } of entries) {
+      // Check skill references
+      for (const match of content.matchAll(SKILL_PATH_RE)) {
+        if (!existingSkills.has(match[1])) {
+          brokenRefs.push({ source: `${sourceLabel}/${name}`, refType: 'skill', target: match[1] });
+        }
+      }
+      // Check instruction references
+      for (const match of content.matchAll(INSTR_PATH_RE)) {
+        if (!existingInstructions.has(match[1])) {
+          brokenRefs.push({ source: `${sourceLabel}/${name}`, refType: 'instruction', target: match[1] });
+        }
+      }
+      // Check agent references
+      for (const match of content.matchAll(AGENT_PATH_RE)) {
+        if (!existingAgents.has(match[1])) {
+          brokenRefs.push({ source: `${sourceLabel}/${name}`, refType: 'agent', target: match[1] });
+        }
+      }
+      // Check prompt references
+      for (const match of content.matchAll(PROMPT_PATH_RE)) {
+        if (!existingPrompts.has(match[1])) {
+          brokenRefs.push({ source: `${sourceLabel}/${name}`, refType: 'prompt', target: match[1] });
+        }
+      }
+      // Check muscle references
+      for (const match of content.matchAll(MUSCLE_PATH_RE)) {
+        if (!existingMuscles.has(match[1])) {
+          brokenRefs.push({ source: `${sourceLabel}/${name}`, refType: 'muscle', target: match[1] });
+        }
+      }
+    }
+  }
+
+  // Skill files
+  scanDir(skillsDir, (dir) => {
+    return fs.readdirSync(dir, { withFileTypes: true })
+      .filter(d => d.isDirectory() && fs.existsSync(path.join(dir, d.name, "SKILL.md")))
+      .map(d => ({
+        name: d.name,
+        content: fs.readFileSync(path.join(dir, d.name, "SKILL.md"), "utf-8"),
+      }));
+  }, 'skills');
+
+  // Instruction files
+  scanDir(instrDir, (dir) => {
+    return fs.readdirSync(dir)
+      .filter(f => f.endsWith(".instructions.md"))
+      .map(f => ({
+        name: f.replace(".instructions.md", ""),
+        content: fs.readFileSync(path.join(dir, f), "utf-8"),
+      }));
+  }, 'instructions');
+
+  // Agent files
+  scanDir(agentsDir, (dir) => {
+    return fs.readdirSync(dir)
+      .filter(f => f.endsWith(".agent.md"))
+      .map(f => ({
+        name: f.replace(".agent.md", ""),
+        content: fs.readFileSync(path.join(dir, f), "utf-8"),
+      }));
+  }, 'agents');
+
+  // Deduplicate (same source+target may appear from repeated references)
+  // Filter out placeholder/example names commonly found in documentation
+  const PLACEHOLDER_NAMES = new Set(['name', 'my', 'example', 'your', 'sample', 'foo', 'bar', 'test']);
+  const seen = new Set();
+  return brokenRefs.filter(ref => {
+    if (PLACEHOLDER_NAMES.has(ref.target)) return false;
+    const key = `${ref.source}|${ref.refType}|${ref.target}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 // --- Ensure quality folder exists ---
 if (!fs.existsSync(QUALITY_DIR)) {
   fs.mkdirSync(QUALITY_DIR, { recursive: true });
@@ -994,6 +1145,27 @@ function generateGrid() {
     lines.push("- Complex workflows → Numbered steps or bullet list");
   }
 
+  // ── QA3: Cross-Reference Validation ─────────────────────────────
+  // Detect broken internal references between brain files.
+  // Scans skills, instructions, and agents for references to other brain files
+  // and verifies those targets exist.
+  lines.push("");
+  lines.push("## Cross-References");
+  lines.push("");
+
+  const brokenRefs = scanCrossReferences();
+  if (brokenRefs.length === 0) {
+    lines.push("**Status**: ✅ No broken internal references detected");
+  } else {
+    lines.push(`**Status**: ⚠️ ${brokenRefs.length} broken reference(s) found`);
+    lines.push("");
+    lines.push("| Source | Type | References | Target Missing |");
+    lines.push("|--------|:----:|------------|----------------|");
+    for (const ref of brokenRefs) {
+      lines.push(`| ${ref.source} | ${ref.refType} | → ${ref.target} | ✗ |`);
+    }
+  }
+
   // ── BE3: Master ↔ Heir Drift Detection ──────────────────────────
   const heirBrain = path.join(ROOT, "heir", ".github");
   if (fs.existsSync(heirBrain)) {
@@ -1066,6 +1238,7 @@ if (typeof module !== 'undefined') {
     scanPrompts,
     scanMuscles,
     scanHooks,
+    scanCrossReferences,
     generateGrid,
     listBrainFiles,
     CURRENCY_MAX_DAYS,
