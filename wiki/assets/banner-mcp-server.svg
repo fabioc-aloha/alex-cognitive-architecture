@@ -14,4 +14,5 @@
   <circle cx="1020" cy="210" r="8" fill="none" stroke="#6366f1" stroke-width="2" opacity="0.16"/>
   <text x="40" y="85" font-family="'Segoe UI', system-ui, sans-serif" font-size="18" font-weight="700" fill="#94a3b8" letter-spacing="5">ALEX COGNITIVE ARCHITECTURE</text>
   <text x="40" y="185" font-family="'Segoe UI', system-ui, sans-serif" font-size="72" font-weight="700" fill="#f1f5f9">MCP Server</text>
+  <text x="40" y="230" font-family="'Segoe UI', system-ui, sans-serif" font-size="22" font-weight="400" fill="#94a3b8">Connect Alex's cognitive tools to any AI client</text>
 </svg>
