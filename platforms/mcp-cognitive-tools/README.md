@@ -1,6 +1,8 @@
 # Alex Cognitive Tools MCP Server
 
-Standalone MCP server that exposes Alex's cognitive architecture tools for use with any MCP-compatible AI client.
+Standalone [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server that exposes Alex's cognitive architecture tools for use with any MCP-compatible AI client — Claude Desktop, Cline, Continue, Windows Copilot, and more.
+
+> **Full user documentation**: See the [MCP Server wiki page](https://github.com/fabioc-aloha/alex-cognitive-architecture/wiki/MCP-Server) for setup guides, client configuration, and troubleshooting.
 
 ## Features
 
@@ -186,8 +188,8 @@ Architecture documents are exposed as browseable MCP resources. Attach them to c
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/alex-cognitive-architecture
-cd packages/mcp-cognitive-tools
+git clone https://github.com/fabioc-aloha/alex-cognitive-architecture
+cd heir/platforms/mcp-cognitive-tools
 
 # Install dependencies
 npm install

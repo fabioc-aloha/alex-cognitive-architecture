@@ -12,6 +12,7 @@ Welcome to the Alex Cognitive Architecture Wiki — your comprehensive guide to 
 |---------|-------------|
 | **[Getting Started](Getting-Started)** | First-time setup and configuration |
 | **[User Manual](User-Manual)** | Commands, UI, and daily usage |
+| **[MCP Server](MCP-Server)** | Use Alex tools from Claude Desktop, Cline, and other MCP clients |
 | **[Heir Project Setup](Heir-Project-Setup)** | Configure Alex for your projects |
 | **[FAQ](FAQ)** | Frequently asked questions |
 

@@ -21,6 +21,13 @@
 - [Health Processes](User-Manual#health-processes)
 - [Settings](User-Manual#settings)
 
+### Platforms
+
+- [MCP Server](MCP-Server)
+  - [Tools](MCP-Server#tools)
+  - [Client Configuration](MCP-Server#client-configuration)
+  - [Troubleshooting](MCP-Server#troubleshooting)
+
 ### Heir Projects
 
 - [Quick Setup](Heir-Project-Setup#quick-setup)
