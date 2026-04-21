@@ -747,7 +747,7 @@ export function renderScheduledTasks(
       if (runInfo && (runInfo.status === "queued" || runInfo.status === "in_progress")) {
         statusPill = `<span class="schedule-pill schedule-pill-running"><span class="codicon codicon-loading codicon-modifier-spin"></span> Running</span>`;
       } else if (runInfo && runInfo.status === "completed") {
-        statusPill = `<span class="schedule-pill schedule-pill-success"><span class="codicon codicon-check"></span> Passed</span>`;
+        statusPill = `<span class="schedule-pill schedule-pill-success"><span class="codicon codicon-check"></span> Dispatched</span>`;
       } else if (runInfo && (runInfo.status === "failure" || runInfo.status === "cancelled" || runInfo.status === "error")) {
         statusPill = `<span class="schedule-pill schedule-pill-fail"><span class="codicon codicon-error"></span> Failed</span>`;
       } else {
