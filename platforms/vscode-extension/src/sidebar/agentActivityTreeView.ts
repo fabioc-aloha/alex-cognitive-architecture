@@ -51,6 +51,17 @@ export class AgentActivityItem extends vscode.TreeItem {
   }
 }
 
+// ── Formatting ────────────────────────────────────────────────────
+
+function formatMetricValue(value: number, unit: string): string {
+  switch (unit) {
+    case "percent": return `${value}%`;
+    case "seconds": return `${value}s`;
+    case "count": return `${value}`;
+    default: return `${value} ${unit}`;
+  }
+}
+
 // ── TreeView Provider ─────────────────────────────────────────────
 
 export class AgentActivityProvider implements vscode.TreeDataProvider<AgentActivityItem> {
@@ -114,7 +125,7 @@ export class AgentActivityProvider implements vscode.TreeDataProvider<AgentActiv
     const thresholds = config.thresholds ?? {};
     for (const metric of config.metrics) {
       const current = state[metric.id];
-      const value = current ? `${current.value}${metric.unit}` : "—";
+      const value = current ? formatMetricValue(current.value, metric.unit) : "—";
       const threshold = thresholds[metric.id];
       const iconName = this.getStatusIcon(metric, current?.value, threshold);
 
@@ -126,7 +137,7 @@ export class AgentActivityProvider implements vscode.TreeDataProvider<AgentActiv
       );
       item.iconPath = new vscode.ThemeIcon(iconName);
       const thresholdInfo = threshold
-        ? `\n\nWarning: ${threshold.warning}${metric.unit} · Critical: ${threshold.critical}${metric.unit}`
+        ? `\n\nWarning: ${formatMetricValue(threshold.warning, metric.unit)} · Critical: ${formatMetricValue(threshold.critical, metric.unit)}`
         : "";
       item.tooltip = new vscode.MarkdownString(
         `**${metric.name}**\n\n${metric.description}\n\nCurrent: ${value}${thresholdInfo}`,
