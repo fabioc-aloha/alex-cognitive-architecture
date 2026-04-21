@@ -155,7 +155,7 @@ async function handleCloud(
 
     stream.markdown(`Dispatching **${task.name}** to GitHub Actions...\n\n`);
     try {
-      const disposable = await dispatchAndMonitor(repoUrl, task.id, () => {});
+      const disposable = await dispatchAndMonitor(repoUrl, task.id, () => {}, wsRoot);
       token.onCancellationRequested(() => disposable.dispose());
       stream.markdown(`Workflow dispatched. Check the Autopilot tab or GitHub Actions for progress.`);
     } catch (err) {

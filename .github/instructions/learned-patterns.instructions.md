@@ -2,7 +2,7 @@
 description: "Battle-tested patterns learned from real project experience — gotchas, solutions, and architectural rules"
 application: "Always active — apply relevant patterns when working in matching domains"
 applyTo: "**"
-currency: 2026-04-20
+currency: 2026-04-21
 ---
 
 # Learned Patterns
@@ -14,6 +14,8 @@ Hard-won patterns from production experience. Each entry records a specific gotc
 - **Markdown rendering chain**: marked.js → DOMPurify → Mermaid post-render. Parse first, sanitize second, then run diagram renderer on the sanitized DOM. Never skip the sanitizer even if content is "trusted."
 - **Allowlist over blocklist**: For URL validation, file path validation, command execution — enumerate permitted values, reject everything else
 - **Sanitize at system boundaries**: Strip file paths, stack traces, internal state from user-facing error messages. Regex: replace absolute paths with `[path]`. Also: don't forward raw SDK error messages to clients.
+- **execFileSync over execSync**: When spawning known executables (git, gh, node), use `execFileSync(cmd, argsArray)` instead of `execSync("cmd args")`. Avoids shell injection surface, slightly faster. Same blocking behavior.
+- **Cache expensive CLI probes**: `ghAvailable()`, `gitAvailable()`, and similar "is tool installed?" checks should cache at module level (`let cached: boolean | null = null`). The answer doesn't change mid-session.
 - **Atomic filesystem writes**: Copy to staging dir → swap (rename) → cleanup on failure. Avoids partial-write corruption.
 - **Path traversal guard**: When copying trees, validate `path.resolve(dest, entry.name)` stays within destination root
 - **Event delegation over inline handlers**: Never use `onclick="fn('${userInput}')"` with user-sourced data (localStorage, URL params). Use `data-*` attributes + event delegation to prevent XSS.
@@ -41,6 +43,7 @@ Hard-won patterns from production experience. Each entry records a specific gotc
 - **Weighted scoring matrix**: Multi-factor scoring with normalized weights and optional boosts.
 - **Staged transformation pipeline**: Input flows through discrete stages (profile → style → format → output). Each stage is independently testable and replaceable.
 - **Opt-in for workspace mutations**: Extensions/tools that write to user workspaces must get explicit consent first. Auto-writing .github/, config files, or scaffolding without confirmation violates least-surprise.
+- **Cross-platform path resolution**: Never use raw `process.env.APPDATA` for VS Code paths. Use `os.platform()` switch: Windows=`%APPDATA%/Code/User`, macOS=`~/Library/Application Support/Code/User`, Linux=`${XDG_CONFIG_HOME:-~/.config}/Code/User`.
 
 ## Visual Memory
 
@@ -70,6 +73,8 @@ Hard-won patterns from production experience. Each entry records a specific gotc
 - **Dev folder harvest**: Scan all projects → deduplicate against master → tier (ADOPT/MAYBE/SKIP) → copy → clean frontmatter → validate. Battle-tested (3+ projects) is a strong quality signal.
 - **brain-qa frontmatter gate**: All 4 fields required (name, description, applyTo, tier). Missing any one → fm=0 → likely fail. Workflow skills also need matching `.instructions.md` for tri=1.
 - **Token waste triage**: Not all scanner findings are actionable. Mermaid in a Mermaid-teaching skill is instructional content, not waste. Triage before fixing.
+- **Fractional date arithmetic at thresholds**: `daysBetween(a, b)` using `getTime()` returns fractional days. A date "exactly 7 days ago" may compute as 7.0001 and fail a `> 7` check. Always `Math.floor()` before threshold comparison.
+- **Rename drift in tests**: When renaming a function, grep all test files for both the old and new name. Test describe blocks, comments, and non-invocation references survive find-and-replace that only targets `fn(` call sites.
 
 ## Windows / Node.js
 

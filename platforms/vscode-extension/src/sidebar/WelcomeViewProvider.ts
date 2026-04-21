@@ -14,6 +14,7 @@ import { getTagline, loadTaglineConfig } from "../taglines.js";
 import { loadLoopGroups } from "./loopMenu.js";
 import { loadScheduledTasks, toggleTask, deleteTask, addTaskWizard, renderScheduledTasks, getGitHubRepoUrl, hasWorkflow, generateWorkflow, removeWorkflow, recordTaskRun, dispatchAndMonitor, getRunInfo, clearRunInfo, SCHEDULE_CSS } from "./scheduledTasks.js";
 import { renderAgentActivity, refreshAgentActivityAsync, AGENT_ACTIVITY_CSS } from "./agentActivity.js";
+import { recordTaskStart, recordTaskEnd } from "./agentMetricsCollector.js";
 import { escHtml, escAttr } from "./htmlUtils.js";
 
 const VIEW_ID = "alex.welcomeView";
@@ -575,7 +576,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
             try {
               const pollDisposable = await dispatchAndMonitor(repoUrl, msg.file, (_info) => {
                 this.refresh(); // re-render card with updated status
-              });
+              }, this.workspaceRoot);
               this.disposables.push(pollDisposable);
               vscode.window.showInformationMessage(
                 `Workflow dispatched for "${msg.file}". Monitoring execution…`,
@@ -586,6 +587,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
             }
           } else {
             // Local fallback — send prompt to Copilot Chat
+            const localRunKey = recordTaskStart(msg.file);
             const tasks = loadScheduledTasks(this.workspaceRoot);
             const task = tasks.find((t) => t.id === msg.file);
             if (task?.promptFile) {
@@ -599,11 +601,16 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
                   query: promptContent,
                   isPartialQuery: false,
                 });
+                // Record as success — we handed off successfully to Copilot
+                recordTaskEnd(this.workspaceRoot, localRunKey, true);
               } else {
                 vscode.window.showWarningMessage(
                   `Prompt file not found: ${task.promptFile}`,
                 );
+                recordTaskEnd(this.workspaceRoot, localRunKey, false);
               }
+            } else {
+              recordTaskEnd(this.workspaceRoot, localRunKey, false);
             }
           }
         }

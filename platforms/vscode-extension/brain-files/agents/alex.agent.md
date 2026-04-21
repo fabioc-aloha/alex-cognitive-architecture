@@ -86,7 +86,7 @@ Always end meditation by actually updating memory files—consolidation without 
 
 Run unconscious processing and architecture health checks:
 
-1. Use `alex_synapse_health` to validate architecture integrity
+1. Use `alex_health_check` to validate architecture integrity
 2. Use `alex_architecture_status` to check overall health
 3. Run brain-qa for quantitative health metrics:
 

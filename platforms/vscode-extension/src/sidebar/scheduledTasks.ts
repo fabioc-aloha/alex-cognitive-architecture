@@ -9,6 +9,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
 import { escHtml, escAttr } from "./htmlUtils.js";
+import { recordTaskStart, recordTaskEnd } from "./agentMetricsCollector.js";
 
 // ── Types ─────────────────────────────────────────────────────────
 
@@ -300,9 +301,14 @@ export async function dispatchAndMonitor(
   repoUrl: string,
   taskId: string,
   onUpdate: (info: RunInfo) => void,
+  workspaceRoot?: string,
 ): Promise<vscode.Disposable> {
   const parsed = parseOwnerRepo(repoUrl);
   if (!parsed) throw new Error("Cannot parse GitHub owner/repo from URL");
+
+  // Metrics: start tracking
+  const metricsKey = recordTaskStart(taskId);
+  const wsRoot = workspaceRoot ?? vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
 
   const { owner, repo } = parsed;
   const workflowFile = `scheduled-${taskId}.yml`;
@@ -337,6 +343,8 @@ export async function dispatchAndMonitor(
     const info: RunInfo = { status: "error" };
     setRunInfo(taskId, info);
     onUpdate(info);
+    // Metrics: record failure
+    if (wsRoot) recordTaskEnd(wsRoot, metricsKey, false);
     throw new Error(`Dispatch failed (${dispatchRes.status}): ${body}`);
   }
 
@@ -353,6 +361,8 @@ export async function dispatchAndMonitor(
       const info: RunInfo = { status: "error" };
       setRunInfo(taskId, info);
       onUpdate(info);
+      // Metrics: record timeout as failure
+      if (wsRoot) recordTaskEnd(wsRoot, metricsKey, false);
       return;
     }
 
@@ -382,6 +392,9 @@ export async function dispatchAndMonitor(
       if (run.status !== "completed") {
         return schedulePoll();
       }
+
+      // Metrics: record final outcome
+      if (wsRoot) recordTaskEnd(wsRoot, metricsKey, run.conclusion === "success");
     } catch {
       return schedulePoll();
     }
@@ -586,16 +599,24 @@ jobs:
 
       - name: Create issue for Copilot
         if: steps.check.outputs.open == '0'
+        id: create
         env:
           GH_TOKEN: \${{ github.token }}
           TASK_NAME: "${safeName}"
           PROMPT_FILE: "${sanitizeForYaml(task.promptFile ?? "")}"
         run: |
-          gh issue create \\
+          ISSUE_URL=$(gh issue create \\
             --title "$TASK_NAME: $(date -u +%Y-%m-%d-%H%M)" \\
             --body-file "$PROMPT_FILE" \\
-            --label automated,${safeId} \\
-            --assignee copilot
+            --label automated,${safeId})
+          echo "issue_url=$ISSUE_URL" >> $GITHUB_OUTPUT
+
+      - name: Assign Copilot to issue
+        if: steps.create.outputs.issue_url != ''
+        env:
+          GH_TOKEN: \${{ github.token }}
+        run: |
+          gh issue edit "\${{ steps.create.outputs.issue_url }}" --add-assignee copilot
 `;
 }
 
@@ -739,10 +760,10 @@ export function renderScheduledTasks(
         ? `<button class="schedule-action-btn" data-command="openExternal" data-file="${escAttr(runInfo.runUrl)}" title="View run on GitHub"><span class="codicon codicon-link-external"></span></button>`
         : "";
       const editPromptBtn = t.mode === "agent" && t.promptFile
-        ? `<button class="schedule-action-btn" data-command="openPromptFile" data-file="${escAttr(t.promptFile)}" title="Edit prompt">\u270E</button>`
+        ? `<button class="schedule-action-btn" data-command="openPromptFile" data-file="${escAttr(t.promptFile)}" title="Edit prompt"><span class="codicon codicon-edit"></span></button>`
         : "";
-      const toggleBtn = `<button class="schedule-action-btn ${t.enabled ? "schedule-action-pause" : "schedule-action-resume"}" data-command="toggleTask" data-file="${escAttr(t.id)}" title="${t.enabled ? "Pause" : "Resume"}">${t.enabled ? "\u23F8" : "\u25B6"}</button>`;
-      const deleteBtn = `<button class="schedule-action-btn schedule-action-danger" data-command="deleteTask" data-file="${escAttr(t.id)}" title="Delete">\uD83D\uDDD1</button>`;
+      const toggleBtn = `<button class="schedule-action-btn ${t.enabled ? "schedule-action-pause" : "schedule-action-resume"}" data-command="toggleTask" data-file="${escAttr(t.id)}" title="${t.enabled ? "Pause" : "Resume"}">${t.enabled ? `<span class="codicon codicon-debug-pause"></span>` : `<span class="codicon codicon-play-circle"></span>`}</button>`;
+      const deleteBtn = `<button class="schedule-action-btn schedule-action-danger" data-command="deleteTask" data-file="${escAttr(t.id)}" title="Delete"><span class="codicon codicon-trash"></span></button>`;
 
       // Last-run indicator
       const lastRunHtml = taskState[t.id]?.lastRun

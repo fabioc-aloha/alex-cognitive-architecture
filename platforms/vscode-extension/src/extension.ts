@@ -95,6 +95,16 @@ export function activate(context: vscode.ExtensionContext): void {
       agentActivityProvider.refresh();
     }),
   );
+
+  // Auto-refresh TreeView when metrics state file changes
+  if (workspaceRoot) {
+    const metricsPattern = new vscode.RelativePattern(workspaceRoot, ".agent-metrics-state.json");
+    const metricsWatcher = vscode.workspace.createFileSystemWatcher(metricsPattern);
+    metricsWatcher.onDidChange(() => agentActivityProvider.refresh());
+    metricsWatcher.onDidCreate(() => agentActivityProvider.refresh());
+    context.subscriptions.push(metricsWatcher);
+  }
+
   context.subscriptions.push(
     vscode.commands.registerCommand("alex.refreshWelcome", () => {
       welcomeProvider.refresh();
