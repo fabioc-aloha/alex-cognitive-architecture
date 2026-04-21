@@ -20,6 +20,7 @@
  *   node .github/muscles/audit-token-waste.cjs           # Report only
  *   node .github/muscles/audit-token-waste.cjs --fix     # Auto-fix safe patterns
  *   node .github/muscles/audit-token-waste.cjs --json    # Machine-readable output
+ * @currency 2026-04-20
  */
 const fs = require("fs");
 const path = require("path");

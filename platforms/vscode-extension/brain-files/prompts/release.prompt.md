@@ -3,6 +3,7 @@ sem: 1
 description: Execute release management workflow for version bumping, changelog, and publishing
 application: "When preparing releases, publishing artifacts, or deployment workflows"
 agent: Alex
+currency: 2025-01-01
 ---
 
 # /release - Release Management

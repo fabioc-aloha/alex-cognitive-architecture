@@ -38,6 +38,7 @@
  *
  * Output (JSON):
  *   {"score":85,"passed":true,"findings":[...],"feedback":"..."}
+ * @currency 2026-04-20
  */
 
 "use strict";

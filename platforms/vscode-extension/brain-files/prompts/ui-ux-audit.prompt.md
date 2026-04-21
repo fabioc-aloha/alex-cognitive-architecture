@@ -3,6 +3,7 @@ mode: agent
 sem: 1
 description: Systematic WCAG AA accessibility and UI/UX audit covering typography, keyboard navigation, screen reader support, and design tokens
 application: "When requesting architecture health checks, quality audits, or validation"
+currency: 2025-01-01
 ---
 
 # UI/UX Accessibility Audit

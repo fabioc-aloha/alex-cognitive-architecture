@@ -11,6 +11,7 @@ metadata:
     triggers: [prompt evolution, a/b test, prompt store, prompt versioning, metrics, prompt rollback, evolution engine]
     context: Working on prompt evolution, A/B testing, prompt metrics, or evolution lifecycle
   prerequisites: []
+currency: 2025-01-01
 ---
 
 # Prompt Evolution System

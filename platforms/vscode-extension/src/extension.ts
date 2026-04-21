@@ -1,27 +1,22 @@
 import * as vscode from "vscode";
-import { bootstrapBrainFiles, getBrainStatus } from "./bootstrap.js";
+import { chatHandler } from "./chat/handler.js";
 import { WelcomeViewProvider } from "./sidebar/WelcomeViewProvider.js";
-import { sanitizeError } from "./shared/sanitize.js";
-import { DOCS_URL, MASTER_PROTECTED_FILE } from "./shared/constants.js";
-import { setupAIMemory } from "./aiMemory.js";
-import * as fs from "fs";
-import * as path from "path";
+import { detectProject } from "./sidebar/projectDetector.js";
+import { writeLoopConfig, setProjectPhase } from "./sidebar/loopConfigGenerator.js";
+import { setupAIMemory, resolveAIMemoryPath, getAIMemoryStatus } from "./aiMemory.js";
+import { createAgentStatusBar, updateAgentStatusBar } from "./sidebar/agentActivity.js";
+import { AgentActivityProvider } from "./sidebar/agentActivityTreeView.js";
+import { initRunStore } from "./sidebar/scheduledTasks.js";
 
-export function activate(context: vscode.ExtensionContext): void {
-  try {
-    activateInternal(context);
-  } catch (err) {
-    vscode.window
-      .showErrorMessage(
-        `Alex: Activation failed — ${sanitizeError(err)}`,
-        "Reload Window",
-      )
-      .then((choice) => {
-        if (choice === "Reload Window") {
-          vscode.commands.executeCommand("workbench.action.reloadWindow");
-        }
-      });
-  }
+/**
+ * Sanitize error messages for user display — strips file system paths
+ * that could leak internal directory structure.
+ */
+function sanitizeError(err: unknown): string {
+  const raw = err instanceof Error ? err.message : String(err);
+  return raw
+    .replace(/[A-Z]:\\[\w\\.\-\s]+/gi, "[path]")
+    .replace(/\/(?:home|usr|tmp|var|etc|Users|mnt)\/[\w/.\-]+/g, "[path]");
 }
 
 /**
@@ -38,15 +33,38 @@ async function enforceSafetySettings(): Promise<void> {
   }
 }
 
-function activateInternal(context: vscode.ExtensionContext): void {
-  // Auto-detect Master Alex workspace and enable protection
-  detectProtectedMode();
-
+export function activate(context: vscode.ExtensionContext): void {
   // Enforce safety settings on every activation
   enforceSafetySettings();
 
-  // --- Sidebar ---
-  const welcomeProvider = new WelcomeViewProvider(context.extensionUri);
+  // Initialize persistent run store for scheduled task tracking
+  initRunStore(context.workspaceState);
+
+  // Chat participant
+  const participant = vscode.chat.createChatParticipant(
+    "alex.chat",
+    chatHandler,
+  );
+  participant.iconPath = vscode.Uri.joinPath(
+    context.extensionUri,
+    "assets",
+    "icon.png",
+  );
+  participant.followupProvider = {
+    provideFollowups() {
+      return [
+        { prompt: "/autopilot list", label: "List Autopilot Tasks", command: "autopilot" },
+      ];
+    },
+  };
+  context.subscriptions.push(participant);
+
+  // Sidebar welcome panel
+  const welcomeProvider = new WelcomeViewProvider(
+    context.extensionUri,
+    context.globalState,
+  );
+  context.subscriptions.push(welcomeProvider);
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider(
       WelcomeViewProvider.viewId,
@@ -54,204 +72,120 @@ function activateInternal(context: vscode.ExtensionContext): void {
     ),
   );
 
-  // Initial status refresh
-  refreshSidebar(context, welcomeProvider);
+  // Status bar — agent activity badge (AP6)
+  const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+  const statusBar = createAgentStatusBar(context);
+  updateAgentStatusBar(workspaceRoot);
 
-  // --- Commands ---
+  // Refresh status bar periodically (every 5 minutes)
+  const statusTimer = setInterval(() => {
+    updateAgentStatusBar(vscode.workspace.workspaceFolders?.[0]?.uri.fsPath);
+  }, 5 * 60 * 1000);
+  context.subscriptions.push({ dispose: () => clearInterval(statusTimer) });
 
-  // Install / Update Brain
+  // Agent Activity TreeView (CL1)
+  const agentActivityProvider = new AgentActivityProvider(workspaceRoot);
   context.subscriptions.push(
-    vscode.commands.registerCommand("alex.updateBrain", async () => {
-      if (isProtected()) {
-        vscode.window.showWarningMessage(
-          "Alex: Protected mode is enabled. Brain updates are blocked in this workspace.",
-        );
-        return;
-      }
-      const choice = await vscode.window.showInformationMessage(
-        "Install or update the Alex brain in this workspace?",
-        "Install",
-        "Cancel",
-      );
-      if (choice === "Install") {
-        await bootstrapBrainFiles(context, true);
-        await enforceSafetySettings();
-        refreshSidebar(context, welcomeProvider);
-      }
+    vscode.window.createTreeView("alex.agentActivity", {
+      treeDataProvider: agentActivityProvider,
     }),
   );
-
-  // Dream (Knowledge Consolidation)
   context.subscriptions.push(
-    vscode.commands.registerCommand("alex.dream", async () => {
-      const terminal = vscode.window.createTerminal("Alex Dream");
-      terminal.show();
-      terminal.sendText("echo 'Dream state: consolidating knowledge...'");
-      // Future: invoke dream-cli.ts or brain-qa.cjs
-      vscode.window.showInformationMessage(
-        "Alex: Dream session started. Check the terminal for output.",
-      );
+    vscode.commands.registerCommand("alex.refreshAgentActivity", () => {
+      agentActivityProvider.refresh();
     }),
   );
-
-  // Refresh Welcome sidebar
   context.subscriptions.push(
     vscode.commands.registerCommand("alex.refreshWelcome", () => {
       welcomeProvider.refresh();
     }),
   );
 
-  // Show Status
+  // Commands
   context.subscriptions.push(
-    vscode.commands.registerCommand("alex.showStatus", () => {
-      const status = getBrainStatus(context);
-      const items: vscode.QuickPickItem[] = [
-        {
-          label: status.installed ? "$(check) Brain Installed" : "$(warning) Brain Not Installed",
-          description: status.version
-            ? `v${status.version}`
-            : "Run 'Install Brain' to set up",
-        },
-        {
-          label: "$(package) Bundled Version",
-          description: `v${status.bundledVersion}`,
-        },
-        {
-          label: "$(shield) Protected Mode",
-          description: isProtected() ? "Enabled" : "Disabled",
-        },
-      ];
-      vscode.window.showQuickPick(items, {
-        title: "Alex — Brain Status",
-        placeHolder: "Brain health overview",
-      });
+    vscode.commands.registerCommand("alex.openChat", () => {
+      vscode.commands.executeCommand("workbench.action.chat.open");
     }),
   );
 
-  // Optimize Settings
   context.subscriptions.push(
-    vscode.commands.registerCommand("alex.optimizeSettings", async () => {
-      const config = vscode.workspace.getConfiguration();
-
-      // Settings that default to OFF and must be enabled for full Alex functionality.
-      // Verified against VS Code Copilot Settings Reference (April 2026).
-      const essentialUpdates: Array<{ key: string; value: unknown; label: string }> = [
-        {
-          key: "chat.useCustomAgentHooks",
-          value: true,
-          label: "Custom agent hooks",
-        },
-        {
-          key: "github.copilot.chat.copilotMemory.enabled",
-          value: false,
-          label: "Copilot Memory disabled (PII safety — use AI-Memory instead)",
-        },
-        {
-          key: "chat.customAgentInSubagent.enabled",
-          value: true,
-          label: "Custom agents in subagents",
-        },
-        {
-          key: "chat.useNestedAgentsMdFiles",
-          value: true,
-          label: "Nested agent files",
-        },
-        {
-          key: "chat.includeReferencedInstructions",
-          value: true,
-          label: "Referenced instructions",
-        },
-        {
-          key: "github.copilot.chat.agent.thinkingTool",
-          value: true,
-          label: "Agent thinking tool",
-        },
-        {
-          key: "chat.plugins.enabled",
-          value: true,
-          label: "Agent plugins",
-        },
-      ];
-
-      const recommendedUpdates: Array<{ key: string; value: unknown; label: string }> = [
-        {
-          key: "chat.agent.maxRequests",
-          value: 100,
-          label: "Max agent requests → 100",
-        },
-        {
-          key: "chat.notifyWindowOnConfirmation",
-          value: "always",
-          label: "OS notifications for confirmations",
-        },
-        {
-          key: "chat.agentsControl.enabled",
-          value: true,
-          label: "Agent session status indicator",
-        },
-        {
-          key: "chat.requestQueuing.defaultAction",
-          value: "queue",
-          label: "Request queuing → queue",
-        },
-        {
-          key: "github.copilot.chat.localeOverride",
-          value: "en",
-          label: "Locale → English",
-        },
-      ];
-
-      // Apply essential settings without asking
-      const applied: string[] = [];
-      for (const u of essentialUpdates) {
-        const current = config.get(u.key);
-        if (current !== u.value) {
-          await config.update(u.key, u.value, vscode.ConfigurationTarget.Global);
-          applied.push(u.label);
-        }
-      }
-
-      // Ask before applying recommended settings
-      const needsRecommended = recommendedUpdates.filter(
-        (u) => config.get(u.key) !== u.value,
-      );
-      if (needsRecommended.length > 0) {
-        const choice = await vscode.window.showInformationMessage(
-          `Also apply ${needsRecommended.length} recommended setting(s)?`,
-          "Yes",
-          "Skip",
+    vscode.commands.registerCommand("alex.dream", async () => {
+      try {
+        await vscode.commands.executeCommand("workbench.action.chat.open", {
+          query: "/dream",
+        });
+      } catch (err) {
+        vscode.window.showErrorMessage(
+          `Dream protocol failed: ${sanitizeError(err)}`,
         );
-        if (choice === "Yes") {
-          for (const u of needsRecommended) {
-            await config.update(u.key, u.value, vscode.ConfigurationTarget.Global);
-            applied.push(u.label);
+      }
+    }),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.initialize", async () => {
+      try {
+        // Enforce safety settings during initialization
+        await enforceSafetySettings();
+
+        // Ensure AI-Memory is set up before initializing the workspace
+        const memPath = resolveAIMemoryPath();
+        if (!memPath) {
+          const setup = await vscode.window.showInformationMessage(
+            "Alex: Set up AI-Memory for cross-project knowledge sharing?",
+            "Setup AI-Memory",
+            "Skip",
+          );
+          if (setup === "Setup AI-Memory") {
+            await setupAIMemory();
           }
         }
-      }
-
-      if (applied.length > 0) {
-        vscode.window.showInformationMessage(
-          `Alex: Applied ${applied.length} setting(s).`,
+        await vscode.commands.executeCommand("workbench.action.chat.open", {
+          query: "Initialize this workspace with Alex's cognitive architecture",
+        });
+      } catch (err) {
+        vscode.window.showErrorMessage(
+          `Initialize failed: ${sanitizeError(err)}`,
         );
-        refreshSidebar(context, welcomeProvider);
-      } else {
-        vscode.window.showInformationMessage("Alex: Settings already optimized.");
       }
     }),
   );
 
-  // Open Documentation
   context.subscriptions.push(
-    vscode.commands.registerCommand("alex.openDocs", () => {
-      vscode.env.openExternal(vscode.Uri.parse(DOCS_URL));
+    vscode.commands.registerCommand("alex.upgrade", async () => {
+      try {
+        // Enforce safety settings during upgrade
+        await enforceSafetySettings();
+
+        // Check AI-Memory during upgrade — offer setup if not found
+        const memPath = resolveAIMemoryPath();
+        if (!memPath) {
+          const setup = await vscode.window.showInformationMessage(
+            "Alex: AI-Memory not found. Set it up for cross-project knowledge sharing?",
+            "Setup AI-Memory",
+            "Skip",
+          );
+          if (setup === "Setup AI-Memory") {
+            await setupAIMemory();
+          }
+        }
+        await vscode.commands.executeCommand("workbench.action.chat.open", {
+          query: "Upgrade this workspace's cognitive architecture to the latest version",
+        });
+      } catch (err) {
+        vscode.window.showErrorMessage(
+          `Upgrade failed: ${sanitizeError(err)}`,
+        );
+      }
     }),
   );
 
-  // AI-Memory setup
+  // AI-Memory setup (standalone command)
   context.subscriptions.push(
     vscode.commands.registerCommand("alex.setupAIMemory", async () => {
       try {
         await setupAIMemory();
+        welcomeProvider.refresh();
       } catch (err) {
         vscode.window.showErrorMessage(
           `AI-Memory setup failed: ${sanitizeError(err)}`,
@@ -260,61 +194,102 @@ function activateInternal(context: vscode.ExtensionContext): void {
     }),
   );
 
-  // --- Status Bar ---
-  const statusBarItem = vscode.window.createStatusBarItem(
-    vscode.StatusBarAlignment.Right,
-    50,
+  // Generate project-specific loop config
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.generateLoopConfig", async () => {
+      const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+      if (!wsRoot) {
+        vscode.window.showWarningMessage("Alex: Open a workspace folder first.");
+        return;
+      }
+      try {
+        const ctx = detectProject(wsRoot);
+        const ok = writeLoopConfig(wsRoot, ctx);
+        if (ok) {
+          vscode.window.showInformationMessage(
+            `Alex: Loop config generated for ${ctx.projectType} project (${ctx.conventions.length} conventions detected).`,
+          );
+        } else {
+          vscode.window.showErrorMessage("Alex: Failed to write loop config.");
+        }
+      } catch (err) {
+        vscode.window.showErrorMessage(
+          `Alex: Loop config generation failed — ${sanitizeError(err)}`,
+        );
+      }
+    }),
   );
-  statusBarItem.command = "alex.showStatus";
-  updateStatusBar(statusBarItem, context);
-  statusBarItem.show();
-  context.subscriptions.push(statusBarItem);
-}
 
-function refreshSidebar(
-  context: vscode.ExtensionContext,
-  provider: WelcomeViewProvider,
-): void {
-  provider.updateStatus(getBrainStatus(context));
-}
+  // Set project lifecycle phase
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.setProjectPhase", async () => {
+      const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+      if (!wsRoot) {
+        vscode.window.showWarningMessage("Alex: Open a workspace folder first.");
+        return;
+      }
+      const phases = [
+        { label: "Planning", description: "Ideation, research, and design", value: "planning" },
+        { label: "Active Development", description: "Building features and writing code", value: "active-development" },
+        { label: "Testing", description: "QA, integration tests, and validation", value: "testing" },
+        { label: "Release", description: "Packaging, publishing, and deployment", value: "release" },
+        { label: "Maintenance", description: "Bug fixes, upgrades, and monitoring", value: "maintenance" },
+      ] as const;
+      const picked = await vscode.window.showQuickPick(
+        phases.map((p) => ({ label: p.label, description: p.description, value: p.value })),
+        { placeHolder: "Select the current project phase" },
+      );
+      if (!picked) return;
+      const ok = setProjectPhase(wsRoot, picked.value);
+      if (ok) {
+        welcomeProvider.refresh();
+        vscode.window.showInformationMessage(
+          `Alex: Project phase set to "${picked.label}".`,
+        );
+      } else {
+        vscode.window.showErrorMessage(
+          "Alex: Failed to update project phase. Generate a loop config first.",
+        );
+      }
+    }),
+  );
 
-function updateStatusBar(
-  item: vscode.StatusBarItem,
-  context: vscode.ExtensionContext,
-): void {
-  const status = getBrainStatus(context);
-  if (status.installed) {
-    item.text = "$(brain) Alex";
-    item.tooltip = `Alex Brain v${status.version ?? status.bundledVersion}`;
-  } else {
-    item.text = "$(brain) Alex (no brain)";
-    item.tooltip = "Click to install Alex brain files";
-  }
-}
-
-/**
- * Detect if this is the Master Alex workspace (source of truth).
- * If MASTER-ALEX-PROTECTED.json exists, auto-enable protection.
- */
-function detectProtectedMode(): void {
-  const folders = vscode.workspace.workspaceFolders;
-  if (!folders) return;
-
-  const protectedFile = path.join(folders[0].uri.fsPath, MASTER_PROTECTED_FILE);
-  if (fs.existsSync(protectedFile)) {
-    const config = vscode.workspace.getConfiguration("alex.workspace");
-    if (!config.get<boolean>("protectedMode")) {
-      config.update("protectedMode", true, vscode.ConfigurationTarget.Workspace);
-    }
-  }
-}
-
-function isProtected(): boolean {
-  return vscode.workspace
-    .getConfiguration("alex.workspace")
-    .get<boolean>("protectedMode", false);
+  // File watcher: hot-reload sidebar when loop config or prompts change
+  const loopConfigWatcher = vscode.workspace.createFileSystemWatcher(
+    new vscode.RelativePattern(
+      vscode.workspace.workspaceFolders?.[0] ?? "",
+      ".github/config/loop-menu.json",
+    ),
+  );
+  const loopPromptWatcher = vscode.workspace.createFileSystemWatcher(
+    new vscode.RelativePattern(
+      vscode.workspace.workspaceFolders?.[0] ?? "",
+      ".github/prompts/loop/*.prompt.md",
+    ),
+  );
+  const skillPartialWatcher = vscode.workspace.createFileSystemWatcher(
+    new vscode.RelativePattern(
+      vscode.workspace.workspaceFolders?.[0] ?? "",
+      ".github/skills/*/loop-config.partial.json",
+    ),
+  );
+  const refreshOnChange = () => welcomeProvider.refresh();
+  context.subscriptions.push(
+    loopConfigWatcher,
+    loopConfigWatcher.onDidChange(refreshOnChange),
+    loopConfigWatcher.onDidCreate(refreshOnChange),
+    loopConfigWatcher.onDidDelete(refreshOnChange),
+    loopPromptWatcher,
+    loopPromptWatcher.onDidChange(refreshOnChange),
+    loopPromptWatcher.onDidCreate(refreshOnChange),
+    loopPromptWatcher.onDidDelete(refreshOnChange),
+    skillPartialWatcher,
+    skillPartialWatcher.onDidChange(refreshOnChange),
+    skillPartialWatcher.onDidCreate(refreshOnChange),
+    skillPartialWatcher.onDidDelete(refreshOnChange),
+  );
 }
 
 export function deactivate(): void {
-  // Cleanup handled by disposables
+  // Cleanup handled by disposables in context.subscriptions
 }

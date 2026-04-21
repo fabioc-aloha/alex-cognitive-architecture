@@ -3,6 +3,7 @@ name: service-worker-offline-first
 description: "Progressive Web App offline-first patterns — Service Worker lifecycle, caching strategies, background sync, and offline fallbacks for resilient web applications"
 tier: extended
 applyTo: '**/*service-worker*,**/*sw.*,**/*offline*,**/*pwa*,**/*cache-strateg*,**/manifest.json'
+currency: 2025-01-01
 ---
 
 # Service Worker Offline-First Patterns

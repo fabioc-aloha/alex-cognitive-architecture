@@ -2,6 +2,7 @@
 description: "Cross-project pattern recognition, insight promotion, and knowledge synthesis protocols"
 application: "When following knowledge synthesis workflows or troubleshooting related issues"
 applyTo: "**/*knowledge*,**/*insight*,**/*synthesis*,**/*pattern*"
+currency: 2025-01-01
 ---
 
 # Knowledge Synthesis — Auto-Loaded Rules
@@ -42,6 +43,7 @@ Promote an insight to a pattern when:
 Before saving globally:
 
 - [ ] Abstracted — no project-specific names or details in the core insight
+- [ ] Isolated — passes `cross-project-isolation.instructions.md` stripping rules
 - [ ] Tested — "would this help a stranger working on a different codebase?"
 - [ ] Categorized — placed under an appropriate heading in global-knowledge.md
 - [ ] Formatted — uses standard entry format (Topic, Source, Insight, Date)

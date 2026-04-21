@@ -3,6 +3,7 @@ name: frontend-design-review
 description: Review and create distinctive frontend interfaces — design system compliance, three quality pillars (Frictionless, Quality Craft, Trustworthy), accessibility
 tier: standard
 applyTo: '**/*.{html,jsx,tsx,vue,svelte,css,scss},**/components/**,**/ui/**'
+currency: 2025-01-01
 ---
 
 # Frontend Design Review
@@ -235,9 +236,16 @@ Match implementation complexity to vision. Maximalist = elaborate code. Minimali
 - [ ] Matches Figma specs within tolerance
 - [ ] All variants/states implemented
 
+**React 19 Patterns (if applicable):**
+- [ ] Forms use `useActionState` (not manual useState + fetch)
+- [ ] Optimistic updates use `useOptimistic` hook
+- [ ] Server state via TanStack Query (not local state for fetched data)
+- [ ] Submit buttons use `useFormStatus` from design system
+- [ ] No unnecessary `forwardRef` (React 19 accepts ref as prop)
+
 **Aesthetic Quality:**
 - [ ] Distinctive typography choice
-- [ ] Cohesive color palette
+- [ ] Cohesive color palette via CSS variables
 - [ ] Intentional motion (or explicit choice of none)
 - [ ] Appropriate visual density
 
@@ -246,12 +254,13 @@ Match implementation complexity to vision. Maximalist = elaborate code. Minimali
 - [ ] Clear action hierarchy
 - [ ] No dead ends
 - [ ] Progress indicators for multi-step flows
+- [ ] Optimistic UI for perceived performance
 
 **Quality Craft:**
 - [ ] Responsive/reflow works
-- [ ] Focus indicators visible
-- [ ] Loading states present
-- [ ] Error states handled
+- [ ] Focus indicators visible (`:focus-visible` with ring)
+- [ ] Loading states present (skeleton > spinner)
+- [ ] Error states handled with `role="alert"`
 
 **Trustworthy:**
 - [ ] AI content disclosed
@@ -260,10 +269,23 @@ Match implementation complexity to vision. Maximalist = elaborate code. Minimali
 
 ---
 
+## Modern Stack Reference
+
+| Layer | Recommended | Notes |
+|-------|-------------|-------|
+| Framework | React 19 | useActionState, useOptimistic, use() |
+| Styling | Tailwind + CSS vars | Design tokens via variables |
+| Components | shadcn/ui + Radix | Open Code philosophy |
+| Server state | TanStack Query | Caching, optimistic updates |
+| Client state | Zustand | Simple, TypeScript-first |
+| Forms | React Hook Form + Zod | Or native form actions |
+| Testing | Vitest + Testing Library | Test behavior, not implementation |
+
 ## Related Skills
 
 This skill complements:
 - **ui-ux-design** — Accessibility patterns, design system foundations
+- **Frontend** agent — React 19 patterns, full component examples
 - **graphic-design** — Visual design principles, SVG graphics
 - **code-review** — Technical review patterns
 

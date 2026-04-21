@@ -3,6 +3,7 @@ name: skill-building
 description: Create effective, reusable skills from real-world experience for promotion to Master Alex
 tier: standard
 applyTo: '**/*skill*,**/*SKILL*,**/skills/**'
+currency: 2025-01-01
 ---
 
 # Skill Building

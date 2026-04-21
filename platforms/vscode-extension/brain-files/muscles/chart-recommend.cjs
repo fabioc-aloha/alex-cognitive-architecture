@@ -18,6 +18,7 @@
  *   node chart-recommend.cjs --message "rank states by population"
  *   node chart-recommend.cjs --json '{"storyIntent":"trend","dataShape":"time-series","columns":[...]}'
  *   cat profile.json | node chart-recommend.cjs --stdin --intent compare
+ * @currency 2026-04-20
  */
 'use strict';
 

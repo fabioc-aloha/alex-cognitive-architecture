@@ -3,6 +3,7 @@ name: "architecture-health"
 description: "Diagnose cognitive architecture health — connection integrity, memory balance, link density, and drift detection"
 tier: standard
 applyTo: '**/*health*,**/*cognitive*,**/*drift*,**/*architecture*'
+currency: 2025-01-01
 ---
 
 # Architecture Health Skill

@@ -12,6 +12,8 @@ import {
 import { getTagline, loadTaglineConfig } from "../taglines.js";
 import { loadLoopGroups } from "./loopMenu.js";
 import { loadScheduledTasks, toggleTask, deleteTask, addTaskWizard, renderScheduledTasks, getGitHubRepoUrl, hasWorkflow, generateWorkflow, removeWorkflow, recordTaskRun, dispatchAndMonitor, getRunInfo, clearRunInfo, SCHEDULE_CSS } from "./scheduledTasks.js";
+import { renderAgentActivity, refreshAgentActivityAsync, AGENT_ACTIVITY_CSS } from "./agentActivity.js";
+import { escHtml, escAttr } from "./htmlUtils.js";
 
 const VIEW_ID = "alex.welcomeView";
 
@@ -272,6 +274,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
   private view?: vscode.WebviewView;
   private workspaceRoot: string;
   private frecencyData: FrecencyData;
+  private readonly disposables: vscode.Disposable[] = [];
 
   constructor(
     private readonly extensionUri: vscode.Uri,
@@ -281,6 +284,11 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       vscode.workspace.workspaceFolders?.[0]?.uri.fsPath ?? "";
     this.frecencyData =
       globalState.get<FrecencyData>(FRECENCY_KEY) ?? createEmptyData();
+  }
+
+  dispose(): void {
+    for (const d of this.disposables) d.dispose();
+    this.disposables.length = 0;
   }
 
   /** Record a Quick Action use and persist */
@@ -348,6 +356,11 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     };
 
     webviewView.webview.html = this.getHtml(webviewView.webview);
+
+    // Kick off async agent activity fetch — sidebar renders instantly from cache
+    if (this.workspaceRoot) {
+      void refreshAgentActivityAsync(this.workspaceRoot, () => this.refresh());
+    }
 
     webviewView.webview.onDidReceiveMessage((msg) =>
       this.handleMessage(msg),
@@ -526,7 +539,10 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
 
       case "openPromptFile":
         if (this.workspaceRoot && msg.file) {
-          const promptPath = path.join(this.workspaceRoot, msg.file);
+          const promptPath = path.resolve(this.workspaceRoot, msg.file);
+          // Defense-in-depth: ensure resolved path stays within workspace (case-insensitive on Windows)
+          if (!promptPath.toLowerCase().startsWith(this.workspaceRoot.toLowerCase() + path.sep) &&
+              promptPath.toLowerCase() !== this.workspaceRoot.toLowerCase()) break;
           if (fs.existsSync(promptPath)) {
             await vscode.commands.executeCommand(
               "vscode.open",
@@ -549,9 +565,10 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
           if (repoUrl && wfExists) {
             // Cloud dispatch via GitHub API + poll for status
             try {
-              await dispatchAndMonitor(repoUrl, msg.file, (_info) => {
+              const pollDisposable = await dispatchAndMonitor(repoUrl, msg.file, (_info) => {
                 this.refresh(); // re-render card with updated status
               });
+              this.disposables.push(pollDisposable);
               vscode.window.showInformationMessage(
                 `Workflow dispatched for "${msg.file}". Monitoring execution…`,
               );
@@ -564,7 +581,9 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
             const tasks = loadScheduledTasks(this.workspaceRoot);
             const task = tasks.find((t) => t.id === msg.file);
             if (task?.promptFile) {
-              const promptPath = path.join(this.workspaceRoot, task.promptFile);
+              const promptPath = path.resolve(this.workspaceRoot, task.promptFile);
+              const wsLower = this.workspaceRoot.toLowerCase() + path.sep;
+              if (!promptPath.toLowerCase().startsWith(wsLower)) break;
               if (fs.existsSync(promptPath)) {
                 const promptContent = fs.readFileSync(promptPath, "utf-8")
                   .replace(/^---[\s\S]*?---\s*/, "").trim();
@@ -995,6 +1014,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       to { opacity: 1; transform: translateY(-50%) translateX(0); }
     }
     ${SCHEDULE_CSS}
+    ${AGENT_ACTIVITY_CSS}
   </style>
 </head>
 <body>
@@ -1048,6 +1068,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
 
   <!-- Autopilot Tab -->
   <div id="tab-autopilot" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-autopilot">
+    ${this.workspaceRoot ? renderAgentActivity(this.workspaceRoot) : ""}
     ${renderScheduledTasks(this.workspaceRoot ? loadScheduledTasks(this.workspaceRoot) : [], this.workspaceRoot ? getGitHubRepoUrl(this.workspaceRoot) : undefined, this.workspaceRoot)}
   </div>
 
@@ -1199,21 +1220,4 @@ function renderButton(b: ActionButton, primary = false): string {
   </button>`;
 }
 
-function escHtml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
 
-function escAttr(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;")
-    .replace(/`/g, "&#96;")
-    .replace(/\\/g, "&#92;");
-}

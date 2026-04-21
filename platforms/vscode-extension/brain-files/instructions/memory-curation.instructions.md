@@ -2,6 +2,7 @@
 description: "Monitor, audit, and curate VS Code user memory for token efficiency and value density"
 application: "When reviewing or cleaning /memories/ user memory"
 applyTo: "**/*memory*,**/*curation*"
+currency: 2025-01-01
 ---
 
 # Memory Curation
@@ -16,6 +17,8 @@ applyTo: "**/*memory*,**/*curation*"
 | Session scratch | /memories/session/ | ✗ |
 
 **3-Workspace Test**: Only store in `/memories/` if useful across 3+ workspaces.
+
+**PII Gate**: Before ANY write, apply `pii-memory-filter.instructions.md`. No PII in persistent tiers.
 
 ## Budget
 

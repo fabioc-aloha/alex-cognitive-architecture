@@ -131,7 +131,7 @@ const SCAFFOLD_DIRS = [
 ];
 
 /** Template files created only when missing. */
-const SCAFFOLD_FILES: Record<string, string> = {
+const SCAFFOLD_FILES: Record<string, string | (() => string)> = {
   "global-knowledge.md": `# Global Knowledge
 
 Cross-project patterns, insights, and reusable solutions.
@@ -160,7 +160,7 @@ Active learning objectives and progress tracking.
 
 ## Completed
 `,
-  "user-profile.json": JSON.stringify(
+  "user-profile.json": () => JSON.stringify(
     {
       name: "",
       role: "",
@@ -174,7 +174,7 @@ Active learning objectives and progress tracking.
     null,
     2,
   ),
-  "project-registry.json": JSON.stringify(
+  "project-registry.json": () => JSON.stringify(
     {
       version: 1,
       projects: [],
@@ -183,7 +183,7 @@ Active learning objectives and progress tracking.
     null,
     2,
   ),
-  "index.json": JSON.stringify(
+  "index.json": () => JSON.stringify(
     {
       version: 1,
       files: [],
@@ -220,9 +220,10 @@ export function ensureAIMemoryStructure(basePath: string): string[] {
   }
 
   // Template files (never overwrite)
-  for (const [file, content] of Object.entries(SCAFFOLD_FILES)) {
+  for (const [file, contentOrFn] of Object.entries(SCAFFOLD_FILES)) {
     const filePath = path.join(basePath, file);
     if (!fs.existsSync(filePath)) {
+      const content = typeof contentOrFn === "function" ? contentOrFn() : contentOrFn;
       fs.writeFileSync(filePath, content, "utf-8");
       created.push(filePath);
     }

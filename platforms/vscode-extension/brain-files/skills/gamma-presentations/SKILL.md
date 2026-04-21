@@ -3,6 +3,7 @@ name: gamma-presentations
 description: "Generate professional presentations using the Gamma API with expert storytelling consulting based on Duarte methodology."
 tier: standard
 applyTo: '**/*presentation*,**/*slides*,**/*deck*,**/*gamma*,**/*pitch*'
+currency: 2025-01-01
 ---
 
 # Gamma Presentations Skill

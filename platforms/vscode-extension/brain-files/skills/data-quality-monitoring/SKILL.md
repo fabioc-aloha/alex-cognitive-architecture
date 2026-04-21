@@ -3,6 +3,7 @@ name: data-quality-monitoring
 description: "Data pipeline quality assurance — anomaly detection, schema drift, null ratio monitoring, freshness checks, and safe-write protection for reliable data engineering"
 tier: standard
 applyTo: '**/*quality*,**/*anomal*,**/*baseline*,**/*schema-drift*,**/*data-valid*,**/*pipeline*'
+currency: 2025-01-01
 ---
 
 # Data Quality Monitoring

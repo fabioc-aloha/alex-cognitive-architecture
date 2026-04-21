@@ -3,6 +3,7 @@ name: skill-creator
 description: Create effective skills for AI agents — Azure SDK patterns, progressive disclosure, acceptance criteria, test scenarios
 tier: standard
 applyTo: '**/*skill*,**/*SKILL*,**/skills/**'
+currency: 2025-01-01
 ---
 
 # Skill Creator

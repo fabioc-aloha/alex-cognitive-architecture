@@ -3,6 +3,7 @@ name: "image-handling"
 description: "Right format, right size, right quality — plus AI image generation via Replicate"
 tier: standard
 applyTo: '**/*.png,**/*.jpg,**/*.jpeg,**/*.webp,**/*.svg,**/*image*'
+currency: 2025-01-01
 ---
 
 # Image Handling Skill

@@ -1,7 +1,10 @@
 #!/usr/bin/env node
-// H3: Validator session start
-// Agent-scoped SessionStart hook for Validator mode.
-// Loads adversarial checklist + recent changes summary for faster QA startup.
+/**
+ * H3: Validator session start
+ * Agent-scoped SessionStart hook for Validator mode.
+ * Loads adversarial checklist + recent changes summary for faster QA startup.
+ * @currency 2026-04-20
+ */
 'use strict';
 
 const { execSync } = require('child_process');

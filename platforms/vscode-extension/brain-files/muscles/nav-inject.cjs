@@ -35,6 +35,7 @@
  *   <!-- nav:end -->
  *
  * On repeated runs, only the content between sentinels is replaced.
+ * @currency 2026-04-20
  */
 
 const fs = require('fs');

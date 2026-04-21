@@ -2,6 +2,7 @@
 description: "Step-by-step skill creation, assessment, and completion procedure"
 application: "When following skill building workflows or troubleshooting related issues"
 applyTo: "**/.github/skills/**,**/*SKILL*"
+currency: 2025-01-01
 ---
 
 # Skill Building Procedure

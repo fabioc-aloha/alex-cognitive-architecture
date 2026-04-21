@@ -4,6 +4,7 @@ description: '**Domain**: Multicultural team communication, cultural intelligenc
 tier: extended
 applyTo: '**/*cultural*,**/*global*,**/*international*,**/*diversity*'
 disableModelInvocation: true
+currency: 2025-01-01
 ---
 
 # Cross-Cultural Collaboration

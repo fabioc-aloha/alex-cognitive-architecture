@@ -3,6 +3,7 @@ name: architecture-audit
 description: Comprehensive **project** consistency review across code, documentation, diagrams, and configuration
 tier: standard
 applyTo: '**/*audit*,**/*review*,**/*consistency*'
+currency: 2025-01-01
 ---
 
 # Architecture Audit

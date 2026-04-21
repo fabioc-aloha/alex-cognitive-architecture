@@ -3,6 +3,7 @@ name: token-waste-elimination
 description: Audit and eliminate token waste from cognitive architecture memory files -- instructions, prompts, skills, and agents
 tier: standard
 applyTo: '**/*token*,**/*waste*,**/*optimization*'
+currency: 2025-01-01
 ---
 
 # Token Waste Elimination

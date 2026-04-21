@@ -4,6 +4,7 @@ mode: agent
 name: "generate-image"
 description: "Generate an image or video using Replicate AI models"
 application: "When generating images, banners, or visual assets"
+currency: 2025-01-01
 ---
 
 # Generate Image / Video with Replicate

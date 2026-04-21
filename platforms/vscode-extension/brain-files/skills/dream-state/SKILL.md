@@ -4,6 +4,7 @@ description: "Architecture maintenance, connection validation, automated health 
 tier: standard
 applyTo: '**/*dream*,**/*maintenance*,**/*health*'
 disable-model-invocation: true
+currency: 2025-01-01
 ---
 
 # Dream State Skill

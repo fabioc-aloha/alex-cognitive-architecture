@@ -3,6 +3,7 @@ name: "distribution-security"
 description: "Defense-in-depth, PII protection, secrets scanning, and secure packaging for distributed software"
 tier: standard
 applyTo: '**/*security*,**/*secrets*,**/*pii*,**/*distribution*'
+currency: 2025-01-01
 ---
 
 # Distribution Security

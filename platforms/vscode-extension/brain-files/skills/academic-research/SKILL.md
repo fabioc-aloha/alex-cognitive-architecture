@@ -4,6 +4,7 @@ description: Research project scaffolding, thesis/dissertation writing, literatu
 tier: extended
 category: documentation
 applyTo: '**/*paper*,**/*manuscript*,**/*journal*,**/*thesis*,**/*dissertation*,**/*research*,**/*academic*'
+currency: 2026-04-20
 ---
 
 # Academic Research
@@ -333,7 +334,7 @@ git mv draft.docx writing/drafts/paper-v1.docx
 
 ## Related Skills
 
-- [literature-review](.github/skills/literature-review/SKILL.md) — Systematic search
-- [citation-management](.github/skills/citation-management/SKILL.md) — APA formatting
-- [md-to-word](.github/skills/md-to-word/SKILL.md) — Document conversion
-- [dissertation-defense](.github/skills/dissertation-defense/SKILL.md) — Defense preparation
+- [literature-review](../literature-review/SKILL.md) — Systematic search
+- [citation-management](../citation-management/SKILL.md) — APA formatting
+- [md-to-word](../md-to-word/SKILL.md) — Document conversion
+- [dissertation-defense](../dissertation-defense/SKILL.md) — Defense preparation

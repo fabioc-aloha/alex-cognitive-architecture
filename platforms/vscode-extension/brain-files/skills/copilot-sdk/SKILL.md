@@ -3,6 +3,7 @@ name: copilot-sdk
 description: Build applications powered by GitHub Copilot using the Copilot SDK — session management, custom tools, streaming, hooks, MCP servers, BYOK, deployment patterns
 tier: standard
 applyTo: '**/copilot*,**/*copilot-sdk*,**/*github-copilot*'
+currency: 2025-01-01
 ---
 
 # GitHub Copilot SDK
@@ -19,7 +20,7 @@ The SDK wraps the Copilot CLI via JSON-RPC, providing session management, custom
 
 - **GitHub Copilot CLI** installed and authenticated (`copilot --version`)
 - **GitHub Copilot subscription** (Individual, Business, or Enterprise) — not required for BYOK
-- **Runtime:** Node.js 18+ / Python 3.8+ / Go 1.21+ / .NET 8.0+
+- **Runtime:** Node.js 18+ / Python 3.10+ / Go 1.21+ / .NET 8.0+
 
 ## Installation
 

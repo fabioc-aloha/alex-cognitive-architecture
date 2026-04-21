@@ -3,6 +3,7 @@ name: vscode-configuration-validation
 description: Validate VS Code extension manifest against runtime code usage
 tier: standard
 applyTo: '**/package.json,**/.vscode/**,**/tsconfig*'
+currency: 2025-01-01
 ---
 
 # VS Code Extension Configuration Validation

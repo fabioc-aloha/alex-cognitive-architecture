@@ -8,6 +8,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
+import { escHtml, escAttr } from "./htmlUtils.js";
 
 // ── Types ─────────────────────────────────────────────────────────
 
@@ -23,6 +24,7 @@ export interface ScheduledTask {
   muscle?: string;
   muscleArgs?: string[];
   target?: string;
+  dependsOn?: string[];
 }
 
 interface ScheduledTasksConfig {
@@ -162,15 +164,123 @@ interface RunInfo {
   conclusion?: string;
 }
 
-/** In-memory map of taskId → current workflow run info. */
-const activeRuns = new Map<string, RunInfo>();
+/** Backing store for run state — persists across reloads when initialized. */
+let runStore: vscode.Memento | null = null;
+const RUNS_KEY = "alex.scheduledRuns";
+
+/** Initialize persistent run store. Call from activate(). */
+export function initRunStore(state: vscode.Memento): void {
+  runStore = state;
+}
+
+function getRunMap(): Record<string, RunInfo> {
+  return runStore?.get<Record<string, RunInfo>>(RUNS_KEY) ?? {};
+}
+
+function setRunMap(map: Record<string, RunInfo>): void {
+  if (runStore) void runStore.update(RUNS_KEY, map);
+}
 
 export function getRunInfo(taskId: string): RunInfo | undefined {
-  return activeRuns.get(taskId);
+  return getRunMap()[taskId];
 }
 
 export function clearRunInfo(taskId: string): void {
-  activeRuns.delete(taskId);
+  const map = getRunMap();
+  delete map[taskId];
+  setRunMap(map);
+}
+
+/** Update run info (used by dispatchAndMonitor). */
+function setRunInfo(taskId: string, info: RunInfo): void {
+  const map = getRunMap();
+  map[taskId] = info;
+  setRunMap(map);
+}
+
+// ── Dependency Resolution ─────────────────────────────────────────
+
+/**
+ * Check whether a task's dependencies are satisfied.
+ * A dependency is satisfied if its last run completed successfully
+ * (i.e., it has a "completed" status in the run store or a lastRun in state).
+ */
+export function checkDependencies(
+  task: ScheduledTask,
+  allTasks: ScheduledTask[],
+  workspaceRoot: string,
+): { satisfied: boolean; blocking: string[] } {
+  if (!task.dependsOn || task.dependsOn.length === 0) {
+    return { satisfied: true, blocking: [] };
+  }
+
+  const state = getTaskState(workspaceRoot);
+  const blocking: string[] = [];
+
+  for (const depId of task.dependsOn) {
+    const depTask = allTasks.find((t) => t.id === depId);
+    if (!depTask) {
+      blocking.push(`${depId} (not found)`);
+      continue;
+    }
+
+    // Check persisted run status first
+    const runInfo = getRunInfo(depId);
+    if (runInfo) {
+      if (runInfo.status === "failure" || runInfo.status === "error" || runInfo.status === "cancelled") {
+        blocking.push(`${depId} (${runInfo.status})`);
+      } else if (runInfo.status !== "completed") {
+        blocking.push(`${depId} (${runInfo.status})`);
+      }
+      // "completed" means satisfied — continue
+      continue;
+    }
+
+    // Fall back to persisted state — if never run, it's blocking
+    if (!state[depId]?.lastRun) {
+      blocking.push(`${depId} (never run)`);
+    }
+  }
+
+  return { satisfied: blocking.length === 0, blocking };
+}
+
+/**
+ * Topological sort of tasks respecting dependsOn.
+ * Returns tasks in safe execution order. Cycles are detected and
+ * offending tasks are appended at the end.
+ */
+export function topologicalSort(tasks: ScheduledTask[]): ScheduledTask[] {
+  const taskMap = new Map(tasks.map((t) => [t.id, t]));
+  const visited = new Set<string>();
+  const visiting = new Set<string>(); // cycle detection
+  const sorted: ScheduledTask[] = [];
+
+  function visit(id: string): void {
+    if (visited.has(id)) return;
+    if (visiting.has(id)) return; // cycle — skip
+    visiting.add(id);
+
+    const task = taskMap.get(id);
+    if (task?.dependsOn) {
+      for (const depId of task.dependsOn) {
+        if (taskMap.has(depId)) visit(depId);
+      }
+    }
+
+    visiting.delete(id);
+    visited.add(id);
+    if (task) sorted.push(task);
+  }
+
+  for (const task of tasks) visit(task.id);
+
+  // Append any unvisited (cycle participants) at the end
+  for (const task of tasks) {
+    if (!visited.has(task.id)) sorted.push(task);
+  }
+
+  return sorted;
 }
 
 /** Parse "owner/repo" from a GitHub URL. */
@@ -184,13 +294,13 @@ function parseOwnerRepo(repoUrl: string): { owner: string; repo: string } | unde
  * Dispatch a workflow via GitHub Actions API and poll until completion.
  *
  * Uses VS Code's built-in GitHub authentication provider — no PAT needed.
- * Returns a dispose function to stop polling.
+ * Returns a Disposable to cancel polling (push into context.subscriptions).
  */
 export async function dispatchAndMonitor(
   repoUrl: string,
   taskId: string,
   onUpdate: (info: RunInfo) => void,
-): Promise<void> {
+): Promise<vscode.Disposable> {
   const parsed = parseOwnerRepo(repoUrl);
   if (!parsed) throw new Error("Cannot parse GitHub owner/repo from URL");
 
@@ -208,7 +318,7 @@ export async function dispatchAndMonitor(
   };
 
   // Mark as queued
-  activeRuns.set(taskId, { status: "queued" });
+  setRunInfo(taskId, { status: "queued" });
   onUpdate({ status: "queued" });
 
   // Capture timestamp before dispatch to filter runs
@@ -225,7 +335,7 @@ export async function dispatchAndMonitor(
   if (!dispatchRes.ok) {
     const body = await dispatchRes.text();
     const info: RunInfo = { status: "error" };
-    activeRuns.set(taskId, info);
+    setRunInfo(taskId, info);
     onUpdate(info);
     throw new Error(`Dispatch failed (${dispatchRes.status}): ${body}`);
   }
@@ -241,7 +351,7 @@ export async function dispatchAndMonitor(
     attempts++;
     if (attempts > maxAttempts) {
       const info: RunInfo = { status: "error" };
-      activeRuns.set(taskId, info);
+      setRunInfo(taskId, info);
       onUpdate(info);
       return;
     }
@@ -265,7 +375,7 @@ export async function dispatchAndMonitor(
         runUrl: run.html_url,
         conclusion: run.conclusion ?? undefined,
       };
-      activeRuns.set(taskId, info);
+      setRunInfo(taskId, info);
       onUpdate(info);
 
       // Keep polling if not terminal
@@ -277,13 +387,17 @@ export async function dispatchAndMonitor(
     }
   };
 
+  let cancelled = false;
   const timers: ReturnType<typeof setTimeout>[] = [];
   const schedulePoll = (): void => {
+    if (cancelled) return;
     timers.push(setTimeout(() => void poll(), pollInterval));
   };
 
   // Start polling after a short delay (GitHub needs a moment to create the run)
   timers.push(setTimeout(() => void poll(), 3_000));
+
+  return { dispose: () => { cancelled = true; timers.forEach(clearTimeout); } };
 }
 
 // ── Loader ────────────────────────────────────────────────────────
@@ -418,13 +532,37 @@ function workflowPath(workspaceRoot: string, taskId: string): string {
   return path.join(workflowDir(workspaceRoot), `scheduled-${taskId}.yml`);
 }
 
+/** Sanitize a string for safe interpolation in YAML values (single-line). */
+function sanitizeForYaml(value: string): string {
+  return value.replace(/[\\"`$!#&|;(){}<>]/g, "");
+}
+
+/** Validate a task ID contains only safe characters (alphanumeric + hyphen). */
+function validateTaskId(id: string): string {
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)) {
+    throw new Error(`Invalid task ID: "${id}". Must be lowercase alphanumeric with hyphens.`);
+  }
+  return id;
+}
+
+/** Validate a cron expression contains only safe characters (digits, spaces, asterisks, commas, slashes, hyphens). */
+function validateCron(cron: string): string {
+  if (!/^[0-9*\/,\- ]+$/.test(cron)) {
+    throw new Error(`Invalid cron expression: "${cron}".`);
+  }
+  return cron;
+}
+
 function agentWorkflowYaml(task: ScheduledTask): string {
+  const safeName = sanitizeForYaml(task.name);
+  const safeId = validateTaskId(task.id);
+  const safeCron = validateCron(task.schedule);
   return `# Auto-generated — do not edit manually
-name: "Scheduled: ${task.name}"
+name: "Scheduled: ${safeName}"
 
 on:
   schedule:
-    - cron: "${task.schedule}"
+    - cron: "${safeCron}"
   workflow_dispatch: {}
 
 permissions:
@@ -443,30 +581,39 @@ jobs:
         env:
           GH_TOKEN: \${{ github.token }}
         run: |
-          OPEN=$(gh issue list --label automated,${task.id} --state open --json number --jq 'length')
+          OPEN=$(gh issue list --label automated,${safeId} --state open --json number --jq 'length')
           echo "open=$OPEN" >> $GITHUB_OUTPUT
 
       - name: Create issue for Copilot
         if: steps.check.outputs.open == '0'
         env:
           GH_TOKEN: \${{ github.token }}
+          TASK_NAME: "${safeName}"
+          PROMPT_FILE: "${sanitizeForYaml(task.promptFile ?? "")}"
         run: |
           gh issue create \\
-            --title "${task.name}: $(date -u +%Y-%m-%d-%H%M)" \\
-            --body-file "${task.promptFile}" \\
-            --label automated,${task.id} \\
+            --title "$TASK_NAME: $(date -u +%Y-%m-%d-%H%M)" \\
+            --body-file "$PROMPT_FILE" \\
+            --label automated,${safeId} \\
             --assignee copilot
 `;
 }
 
 function directWorkflowYaml(task: ScheduledTask): string {
-  const args = task.muscleArgs ? ` ${task.muscleArgs.join(" ")}` : "";
+  const safeName = sanitizeForYaml(task.name);
+  const safeDesc = sanitizeForYaml(task.description);
+  const safeMuscle = task.muscle ? sanitizeForYaml(task.muscle) : "";
+  const safeArgs = task.muscleArgs
+    ? ` ${task.muscleArgs.map(sanitizeForYaml).join(" ")}`
+    : "";
+  const safeId = validateTaskId(task.id);
+  const safeCron = validateCron(task.schedule);
   return `# Auto-generated — do not edit manually
-name: "Scheduled: ${task.name}"
+name: "Scheduled: ${safeName}"
 
 on:
   schedule:
-    - cron: "${task.schedule}"
+    - cron: "${safeCron}"
   workflow_dispatch: {}
 
 permissions:
@@ -483,24 +630,26 @@ jobs:
         with:
           node-version: 22
 
-      - name: Run ${task.id}
-        run: node ${task.muscle}${args}
+      - name: Run ${safeId}
+        run: node ${safeMuscle}${safeArgs}
 
       - name: Create PR if changes exist
         env:
           GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          TASK_NAME: "${safeName}"
+          TASK_DESC: "${safeDesc}"
         run: |
           git diff --quiet && exit 0
-          BRANCH="auto/${task.id}-$(date -u +%s)"
+          BRANCH="auto/${safeId}-$(date -u +%s)"
           git checkout -b "$BRANCH"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "chore(scheduled): ${task.id} $(date -u +%Y-%m-%d)"
+          git commit -m "chore(scheduled): ${safeId} $(date -u +%Y-%m-%d)"
           git push origin "$BRANCH"
           gh pr create \\
-            --title "Scheduled: ${task.name} $(date -u +%Y-%m-%d)" \\
-            --body "## Automated Task: ${task.name}\\n\\n${task.description}\\n\\n---\\n\\n*Generated by scheduled-${task.id}.yml*" \\
+            --title "Scheduled: $TASK_NAME $(date -u +%Y-%m-%d)" \\
+            --body "## Automated Task: $TASK_NAME\\n\\n$TASK_DESC\\n\\n---\\n\\n*Generated by scheduled-${safeId}.yml*" \\
             --label automated \\
             --base main
 `;
@@ -600,6 +749,17 @@ export function renderScheduledTasks(
         ? `<span class="schedule-last-run" title="Last run: ${escAttr(taskState[t.id].lastRun)}"><span class="codicon codicon-history"></span> ${timeAgo(taskState[t.id].lastRun)}</span>`
         : "";
 
+      // Dependency indicator
+      let depsHtml = "";
+      if (t.dependsOn && t.dependsOn.length > 0 && workspaceRoot) {
+        const depCheck = checkDependencies(t, tasks, workspaceRoot);
+        if (!depCheck.satisfied) {
+          depsHtml = `<div class="schedule-task-deps schedule-deps-blocked"><span class="codicon codicon-lock"></span> Blocked by: ${escHtml(depCheck.blocking.join(", "))}</div>`;
+        } else {
+          depsHtml = `<div class="schedule-task-deps schedule-deps-ok"><span class="codicon codicon-pass"></span> Dependencies met</div>`;
+        }
+      }
+
       return `
       <div class="schedule-task ${t.enabled ? "enabled" : "disabled"}" data-task-id="${escAttr(t.id)}">
         <div class="schedule-task-header">
@@ -612,6 +772,7 @@ export function renderScheduledTasks(
           ${lastRunHtml}
         </div>
         <div class="schedule-task-desc">${escHtml(t.description)}</div>
+        ${depsHtml}
         <div class="schedule-task-actions">
           ${runNowBtn}
           ${viewRunBtn}
@@ -806,6 +967,11 @@ export async function addTaskWizard(workspaceRoot: string): Promise<boolean> {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+
+  if (!id) {
+    vscode.window.showErrorMessage("Task name must contain at least one letter or digit.");
+    return false;
+  }
 
   const task: ScheduledTask = {
     id,
@@ -1090,6 +1256,28 @@ export const SCHEDULE_CSS = `
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+    /* Dependency indicators */
+    .schedule-task-deps {
+      font-size: var(--font-sm, 11px);
+      margin-top: var(--spacing-xs, 4px);
+      margin-left: 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-xs, 4px);
+    }
+    .schedule-deps-blocked {
+      color: var(--vscode-editorWarning-foreground, #cca700);
+    }
+    .schedule-deps-blocked .codicon {
+      font-size: 11px;
+    }
+    .schedule-deps-ok {
+      color: var(--vscode-testing-iconPassed, #22c55e);
+      opacity: 0.75;
+    }
+    .schedule-deps-ok .codicon {
+      font-size: 11px;
+    }
     .schedule-actions {
       display: flex;
       flex-direction: column;
@@ -1105,23 +1293,4 @@ export const SCHEDULE_CSS = `
     }
 `;
 
-// ── Utilities (duplicated to keep module self-contained) ──────────
 
-function escHtml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-function escAttr(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;")
-    .replace(/`/g, "&#96;")
-    .replace(/\\/g, "&#92;");
-}

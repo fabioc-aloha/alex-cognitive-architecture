@@ -3,6 +3,7 @@ name: healthcare-informatics
 description: Clinical terminology, healthcare compliance (HIPAA/HITECH), patient safety, and health data management.
 tier: extended
 applyTo: '**/*health*,**/*clinical*,**/*medical*,**/*patient*,**/*hipaa*,**/*ehr*,**/*pharma*'
+currency: 2025-01-01
 ---
 
 # Healthcare Informatics Skill
@@ -79,13 +80,13 @@ PHI is any individually identifiable health information. The 18 HIPAA identifier
     }
   ],
   "gender": "male",
-  "birthDate": "1968-03-07",
+  "birthDate": "1985-06-15",
   "address": [
     {
       "use": "home",
-      "city": "Charlotte",
-      "state": "NC",
-      "postalCode": "28278"
+      "city": "Springfield",
+      "state": "IL",
+      "postalCode": "62704"
     }
   ]
 }

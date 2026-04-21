@@ -3,6 +3,7 @@ name: appropriate-reliance
 description: "Calibrated human-AI collaboration with creative latitude — trust calibrated to reliability, creativity preserved with validation."
 tier: core
 applyTo: '**/*reliance*,**/*calibrat*,**/*trust*,**/*collaborat*'
+currency: 2026-04-20
 ---
 
 # Appropriate Reliance Skill (v2.0)

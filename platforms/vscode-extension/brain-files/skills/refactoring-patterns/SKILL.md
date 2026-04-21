@@ -3,6 +3,7 @@ name: refactoring-patterns
 description: Safe transformations — same behavior, better structure.
 tier: core
 applyTo: '**/*refactor*,**/*extract*,**/*rename*,**/*inline*'
+currency: 2026-04-20
 ---
 
 # Refactoring Patterns Skill

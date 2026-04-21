@@ -4,6 +4,7 @@ description: "Knowledge consolidation — transform session learnings into perma
 tier: standard
 disable-model-invocation: true
 applyTo: '**/*meditat*,**/*reflect*,**/*consolidat*'
+currency: 2025-01-01
 ---
 
 # Meditation Skill

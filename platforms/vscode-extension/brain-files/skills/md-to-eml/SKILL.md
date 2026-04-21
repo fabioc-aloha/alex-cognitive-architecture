@@ -5,6 +5,7 @@ tier: extended
 inheritance: inheritable
 applyTo: '**/*.eml,**/*email*,**/*newsletter*'
 muscle: .github/muscles/md-to-eml.cjs
+currency: 2025-01-01
 ---
 
 # Markdown to Email Conversion

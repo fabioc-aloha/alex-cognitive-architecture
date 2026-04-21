@@ -3,6 +3,7 @@ name: "research-first-development"
 description: "Build knowledge bases that build software — research before code, teach before execute"
 tier: standard
 applyTo: '**/*research*,**/*knowledge*,**/*learning*'
+currency: 2025-01-01
 ---
 
 # Research-First Development

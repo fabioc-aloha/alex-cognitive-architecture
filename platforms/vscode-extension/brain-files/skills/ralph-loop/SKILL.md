@@ -4,13 +4,14 @@ description: Iterative quality improvement — generate, evaluate, feedback, re-
 applyTo: '**/*quality*,**/*eval*,**/*iterate*,**/*ralph*'
 domain: Quality Engineering
 category: Iterative Improvement
-tier: advanced
+tier: standard
 dependencies:
   - testing-strategies
   - code-review
 created: 2026-04-14
 author: Alex
 source: microsoft/skills (Sensei technique by Shayne Boyer)
+currency: 2025-01-01
 ---
 
 # Ralph Loop — Iterative Quality Improvement

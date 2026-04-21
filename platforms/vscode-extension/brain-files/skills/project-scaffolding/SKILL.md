@@ -3,6 +3,7 @@ name: project-scaffolding
 description: First impressions matter. Set projects up for success.
 tier: standard
 applyTo: '**/*scaffold*,**/*init*,**/*new*,**/*create*,**/README*'
+currency: 2025-01-01
 ---
 
 # Project Scaffolding Skill

@@ -1,7 +1,14 @@
 #!/usr/bin/env node
-// H4: Builder auto-compile reminder
-// Agent-scoped PostToolUse hook for Builder mode.
-// After a .ts file edit, reminds to compile for immediate error feedback.
+/**
+ * H4: Builder auto-compile reminder
+ * Agent-scoped PostToolUse hook for Builder mode.
+ * After a .ts file edit, reminds to compile for immediate error feedback.
+ *
+ * Input:  JSON via stdin (tool_name, tool_input)
+ * Output: JSON to stdout with compile reminder if .ts file edited.
+ *
+ * @currency 2026-04-20
+ */
 'use strict';
 
 const WRITE_TOOLS = new Set([

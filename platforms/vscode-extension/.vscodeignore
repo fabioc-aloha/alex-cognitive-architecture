@@ -3,16 +3,12 @@
 
 # Bundled output
 !dist/extension.js
-!dist/extension.js.map
 
 # Assets
 !assets/icon.png
-!assets/logo-mono.svg
+!assets/sidebar-icon.svg
 
-# Walkthrough media
-!media/walkthrough/**
-
-# Brain files for workspace bootstrap
+# Brain files (synced at package time by sync-brain-files.cjs)
 !brain-files/**
 
 # Metadata
@@ -23,13 +19,8 @@
 
 # Exclude dev artifacts
 src/**
-tests/**
 node_modules/**
 tsconfig.json
+MASTER-ALEX-PROTECTED.json
 esbuild.mjs
-sync-brain-files.cjs
-*.vsix
-dist/**/*.d.ts
-dist/**/*.d.ts.map
-**/.env
-**/.env.*
+vitest.config.ts

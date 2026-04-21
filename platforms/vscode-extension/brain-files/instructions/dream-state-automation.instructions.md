@@ -2,6 +2,7 @@
 applyTo: "**/*dream*,**/*brain-qa*"
 description: "Automated architecture maintenance and dream state processing protocols"
 application: "When running dream protocol or troubleshooting architecture health"
+currency: 2025-01-01
 ---
 
 # Dream Protocol

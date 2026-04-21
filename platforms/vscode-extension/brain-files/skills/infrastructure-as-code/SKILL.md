@@ -3,6 +3,7 @@ name: infrastructure-as-code
 description: '**Domain**: DevOps & Cloud Engineering'
 tier: standard
 applyTo: '**/*iac*,**/*.bicep,**/*.tf,**/*terraform*,**/*pulumi*'
+currency: 2025-01-01
 ---
 
 # Infrastructure as Code Skill
@@ -62,11 +63,14 @@ Manual Infrastructure          Infrastructure as Code
 | Tool | Provider | Language | State | Best For |
 |------|----------|----------|-------|----------|
 | **Terraform** | HashiCorp | HCL | Remote/Local | Multi-cloud, mature ecosystem |
+| **OpenTofu** | Linux Foundation | HCL | Remote/Local | OSS Terraform fork (BSL-free), drop-in replacement |
 | **Bicep** | Microsoft | Bicep DSL | Azure-managed | Azure-native, simple syntax |
 | **Pulumi** | Pulumi | TS/Python/Go/C# | Managed/Self | Developers who prefer real languages |
 | **CloudFormation** | AWS | YAML/JSON | AWS-managed | AWS-only, deep integration |
 | **ARM Templates** | Microsoft | JSON | Azure-managed | Legacy Azure (prefer Bicep) |
 | **CDK** | AWS | TS/Python/Java | AWS-managed | Developers on AWS |
+
+> **Azure Verified Modules (AVM)**: For Bicep and Terraform, prefer [AVM](https://azure.github.io/Azure-Verified-Modules/) — Microsoft-maintained, tested, WAF-aligned modules. Reduces boilerplate and enforces best practices. Tracked at `registry.terraform.io/namespaces/Azure` and Bicep public module registry.
 
 ---
 

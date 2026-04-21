@@ -3,6 +3,7 @@ sem: 1
 description: Design an interactive dashboard layout with KPIs, charts, filters, and drill-down
 application: "When requesting dashboard workflows"
 agent: Alex
+currency: 2025-01-01
 ---
 
 # /dashboard - Dashboard Design

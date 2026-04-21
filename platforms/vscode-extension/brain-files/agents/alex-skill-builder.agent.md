@@ -24,6 +24,7 @@ handoffs:
     agent: Alex
     prompt: Returning to main cognitive mode.
     send: true
+currency: 2026-04-20
 ---
 
 # Alex Skill Builder Mode

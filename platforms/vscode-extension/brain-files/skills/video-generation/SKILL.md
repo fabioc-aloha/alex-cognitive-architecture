@@ -4,6 +4,7 @@ description: "AI video generation via Replicate — 17 models, editing, and prod
 tier: standard
 applyTo: '**/*video*,**/*animate*,**/*clip*'
 $schema: ../SKILL-SCHEMA.json
+currency: 2025-01-01
 ---
 
 # Video Generation Skill

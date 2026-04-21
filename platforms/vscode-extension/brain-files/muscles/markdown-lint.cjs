@@ -20,6 +20,7 @@
  *   node markdown-lint.cjs FILE.md --target email     # Validate for email conversion
  *   node markdown-lint.cjs FILE.md --fix              # Auto-fix what we can
  *   node markdown-lint.cjs FILE.md --json             # JSON output
+ * @currency 2026-04-20
  */
 'use strict';
 

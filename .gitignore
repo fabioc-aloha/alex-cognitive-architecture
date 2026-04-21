@@ -5,7 +5,7 @@ node_modules/
 dist/
 *.vsix
 
-# Brain files (generated at package time by sync-brain-files.cjs)
+# Brain files copy (generated at package time by sync-brain-files.cjs)
 platforms/vscode-extension/brain-files/
 
 # OS files

@@ -3,6 +3,7 @@ name: "dialog-engineering"
 description: "CSAR Loop and structured conversation patterns for effective AI dialog -- Clarify, Summarize, Act, Reflect"
 tier: core
 applyTo: '**/*dialog*,**/*conversation*,**/*csar*,**/*prompt*'
+currency: 2026-04-20
 ---
 
 # Dialog Engineering

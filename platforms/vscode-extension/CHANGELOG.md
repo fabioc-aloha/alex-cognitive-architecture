@@ -7,6 +7,148 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.1.0] - 2026-04-21
+
+### Added
+
+- **Autopilot v2**: Custom cloud agents, cross-lane seed tasks, GitHub Actions dispatch, Recent Sessions panel, Pending Reviews panel, status bar badge, task dependency chains, `/autopilot` chat command
+- **Competition Response**: Agent activity TreeView with real-time status, competitive health pulse, news feed articles, prompt priority engine with layer weights
+- **RAI Safety Framework**: Sycophancy detection, gaslighting defense, blame-shifting protection, emotional dependency prevention, session boundary awareness
+- **Privacy & Data Governance**: PII memory filter at write boundaries, cross-project data isolation, consent-first workspace mutations, data retention policies
+- **Brain Evolution**: Organic evolution policy, trifecta audit protocol, heir skill promotion, currency audit stamps, skill activation index
+- **AI-Memory Bootstrap**: Feedback and announcements flows operational, AFCP artifact lifecycle with provenance tracking, knowledge artifact store
+
+### Changed
+
+- **Documentation updates**: Cognitive architecture, memory systems, working-with-alex, and heir setup guides updated for v8.1 features
+- **Brain inventory**: 195 skills, 159 instructions, 37 prompts, 22 agents
+
+---
+
+## [8.0.3] - 2026-04-20
+
+### Added
+
+- **Run Now button**: Autopilot task cards now have a 🚀 button that opens the GitHub Actions workflow dispatch page — run tasks in the cloud on demand, same as the scheduled execution.
+- **Last-run tracking**: Each Autopilot task displays when it was last executed. Timestamps persist in `.github/config/.scheduled-tasks-state.json` and survive extension reloads.
+- **Toggle as pause/resume**: Enabled tasks show a pause button; disabled tasks show a resume button — clearer intent than a generic toggle.
+
+### Changed
+
+- **Brand-aligned UI across all three tabs**: Every color in the sidebar now uses the Alex brand palette — Indigo 500 (`#6366f1`) as the primary accent, with brand green (`#22c55e`), yellow (`#eab308`), red (`#ef4444`), and blue (`#3b82f6`) for semantic indicators.
+- **Autopilot card redesign**: Status pills (Active/Paused) replace status dots; action buttons grouped at card bottom with semantic hover colors (green for run/resume, orange for pause, red for delete); hover box-shadow on cards; mode icons tint indigo when active; description line-clamped to 2 lines.
+- **Loop tab polish**: "Chat with Alex" CTA button uses brand indigo instead of VS Code default blue; Health Pulse status dot, nudge, and action button colors aligned to brand palette; expanded groups tint their icon to indigo; button hover shows subtle indigo left-border indicator.
+- **Setup tab polish**: Same group and button polish as Loop — consistent indigo accent, expanded icon tint, and button hover indicators across all six groups.
+- **Active tab indicator**: Selected tab now has a subtle indigo background tint in addition to the bottom border.
+- **Accent-tinted scrollbar**: Sidebar scrollbar uses indigo-tinted track for brand cohesion.
+
+---
+
+## [8.0.2] - 2026-04-20
+
+### Fixed
+
+- **Sidebar UI polish**: Design tokens, 44px touch targets for accessibility, vertical button stacking, visible backgrounds and borders on task buttons. Multiple iterations to restore Autopilot card clarity — readable schedules, consistent descriptions.
+- **Learn section URLs**: Corrected broken links and added `learnai` domain to URL allowlist in sidebar.
+- **Empty autopilot on fresh heirs**: Heirs now ship with empty autopilot task list instead of erroring.
+- **Sync exclusions**: `visual-memory/`, `audio-memory/`, and `examples/` subdirectories excluded from heir brain sync — reduces heir payload size.
+- **upgrade-brain version detection**: Reads version from `package.json` instead of hardcoded value.
+
+### Added
+
+- **News feed monitoring**: Autopilot task for competition and ecosystem news tracking with structured watch format.
+- **Competition analysis**: Feature comparison matrix (16 capabilities × 9 tools), critical analysis with bias disclosure, unique differentiators table. Archived at `master-wiki/news-feed/competition/`.
+- **RAI privacy audit**: `RAI-AUDIT-v8.1.0.md` — data flow analysis across 9 memory tiers, PII exposure assessment, behavioral profiling risks, and remediation roadmap.
+- **v8.1.0 plan**: 12-lane parallel development plan (83 tasks) covering heir slim, AFCP leverage, proactive awareness, knowledge scoring, fleet intel, brain evolution, RAI safety, privacy governance, docs, autopilot v2, extension polish, and competition response.
+- **Brain currency audit**: 22 core skills stamped with 2026-04-20 currency dates.
+- **Blog posts #8-#11**: Four new posts with header images.
+- **Heir wiki tutorials**: 5 new tutorials with hero images, LearnAI domain tutorials, sidebar links.
+- **Documentation count sync**: Updated brain inventory counts (194 skills, 150 instructions, 64 prompts) across 8+ documentation surfaces.
+
+### Changed
+
+- **Sidebar modernization**: WelcomeViewProvider and scheduledTasks rewritten with design token system — CSS custom properties for colors, spacing, and typography. Autopilot task cards simplified from verbose badge layout to clean card format.
+
+---
+
+## [8.0.1] - 2026-04-19
+
+### Fixed
+
+- **brain-qa.cjs crash on fresh heirs**: Fixed `TypeError: Cannot read properties of undefined (reading 'skills')` when running `brain-qa.cjs` on heir projects without an existing `brain-health-grid.md`. The `readExistingSemValues()` function now returns the correct `{ semValues, staleValues }` structure when the grid file doesn't exist.
+
+### Added
+
+- **Signal-driven autopilot mechanism**: New two-phase pattern for heirs to consume external signals (search logs, analytics, feedback) in autopilots. Scheduled collector task queries signal source daily → writes `.github/signals/suggestions.json` → SessionStart hook reads local cache (fast, 5s timeout safe). Full implementation guide in `sidebar-customization` skill.
+- **Markdown preview CSS**: Added `.github/config/markdown-light.css` — GitHub-flavored markdown preview theme that syncs to heirs. Heirs opt-in via `.vscode/settings.json` `markdown.styles` setting.
+- **Sidebar customization trifecta**: New `sidebar-customization` skill + instruction + `customize-sidebar.prompt.md` teaches heirs how to customize Loop tab buttons (`loop-menu.json`) and Autopilot scheduled tasks (`scheduled-tasks.json`).
+- **Editorial critical thinking guidance**: Added "Editorial Passes Require Critical Thinking" section to `academic-paper-drafting.instructions.md`. Complex style rules (APA7 verb tense, citation format) are judgment tasks, not pattern-matching — now documented with alternative hypotheses, evidence needed, and falsifiability checks.
+- **Thesis/dissertation applyTo**: Expanded `academic-paper-drafting.instructions.md` to trigger on `**/*thesis*,**/*dissertation*` paths.
+- **FAQ: Agent picker clarification**: Added FAQ entry explaining that VS Code Copilot's `@` agent dropdown is a built-in feature — not customizable via Alex. Clarified the difference between Loop tab buttons (customizable via `loop-menu.json`) and the agent picker.
+
+### Changed
+
+- **Documentation: Natural language first**: Revised Getting-Started, User-Manual, and FAQ to use natural language examples throughout. Moved `@alex` prefix and `/slash` command syntax to a new "Advanced Syntax" section at the end of the User Manual for power users.
+- **Heir feedback channel tested**: First production use of `AI-Memory/feedback/` for heir-to-master escalations. Three issues reported and resolved within one session.
+
+---
+
+## [8.0.0] - 2026-04-19
+
+### Major Release — Clean-Room Extension Rebuild
+
+The extension has been completely rebuilt from scratch with a modern, maintainable architecture. Every line of TypeScript is new. The cognitive architecture has been modernized with consistent terminology and a trifecta-based design.
+
+### Added
+
+- **Health Pulse System**: Real-time brain health monitoring with status computation (healthy/attention/critical), connection health scoring, ritual tracking, and architecture inventory
+- **3-Tab Sidebar**: Loop (creative workflow), Autopilot (scheduled maintenance), Setup (configuration) — data-driven, declarative button definitions
+- **Creative Loop Integration**: Ideate → Plan → Build → Test → Release → Improve workflow in sidebar
+- **Autopilot v1**: Scheduled task system for recurring brain maintenance — task cards, enable/disable toggles, interval configuration, and workflow generator for custom tasks
+- **Chat Participant**: `@alex` in Copilot Chat with context-aware routing
+- **Architecture Stats**: Dynamic skill/instruction/prompt/agent counts in Loop tab
+- **Project Phase Detection**: Auto-detects project lifecycle phase for contextual workflow suggestions
+- **Loop Config Generator**: Generates custom loop menu configurations from project analysis
+- **AI-Generated Extension Icon**: Hand-painted watercolor style icon with neural network motif in teal/amber brand colors
+
+### Changed
+
+- **Complete Terminology Modernization**: "Neural" → "Architecture", "Synapse" → "Connection" across 28 skills, 7 prompts, and all documentation
+- **Ritual Hierarchy Clarified**: Meditation (foundational) → Dream (diagnostic) → Self-Actualize (deep assessment)
+- **Cognitive Architecture v3**: Modern trifecta-based design (skill + instruction + muscle = atomic capability)
+- **Muscles Decoupled**: CLI tools (dream-cli.cjs, pptxgen-cli.cjs) rewritten as standalone — no extension dependencies
+- **Repo Refactor**: Mono-repo structure with private master brain and public heir distribution
+
+### Removed
+
+- **Neural Terminology**: All references to "neural maintenance", "synapses" replaced with modern equivalents
+- **Broken Import Dependencies**: CLI tools no longer import from extension codebase
+- **Legacy Build System**: Replaced webpack with esbuild
+
+### Documentation
+
+- **Wiki**: Getting Started, User Manual, Heir Project Setup, FAQ, Autopilot — all published to GitHub Wiki
+- **Blog #7**: "Every Age I'll Never Be" published with portrait gallery
+- **Migration Guide**: v7 → v8 upgrade instructions for existing users
+
+### Technical
+
+- **esbuild**: Modern build system (49KB bundle)
+- **TypeScript Strict**: Clean compilation with zero errors
+- **Zero Runtime Dependencies**: Extension uses only VS Code API and Node.js built-ins
+- **97 Tests**: Full test coverage for Health Pulse, frecency, taglines, nudge engine
+
+### Brain Inventory (v8.0.0)
+
+| Component | Count |
+|-----------|-------|
+| Skills | 182 |
+| Instructions | 138 |
+| Prompts | 61 |
+| Agents | 18 |
+
+---
+
 ## [8.0.0-alpha.0] - 2026-04-16
 
 ### 🚀 Major Release — Clean-Room Extension Rebuild

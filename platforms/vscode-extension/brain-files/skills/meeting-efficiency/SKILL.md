@@ -3,6 +3,7 @@ name: "meeting-efficiency"
 description: "Agenda design, time boxing, decision capture, async alternatives, and productive facilitation"
 tier: standard
 applyTo: '**/*meeting*,**/*agenda*,**/*facilitation*'
+currency: 2025-01-01
 ---
 
 # Skill: Meeting Efficiency

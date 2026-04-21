@@ -3,6 +3,7 @@ sem: 1
 description: "Generate or update ASCII project dashboard with parallel lanes"
 application: "When creating project trackers, dashboards, or visual progress reports"
 mode: agent
+currency: 2025-01-01
 ---
 
 # Create Project Dashboard

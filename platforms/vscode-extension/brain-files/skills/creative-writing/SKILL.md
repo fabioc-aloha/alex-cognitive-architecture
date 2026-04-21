@@ -3,6 +3,7 @@ name: creative-writing
 description: Patterns for fiction, narrative structure, character development, dialogue, and storytelling craft.
 tier: standard
 applyTo: '**/*fiction*,**/*story*,**/*narrative*,**/*dialogue*,**/*character*'
+currency: 2025-01-01
 ---
 
 # Creative Writing Skill

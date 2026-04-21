@@ -4,6 +4,7 @@ description: "Comprehensive Microsoft Graph API reference for M365 service integ
 tier: standard
 applyTo: '**/*graph*,**/*msal*,**/*oauth*,**/*entra*'
 user-invokable: false
+currency: 2025-01-01
 ---
 
 # Microsoft Graph API Skill
@@ -18,7 +19,7 @@ See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs a
 **Refresh triggers:**
 - Microsoft Graph API version updates
 - MSAL library major releases
-- Microsoft Entra ID to Microsoft Entra ID migration (completed)
+- Azure Active Directory to Microsoft Entra ID migration (completed)
 - New Graph scopes or permissions
 
 **Last validated:** February 2026 (Graph v1.0, MSAL 2.x)
@@ -340,7 +341,7 @@ Graph supports standard OData query parameters:
 | `$skip` | `?$skip=20` | Skip N results (not all APIs) |
 | `$expand` | `?$expand=manager` | Include related resources inline |
 | `$count` | `?$count=true` | Include total count in response |
-| `$search` | `?$search="displayName:Fabio"` | Full-text search |
+| `$search` | `?$search="displayName:Jane"` | Full-text search |
 
 **Combining parameters**:
 ```http

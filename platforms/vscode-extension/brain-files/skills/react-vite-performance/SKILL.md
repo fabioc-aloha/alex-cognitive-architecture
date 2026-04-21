@@ -3,11 +3,14 @@ name: react-vite-performance
 description: "React + Vite performance optimization — code splitting, lazy loading, bundle analysis, Web Vitals, and modern React patterns for fast web applications"
 tier: standard
 applyTo: '**/*react*,**/*vite*,**/vite.config*,**/*bundle*,**/*lazy*,**/*performance*'
+currency: 2025-01-01
 ---
 
 # React + Vite Performance Optimization
 
 > Fast by default, optimized by design — sub-300KB bundles and sub-2s load times.
+>
+> **Targets**: React 19+ / Vite 6+ | **Last validated**: April 2026
 
 ## Performance Targets
 
@@ -144,6 +147,18 @@ function UserCard({ user }: { user: User }) {
 const UserCard = React.memo(({ user }) => { ... });
 ```
 
+**Vite setup** — install `babel-plugin-react-compiler` and add to `vite.config.ts`:
+
+```typescript
+// vite.config.ts
+import react from '@vitejs/plugin-react';
+export default defineConfig({
+  plugins: [
+    react({ babel: { plugins: ['babel-plugin-react-compiler'] } }),
+  ],
+});
+```
+
 ### use() Hook for Data Loading
 
 ```typescript
@@ -257,8 +272,10 @@ const updateUser = useMutation({
 
 ## Web Vitals Monitoring
 
+> **INP replaced FID** as a Core Web Vital in March 2024. INP measures overall responsiveness (all interactions), not just the first one.
+
 ```typescript
-import { onCLS, onFID, onLCP, onFCP, onTTFB } from 'web-vitals';
+import { onCLS, onINP, onLCP, onFCP, onTTFB } from 'web-vitals';
 
 function reportMetric(metric: Metric) {
   analytics.track('web-vitals', {
@@ -269,7 +286,7 @@ function reportMetric(metric: Metric) {
 }
 
 onCLS(reportMetric);
-onFID(reportMetric);
+onINP(reportMetric);   // Interaction to Next Paint (replaced FID)
 onLCP(reportMetric);
 onFCP(reportMetric);
 onTTFB(reportMetric);

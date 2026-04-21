@@ -3,6 +3,7 @@ name: pptx-generation
 description: Programmatic PowerPoint creation via PptxGenJS with data-driven slides and Markdown conversion
 tier: extended
 applyTo: '**/*.pptx,**/*powerpoint*,**/*presentation*,**/*slide*'
+currency: 2025-01-01
 ---
 
 # PPTX Generation Skill

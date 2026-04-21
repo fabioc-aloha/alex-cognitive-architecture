@@ -3,6 +3,7 @@ name: counseling-psychology
 description: Therapeutic frameworks, assessment, ethical practice, and client documentation for counselors and psychologists.
 tier: extended
 applyTo: '**/*counsel*,**/*therap*,**/*psycholog*,**/*mental-health*,**/*wellbeing*,**/*wellness*'
+currency: 2025-01-01
 ---
 
 # Counseling Psychology Skill

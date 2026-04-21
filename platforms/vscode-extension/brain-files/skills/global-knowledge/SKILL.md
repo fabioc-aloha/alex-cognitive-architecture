@@ -3,6 +3,7 @@ name: "global-knowledge"
 description: "Cross-project knowledge search, pattern recognition, and insight management via unified AI-Memory"
 tier: standard
 applyTo: '**/*knowledge*,**/*insight*,**/*ai-memory*,**/*pattern*'
+currency: 2026-04-20
 ---
 
 # Global Knowledge Skill

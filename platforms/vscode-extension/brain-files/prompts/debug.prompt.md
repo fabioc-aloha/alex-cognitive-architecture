@@ -2,6 +2,7 @@
 description: Systematic debugging session — from error to fix
 application: When investigating build failures, test errors, runtime crashes, or unexpected behavior
 agent: Alex
+currency: 2025-01-01
 ---
 
 # /debug - Systematic Debugging

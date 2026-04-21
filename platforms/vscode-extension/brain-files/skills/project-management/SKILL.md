@@ -3,6 +3,7 @@ name: project-management
 description: "Alex project management patterns: rapid AI-assisted iteration, meditation-based retrospectives, session-focused work, and safety-first release gates."
 tier: standard
 applyTo: '**/*project*,**/*tracker*,**/*sprint*,**/*iteration*'
+currency: 2025-01-01
 ---
 
 # Project Management Skill

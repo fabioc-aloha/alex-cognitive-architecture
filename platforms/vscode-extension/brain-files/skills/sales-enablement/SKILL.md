@@ -3,6 +3,7 @@ name: sales-enablement
 description: Sales methodology, pipeline management, negotiation frameworks, and customer engagement patterns.
 tier: extended
 applyTo: '**/*sales*,**/*pipeline*,**/*prospect*,**/*deal*,**/*crm*,**/*quota*,**/*commission*,**/*lead*'
+currency: 2025-01-01
 ---
 
 # Sales Enablement Skill
