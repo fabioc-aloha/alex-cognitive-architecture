@@ -38,7 +38,24 @@ import * as os from "os";
 // ---------------------------------------------------------------------------
 
 const ALEX_HOME = path.join(os.homedir(), ".alex");
-const GLOBAL_KNOWLEDGE_PATH = path.join(ALEX_HOME, "global-knowledge");
+
+// AI-Memory lives in OneDrive for cross-surface sync.
+// Fallback chain: ALEX_AI_MEMORY env → OneDrive/AI-Memory → ~/.alex/global-knowledge
+function resolveAIMemoryPath(): string {
+  if (process.env.ALEX_AI_MEMORY) {
+    return process.env.ALEX_AI_MEMORY;
+  }
+  const oneDrive = process.env.OneDrive || process.env.ONEDRIVE;
+  if (oneDrive) {
+    const candidate = path.join(oneDrive, "AI-Memory");
+    if (fs.existsSync(candidate)) {
+      return candidate;
+    }
+  }
+  return path.join(ALEX_HOME, "global-knowledge");
+}
+
+const AI_MEMORY_PATH = resolveAIMemoryPath();
 
 // ---------------------------------------------------------------------------
 // Tool Definitions
@@ -446,8 +463,8 @@ async function memorySearch(
 
   // Search global knowledge
   if (memoryType === "all" || memoryType === "global") {
-    if (fs.existsSync(GLOBAL_KNOWLEDGE_PATH)) {
-      const gkFiles = findFiles(GLOBAL_KNOWLEDGE_PATH, "*.md");
+    if (fs.existsSync(AI_MEMORY_PATH)) {
+      const gkFiles = findFiles(AI_MEMORY_PATH, "*.md");
       for (const file of gkFiles) {
         const content = fs.readFileSync(file, "utf-8");
         if (content.toLowerCase().includes(lowerQuery)) {
@@ -537,9 +554,9 @@ async function architectureStatus(workspacePath?: string): Promise<string> {
   }
 
   // Count global knowledge
-  if (fs.existsSync(GLOBAL_KNOWLEDGE_PATH)) {
-    const patternsPath = path.join(GLOBAL_KNOWLEDGE_PATH, "patterns");
-    const insightsPath = path.join(GLOBAL_KNOWLEDGE_PATH, "insights");
+  if (fs.existsSync(AI_MEMORY_PATH)) {
+    const patternsPath = path.join(AI_MEMORY_PATH, "patterns");
+    const insightsPath = path.join(AI_MEMORY_PATH, "insights");
 
     if (fs.existsSync(patternsPath)) {
       status.globalKnowledge.patterns = findFiles(patternsPath, "*.md").length;
@@ -578,21 +595,21 @@ async function knowledgeSearch(
   }> = [];
   const lowerQuery = query.toLowerCase();
 
-  if (!fs.existsSync(GLOBAL_KNOWLEDGE_PATH)) {
+  if (!fs.existsSync(AI_MEMORY_PATH)) {
     return JSON.stringify({
       query,
       totalResults: 0,
       results: [],
-      message: "Global knowledge base not found at ~/.alex/global-knowledge/",
+      message: `AI-Memory not found. Set ALEX_AI_MEMORY env var or ensure OneDrive/AI-Memory exists.`,
     });
   }
 
   const searchPaths: string[] = [];
   if (category === "all" || category === "patterns") {
-    searchPaths.push(path.join(GLOBAL_KNOWLEDGE_PATH, "patterns"));
+    searchPaths.push(path.join(AI_MEMORY_PATH, "patterns"));
   }
   if (category === "all" || category === "insights") {
-    searchPaths.push(path.join(GLOBAL_KNOWLEDGE_PATH, "insights"));
+    searchPaths.push(path.join(AI_MEMORY_PATH, "insights"));
   }
 
   for (const searchPath of searchPaths) {
@@ -630,7 +647,7 @@ async function knowledgeSave(
   category: string,
   tags: string[] = [],
 ): Promise<string> {
-  const insightsPath = path.join(GLOBAL_KNOWLEDGE_PATH, "insights", category);
+  const insightsPath = path.join(AI_MEMORY_PATH, "insights", category);
 
   // Ensure directory exists
   if (!fs.existsSync(insightsPath)) {
@@ -734,7 +751,7 @@ export {
   TOOLS,
   PROMPTS,
   ALEX_HOME,
-  GLOBAL_KNOWLEDGE_PATH,
+  AI_MEMORY_PATH,
 };
 
 // ---------------------------------------------------------------------------

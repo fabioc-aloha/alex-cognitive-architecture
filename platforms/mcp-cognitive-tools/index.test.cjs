@@ -210,12 +210,12 @@ describe('knowledgeSave', () => {
   });
 
   it('creates insight file with YAML frontmatter', async () => {
-    // Temporarily override GLOBAL_KNOWLEDGE_PATH — not cleanly possible
+    // Temporarily override AI_MEMORY_PATH — not cleanly possible
     // since it's a const. Instead, test the file creation logic directly.
     const insightsPath = path.join(tmpDir, 'insights', 'patterns');
     fs.mkdirSync(insightsPath, { recursive: true });
 
-    // Verify the function creates a file (will use real GLOBAL_KNOWLEDGE_PATH)
+    // Verify the function creates a file (will use real AI_MEMORY_PATH)
     // We test the formatting by calling and checking the return value
     const result = JSON.parse(
       await mcp.knowledgeSave('Test Insight', 'Test content', 'patterns', ['test'])
