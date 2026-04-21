@@ -42,18 +42,18 @@
 
 Real-world stories of working with Alex:
 
-- [Writing a Research Paper](blog/BLOG-Research-Paper)
-- [Building a Data Dashboard](blog/BLOG-Data-Dashboard)
-- [My First API](blog/BLOG-First-API)
-- [Documentation Nobody Wanted](blog/BLOG-Documentation)
+- [Writing a Research Paper](BLOG-Research-Paper)
+- [Building a Data Dashboard](BLOG-Data-Dashboard)
+- [My First API](BLOG-First-API)
+- [Documentation Nobody Wanted](BLOG-Documentation)
 
 ### Tutorials
 
 Step-by-step guides:
 
-- [Your First Custom Instruction](tutorials/TUTORIAL-First-Instruction)
-- [Creating a Reusable Prompt](tutorials/TUTORIAL-First-Prompt)
-- [Using Agent Modes](tutorials/TUTORIAL-Agent-Modes)
+- [Your First Custom Instruction](TUTORIAL-First-Instruction)
+- [Creating a Reusable Prompt](TUTORIAL-First-Prompt)
+- [Using Agent Modes](TUTORIAL-Agent-Modes)
 
 ### Help
 
@@ -64,4 +64,4 @@ Step-by-step guides:
 
 ---
 
-**Version**: 8.1.0
+**Version**: 8.1.5

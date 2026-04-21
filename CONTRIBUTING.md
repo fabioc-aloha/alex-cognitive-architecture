@@ -224,7 +224,7 @@ This project adheres to the Contributor Covenant Code of Conduct. By participati
 ### Repository Structure
 
 ```
-AlexMaster/
+alex-cognitive-architecture/
 ├── platforms/vscode-extension/          # VS Code extension project
 │   ├── src/                             # Extension source code
 │   │   ├── commands/                    # Extension commands (Initialize, Dream)
@@ -250,8 +250,8 @@ AlexMaster/
 
 ```bash
 # Fork the repository via GitHub UI, then:
-git clone https://github.com/YOUR-USERNAME/AlexMaster.git
-cd AlexMaster
+git clone https://github.com/YOUR-USERNAME/alex-cognitive-architecture.git
+cd alex-cognitive-architecture
 npm install
 ```
 

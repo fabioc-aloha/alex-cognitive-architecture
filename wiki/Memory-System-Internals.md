@@ -38,7 +38,7 @@ The extension bundle includes:
 - `.github/` — the complete brain (skills, instructions, prompts, muscles, agents, config)
 - `package.json`, `README.md`, `CHANGELOG.md`, `LICENSE.md`
 
-The `.github/` directory inside the extension package is the **source of truth** for brain files. It gets there via `sync-architecture.cjs` at build time, which copies from the AlexMaster root `.github/` into `platforms/vscode-extension/.github/`.
+The `.github/` directory inside the extension package is the **source of truth** for brain files. It gets there via `sync-architecture.cjs` at build time, which copies from the repository root `.github/` into `platforms/vscode-extension/.github/`.
 
 ### Step 2: Extension Activates (Automatic)
 
