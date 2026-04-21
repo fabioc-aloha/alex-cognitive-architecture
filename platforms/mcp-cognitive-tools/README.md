@@ -82,7 +82,7 @@ Add to your `claude_desktop_config.json` (use absolute path to your repo):
 
 ## Tools Reference
 
-### alex_synapse_health
+### alex_health_check
 
 Check the health of Alex's cognitive architecture.
 

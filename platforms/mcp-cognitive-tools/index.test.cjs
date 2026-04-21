@@ -239,7 +239,7 @@ describe('MCP definitions', () => {
   it('exports 5 tools', () => {
     assert.strictEqual(mcp.TOOLS.length, 5);
     const names = mcp.TOOLS.map(t => t.name);
-    assert.ok(names.includes('alex_synapse_health'));
+    assert.ok(names.includes('alex_health_check'));
     assert.ok(names.includes('alex_memory_search'));
     assert.ok(names.includes('alex_architecture_status'));
     assert.ok(names.includes('alex_knowledge_search'));

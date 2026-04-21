@@ -6,7 +6,7 @@
  * Can be used with Claude Desktop, VS Code MCP Gallery, or any MCP client.
  *
  * Tools exposed:
- * - alex_synapse_health: Check cognitive architecture health
+ * - alex_health_check: Check cognitive architecture health
  * - alex_memory_search: Search across all memory systems
  * - alex_architecture_status: Get current architecture inventory
  * - alex_knowledge_search: Search global knowledge base
@@ -46,9 +46,9 @@ const GLOBAL_KNOWLEDGE_PATH = path.join(ALEX_HOME, "global-knowledge");
 
 const TOOLS: Tool[] = [
   {
-    name: "alex_synapse_health",
+    name: "alex_health_check",
     description:
-      "Check the health of Alex's cognitive architecture - validates synapses, memory files, and connections",
+      "Check the health of Alex's cognitive architecture - validates component counts, memory files, and overall status",
     inputSchema: {
       type: "object",
       properties: {
@@ -769,7 +769,7 @@ async function main() {
       let result: string;
 
       switch (name) {
-        case "alex_synapse_health":
+        case "alex_health_check":
           result = await synapseHealth(
             args?.workspacePath as string | undefined,
           );
@@ -848,7 +848,7 @@ async function main() {
               role: "user" as const,
               content: {
                 type: "text" as const,
-                text: "Run a cognitive architecture health check. Use the alex_synapse_health tool to check synapse integrity, then use alex_architecture_status to get the current inventory. Summarize the overall health status, highlight any issues, and suggest improvements.",
+                text: "Run a cognitive architecture health check. Use the alex_health_check tool to check architecture health, then use alex_architecture_status to get the current inventory. Summarize the overall health status, highlight any issues, and suggest improvements.",
               },
             },
           ],

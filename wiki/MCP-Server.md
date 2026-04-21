@@ -84,9 +84,9 @@ Add to `claude_desktop_config.json` (use the absolute path to your repo):
 
 The MCP server exposes five tools that any connected AI client can call.
 
-### alex_synapse_health
+### alex_health_check
 
-Check the health of Alex's cognitive architecture. Validates that skills, instructions, and prompts are properly connected.
+Check the health of Alex's cognitive architecture. Validates that skills, instructions, and prompts are properly installed.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -161,7 +161,7 @@ Architecture documents are exposed as browseable MCP resources. In VS Code, atta
 
 ### Tools return empty results
 
-The workspace-specific tools (`alex_synapse_health`, `alex_memory_search`, `alex_architecture_status`) require a `.github/` directory in the workspace. If you're running outside an Alex workspace, only the global knowledge tools will work.
+The workspace-specific tools (`alex_health_check`, `alex_memory_search`, `alex_architecture_status`) require a `.github/` directory in the workspace. If you're running outside an Alex workspace, only the global knowledge tools will work.
 
 ### "Cannot find module" error
 
