@@ -254,9 +254,10 @@ const SETUP_GROUPS: ActionGroup[] = [
     collapsed: true,
     buttons: [
       {
-        icon: "info",
-        label: `v${extVersion}`,
+        icon: "tag",
+        label: `Version ${extVersion}`,
         command: "noop",
+        tooltip: "Installed extension version",
       },
       {
         icon: "person",
@@ -264,6 +265,7 @@ const SETUP_GROUPS: ActionGroup[] = [
         command: "openExternal",
         file: "https://github.com/fabioc-aloha",
         hint: "link",
+        tooltip: "View publisher on GitHub",
       },
       {
         icon: "law",
@@ -271,6 +273,7 @@ const SETUP_GROUPS: ActionGroup[] = [
         command: "openExternal",
         file: "https://github.com/fabioc-aloha/alex-cognitive-architecture/blob/main/LICENSE.md",
         hint: "link",
+        tooltip: "View license",
       },
     ],
   },
@@ -722,6 +725,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       background: var(--vscode-sideBar-background);
       padding: var(--spacing-sm) var(--spacing-md);
       overflow-y: auto;
+      scroll-behavior: smooth;
       scrollbar-width: thin;
       scrollbar-color: color-mix(in srgb, var(--accent) 40%, transparent) transparent;
       line-height: 1.5;
@@ -829,8 +833,15 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       background: var(--accent-subtle);
     }
     .tab.active .codicon { opacity: 1; }
-    .tab-panel { display: none; }
+    .tab-panel {
+      display: none;
+      animation: panel-fade 0.15s ease-out;
+    }
     .tab-panel.active { display: block; }
+    @keyframes panel-fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
     /* Action groups — collapsible sections */
     .group {
@@ -904,10 +915,11 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     .group-content {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.25s ease-out;
+      transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .group.expanded .group-content {
       max-height: 2000px;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .group-buttons {
       padding: var(--spacing-xs) var(--spacing-sm) var(--spacing-sm);
@@ -921,21 +933,22 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       width: 100%;
       min-height: var(--touch-target);
       padding: var(--spacing-sm) var(--spacing-md);
+      padding-left: calc(var(--spacing-md) + 2px);
       margin-bottom: 2px;
       font-size: var(--font-md);
       color: var(--vscode-foreground);
       background: none;
       border: none;
+      border-left: 2px solid transparent;
       border-radius: var(--radius-sm);
       cursor: pointer;
       text-align: left;
-      transition: background 0.12s ease, box-shadow 0.15s ease, transform 0.1s;
+      transition: background 0.12s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s;
       position: relative;
     }
     .action-btn:hover {
       background: var(--vscode-list-hoverBackground);
-      padding-left: calc(var(--spacing-md) + 2px);
-      border-left: 2px solid color-mix(in srgb, var(--accent) 50%, transparent);
+      border-left-color: color-mix(in srgb, var(--accent) 50%, transparent);
     }
     .action-btn:focus-visible {
       outline: var(--focus-ring);
@@ -944,6 +957,15 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     }
     .action-btn:active {
       transform: scale(0.99);
+    }
+    /* Noop buttons — informational only, not interactive */
+    .action-btn[data-command="noop"] {
+      cursor: default;
+      opacity: 0.7;
+    }
+    .action-btn[data-command="noop"]:hover {
+      background: none;
+      border-left-color: transparent;
     }
     .action-btn .codicon {
       font-size: 15px;
@@ -979,8 +1001,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     .action-btn.primary:hover {
       background: var(--accent-light);
       box-shadow: 0 2px 6px rgba(0,0,0,0.18);
-      padding-left: var(--spacing-lg);
-      border-left: none;
+      border-left-color: transparent;
     }
 
     /* Hint badges — show button behavior (chat/link/command) */
@@ -1000,14 +1021,13 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       background: var(--vscode-toolbar-hoverBackground);
     }
 
-    /* Tooltips — positioned to avoid overflow */
+    /* Tooltips — positioned below to fit narrow sidebar */
     .action-btn[data-tooltip]:hover::after {
       content: attr(data-tooltip);
       position: absolute;
-      left: 100%;
-      top: 50%;
-      transform: translateY(-50%);
-      margin-left: var(--spacing-sm);
+      left: var(--spacing-md);
+      top: 100%;
+      margin-top: var(--spacing-xs);
       padding: var(--spacing-xs) var(--spacing-sm);
       font-size: var(--font-sm);
       font-weight: normal;
@@ -1016,14 +1036,17 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       border: 1px solid var(--vscode-editorWidget-border);
       border-radius: var(--radius-sm);
       white-space: nowrap;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
       z-index: 1000;
       pointer-events: none;
       box-shadow: 0 2px 8px rgba(0,0,0,0.18);
       animation: tooltip-fade 0.15s ease-out;
     }
     @keyframes tooltip-fade {
-      from { opacity: 0; transform: translateY(-50%) translateX(-4px); }
-      to { opacity: 1; transform: translateY(-50%) translateX(0); }
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     ${SCHEDULE_CSS}
     ${AGENT_ACTIVITY_CSS}
@@ -1164,6 +1187,15 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       const file = btn.dataset.file;
       const actionId = btn.dataset.actionId;
       vscode.postMessage({ command, prompt, file, actionId });
+    });
+
+    // Keyboard support for interactive elements (Enter/Space)
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const el = e.target.closest('[data-command][role="button"]');
+      if (!el) return;
+      e.preventDefault();
+      el.click();
     });
 
 

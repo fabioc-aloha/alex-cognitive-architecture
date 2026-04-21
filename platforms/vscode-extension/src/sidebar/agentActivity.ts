@@ -238,8 +238,9 @@ export function renderAgentActivity(_workspaceRoot: string): string {
     return `
     <div class="agent-activity">
       <div class="agent-activity-empty">
-        <span class="codicon codicon-info"></span>
-        ${activity.error ? "GitHub CLI not available or not authenticated." : "No agent PRs found. Agent activity will appear here."}
+        <span class="codicon codicon-hubot"></span>
+        <p class="agent-empty-title">${activity.error ? "GitHub CLI unavailable" : "No agent activity yet"}</p>
+        <p class="agent-empty-hint">${activity.error ? "Install and authenticate <code>gh</code> to see agent PRs." : "When Copilot creates PRs, they\u2019ll appear here."}</p>
       </div>
     </div>`;
   }
@@ -283,12 +284,13 @@ function renderPRRow(pr: AgentPR): string {
   const icon = prStateIcon(pr);
   const color = prStateColor(pr);
   return `
-  <div class="agent-pr-row" data-command="openExternal" data-file="${escAttr(pr.url)}" role="button" tabindex="0">
+  <div class="agent-pr-row" data-command="openExternal" data-file="${escAttr(pr.url)}" role="button" tabindex="0" title="${escAttr(pr.title)}">
     <span class="codicon codicon-${escAttr(icon)}" style="color:${escAttr(color)};"></span>
     <div class="agent-pr-info">
       <span class="agent-pr-title">${escHtml(pr.title)}</span>
       <span class="agent-pr-meta">#${pr.number} · ${escHtml(timeAgo(pr.createdAt))} · ${escHtml(pr.author)}</span>
     </div>
+    <span class="agent-pr-arrow codicon codicon-link-external"></span>
   </div>`;
 }
 
@@ -345,24 +347,48 @@ export function updateAgentStatusBar(workspaceRoot: string | undefined): void {
 // ── CSS for agent activity panels ─────────────────────────────────
 
 export const AGENT_ACTIVITY_CSS = `
-  .agent-activity { margin: 8px 0; }
+  .agent-activity {
+    margin: var(--spacing-sm, 8px) 0;
+  }
   .agent-activity-empty {
-    padding: 12px;
+    padding: var(--spacing-xl, 24px) var(--spacing-lg, 16px);
     text-align: center;
     color: var(--vscode-descriptionForeground);
-    font-size: 11px;
   }
-  .agent-activity-empty .codicon { margin-right: 4px; }
-  .agent-section { margin-bottom: 12px; }
+  .agent-activity-empty .codicon {
+    font-size: 32px;
+    display: block;
+    margin-bottom: var(--spacing-sm, 8px);
+    opacity: 0.5;
+  }
+  .agent-empty-title {
+    font-size: var(--font-lg, 13px);
+    font-weight: 600;
+    color: var(--vscode-foreground);
+    margin: var(--spacing-xs, 4px) 0;
+  }
+  .agent-empty-hint {
+    font-size: var(--font-sm, 11px);
+    color: var(--vscode-descriptionForeground);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .agent-section {
+    margin-bottom: var(--spacing-md, 12px);
+  }
   .agent-section-header {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 8px;
+    padding: var(--spacing-xs, 4px) var(--spacing-sm, 8px);
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--vscode-descriptionForeground);
+  }
+  .agent-section-header .codicon {
+    font-size: 13px;
+    opacity: 0.7;
   }
   .agent-badge {
     background: var(--vscode-badge-background);
@@ -377,22 +403,49 @@ export const AGENT_ACTIVITY_CSS = `
   .agent-pr-row {
     display: flex;
     align-items: flex-start;
-    gap: 8px;
-    padding: 6px 8px;
+    gap: var(--spacing-sm, 8px);
+    padding: var(--spacing-sm, 8px);
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: var(--radius-sm, 4px);
+    transition: background 0.12s ease;
   }
-  .agent-pr-row:hover { background: var(--vscode-list-hoverBackground); }
-  .agent-pr-row .codicon { margin-top: 2px; flex-shrink: 0; }
-  .agent-pr-info { display: flex; flex-direction: column; min-width: 0; }
+  .agent-pr-row:hover {
+    background: var(--vscode-list-hoverBackground);
+  }
+  .agent-pr-row:focus-visible {
+    outline: 2px solid var(--accent, #6366f1);
+    outline-offset: -2px;
+  }
+  .agent-pr-row .codicon {
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .agent-pr-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+  }
   .agent-pr-title {
-    font-size: 12px;
+    font-size: var(--font-md, 12px);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   .agent-pr-meta {
-    font-size: 10px;
+    font-size: var(--font-xs, 10px);
     color: var(--vscode-descriptionForeground);
+    margin-top: 1px;
+  }
+  .agent-pr-arrow {
+    opacity: 0;
+    font-size: 12px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    transition: opacity 0.12s;
+    color: var(--vscode-descriptionForeground);
+  }
+  .agent-pr-row:hover .agent-pr-arrow {
+    opacity: 0.6;
   }
 `;

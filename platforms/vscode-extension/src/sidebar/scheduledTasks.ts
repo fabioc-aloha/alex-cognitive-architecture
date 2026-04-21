@@ -761,7 +761,7 @@ export function renderScheduledTasks(
       const runNowBtn = t.mode === "agent" && t.promptFile
         ? (isRunning
             ? `<button class="schedule-action-btn schedule-action-running" disabled title="Running…"><span class="codicon codicon-loading codicon-modifier-spin"></span></button>`
-            : `<button class="schedule-action-btn schedule-action-run" data-command="runTask" data-file="${escAttr(t.id)}" title="${wfExists ? "Run on GitHub Actions" : "Run now in Copilot Chat"}">\uD83D\uDE80</button>`)
+            : `<button class="schedule-action-btn schedule-action-run" data-command="runTask" data-file="${escAttr(t.id)}" title="${wfExists ? "Run on GitHub Actions" : "Run now in Copilot Chat"}"><span class="codicon codicon-rocket"></span></button>`)
         : "";
       const viewRunBtn = runInfo?.runUrl
         ? `<button class="schedule-action-btn" data-command="openExternal" data-file="${escAttr(runInfo.runUrl)}" title="View run on GitHub"><span class="codicon codicon-link-external"></span></button>`
@@ -813,6 +813,11 @@ export function renderScheduledTasks(
     .join("");
 
   html = `
+    <div class="schedule-section-header">
+      <span class="codicon codicon-clock"></span>
+      <strong>Scheduled Tasks</strong>
+      <span class="agent-badge">${tasks.filter(t => t.enabled).length}/${tasks.length}</span>
+    </div>
     <div class="schedule-tasks">
       ${taskRows}
     </div>
@@ -1107,11 +1112,11 @@ export const SCHEDULE_CSS = `
       border-left: 3px solid var(--accent, #6366f1);
     }
     .schedule-task.disabled {
-      opacity: 0.5;
+      opacity: 0.6;
       border-left: 3px solid transparent;
     }
     .schedule-task.disabled:hover {
-      opacity: 0.7;
+      opacity: 0.8;
     }
     .schedule-task-header {
       display: flex;
@@ -1318,6 +1323,23 @@ export const SCHEDULE_CSS = `
     .schedule-divider {
       border-top: 1px solid var(--vscode-widget-border, rgba(128,128,128,0.15));
       margin: var(--spacing-sm, 8px) 0 var(--spacing-xs, 4px);
+    }
+    .schedule-section-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: var(--spacing-sm, 8px) var(--spacing-sm, 8px) var(--spacing-xs, 4px);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--vscode-descriptionForeground);
+    }
+    .schedule-section-header .codicon {
+      font-size: 13px;
+      opacity: 0.7;
+    }
+    .schedule-section-header strong {
+      flex: 1;
     }
 `;
 
