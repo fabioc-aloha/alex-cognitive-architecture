@@ -2,9 +2,9 @@
 
 ![Alex — Your AI Learning Partner](assets/banner.png)
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/fabioc-aloha.alex-cognitive-architecture)](https://marketplace.visualstudio.com/items?itemName=fabioc-aloha.alex-cognitive-architecture)
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/fabioc-aloha.alex-cognitive-architecture)](https://marketplace.visualstudio.com/items?itemName=fabioc-aloha.alex-cognitive-architecture)
-[![License](https://img.shields.io/github/license/fabioc-aloha/alex-cognitive-architecture)](https://github.com/fabioc-aloha/alex-cognitive-architecture/blob/main/LICENSE.md)
+[![Version](https://vsmarketplacebadges.dev/version/fabioc-aloha.alex-cognitive-architecture.svg)](https://marketplace.visualstudio.com/items?itemName=fabioc-aloha.alex-cognitive-architecture)
+[![Installs](https://vsmarketplacebadges.dev/installs-short/fabioc-aloha.alex-cognitive-architecture.svg)](https://marketplace.visualstudio.com/items?itemName=fabioc-aloha.alex-cognitive-architecture)
+[![License](https://img.shields.io/github/license/fabioc-aloha/AlexMaster)](https://github.com/fabioc-aloha/AlexMaster/blob/main/LICENSE.md)
 
 **Your cognitive learning partner for VS Code.** Alex installs a living brain of skills, instructions, and prompts that makes GitHub Copilot dramatically smarter in any project.
 

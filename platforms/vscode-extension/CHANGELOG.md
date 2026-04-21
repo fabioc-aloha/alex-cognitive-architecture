@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.1.2] - 2026-04-21
+
+### Fixed
+
+- **Marketplace**: Replaced retired shields.io badges with vsmarketplacebadges.dev, fixed license badge repo URL
+
 ## [8.1.1] - 2026-04-21
 
 ### Fixed
