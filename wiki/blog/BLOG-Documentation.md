@@ -1,6 +1,6 @@
 # The Documentation Nobody Wanted to Write
 
-![Documentation workflow](images/blog-documentation.png)
+![Documentation workflow](blog/images/blog-documentation.png)
 
 *How Alex made the worst part of projects tolerable*
 

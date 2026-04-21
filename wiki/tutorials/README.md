@@ -1,6 +1,6 @@
 # Tutorials
 
-![Tutorials](images/tutorials-hero.png)
+![Tutorials](tutorials/images/tutorials-hero.png)
 
 Step-by-step guides for common tasks with Alex.
 

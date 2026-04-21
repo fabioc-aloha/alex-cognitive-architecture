@@ -1,6 +1,6 @@
 # Tutorial: Writing a Technical Document
 
-![Technical writing](images/tutorial-technical-writing.png)
+![Technical writing](tutorials/images/tutorial-technical-writing.png)
 
 *25 minutes · Intermediate*
 

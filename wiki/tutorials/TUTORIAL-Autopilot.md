@@ -1,6 +1,6 @@
 # Tutorial: Setting Up Autopilot Tasks
 
-![Autopilot](images/tutorial-autopilot.png)
+![Autopilot](tutorials/images/tutorial-autopilot.png)
 
 *20 minutes · Intermediate*
 

@@ -1,6 +1,6 @@
 # My First API — Built by Someone Who'd Never Written One
 
-![Building first API](images/blog-first-api.png)
+![Building first API](blog/images/blog-first-api.png)
 
 *A non-developer's experience building a real web service*
 

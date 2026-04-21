@@ -1,5 +1,20 @@
 {
   "competition-watch": {
-    "lastRun": "2026-04-20T15:15:56.837Z"
+    "lastRun": "2026-04-21T20:54:58.533Z"
+  },
+  "vscode-news": {
+    "lastRun": "2026-04-21T21:04:45.779Z"
+  },
+  "copilot-news": {
+    "lastRun": "2026-04-21T21:26:58.341Z"
+  },
+  "customization-trends": {
+    "lastRun": "2026-04-21T20:54:56.348Z"
+  },
+  "api-monitor": {
+    "lastRun": "2026-04-21T20:55:00.503Z"
+  },
+  "rai-compliance": {
+    "lastRun": "2026-04-21T20:55:07.451Z"
   }
 }

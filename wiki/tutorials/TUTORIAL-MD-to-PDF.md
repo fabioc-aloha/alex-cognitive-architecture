@@ -1,6 +1,6 @@
 # Tutorial: Markdown to PDF
 
-![Markdown to PDF](images/tutorial-md-to-pdf.png)
+![Markdown to PDF](tutorials/images/tutorial-md-to-pdf.png)
 
 *15 minutes · Beginner*
 
@@ -121,7 +121,7 @@ Add a cover page with:
 Images in your Markdown are automatically included:
 
 ```markdown
-![Architecture Diagram](./images/architecture.png)
+![Architecture Diagram](tutorials/images/architecture.png)
 ```
 
 Make sure paths are relative to the Markdown file.

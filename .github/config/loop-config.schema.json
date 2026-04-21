@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/fabioc-aloha/alex-cognitive-architecture/blob/main/.github/config/loop-config.schema.json",
+  "$id": "https://github.com/fabioc-aloha/AlexMaster/blob/main/.github/config/loop-config.schema.json",
   "title": "Loop Menu Configuration",
   "description": "Defines the sidebar Loop tab menu structure — groups, buttons, and prompt file references.",
   "type": "object",

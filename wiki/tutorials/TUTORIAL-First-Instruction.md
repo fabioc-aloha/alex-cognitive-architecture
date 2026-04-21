@@ -1,6 +1,6 @@
 # Tutorial: Your First Custom Instruction
 
-![Custom instructions](images/tutorial-instructions.png)
+![Custom instructions](tutorials/images/tutorial-instructions.png)
 
 *15 minutes · Beginner*
 

@@ -1,6 +1,6 @@
 # Tutorial: AI-Assisted Job Search
 
-![AI job search](images/tutorial-ai-job-search.png)
+![AI job search](tutorials/images/tutorial-ai-job-search.png)
 
 *30 minutes · For Job Seekers*
 

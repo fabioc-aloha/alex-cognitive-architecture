@@ -1,6 +1,6 @@
 # Tutorial: Building Your Own Skill
 
-![Build a skill](images/tutorial-build-skill.png)
+![Build a skill](tutorials/images/tutorial-build-skill.png)
 
 *45 minutes · Advanced*
 

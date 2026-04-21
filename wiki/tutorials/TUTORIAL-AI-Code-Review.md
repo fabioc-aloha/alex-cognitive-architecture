@@ -1,6 +1,6 @@
 # Tutorial: AI-Assisted Code Review
 
-![Code review](images/tutorial-code-review.png)
+![Code review](tutorials/images/tutorial-code-review.png)
 
 *25 minutes · For Developers*
 

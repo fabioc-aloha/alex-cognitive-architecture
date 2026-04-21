@@ -1,6 +1,6 @@
 # Tutorial: Analyzing a Dataset
 
-![Data analysis](images/tutorial-data-analysis.png)
+![Data analysis](tutorials/images/tutorial-data-analysis.png)
 
 *30 minutes · Intermediate*
 

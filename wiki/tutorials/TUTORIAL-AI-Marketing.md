@@ -1,6 +1,6 @@
 # Tutorial: AI-Assisted Marketing
 
-![AI marketing](images/tutorial-ai-marketing.png)
+![AI marketing](tutorials/images/tutorial-ai-marketing.png)
 
 *25 minutes · For Marketing Professionals*
 

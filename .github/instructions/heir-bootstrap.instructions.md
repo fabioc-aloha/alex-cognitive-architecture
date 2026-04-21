@@ -50,3 +50,12 @@ The AI-Memory folder stores cross-project knowledge (patterns, notes, registry).
 - Not tailoring to project type
 - Keeping irrelevant skills (noise)
 - Skipping AI-Memory setup (loses cross-project knowledge sharing)
+
+## Recommended VS Code Settings
+
+After bootstrap, recommend these VS Code settings for optimal Alex experience:
+
+| Setting | Value | Effect |
+|---------|-------|--------|
+| `chat.permissions.default` | `"autopilot"` | Persistent autopilot — tools run without per-action approval (VS Code 1.117+) |
+| `chat.agent.enabled` | `true` | Enables agent mode in Copilot Chat |
