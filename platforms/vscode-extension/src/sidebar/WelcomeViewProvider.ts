@@ -2,19 +2,7 @@ import * as vscode from "vscode";
 import * as crypto from "crypto";
 import * as fs from "fs";
 import * as path from "path";
-import {
-  collectHealthPulse,
-  formatRelativeTime,
-  formatInventory,
-  statusDotColor,
-  statusLabel,
-  type HealthPulse,
-} from "../healthPulse.js";
-import {
-  generateNudges,
-  nudgeColor,
-  type Nudge,
-} from "../nudgeEngine.js";
+import { collectHealthPulse } from "../healthPulse.js";
 import {
   sortByFrecency,
   recordUse,
@@ -147,20 +135,7 @@ const SETUP_GROUPS: ActionGroup[] = [
         tooltip: "Open VS Code user memories folder",
         hint: "command",
       },
-      {
-        icon: "person",
-        label: "Custom Agents",
-        command: "openAgents",
-        tooltip: "User-level agents (~/.copilot/agents/)",
-        hint: "command",
-      },
-      {
-        icon: "file-code",
-        label: "User Instructions",
-        command: "openInstructions",
-        tooltip: "User-level instructions (~/.copilot/instructions/)",
-        hint: "command",
-      },
+
       {
         icon: "edit",
         label: "User Prompts",
@@ -459,39 +434,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
         }
         break;
 
-      case "openAgents":
-        // Open the user-level agents folder (~/.copilot/agents/)
-        {
-          const home = process.env.USERPROFILE || process.env.HOME;
-          if (home) {
-            const agentsPath = vscode.Uri.file(
-              path.join(home, ".copilot", "agents"),
-            );
-            try {
-              await vscode.commands.executeCommand("revealFileInOS", agentsPath);
-            } catch {
-              await vscode.commands.executeCommand("vscode.openFolder", agentsPath, { forceNewWindow: false });
-            }
-          }
-        }
-        break;
 
-      case "openInstructions":
-        // Open the user-level instructions folder (~/.copilot/instructions/)
-        {
-          const home = process.env.USERPROFILE || process.env.HOME;
-          if (home) {
-            const instructionsPath = vscode.Uri.file(
-              path.join(home, ".copilot", "instructions"),
-            );
-            try {
-              await vscode.commands.executeCommand("revealFileInOS", instructionsPath);
-            } catch {
-              await vscode.commands.executeCommand("vscode.openFolder", instructionsPath, { forceNewWindow: false });
-            }
-          }
-        }
-        break;
 
       case "openPrompts":
         // Open the User prompts folder
@@ -814,160 +757,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       margin-top: 3px;
     }
 
-    /* Health Pulse — status card */
-    .health-pulse {
-      padding: var(--spacing-md);
-      margin-bottom: var(--spacing-sm);
-      background: var(--vscode-editor-background);
-      border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--vscode-panel-border));
-      border-radius: var(--radius-md);
-      font-size: var(--font-sm);
-    }
-    .health-pulse .status-row {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-sm);
-      margin-bottom: var(--spacing-xs);
-    }
-    .health-pulse .status-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #22c55e;
-      box-shadow: 0 0 6px #22c55e;
-      flex-shrink: 0;
-    }
-    .health-pulse .metric {
-      display: flex;
-      justify-content: space-between;
-      padding: var(--spacing-xs) 0;
-      font-size: var(--font-xs);
-      color: var(--vscode-descriptionForeground);
-    }
-    .health-pulse .actions {
-      display: flex;
-      gap: var(--spacing-sm);
-      margin-top: var(--spacing-sm);
-    }
-    .health-pulse .actions button {
-      flex: 1;
-      min-height: var(--touch-target-sm);
-      padding: var(--spacing-sm) var(--spacing-md);
-      font-size: var(--font-sm);
-      font-weight: 500;
-      border: 1px solid var(--vscode-panel-border);
-      border-radius: var(--radius-md);
-      background: var(--vscode-button-secondaryBackground);
-      color: var(--vscode-button-secondaryForeground);
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s, border-color 0.15s;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--spacing-sm);
-    }
-    .health-pulse .actions button .codicon {
-      font-size: 13px;
-      opacity: 0.8;
-    }
-    .health-pulse .actions button:hover {
-      background: var(--vscode-button-secondaryHoverBackground);
-      border-color: color-mix(in srgb, var(--accent) 40%, var(--vscode-panel-border));
-    }
-    .health-pulse .actions button:focus-visible {
-      outline: var(--focus-ring);
-      outline-offset: var(--focus-ring-offset);
-    }
-    .health-pulse .actions button:active {
-      transform: scale(0.98);
-    }
 
-    /* Health pulse refresh button — 36px touch target (compact context) */
-    .refresh-btn {
-      margin-left: auto;
-      appearance: none;
-      -webkit-appearance: none;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color: var(--vscode-descriptionForeground);
-      font-size: 16px;
-      width: var(--touch-target-sm);
-      height: var(--touch-target-sm);
-      padding: 0;
-      border-radius: var(--radius-sm);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.15s, color 0.15s, transform 0.2s;
-      flex-shrink: 0;
-    }
-    .refresh-btn:hover {
-      color: var(--vscode-foreground);
-      background: var(--vscode-toolbar-hoverBackground);
-    }
-    .refresh-btn:focus-visible {
-      outline: var(--focus-ring);
-      outline-offset: var(--focus-ring-offset);
-    }
-    .refresh-btn:active {
-      transform: rotate(90deg);
-    }
-
-    /* Health pulse full-width metric */
-    .metric-full {
-      grid-column: 1 / -1;
-      opacity: 0.8;
-      font-size: 0.9em;
-    }
-
-    /* Empty state dot (ring only) */
-    .status-dot.unknown {
-      background: transparent;
-      border: 1px solid;
-    }
-
-    /* Nudges — actionable hints */
-    .nudges {
-      margin-top: var(--spacing-sm);
-      padding-top: var(--spacing-sm);
-      border-top: 1px solid var(--vscode-panel-border);
-    }
-    .nudge {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--spacing-sm);
-      padding: var(--spacing-sm);
-      margin-bottom: var(--spacing-xs);
-      min-height: var(--touch-target-sm);
-      font-size: var(--font-xs);
-      border-radius: var(--radius-sm);
-      background: color-mix(in srgb, var(--nudge-color, #3b82f6) 8%, transparent);
-      border-left: 3px solid var(--nudge-color, #3b82f6);
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-    }
-    .nudge:hover {
-      background: color-mix(in srgb, var(--nudge-color, #3b82f6) 15%, transparent);
-    }
-    .nudge:focus-visible {
-      outline: 2px solid var(--nudge-color, #3b82f6);
-      outline-offset: var(--focus-ring-offset);
-    }
-    .nudge:active {
-      transform: scale(0.99);
-    }
-    .nudge .codicon {
-      font-size: 13px;
-      color: var(--nudge-color, #3b82f6);
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .nudge-msg {
-      flex: 1;
-      line-height: 1.4;
-      color: var(--vscode-foreground);
-    }
 
     /* Tabs — 44px touch target (WCAG 2.1 AA 2.5.5) */
     .tabs {
@@ -1245,9 +1035,6 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
 
   <!-- Loop Tab -->
   <div id="tab-loop" class="tab-panel active" role="tabpanel" aria-labelledby="tab-btn-loop">
-    <!-- Health Pulse -->
-    ${renderHealthPulse(this.workspaceRoot)}
-
     <!-- Chat CTA -->
     ${renderButton({ icon: "comment-discussion", label: "Chat with Alex", command: "openChat", hint: "chat" }, true)}
 
@@ -1346,14 +1133,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       vscode.postMessage({ command, prompt, file, actionId });
     });
 
-    // Keyboard support for nudges and other role="button" elements
-    document.addEventListener('keydown', (e) => {
-      if (e.key !== 'Enter' && e.key !== ' ') return;
-      const el = e.target.closest('.nudge[data-command]');
-      if (!el) return;
-      e.preventDefault();
-      el.click();
-    });
+
   </script>
 </body>
 </html>`;
@@ -1364,72 +1144,6 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
 
 function getNonce(): string {
   return crypto.randomBytes(16).toString("hex");
-}
-
-function renderHealthPulse(workspaceRoot: string): string {
-  const pulse = workspaceRoot ? collectHealthPulse(workspaceRoot) : null;
-
-  if (!pulse || !pulse.lastDreamDate) {
-    // No data state
-    return `
-    <div class="health-pulse">
-      <div class="status-row">
-        <span class="status-dot unknown" style="border-color:${escAttr(statusDotColor("attention"))};"></span>
-        <strong>Unknown</strong>
-        <button class="refresh-btn" data-command="refresh" title="Refresh"><span class="codicon codicon-refresh"></span></button>
-      </div>
-      <div class="metric metric-full">Run /dream to establish a health baseline</div>
-      <div class="actions">
-        <button data-command="dream"><span class="codicon codicon-beaker"></span> Run Dream</button>
-      </div>
-    </div>`;
-  }
-
-  const dotColor = statusDotColor(pulse.status);
-  const nudges = generateNudges(pulse, 3);
-
-  return `
-    <div class="health-pulse" style="border-color: color-mix(in srgb, ${escAttr(dotColor)} 25%, var(--vscode-panel-border));">
-      <div class="status-row">
-        <span class="status-dot" style="background:${escAttr(dotColor)};box-shadow:0 0 4px ${escAttr(dotColor)};"></span>
-        <strong>${escHtml(statusLabel(pulse.status))}</strong>
-        <button class="refresh-btn" data-command="refresh" title="Refresh"><span class="codicon codicon-refresh"></span></button>
-      </div>
-      <div class="metric"><span>Last Dream</span><span>${escHtml(formatRelativeTime(pulse.lastDreamDate))}</span></div>
-      <div class="metric metric-full">${escHtml(formatInventory(pulse))}</div>
-      ${renderNudges(nudges)}
-      <div class="actions">
-        <button data-command="dream"><span class="codicon codicon-beaker"></span> Dream</button>
-      </div>
-    </div>`;
-}
-
-function renderNudges(nudges: Nudge[]): string {
-  if (nudges.length === 0) return "";
-
-  // Filter out the "healthy-status" nudge from display (it's just encouragement)
-  const actionableNudges = nudges.filter((n) => n.id !== "healthy-status");
-  if (actionableNudges.length === 0) return "";
-
-  const nudgeHtml = actionableNudges
-    .map((n) => {
-      const color = nudgeColor(n.priority);
-      const attrs = [
-        `data-command="${escAttr(n.command)}"`,
-        n.prompt ? `data-prompt="${escAttr(n.prompt)}"` : "",
-      ]
-        .filter(Boolean)
-        .join(" ");
-
-      return `
-      <div class="nudge" role="button" tabindex="0" style="--nudge-color:${escAttr(color)};" ${attrs}>
-        <span class="codicon codicon-${escAttr(n.icon)}"></span>
-        <span class="nudge-msg">${escHtml(n.message)}</span>
-      </div>`;
-    })
-    .join("");
-
-  return `<div class="nudges">${nudgeHtml}</div>`;
 }
 
 function renderGroups(groups: ActionGroup[]): string {

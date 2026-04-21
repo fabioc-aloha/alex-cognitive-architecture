@@ -103,7 +103,7 @@ Workspace management, brain maintenance, memory access, and settings.
 |---------|-------------|
 | **Workspace** | Initialize or upgrade your cognitive architecture |
 | **Brain Status** | Dream protocol, meditation, and self-actualization |
-| **User Memory** | Quick access to memories, agents, instructions, prompts, and MCP config |
+| **User Memory** | Quick access to memories, prompts, and MCP config |
 | **Environment** | Extension settings |
 | **Learn** | Wiki and issue tracker links |
 | **About** | Version, publisher, and license |

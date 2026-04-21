@@ -1,9 +1,9 @@
 ---
 name: user-config-manager
-description: "Manage VS Code's global AI configuration — user memories, custom agents, user prompts, and MCP servers"
+description: "Manage VS Code's global AI configuration — user memories, user prompts, and MCP servers"
 tier: standard
 applyTo: '**/*memory*,**/*agent*,**/*prompt*,**/*mcp*,**/*user-config*'
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # User Config Manager
@@ -22,36 +22,10 @@ This skill manages user-level AI customization files.
 | Component | Path | Purpose |
 |-----------|------|---------|  
 | User Memories | `<USER_DATA>/globalStorage/github.copilot-chat/memory-tool/memories/` | Cross-workspace knowledge |
-| Custom Agents | `~/.copilot/agents/*.agent.md` (cross-platform) | Specialized personas |
 | User Prompts | `<USER_DATA>/prompts/*.prompt.md` | Reusable workflows |
-| User Instructions | `~/.copilot/instructions/*.instructions.md` (cross-platform) | Global behavior rules |
 | MCP Config | `<USER_DATA>/mcp.json` (access via `MCP: Open User Configuration`) | External tool servers |
 
-**Note**: Workspace-level equivalents exist in `.github/agents/`, `.github/instructions/`, and `.vscode/mcp.json`.
-
-## Deployed Alex Portable Configuration
-
-The following Alex-derived content is deployed user-wide (April 2026):
-
-### Portable Instructions (`~/.copilot/instructions/`)
-
-| File | Purpose |
-|------|---------|  
-| `anti-hallucination.instructions.md` | Prevent confabulation |
-| `awareness.instructions.md` | Metacognitive monitoring |
-| `emotional-intelligence.instructions.md` | Frustration detection |
-| `terminal-safety.instructions.md` | Shell hazard prevention |
-| `code-quality.instructions.md` | KISS/DRY/security principles |
-
-### User-Level Agents (`~/.copilot/agents/`)
-
-| Agent | Mental Model |
-|-------|--------------|  
-| `Alex-Builder` | Optimistic implementation |
-| `Alex-Validator` | Adversarial QA |
-| `Alex-Researcher` | Deep domain research |
-
-These provide Alex-like behavior in **all workspaces**.
+**Note**: Workspace-level agents and instructions live in `.github/agents/` and `.github/instructions/`. VS Code also supports user-level `~/.copilot/agents/` and `~/.copilot/instructions/` but Alex does not deploy content there — all Alex cognitive files are workspace-scoped via `.github/`.
 
 ## Triggers
 
@@ -94,27 +68,15 @@ For each memory file, verify content belongs at user level:
 
 **3-Workspace Test**: Content must be useful in 3+ different workspaces.
 
-### Step 3: Agent Analysis
+### Step 3: Prompt Review
 
-For each custom agent, check:
+For each user prompt in `<USER_DATA>/prompts/`:
 
-1. **Tool scope**: Are tools appropriately constrained?
-2. **Model selection**: Is specific model justified?
-3. **Handoff patterns**: Do handoffs make sense?
-4. **Overlap**: Does agent overlap with workspace agents?
+1. **Relevance**: Is the prompt still useful?
+2. **Overlap**: Does it duplicate a workspace prompt in `.github/prompts/`?
+3. **Quality**: Does frontmatter have description and mode?
 
-### Step 4: Instruction Conflict Detection
-
-Compare user instructions (`prompts/*.instructions.md`) with workspace instructions:
-
-| Situation | Action |
-|-----------|--------|
-| User instruction duplicates workspace | Flag — remove user version |
-| User instruction contradicts workspace | Flag — clarify precedence |
-| User instruction supplements workspace | OK — document relationship |
-| User instruction for domain not in any workspace | OK — global expertise |
-
-### Step 5: MCP Server Audit
+### Step 4: MCP Server Audit
 
 For each MCP server in `mcp.json`:
 
@@ -123,7 +85,7 @@ For each MCP server in `mcp.json`:
 3. **Overlap**: Do workspace MCP servers duplicate functionality?
 4. **Security**: Are credentials properly managed?
 
-### Step 6: Generate Report
+### Step 5: Generate Report
 
 ```markdown
 # User Config Health Report
@@ -136,8 +98,7 @@ For each MCP server in `mcp.json`:
 | Component | Files | Issues | Health |
 |-----------|-------|--------|--------|
 | Memories | N | N | 🟢/🟡/🔴 |
-| Agents | N | N | 🟢/🟡/🔴 |
-| Instructions | N | N | 🟢/🟡/🔴 |
+| Prompts | N | N | 🟢/🟡/🔴 |
 | MCP Servers | N | N | 🟢/🟡/🔴 |
 
 ## Issues Found

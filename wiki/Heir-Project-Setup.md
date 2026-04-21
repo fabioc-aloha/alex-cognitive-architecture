@@ -256,41 +256,15 @@ Alex will prepare the insight for promotion to Master.
 
 ## User-Level Configuration
 
-Starting with v8.1, universal instructions and agents can live at the **user level** — available in every workspace without per-project deployment.
-
-### Location
+VS Code supports user-level configuration files that apply across all workspaces:
 
 | Asset | Path | Scope |
 | ----- | ---- | ----- |
-| **Instructions** | `~/.copilot/instructions/*.instructions.md` | All workspaces |
-| **Agents** | `~/.copilot/agents/*.agent.md` | All workspaces |
+| **User Prompts** | `<USER_DATA>/prompts/*.prompt.md` | All workspaces |
+| **User Memories** | `<USER_DATA>/globalStorage/github.copilot-chat/memory-tool/memories/` | All workspaces |
+| **MCP Config** | `<USER_DATA>/mcp.json` | Profile-scoped |
 
-On Windows, `~/.copilot/` expands to `C:\Users\<username>\.copilot\`.
-
-### How It Works
-
-VS Code loads user-level instructions and agents into **every** Copilot Chat session automatically. This means Alex-like behavior (anti-hallucination, emotional intelligence, code quality rules) follows you even in workspaces that don't have the Alex extension installed.
-
-Workspace-level files (`.github/instructions/`, `.github/agents/`) take **precedence** for project-specific overrides. User-level files provide the baseline; workspace files refine it.
-
-### What Lives at User Level
-
-Universal behaviors that apply everywhere:
-
-- Anti-hallucination and awareness monitoring
-- Emotional intelligence and communication style
-- Code quality and security review rules
-- Terminal command safety patterns
-
-Project-specific content stays in `.github/`:
-
-- Domain skills (e.g., Fabric, PBI, healthcare)
-- Project agents (e.g., Backend, Frontend for a specific stack)
-- Custom prompts tied to project workflows
-
-### Sync Across Machines
-
-User-level files are **local disk only** — VS Code Settings Sync does not currently sync `~/.copilot/` or user prompts. If you use multiple machines, copy these files manually or use a dotfiles repository.
+> **Note**: VS Code also supports `~/.copilot/instructions/` and `~/.copilot/agents/` at the user level, but Alex does not deploy content there. All Alex instructions and agents are workspace-scoped via `.github/` to avoid conflicts and ensure each project gets the full, consistent brain.
 
 ## Heir Bootstrap Wizard
 

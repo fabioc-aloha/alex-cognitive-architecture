@@ -126,22 +126,6 @@ Opens the VS Code Copilot memory folder in your file explorer. This is where per
 
 **What's inside:** Markdown files that Alex creates and reads automatically. Topics like debugging patterns, project preferences, and recurring solutions live here.
 
-### Custom Agents
-
-Opens the user-level custom agents folder. These are `.agent.md` files that define specialized AI personas available in all your workspaces.
-
-**Location:** `~/.copilot/agents/`
-
-**What's inside:** Agent definitions with personality, expertise, and instruction overrides.
-
-### User Instructions
-
-Opens the user-level instructions folder. These are `.instructions.md` files that apply across all your workspaces — your personal coding standards, preferences, and rules.
-
-**Location:** `~/.copilot/instructions/`
-
-**What's inside:** Always-active instructions like code quality rules, communication preferences, and security guidelines.
-
 ### User Prompts
 
 Opens the reusable prompt templates folder. These are `.prompt.md` files that appear in the Copilot Chat prompt picker.

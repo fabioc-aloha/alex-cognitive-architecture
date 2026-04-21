@@ -17,7 +17,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Privacy & Data Governance**: PII memory filter at write boundaries, cross-project data isolation, consent-first workspace mutations, data retention policies
 - **Brain Evolution**: Organic evolution policy, trifecta audit protocol, heir skill promotion, currency audit stamps, skill activation index
 - **AI-Memory Bootstrap**: Feedback and announcements flows operational, AFCP artifact lifecycle with provenance tracking, knowledge artifact store
-- **User-level config**: Universal instructions at `~/.copilot/instructions/` and agents at `~/.copilot/agents/` provide Alex-like behavior in all workspaces without per-project deployment
 
 ### Changed
 

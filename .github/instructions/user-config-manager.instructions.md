@@ -1,8 +1,8 @@
 ---
-description: "Manage VS Code's global AI configuration — user memories, custom agents, user prompts, and MCP servers"
+description: "Manage VS Code's global AI configuration — user memories, user prompts, and MCP servers"
 application: "When reviewing, organizing, or troubleshooting user-level Copilot configuration"
 applyTo: "**/*memory*,**/*agent*,**/*prompt*,**/*mcp*,**/*user-config*"
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # User Config Management
@@ -17,15 +17,15 @@ VS Code user data folder:
 | Component | Path | Scope |
 |-----------|------|-------|
 | **User Memories** | `<USER_DATA>/globalStorage/github.copilot-chat/memory-tool/memories/` | All workspaces |
-| **Custom Agents** | `~/.copilot/agents/*.agent.md` (cross-platform) | All workspaces |
 | **User Prompts** | `<USER_DATA>/prompts/*.prompt.md` | All workspaces |
-| **User Instructions** | `~/.copilot/instructions/*.instructions.md` (cross-platform) | All workspaces |
 | **MCP Config** | `<USER_DATA>/mcp.json` (access via `MCP: Open User Configuration`) | Profile-scoped |
 
 **Workspace-level** (shared with team):
 - Custom agents: `.github/agents/*.agent.md`
 - Instructions: `.github/instructions/*.instructions.md`
 - MCP config: `.vscode/mcp.json`
+
+> **Note**: User-level `~/.copilot/instructions/` and `~/.copilot/agents/` are supported by VS Code but Alex no longer deploys content there. All Alex instructions and agents live at the workspace level via `.github/`.
 
 ## Scope Boundaries
 
@@ -42,22 +42,6 @@ VS Code user data folder:
 - **Team conventions** → Workspace `.github/copilot-instructions.md`
 - **Secrets/tokens** → VS Code SecretStorage or environment variables
 - **Temporary session notes** → `/memories/session/`
-
-## Deployed Alex Portable Content
-
-The following Alex-derived files provide consistent behavior across all workspaces:
-
-**Instructions** (`~/.copilot/instructions/`):
-- `anti-hallucination` — Prevent confabulation
-- `awareness` — Metacognitive monitoring
-- `emotional-intelligence` — Frustration detection
-- `terminal-safety` — Shell hazard prevention
-- `code-quality` — KISS/DRY/security principles
-
-**Agents** (`~/.copilot/agents/`):
-- `Alex-Builder` — Optimistic implementation
-- `Alex-Validator` — Adversarial QA  
-- `Alex-Researcher` — Deep domain research
 
 ## Custom Agent Format
 
@@ -128,6 +112,5 @@ memory str_replace /memories/file.md "old" "new"
 Run periodically:
 
 - **Memory budget**: User memories should stay under 150 lines
-- **Agent overlap**: Check custom agents don't duplicate workspace agents
-- **Instruction conflicts**: Verify no duplicates between user and workspace
 - **MCP reachability**: Confirm MCP servers respond
+- **Prompt deduplication**: Check user prompts don't duplicate workspace prompts
