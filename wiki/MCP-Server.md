@@ -1,5 +1,7 @@
 # MCP Server
 
+![MCP Server](./assets/banner-mcp-server.svg)
+
 Alex ships a standalone **Model Context Protocol (MCP)** server that lets any MCP-compatible AI client access Alex's cognitive tools.
 
 If you use Claude Desktop, Cline, Continue, Windows Copilot, or any other tool that supports MCP, you can connect it to Alex without installing the VS Code extension.
