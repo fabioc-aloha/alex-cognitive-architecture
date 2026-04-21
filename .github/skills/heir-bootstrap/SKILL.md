@@ -113,7 +113,21 @@ Propose `.github/instructions/*.instructions.md` with `applyTo` globs specific t
 
 CONFIRM: Present each proposed instruction file.
 
-### Phase 6: Heir-Specific Skills
+### Phase 6: AI-Memory Setup
+
+Set up the shared AI-Memory folder for cross-project knowledge sharing.
+
+- Check if AI-Memory already exists (setting or auto-discovery)
+- If not found, run `alex.setupAIMemory` command (QuickPick for location selection)
+- Auto-discovers OneDrive paths (Windows/macOS), suggests `~/.alex/AI-Memory/` as fallback
+- User can browse for a custom location
+- Scaffolds directory structure: `global-knowledge.md`, `notes.md`, `learning-goals.md`, `user-profile.json`, `project-registry.json`, `index.json`, plus subdirectories (announcements, feedback, insights, knowledge, patterns)
+- Never overwrites existing content
+- Saves chosen path to `alex.aiMemory.path` setting (global scope)
+
+DECIDE: "AI-Memory at [path]. Register this project in the project registry?"
+
+### Phase 7: Heir-Specific Skills
 
 Propose 2-3 skills unique to the heir project.
 
@@ -123,7 +137,7 @@ Propose 2-3 skills unique to the heir project.
 
 CONFIRM: Present each proposed skill stub.
 
-### Phase 7: Heir Agents
+### Phase 8: Heir Agents
 
 Check if any of Alex's agents need heir-specific tuning.
 
@@ -133,7 +147,7 @@ Check if any of Alex's agents need heir-specific tuning.
 
 CONFIRM: Present each proposed prompt/agent customization.
 
-### Phase 8: Security
+### Phase 9: Security
 
 Propose preToolUse hooks appropriate for the heir's sensitivity level.
 
@@ -143,7 +157,7 @@ Propose preToolUse hooks appropriate for the heir's sensitivity level.
 
 CONFIRM: Present proposed security hooks.
 
-### Phase 9: Review
+### Phase 10: Review
 
 Summary of what was configured across all phases.
 

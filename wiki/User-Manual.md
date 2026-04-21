@@ -114,7 +114,7 @@ See [Setup Tab](Setup-Tab) for full documentation.
 
 ## Agents
 
-Alex has 18 specialized agents for different tasks. Here are the most commonly used:
+Alex has 22 specialized agents for different tasks. Here are the most commonly used:
 
 | Agent | Specialty | When to Use |
 |-------|-----------|-------------|
@@ -153,7 +153,7 @@ Switch to Researcher mode and investigate OAuth2 best practices
 
 ## Skills
 
-Alex has 194 skills across domains. Skills activate automatically based on context.
+Alex has 195 skills across domains. Skills activate automatically based on context.
 
 ### Skill Categories
 

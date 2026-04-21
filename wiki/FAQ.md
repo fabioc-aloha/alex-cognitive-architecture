@@ -16,8 +16,8 @@ Alex is a cognitive learning partner that lives in VS Code. Unlike traditional A
 |---------|--------------|------|
 | **Memory** | Session only | Persistent connections + episodic |
 | **Learning** | None | Continuous through meditation |
-| **Agents** | Single | 18 specialized agents |
-| **Skills** | Generic | 194 domain-specific |
+| **Agents** | Single | 22 specialized agents |
+| **Skills** | Generic | 195 domain-specific |
 | **Adaptation** | None | Project-aware persona |
 
 ### Does Alex require a separate subscription?
@@ -62,7 +62,7 @@ Alex understands context and intent — no special syntax required. For more exa
 
 ### What's the difference between agents?
 
-Alex has 18 specialized agents. Here are the most commonly used:
+Alex has 22 specialized agents. Here are the most commonly used:
 
 | Agent | Best For |
 |-------|----------|
@@ -77,7 +77,7 @@ Alex has 18 specialized agents. Here are the most commonly used:
 | **Backend** | APIs, FastAPI, data services |
 | **Infrastructure** | Azure, Bicep, IaC |
 
-See the [User Manual](User-Manual#agents) for the full list of all 18 agents.
+See the [User Manual](User-Manual#agents) for the full list of all 22 agents.
 
 ### Can I use Alex without the @alex prefix?
 

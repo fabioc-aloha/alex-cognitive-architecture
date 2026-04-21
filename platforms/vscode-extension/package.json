@@ -2,7 +2,7 @@
   "name": "alex-cognitive-architecture",
   "displayName": "Alex Cognitive Architecture",
   "description": "Your cognitive learning partner — installs a living brain of skills, instructions, and prompts that makes GitHub Copilot dramatically smarter in any project.",
-  "version": "8.0.0",
+  "version": "8.1.0",
   "publisher": "fabioc-aloha",
   "license": "PolyForm-Noncommercial-1.0.0",
   "icon": "assets/icon.png",
@@ -76,6 +76,11 @@
           "type": "boolean",
           "default": false,
           "description": "When enabled, prevents brain operations that modify workspace files. Auto-enabled for Master Alex."
+        },
+        "alex.aiMemory.path": {
+          "type": "string",
+          "default": "",
+          "description": "Custom path to the AI-Memory folder for cross-project knowledge sharing. Leave empty for auto-detection (OneDrive preferred)."
         }
       }
     },
@@ -99,6 +104,10 @@
       {
         "command": "alex.openDocs",
         "title": "Alex: Open Documentation"
+      },
+      {
+        "command": "alex.setupAIMemory",
+        "title": "Alex: Setup AI-Memory"
       }
     ],
     "walkthroughs": [

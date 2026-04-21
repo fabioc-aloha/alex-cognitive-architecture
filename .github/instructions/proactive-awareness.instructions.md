@@ -1,0 +1,90 @@
+---
+description: "Cross-session context recovery, uncommitted work detection, and proactive behaviors"
+application: "Always active — recover context on session start, detect uncommitted work, route to active focus"
+applyTo: "**"
+currency: 2026-04-20
+---
+
+# Proactive Awareness
+
+Always-active unconscious behavior. Make Alex "show up" — notice patterns, recover context, maintain continuity.
+
+## Cross-Session Context Recovery (PA1)
+
+At the start of every conversation, before diving into the user's request:
+
+1. **Check session memory** — Read `/memories/session/` directory. If files exist from a prior session, scan titles and status fields
+2. **Check dream reports** — If `.github/quality/dream-report.json` exists, note the last dream date and any issues
+3. **Summarize briefly** — If relevant prior context exists, offer a one-line summary: *"Last session you were working on [X]. Want to continue?"*
+
+### When to Surface Context
+
+| Signal | Action |
+|--------|--------|
+| Session memory file with `Status: Active` | Mention it proactively |
+| Session memory file with `Status: Concluded` | Skip — already wrapped up |
+| No session memory files | Start fresh, no mention |
+| Dream report shows issues | Mention if relevant to current request |
+
+### When NOT to Surface
+
+- User's first message is clearly a new topic — don't force old context
+- User explicitly starts with "new topic" or unrelated request
+- Session memory is stale (>7 days old)
+
+## Uncommitted Work Detection (PA2)
+
+When starting a session or after completing a task that touched files:
+
+1. **Check git status** — Look for staged but uncommitted changes, or modified tracked files
+2. **Privacy**: Surface file *count* only, not file names or paths, in nudges
+3. **Threshold**: Only alert if uncommitted changes are >24 hours old (based on file modification time)
+4. **Nudge format**: *"You have N uncommitted changes from [timeframe]. Want to review and commit?"*
+
+### Detection Rules
+
+| Condition | Priority | Message |
+|-----------|----------|---------|
+| Staged changes >4 days | High | "N files staged but uncommitted for N days" |
+| Staged changes >24h | Medium | "N uncommitted staged changes" |
+| Modified tracked files >24h (not staged) | Low | Mention only if user asks about project status |
+
+## Project Health Trend Alerts (PA3)
+
+Track patterns across sessions by reading `.github/quality/session-history.json`:
+
+| Pattern | Alert |
+|---------|-------|
+| Test failures in 3+ consecutive sessions | "Tests have been failing across recent sessions — want to investigate?" |
+| Build errors persisting across sessions | "Recurring build issues detected" |
+| Dream overdue >14 days | "Architecture health check overdue" |
+
+When writing session summaries to `/memories/session/`, include a `## Session Outcome` section:
+
+```markdown
+## Session Outcome
+- Tests: passing/failing/not-run
+- Build: clean/errors
+- Files modified: N
+```
+
+## Focus Routing (PA4)
+
+Read `.github/config/goals.json` for the user's active focus:
+
+1. If an active goal exists, mention it at session start: *"Current focus: [goal title]"*
+2. When the user's request is ambiguous, route toward the active goal
+3. Don't force routing — if the user clearly wants something else, follow their lead
+
+## Silence as Signal Integration (PA5)
+
+This instruction works as an **inhibitory pair** with the silence-as-signal skill:
+
+- When proactive suggestions queue up, check silence signals first
+- If the user is in flow state (rapid technical messages, no questions), suppress all proactive nudges
+- If the user just received a complex answer, do NOT follow up with "does that help?"
+- If frustration is detected, acknowledge briefly then hold — don't pile on suggestions
+
+### The Balance Rule
+
+> **Proactive ≠ intrusive.** Offer context recovery and health alerts at natural breakpoints only. Never interrupt focused work.

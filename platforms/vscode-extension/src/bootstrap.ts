@@ -3,6 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { BRAIN_DIR, TARGET_DIR, VERSION_FILE } from "./shared/constants.js";
 import { writeLoopConfig } from "./sidebar/loopConfigGenerator.js";
+import { resolveAIMemoryPath, setupAIMemory } from "./aiMemory.js";
 
 /**
  * Brain subdirectories managed by Alex.
@@ -152,6 +153,19 @@ export async function bootstrapBrainFiles(
     if (settingsChoice === "Optimize Settings") {
       vscode.commands.executeCommand("alex.optimizeSettings");
     }
+
+    // Offer AI-Memory setup if not already configured
+    if (!resolveAIMemoryPath()) {
+      const memChoice = await vscode.window.showInformationMessage(
+        "Alex: Set up AI-Memory for cross-project knowledge sharing?",
+        "Setup AI-Memory",
+        "Skip",
+      );
+      if (memChoice === "Setup AI-Memory") {
+        await setupAIMemory();
+      }
+    }
+
     return true;
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);

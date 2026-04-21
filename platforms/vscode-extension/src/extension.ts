@@ -3,6 +3,7 @@ import { bootstrapBrainFiles, getBrainStatus } from "./bootstrap.js";
 import { WelcomeViewProvider } from "./sidebar/WelcomeViewProvider.js";
 import { sanitizeError } from "./shared/sanitize.js";
 import { DOCS_URL, MASTER_PROTECTED_FILE } from "./shared/constants.js";
+import { setupAIMemory } from "./aiMemory.js";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -23,9 +24,26 @@ export function activate(context: vscode.ExtensionContext): void {
   }
 }
 
+/**
+ * Enforce safety-critical VS Code settings.
+ * Copilot Memory (chat memory) is disabled because it auto-loads /memories/
+ * files into every LLM prompt — creating uncontrolled PII exposure via cloud sync.
+ * Alex uses AI-Memory (OneDrive) and .github/instructions/ instead.
+ */
+async function enforceSafetySettings(): Promise<void> {
+  const config = vscode.workspace.getConfiguration();
+  const key = "github.copilot.chat.copilotMemory.enabled";
+  if (config.get(key) !== false) {
+    await config.update(key, false, vscode.ConfigurationTarget.Global);
+  }
+}
+
 function activateInternal(context: vscode.ExtensionContext): void {
   // Auto-detect Master Alex workspace and enable protection
   detectProtectedMode();
+
+  // Enforce safety settings on every activation
+  enforceSafetySettings();
 
   // --- Sidebar ---
   const welcomeProvider = new WelcomeViewProvider(context.extensionUri);
@@ -57,6 +75,7 @@ function activateInternal(context: vscode.ExtensionContext): void {
       );
       if (choice === "Install") {
         await bootstrapBrainFiles(context, true);
+        await enforceSafetySettings();
         refreshSidebar(context, welcomeProvider);
       }
     }),
@@ -117,8 +136,8 @@ function activateInternal(context: vscode.ExtensionContext): void {
         },
         {
           key: "github.copilot.chat.copilotMemory.enabled",
-          value: true,
-          label: "Copilot Memory",
+          value: false,
+          label: "Copilot Memory disabled (PII safety — use AI-Memory instead)",
         },
         {
           key: "chat.customAgentInSubagent.enabled",
@@ -218,6 +237,19 @@ function activateInternal(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand("alex.openDocs", () => {
       vscode.env.openExternal(vscode.Uri.parse(DOCS_URL));
+    }),
+  );
+
+  // AI-Memory setup
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.setupAIMemory", async () => {
+      try {
+        await setupAIMemory();
+      } catch (err) {
+        vscode.window.showErrorMessage(
+          `AI-Memory setup failed: ${sanitizeError(err)}`,
+        );
+      }
     }),
   );
 

@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.1.0] - 2026-04-21
+
+### Added
+
+- **Autopilot v2**: Custom cloud agents, cross-lane seed tasks, GitHub Actions dispatch, Recent Sessions panel, Pending Reviews panel, status bar badge, task dependency chains, `/autopilot` chat command
+- **Competition Response**: Agent activity TreeView with real-time status, competitive health pulse, news feed articles, prompt priority engine with layer weights
+- **RAI Safety Framework**: Sycophancy detection, gaslighting defense, blame-shifting protection, emotional dependency prevention, session boundary awareness
+- **Privacy & Data Governance**: PII memory filter at write boundaries, cross-project data isolation, consent-first workspace mutations, data retention policies
+- **Brain Evolution**: Organic evolution policy, trifecta audit protocol, heir skill promotion, currency audit stamps, skill activation index
+- **AI-Memory Bootstrap**: Feedback and announcements flows operational, AFCP artifact lifecycle with provenance tracking, knowledge artifact store
+- **User-level config**: Universal instructions at `~/.copilot/instructions/` and agents at `~/.copilot/agents/` provide Alex-like behavior in all workspaces without per-project deployment
+
+### Changed
+
+- **Documentation updates**: Cognitive architecture, memory systems, working-with-alex, and heir setup guides updated for v8.1 features
+- **Brain inventory**: 195 skills, 159 instructions, 37 prompts, 22 agents
+
+---
+
 ## [8.0.3] - 2026-04-20
 
 ### Added

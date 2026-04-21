@@ -42,6 +42,27 @@ const GH = path.join(ROOT, ".github");
 const QUALITY_DIR = path.join(GH, "quality");
 const STDOUT_MODE = process.argv.includes("--stdout");
 
+// --- Drift Detection Helpers ---
+
+/**
+ * List brain file names in a directory for drift detection.
+ * Skills use subdirectory names; others use file basenames.
+ */
+function listBrainFiles(dir, category) {
+  if (!fs.existsSync(dir)) return [];
+  try {
+    if (category === "skills") {
+      return fs.readdirSync(dir, { withFileTypes: true })
+        .filter(d => d.isDirectory() && fs.existsSync(path.join(dir, d.name, "SKILL.md")))
+        .map(d => d.name);
+    }
+    return fs.readdirSync(dir)
+      .filter(f => f.endsWith(".md") || f.endsWith(".cjs") || f.endsWith(".json"));
+  } catch {
+    return [];
+  }
+}
+
 // --- Token Waste Detection ---
 // Brain files are LLM-consumed. Mermaid diagrams render for humans, not LLMs.
 // LLMs see raw syntax like "flowchart LR" and "style X fill:#..." which waste tokens.
@@ -973,6 +994,62 @@ function generateGrid() {
     lines.push("- Complex workflows → Numbered steps or bullet list");
   }
 
+  // ── BE3: Master ↔ Heir Drift Detection ──────────────────────────
+  const heirBrain = path.join(ROOT, "heir", ".github");
+  if (fs.existsSync(heirBrain)) {
+    lines.push("");
+    lines.push("## Drift Detection (Master ↔ Heir)");
+    lines.push("");
+
+    const driftDirs = ["skills", "instructions", "prompts", "agents", "muscles", "config"];
+    const masterOnly = [];
+    const heirOnly = [];
+
+    for (const dirName of driftDirs) {
+      const masterDir = path.join(GH, dirName);
+      const hDir = path.join(heirBrain, dirName);
+
+      const masterFiles = listBrainFiles(masterDir, dirName);
+      const heirFiles = listBrainFiles(hDir, dirName);
+
+      const masterSet = new Set(masterFiles);
+      const heirSet = new Set(heirFiles);
+
+      for (const f of masterFiles) {
+        if (!heirSet.has(f)) masterOnly.push(`${dirName}/${f}`);
+      }
+      for (const f of heirFiles) {
+        if (!masterSet.has(f)) heirOnly.push(`${dirName}/${f}`);
+      }
+    }
+
+    if (masterOnly.length === 0 && heirOnly.length === 0) {
+      lines.push("**Status**: ✅ Master and heir file lists are in sync");
+    } else {
+      lines.push(`**Status**: ⚠️ ${masterOnly.length} master-only, ${heirOnly.length} heir-only`);
+
+      if (masterOnly.length > 0) {
+        lines.push("");
+        lines.push("### Master-only (not in heir)");
+        lines.push("");
+        for (const f of masterOnly.slice(0, 30)) {
+          lines.push(`- ${f}`);
+        }
+        if (masterOnly.length > 30) lines.push(`- ... and ${masterOnly.length - 30} more`);
+      }
+
+      if (heirOnly.length > 0) {
+        lines.push("");
+        lines.push("### Heir-only (not in master)");
+        lines.push("");
+        for (const f of heirOnly.slice(0, 30)) {
+          lines.push(`- ${f}`);
+        }
+        if (heirOnly.length > 30) lines.push(`- ... and ${heirOnly.length - 30} more`);
+      }
+    }
+  }
+
   return lines.join("\n");
 }
 
@@ -990,6 +1067,7 @@ if (typeof module !== 'undefined') {
     scanMuscles,
     scanHooks,
     generateGrid,
+    listBrainFiles,
     CURRENCY_MAX_DAYS,
   };
 }

@@ -2,7 +2,7 @@
 description: "Cross-project knowledge search, pattern recognition, and insight management via unified AI-Memory"
 application: "When searching for reusable patterns, applying lessons learned, or managing knowledge across projects"
 applyTo: "**/*knowledge*,**/*insight*,**/*pattern*,**/*ai-memory*"
-currency: 2025-01-01
+currency: 2026-04-20
 ---
 
 # Global Knowledge Management
@@ -16,8 +16,36 @@ currency: 2025-01-01
 | Name, role, identity | AI-Memory/user-profile.json | All projects |
 | Preferences (style, learning) | AI-Memory/user-profile.json | All projects |
 | Cross-project patterns | AI-Memory/global-knowledge.md | All projects |
+| Session notes | AI-Memory/notes.md | All projects |
+| Learning goals | AI-Memory/learning-goals.md | All projects |
 | Fleet visibility | AI-Memory/project-registry.json | All projects |
 | Project persona | .github/config/project-persona.json | One project |
+
+## AI-Memory Location
+
+| Platform | Path |
+|----------|------|
+| Windows | `%OneDrive%/AI-Memory/` (e.g., `~/OneDrive - Company/AI-Memory/`) |
+| macOS | `~/Library/CloudStorage/OneDrive-*/AI-Memory/` |
+| Fallback | `~/.alex/AI-Memory/` |
+| M365 | OneDrive > AI-Memory via OneDriveAndSharePoint |
+
+## Directory Structure
+
+| Path | Content |
+|------|---------|
+| `global-knowledge.md` | Consolidated cross-project patterns and insights |
+| `notes.md` | Quick notes, reminders, observations |
+| `learning-goals.md` | Active learning objectives |
+| `user-profile.json` | User identity and preferences |
+| `project-registry.json` | Fleet project registry |
+| `index.json` | File registry |
+| `.github/` | Architecture config (reserved) |
+| `announcements/` | Fleet announcements |
+| `feedback/` | Heir bug reports and feature requests |
+| `insights/` | Future individual insight files |
+| `knowledge/` | Future domain knowledge files |
+| `patterns/` | Future pattern files |
 
 ## Project Registry: Cross-Project Discovery
 
@@ -33,7 +61,7 @@ Before solving a problem from scratch, check if another project solved it succes
 
 ## Search Strategy
 
-1. Check AI-Memory/insights/ for existing patterns
+1. Check AI-Memory/global-knowledge.md for existing patterns
 2. Check project-local knowledge first (faster)
 3. Escalate to global only when local insufficient
 4. Record new patterns for future use
@@ -42,22 +70,23 @@ Before solving a problem from scratch, check if another project solved it succes
 
 | Signal | Action |
 |--------|--------|
-| Solved similar problem before | Search AI-Memory |
-| New technique worked well | Promote to insight |
-| Pattern applies across projects | Store at global level |
+| Solved similar problem before | Search AI-Memory/global-knowledge.md |
+| New technique worked well | Add to global-knowledge.md |
+| Pattern applies across projects | Store in global-knowledge.md |
 | Pattern is project-specific | Keep in project docs |
 
 ## Insight Lifecycle
 
-1. **Capture**: Record while fresh
+1. **Capture**: Record in AI-Memory/notes.md while fresh
 2. **Validate**: Confirm in second context
 3. **Generalize**: Abstract from specifics
-4. **Store**: AI-Memory/insights/{domain}.md
+4. **Store**: Add to AI-Memory/global-knowledge.md under appropriate category
 5. **Apply**: Reference in future work
+6. **Promote**: Mature patterns become `.github/skills/` or `.github/instructions/`
 
 ## Anti-Patterns
 
-- Reinventing solutions that exist
+- Reinventing solutions that exist in global-knowledge.md
 - Over-generalizing one-off fixes
 - Storing project-specific knowledge globally
 - Duplicating user-profile.json in heirs
@@ -76,15 +105,9 @@ myEntry.successfulPatterns.push('pattern-name');
 myEntry.health.lastMeditation = new Date().toISOString();
 ```
 
-### Create Insight File
+### Add to Global Knowledge
 
-When a pattern proves valuable (reused 3+ times):
-
-```bash
-# Create: ~/AI-Memory/insights/GI-{topic}-{date}.md
-```
-
-Include: project, date, category, tags, context, discovery, evidence.
+When a pattern proves valuable (reused 3+ times), add an entry to `AI-Memory/global-knowledge.md` under the appropriate category heading.
 
 ### Report Friction
 

@@ -23,22 +23,42 @@ const os = require('os');
 
 // Configuration
 const WORKSPACE_ROOT = process.cwd();
-const AI_MEMORY_PATHS = [
-    // Try common OneDrive folder names — adjust for your account
-    ...fs.readdirSync(os.homedir())
-        .filter(d => d.startsWith('OneDrive'))
-        .map(d => path.join(os.homedir(), d, 'AI-Memory')),
-    path.join(os.homedir(), 'AI-Memory'),
-];
 
 /**
- * Find AI-Memory folder
+ * Find AI-Memory folder (Windows + macOS + Linux)
  */
 function findAIMemoryPath() {
-    for (const p of AI_MEMORY_PATHS) {
-        if (fs.existsSync(p)) {
-            return p;
+    const candidates = [];
+
+    // Windows: ~/OneDrive - Company Name/AI-Memory
+    try {
+        const homeEntries = fs.readdirSync(os.homedir());
+        for (const entry of homeEntries) {
+            if (/^OneDrive/i.test(entry)) {
+                candidates.push(path.join(os.homedir(), entry, 'AI-Memory'));
+            }
         }
+    } catch { /* ignore */ }
+
+    // macOS: ~/Library/CloudStorage/OneDrive-Personal/AI-Memory
+    const cloudStorage = path.join(os.homedir(), 'Library', 'CloudStorage');
+    try {
+        if (fs.existsSync(cloudStorage)) {
+            const csEntries = fs.readdirSync(cloudStorage);
+            for (const entry of csEntries) {
+                if (/^OneDrive/i.test(entry)) {
+                    candidates.push(path.join(cloudStorage, entry, 'AI-Memory'));
+                }
+            }
+        }
+    } catch { /* ignore */ }
+
+    // Fallbacks
+    candidates.push(path.join(os.homedir(), 'AI-Memory'));
+    candidates.push(path.join(os.homedir(), '.alex', 'AI-Memory'));
+
+    for (const p of candidates) {
+        if (fs.existsSync(p)) return p;
     }
     return null;
 }

@@ -46,6 +46,11 @@
           "target": {
             "type": "string",
             "description": "Where output goes (for UI display)"
+          },
+          "dependsOn": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Task IDs that must complete successfully before this task runs. Used for ordered execution chains."
           }
         }
       }

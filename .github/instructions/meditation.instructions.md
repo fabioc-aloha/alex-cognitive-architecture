@@ -71,7 +71,32 @@ Output checklist before concluding:
 
 If new skills/instructions were created, verify they load correctly.
 
-### 5. Content Spot-Check (per session)
+### 5. Generative Insight Integration (v8.1.0+)
+
+Before spot-check, run the insight pipeline to enrich meditation output:
+
+```text
+node .github/muscles/insight-pipeline.cjs --json
+```
+
+Use pipeline results to:
+
+| Signal | Action |
+|---|---|
+| Recurring patterns (2+ occurrences) | Promote to instruction or skill if not already captured |
+| High-confidence artifacts (>= 0.8) | Review for promotion to global knowledge |
+| Stale artifacts (>90d, < 0.5 confidence) | Prune or refresh during this meditation |
+| Agent failure patterns (>30% rate) | Investigate — add workaround or retrain delegation |
+
+Also run the dream creativity score to assess cognitive health:
+
+```text
+node .github/muscles/dream-creativity-score.cjs
+```
+
+If score < 60 (grade C or below), prioritize architecture maintenance over new learning.
+
+### 6. Content Spot-Check (per session)
 
 Randomly sample 3-5 existing skills. For each, verify:
 

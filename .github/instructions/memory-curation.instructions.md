@@ -18,6 +18,8 @@ currency: 2025-01-01
 
 **3-Workspace Test**: Only store in `/memories/` if useful across 3+ workspaces.
 
+**PII Gate**: Before ANY write, apply `pii-memory-filter.instructions.md`. No PII in persistent tiers.
+
 ## Budget
 
 - **200 lines** auto-loaded maximum
