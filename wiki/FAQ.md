@@ -40,11 +40,23 @@ See [Getting Started](Getting-Started) for detailed instructions.
 
 ### What VS Code version do I need?
 
-VS Code 1.100 or later. Alex uses features from recent VS Code releases.
+VS Code 1.100 or later. VS Code 1.117+ is recommended for the best experience (persistent autopilot mode, improved terminal handling).
 
 ### Does Alex work with VS Code forks (Cursor, etc.)?
 
 Alex is designed for VS Code. Compatibility with forks is not guaranteed.
+
+### How do I enable persistent autopilot mode?
+
+Add this to your VS Code `settings.json` (requires VS Code 1.117+):
+
+```json
+{
+  "chat.permissions.default": "autopilot"
+}
+```
+
+This lets Alex run tools without per-action approval and persists across sessions. Without it, you need to re-enable autopilot each time you start a new chat session.
 
 ## Usage
 

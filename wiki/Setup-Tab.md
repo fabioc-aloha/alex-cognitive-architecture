@@ -165,6 +165,25 @@ Opens VS Code settings filtered to Alex-specific configuration options. All sett
 | `alex.verbosity` | Response length preference (`brief`, `standard`, `detailed`) |
 | Other settings | Vary by extension version — check the settings page for the full list |
 
+### Recommended VS Code Settings
+
+These built-in VS Code settings improve Alex's effectiveness:
+
+| Setting | Value | Effect |
+|---------|-------|--------|
+| `chat.permissions.default` | `"autopilot"` | Persistent autopilot mode — Alex can run tools without per-action approval. Survives across sessions. |
+| `chat.agent.enabled` | `true` | Enables agent mode in Copilot Chat |
+
+To enable autopilot persistence, add to your VS Code `settings.json`:
+
+```json
+{
+  "chat.permissions.default": "autopilot"
+}
+```
+
+This eliminates the need to re-enable autopilot at the start of every session. Requires VS Code 1.117+.
+
 ---
 
 ## Learn

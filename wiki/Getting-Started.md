@@ -99,6 +99,18 @@ Initialize this workspace and create project instructions
 - **[Heir Project Setup](Heir-Project-Setup)** — Configure Alex for your specific project
 - **[FAQ](FAQ)** — Common questions and troubleshooting
 
+## Recommended Settings
+
+For the best experience with VS Code 1.117+, add to your `settings.json`:
+
+```json
+{
+  "chat.permissions.default": "autopilot"
+}
+```
+
+This enables persistent autopilot mode — Alex can run tools without per-action approval across sessions.
+
 ---
 
 *Alex learns your patterns. The more you work together, the better the partnership becomes.*
