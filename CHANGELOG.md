@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.1.5] - 2026-04-21
+
+### Added
+
+- **v8.2.0 Wave 1**: VS Code 1.117 platform feature docs (AHP subagents, worktree isolation, auto-approve, command allowlisting), agent session sorting and queued message editing docs
+- **Templates**: Tool set presets and user memory structure templates for heir projects
+- **Prompt standard**: Tier classification (Procedural/Interactive/Declarative) for all 38 prompts
+- **Config layers**: Classification manifest for core-brain, integration-layer, and runtime-state configs
+- **PPTX Mermaid**: Diagram rendering support in pptxgen-cli with PNG embedding
+- **Patent disclosure**: Patent disclosure document for Alex Cognitive Architecture
+- **Publish-all**: One-command push and publish for both repos and wikis
+
+### Fixed
+
+- **Badges**: Replaced retired shields.io badges with vsmarketplacebadges.dev
+- **Heir docs**: AlexMaster references → alex-cognitive-architecture, flat wiki link fixes
+- **Blog/tutorial images**: Fixed image paths for flat GitHub Wiki rendering
+- **Sidebar UI**: Codicon rendering in VSIX, agent activity metric formatting
+- **Cloud agents**: Copilot SWE agent REST API and dispatch workflow fixes
+- **setup-ai-memory prompt**: Added missing `application` frontmatter field
+
+### Changed
+
+- **Brain inventory**: 195 skills, 160 instructions, 66 prompts, 22 agents, 37 muscles, 24 hooks
+
+---
+
 ## [8.1.1] - 2026-04-21
 
 ### Fixed

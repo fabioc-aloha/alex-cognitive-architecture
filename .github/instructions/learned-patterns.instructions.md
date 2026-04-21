@@ -2,7 +2,7 @@
 description: "Battle-tested patterns learned from real project experience — gotchas, solutions, and architectural rules"
 application: "Always active — apply relevant patterns when working in matching domains"
 applyTo: "**"
-currency: 2026-04-21
+currency: 2025-01-01
 ---
 
 # Learned Patterns
