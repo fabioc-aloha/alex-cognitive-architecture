@@ -16,25 +16,15 @@ Alex's MCP server exposes five cognitive tools, four prompt templates, and brows
 
 ## Installation
 
-### Option 1: npx (Recommended)
-
-No install needed — just configure your MCP client to run:
+The MCP server ships with the Alex repo. Build it once, then point your MCP client at the compiled output.
 
 ```bash
-npx @alex/mcp-cognitive-tools
+cd heir/platforms/mcp-cognitive-tools
+npm install
+npm run build
 ```
 
-### Option 2: Global Install
-
-```bash
-npm install -g @alex/mcp-cognitive-tools
-```
-
-Then run with:
-
-```bash
-alex-mcp
-```
+The server entry point is `heir/platforms/mcp-cognitive-tools/dist/index.js`.
 
 ### Requirements
 
@@ -60,30 +50,16 @@ Add to your workspace `.vscode/mcp.json`:
 }
 ```
 
-Or if installed globally:
-
-```json
-{
-  "servers": {
-    "alex-cognitive": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["@alex/mcp-cognitive-tools"]
-    }
-  }
-}
-```
-
 ### Claude Desktop
 
-Add to `claude_desktop_config.json`:
+Add to `claude_desktop_config.json` (use the absolute path to your repo):
 
 ```json
 {
   "mcpServers": {
     "alex-cognitive": {
-      "command": "npx",
-      "args": ["@alex/mcp-cognitive-tools"]
+      "command": "node",
+      "args": ["/path/to/alex-cognitive-architecture/heir/platforms/mcp-cognitive-tools/dist/index.js"]
     }
   }
 }
@@ -96,8 +72,8 @@ Add to `claude_desktop_config.json`:
   "mcp": {
     "servers": {
       "alex-cognitive": {
-        "command": "npx",
-        "args": ["@alex/mcp-cognitive-tools"]
+        "command": "node",
+        "args": ["/path/to/alex-cognitive-architecture/heir/platforms/mcp-cognitive-tools/dist/index.js"]
       }
     }
   }
@@ -195,10 +171,12 @@ Make sure Node.js 18+ is installed:
 node --version
 ```
 
-If using npx, clear the cache and retry:
+Rebuild and retry:
 
 ```bash
-npx --yes @alex/mcp-cognitive-tools
+cd heir/platforms/mcp-cognitive-tools
+npm run build
+node dist/index.js
 ```
 
 ### Knowledge tools return nothing

@@ -18,36 +18,52 @@ Standalone [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) serv
 
 ## Installation
 
+The MCP server ships with the Alex repo. Build it locally:
+
 ```bash
-npm install -g @alex/mcp-cognitive-tools
+cd heir/platforms/mcp-cognitive-tools
+npm install
+npm run build
 ```
 
-Or use directly with npx:
+Then run with:
 
 ```bash
-npx @alex/mcp-cognitive-tools
+node dist/index.js
 ```
 
 ## Configuration
 
-### Claude Desktop
+### VS Code
 
-Add to your `claude_desktop_config.json`:
+Add to your workspace `.vscode/mcp.json`:
 
 ```json
 {
-  "mcpServers": {
+  "servers": {
     "alex-cognitive": {
-      "command": "npx",
-      "args": ["@alex/mcp-cognitive-tools"]
+      "type": "stdio",
+      "command": "node",
+      "args": ["${workspaceFolder}/heir/platforms/mcp-cognitive-tools/dist/index.js"]
     }
   }
 }
 ```
 
-### VS Code MCP Gallery
+### Claude Desktop
 
-The server will appear in the MCP Gallery when installed globally.
+Add to your `claude_desktop_config.json` (use absolute path to your repo):
+
+```json
+{
+  "mcpServers": {
+    "alex-cognitive": {
+      "command": "node",
+      "args": ["/path/to/alex-cognitive-architecture/heir/platforms/mcp-cognitive-tools/dist/index.js"]
+    }
+  }
+}
+```
 
 ### Cline / Continue
 
@@ -56,7 +72,8 @@ The server will appear in the MCP Gallery when installed globally.
   "mcp": {
     "servers": {
       "alex-cognitive": {
-        "command": "alex-mcp"
+        "command": "node",
+        "args": ["/path/to/alex-cognitive-architecture/heir/platforms/mcp-cognitive-tools/dist/index.js"]
       }
     }
   }

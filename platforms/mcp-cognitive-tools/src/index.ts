@@ -13,7 +13,7 @@
  * - alex_knowledge_save: Save insights to global knowledge
  *
  * Usage:
- *   npx @alex/mcp-cognitive-tools
+ *   node dist/index.js
  */
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
