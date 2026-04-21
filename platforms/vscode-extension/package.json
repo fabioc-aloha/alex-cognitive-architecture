@@ -1,7 +1,7 @@
 {
   "name": "alex-cognitive-architecture",
   "displayName": "Alex Cognitive Architecture",
-  "description": "Make GitHub Copilot dramatically smarter — installs a living brain of skills, instructions, and prompts into any project.",
+  "description": "Make GitHub Copilot dramatically smarter. Alex installs a living brain of skills, instructions, and prompts into any project.",
   "version": "8.1.6",
   "publisher": "fabioc-aloha",
   "license": "PolyForm-Noncommercial-1.0.0",

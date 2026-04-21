@@ -30,6 +30,7 @@ Hard-won patterns from production experience. Each entry records a specific gotc
 
 - **Docs decay proportional to velocity**: Hardcoded numbers (test counts, line counts, version requirements) rot fastest. Prefer runtime reads or "as of [date]" stamps.
 - **Multi-surface count drift**: When a number (skill count, instruction count) appears in N files across M surfaces, it WILL diverge. Grep for the old number across all surfaces when updating. Analytical/point-in-time docs are exempt — those are historical records.
+- **Automate version stamps**: Version numbers in 5+ files WILL drift with manual edits. Solution: single-source (root `package.json`) + bump script that derives all locations. Classify each reference as auto-derivable vs. inherently manual (changelogs, planning docs).
 - **Plan integrity has no automated check**: Lane header task counts (e.g., "0/6") and total rollups can silently diverge from the actual backlog items when tasks are added. Manual recount is the only verification.
 - **Planning voice → past tense**: Strategy docs written in future tense ("will ship", "in progress") must be updated when milestones complete.
 - **Dual-surface docs drift**: Two READMEs covering overlapping scope will diverge. Cross-reference from the less-detailed to the more-detailed, or consolidate.
@@ -65,6 +66,7 @@ Hard-won patterns from production experience. Each entry records a specific gotc
 - **Declarative data-driven layouts**: Define page layout structures as data, keep rendering code as pure templates. Adding new sections requires only data changes, not template surgery.
 - **Config + content file separation**: JSON config defines structure, separate .md files hold content. Loader resolves file references at runtime. Cache per session, invalidate on refresh.
 - **Verify every field when transcribing code to config**: When extracting hardcoded data to JSON, icon names, descriptions, and field values will silently drift. Cross-check every field against the source.
+- **Hardcoded paths in build scripts rot**: When directory structure changes (e.g., `platforms/` → `heir/platforms/`), build scripts with hardcoded paths break silently. Use config or resolve relative to manifest files.
 
 ## Quality Process
 
