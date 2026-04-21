@@ -8,7 +8,7 @@ Standalone [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) serv
 
 ## Features
 
-- **Synapse Health Check**: Validate cognitive architecture integrity
+- **Health Check**: Validate cognitive architecture integrity
 - **Memory Search**: Search across all Alex memory systems (skills, instructions, prompts, episodic, global knowledge)
 - **Architecture Status**: Get current inventory of cognitive components
 - **Global Knowledge Search**: Search cross-project patterns and insights
@@ -31,6 +31,12 @@ Then run with:
 ```bash
 node dist/index.js
 ```
+
+### Prerequisites
+
+- **Node.js 18+**
+- **A `.github/` brain directory** in the workspace where you run the server. The workspace-specific tools (`alex_health_check`, `alex_memory_search`, `alex_architecture_status`) read skills, instructions, prompts, and agents from `.github/`. Without it, only the global knowledge tools work.
+- **AI-Memory folder** (optional) for `alex_knowledge_search` and `alex_knowledge_save`. Auto-detected from `ALEX_AI_MEMORY` env var, `OneDrive/AI-Memory`, or `~/.alex/global-knowledge`.
 
 ## Configuration
 
@@ -91,9 +97,9 @@ Input:
   workspacePath?: string  # Path to workspace (defaults to cwd)
 
 Output:
-  - status: EXCELLENT | GOOD | NEEDS_ATTENTION
-  - skills, instructions, prompts, agents, synapses counts
-  - brokenSynapses count
+  - status: EXCELLENT | MINIMAL | MISSING
+  - skills, instructions, prompts, agents counts
+  - message
 ```
 
 ### alex_memory_search

@@ -92,7 +92,7 @@ Check the health of Alex's cognitive architecture. Validates that skills, instru
 |-----------|------|----------|-------------|
 | `workspacePath` | string | No | Path to workspace (defaults to cwd) |
 
-Returns status (`EXCELLENT`, `GOOD`, or `NEEDS_ATTENTION`), component counts, and broken synapse details.
+Returns status (`EXCELLENT`, `MINIMAL`, or `MISSING`), component counts, and a summary message.
 
 ### alex_memory_search
 
