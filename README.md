@@ -29,6 +29,16 @@ Alex enhances GitHub Copilot with a **cognitive architecture** — domain knowle
 - **Chat Participant** — `@alex` in Copilot Chat with context-aware routing
 - **Specialized Agents** — Builder, Researcher, Validator, Documentarian, Planner, Presenter, and more
 
+## Platforms
+
+### VS Code Extension
+
+The primary surface — install from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=fabioc-aloha.alex-cognitive-architecture).
+
+### MCP Server
+
+Use Alex's cognitive tools from any MCP-compatible client (Claude Desktop, Cline, etc.). See [MCP Server docs](https://github.com/fabioc-aloha/alex-cognitive-architecture/wiki/MCP-Server) for setup.
+
 ## Quick Start
 
 1. Install from [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=fabioc-aloha.alex-cognitive-architecture)

@@ -289,7 +289,48 @@ function getArchitectureResources(): Resource[] {
   return resources;
 }
 
-async function synapseHealth(workspacePath?: string): Promise<string> {
+// ── Shared component counting ─────────────────────────────────────
+
+interface ComponentCounts {
+  skills: number;
+  instructions: number;
+  prompts: number;
+  agents: number;
+}
+
+function countComponents(githubPath: string): ComponentCounts {
+  const counts: ComponentCounts = { skills: 0, instructions: 0, prompts: 0, agents: 0 };
+
+  const skillsPath = path.join(githubPath, "skills");
+  if (fs.existsSync(skillsPath)) {
+    counts.skills = fs.readdirSync(skillsPath)
+      .filter((f) => fs.statSync(path.join(skillsPath, f)).isDirectory()).length;
+  }
+
+  const instructionsPath = path.join(githubPath, "instructions");
+  if (fs.existsSync(instructionsPath)) {
+    counts.instructions = fs.readdirSync(instructionsPath)
+      .filter((f) => f.endsWith(".instructions.md")).length;
+  }
+
+  const promptsPath = path.join(githubPath, "prompts");
+  if (fs.existsSync(promptsPath)) {
+    counts.prompts = fs.readdirSync(promptsPath)
+      .filter((f) => f.endsWith(".prompt.md")).length;
+  }
+
+  const agentsPath = path.join(githubPath, "agents");
+  if (fs.existsSync(agentsPath)) {
+    counts.agents = fs.readdirSync(agentsPath)
+      .filter((f) => f.endsWith(".agent.md")).length;
+  }
+
+  return counts;
+}
+
+// ── Tool implementations ──────────────────────────────────────────
+
+async function healthCheck(workspacePath?: string): Promise<string> {
   const basePath = workspacePath || process.cwd();
   const githubPath = path.join(basePath, ".github");
 
@@ -301,46 +342,7 @@ async function synapseHealth(workspacePath?: string): Promise<string> {
     });
   }
 
-  const stats = {
-    skills: 0,
-    instructions: 0,
-    prompts: 0,
-    agents: 0,
-  };
-
-  // Count skills
-  const skillsPath = path.join(githubPath, "skills");
-  if (fs.existsSync(skillsPath)) {
-    stats.skills = fs
-      .readdirSync(skillsPath)
-      .filter((f) =>
-        fs.statSync(path.join(skillsPath, f)).isDirectory(),
-      ).length;
-  }
-
-  // Count instructions
-  const instructionsPath = path.join(githubPath, "instructions");
-  if (fs.existsSync(instructionsPath)) {
-    stats.instructions = fs
-      .readdirSync(instructionsPath)
-      .filter((f) => f.endsWith(".instructions.md")).length;
-  }
-
-  // Count prompts
-  const promptsPath = path.join(githubPath, "prompts");
-  if (fs.existsSync(promptsPath)) {
-    stats.prompts = fs
-      .readdirSync(promptsPath)
-      .filter((f) => f.endsWith(".prompt.md")).length;
-  }
-
-  // Count agents
-  const agentsPath = path.join(githubPath, "agents");
-  if (fs.existsSync(agentsPath)) {
-    stats.agents = fs
-      .readdirSync(agentsPath)
-      .filter((f) => f.endsWith(".agent.md")).length;
-  }
+  const stats = countComponents(githubPath);
 
   // Evaluate health based on component counts
   const total = stats.skills + stats.instructions + stats.prompts + stats.agents;
@@ -503,10 +505,7 @@ async function architectureStatus(workspacePath?: string): Promise<string> {
 
   const status = {
     installed: true,
-    skills: 0,
-    instructions: 0,
-    prompts: 0,
-    agents: 0,
+    ...countComponents(githubPath),
     episodicFiles: 0,
     globalKnowledge: {
       patterns: 0,
@@ -515,37 +514,7 @@ async function architectureStatus(workspacePath?: string): Promise<string> {
     version: "unknown",
   };
 
-  // Count components
-  const skillsPath = path.join(githubPath, "skills");
-  if (fs.existsSync(skillsPath)) {
-    status.skills = fs
-      .readdirSync(skillsPath)
-      .filter((f) =>
-        fs.statSync(path.join(skillsPath, f)).isDirectory(),
-      ).length;
-  }
-
-  const instructionsPath = path.join(githubPath, "instructions");
-  if (fs.existsSync(instructionsPath)) {
-    status.instructions = fs
-      .readdirSync(instructionsPath)
-      .filter((f) => f.endsWith(".md")).length;
-  }
-
-  const promptsPath = path.join(githubPath, "prompts");
-  if (fs.existsSync(promptsPath)) {
-    status.prompts = fs
-      .readdirSync(promptsPath)
-      .filter((f) => f.endsWith(".md")).length;
-  }
-
-  const agentsPath = path.join(githubPath, "agents");
-  if (fs.existsSync(agentsPath)) {
-    status.agents = fs
-      .readdirSync(agentsPath)
-      .filter((f) => f.endsWith(".md")).length;
-  }
-
+  // Count episodic files
   const episodicPath = path.join(githubPath, "episodic");
   if (fs.existsSync(episodicPath)) {
     status.episodicFiles = fs
@@ -742,7 +711,7 @@ export {
   extractSnippet,
   findFiles,
   matchPattern,
-  synapseHealth,
+  healthCheck,
   memorySearch,
   architectureStatus,
   knowledgeSearch,
@@ -787,7 +756,7 @@ async function main() {
 
       switch (name) {
         case "alex_health_check":
-          result = await synapseHealth(
+          result = await healthCheck(
             args?.workspacePath as string | undefined,
           );
           break;

@@ -15,6 +15,7 @@ interface AgentMetricConfig {
   name: string;
   description: string;
   unit: string;
+  higherIsBetter?: boolean;
 }
 
 interface ThresholdEntry {
@@ -139,10 +140,11 @@ export class AgentActivityProvider implements vscode.TreeDataProvider<AgentActiv
   private getStatusIcon(metric: AgentMetricConfig, value?: number, threshold?: ThresholdEntry): string {
     if (value === undefined || !threshold) return "circle-outline";
 
-    // For success-rate, higher is better; for duration/latency, lower is better
-    const isInverse = metric.id.includes("rate") || metric.id === "tasks-run-count";
+    // Explicit config field takes priority; fall back to naming heuristic
+    const isHigherBetter = metric.higherIsBetter === true
+      || metric.id.includes("rate") || metric.id === "tasks-run-count";
 
-    if (isInverse) {
+    if (isHigherBetter) {
       if (value < threshold.critical) return "error";
       if (value < threshold.warning) return "warning";
       return "check";

@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.1.1] - 2026-04-21
+
+### Fixed
+
+- **Security**: `execFileSync` array form for git commands, error message path sanitization, cached CLI probes
+- **Portability**: Cross-platform VS Code user-data path resolution (macOS/Linux)
+- **Stability**: `Math.floor()` on dream-age threshold to prevent fractional-day flakiness
+- **Code quality**: Removed dead code, added `higherIsBetter` to metric config interface
+- **MCP server**: Renamed `synapseHealth` → `healthCheck`, DRY `countComponents()` helper, fixed stale path
+- **Docs**: Added MCP Server platform section to README, fixed wiki terminology
+
+---
+
 ## [8.1.0] - 2026-04-21
 
 ### Added

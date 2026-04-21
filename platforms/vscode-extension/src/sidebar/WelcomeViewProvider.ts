@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import * as crypto from "crypto";
 import * as fs from "fs";
 import * as path from "path";
+import * as os from "os";
 import { collectHealthPulse } from "../healthPulse.js";
 import {
   sortByFrecency,
@@ -16,6 +17,24 @@ import { renderAgentActivity, refreshAgentActivityAsync, AGENT_ACTIVITY_CSS } fr
 import { escHtml, escAttr } from "./htmlUtils.js";
 
 const VIEW_ID = "alex.welcomeView";
+
+/**
+ * Resolve the VS Code user data directory cross-platform.
+ * Windows: %APPDATA%/Code/User
+ * macOS:   ~/Library/Application Support/Code/User
+ * Linux:   ~/.config/Code/User
+ */
+function vscodeUserDataPath(): string {
+  const platform = os.platform();
+  if (platform === "win32") {
+    return path.join(process.env.APPDATA || path.join(os.homedir(), "AppData", "Roaming"), "Code", "User");
+  }
+  if (platform === "darwin") {
+    return path.join(os.homedir(), "Library", "Application Support", "Code", "User");
+  }
+  // Linux / other
+  return path.join(process.env.XDG_CONFIG_HOME || path.join(os.homedir(), ".config"), "Code", "User");
+}
 
 // Read extension version from package.json
 const extPkgPath = path.resolve(__dirname, "..", "package.json");
@@ -423,26 +442,21 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       case "openMemories":
         // Open the Copilot memories folder in the file explorer
         {
-          const appData = process.env.APPDATA || process.env.HOME;
-          if (appData) {
-            const memoriesPath = vscode.Uri.file(
-              path.join(
-                appData,
-                "Code",
-                "User",
-                "globalStorage",
-                "github.copilot-chat",
-                "memory-tool",
-                "memories",
-              ),
-            );
-            // Try to reveal in file explorer, or open in VS Code if folder exists
-            try {
-              await vscode.commands.executeCommand("revealFileInOS", memoriesPath);
-            } catch {
-              // Fallback: try to open folder in VS Code
-              await vscode.commands.executeCommand("vscode.openFolder", memoriesPath, { forceNewWindow: false });
-            }
+          const memoriesPath = vscode.Uri.file(
+            path.join(
+              vscodeUserDataPath(),
+              "globalStorage",
+              "github.copilot-chat",
+              "memory-tool",
+              "memories",
+            ),
+          );
+          // Try to reveal in file explorer, or open in VS Code if folder exists
+          try {
+            await vscode.commands.executeCommand("revealFileInOS", memoriesPath);
+          } catch {
+            // Fallback: try to open folder in VS Code
+            await vscode.commands.executeCommand("vscode.openFolder", memoriesPath, { forceNewWindow: false });
           }
         }
         break;
@@ -452,16 +466,13 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       case "openPrompts":
         // Open the User prompts folder
         {
-          const appData = process.env.APPDATA || process.env.HOME;
-          if (appData) {
-            const promptsPath = vscode.Uri.file(
-              path.join(appData, "Code", "User", "prompts"),
-            );
-            try {
-              await vscode.commands.executeCommand("revealFileInOS", promptsPath);
-            } catch {
-              await vscode.commands.executeCommand("vscode.openFolder", promptsPath, { forceNewWindow: false });
-            }
+          const promptsPath = vscode.Uri.file(
+            path.join(vscodeUserDataPath(), "prompts"),
+          );
+          try {
+            await vscode.commands.executeCommand("revealFileInOS", promptsPath);
+          } catch {
+            await vscode.commands.executeCommand("vscode.openFolder", promptsPath, { forceNewWindow: false });
           }
         }
         break;
@@ -469,13 +480,10 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       case "openMcpConfig":
         // Open the MCP config file directly in VS Code
         {
-          const appData = process.env.APPDATA || process.env.HOME;
-          if (appData) {
-            const mcpPath = vscode.Uri.file(
-              path.join(appData, "Code", "User", "mcp.json"),
-            );
-            await vscode.commands.executeCommand("vscode.open", mcpPath);
-          }
+          const mcpPath = vscode.Uri.file(
+            path.join(vscodeUserDataPath(), "mcp.json"),
+          );
+          await vscode.commands.executeCommand("vscode.open", mcpPath);
         }
         break;
 

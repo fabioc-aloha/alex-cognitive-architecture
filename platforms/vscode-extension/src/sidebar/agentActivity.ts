@@ -46,13 +46,17 @@ let cachedActivity: AgentActivitySummary = {
 
 // ── GitHub CLI helpers ────────────────────────────────────────────
 
+let ghAvailableCache: boolean | null = null;
+
 function ghAvailable(): boolean {
+  if (ghAvailableCache !== null) return ghAvailableCache;
   try {
     execSync("gh --version", { stdio: "ignore", timeout: 5000 });
-    return true;
+    ghAvailableCache = true;
   } catch {
-    return false;
+    ghAvailableCache = false;
   }
+  return ghAvailableCache;
 }
 
 /** Run gh CLI asynchronously — never blocks the extension host. */

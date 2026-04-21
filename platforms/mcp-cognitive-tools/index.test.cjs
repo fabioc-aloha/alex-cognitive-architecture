@@ -110,12 +110,12 @@ describe('findFiles', () => {
   });
 });
 
-// -- synapseHealth tests (integration against real workspace) ----------------
+// -- healthCheck tests (integration against real workspace) ------------------
 
-describe('synapseHealth', () => {
+describe('healthCheck', () => {
   it('returns healthy status for AlexMaster workspace', async () => {
     const wsPath = path.resolve(__dirname, '..', '..');
-    const result = JSON.parse(await mcp.synapseHealth(wsPath));
+    const result = JSON.parse(await mcp.healthCheck(wsPath));
     assert.strictEqual(result.status, 'EXCELLENT');
     assert.ok(result.skills > 100, `Expected >100 skills, got ${result.skills}`);
     assert.ok(result.instructions > 50, `Expected >50 instructions, got ${result.instructions}`);
@@ -124,7 +124,7 @@ describe('synapseHealth', () => {
   });
 
   it('returns error for non-existent workspace', async () => {
-    const result = JSON.parse(await mcp.synapseHealth('/tmp/nonexistent-ws'));
+    const result = JSON.parse(await mcp.healthCheck('/tmp/nonexistent-ws'));
     assert.strictEqual(result.status, 'error');
     assert.ok(result.message.includes('.github'));
   });

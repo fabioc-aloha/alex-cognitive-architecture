@@ -74,7 +74,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
   // Status bar — agent activity badge (AP6)
   const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
-  const statusBar = createAgentStatusBar(context);
+  createAgentStatusBar(context);
   updateAgentStatusBar(workspaceRoot);
 
   // Refresh status bar periodically (every 5 minutes)

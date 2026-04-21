@@ -159,7 +159,10 @@ async function handleCloud(
       token.onCancellationRequested(() => disposable.dispose());
       stream.markdown(`Workflow dispatched. Check the Autopilot tab or GitHub Actions for progress.`);
     } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
+      const raw = err instanceof Error ? err.message : String(err);
+      const msg = raw
+        .replace(/[A-Z]:\\[\w\\.\.\-\s]+/gi, "[path]")
+        .replace(/\/(?:home|usr|tmp|var|etc|Users|mnt)\/[\w/.\.\-]+/g, "[path]");
       stream.markdown(`Dispatch failed: ${msg}`);
     }
     return {};

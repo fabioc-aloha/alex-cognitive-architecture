@@ -400,7 +400,10 @@ export async function setupAIMemory(): Promise<string | undefined> {
 
     return chosenPath;
   } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
+    const raw = err instanceof Error ? err.message : String(err);
+    const msg = raw
+      .replace(/[A-Z]:\\[\w\\.\.\-\s]+/gi, "[path]")
+      .replace(/\/(?:home|usr|tmp|var|etc|Users|mnt)\/[\w/.\.\-]+/g, "[path]");
     vscode.window.showErrorMessage(`AI-Memory setup failed: ${msg}`);
     return undefined;
   }

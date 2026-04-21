@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 import { daysBetween } from "./dateUtils.js";
 
 // ── E3: Health Status type ────────────────────────────────────────
@@ -45,7 +45,7 @@ interface DreamReport {
 export function computeHealthStatus(pulse: HealthPulse): HealthStatus {
   const now = new Date();
   const daysSinceDream = pulse.lastDreamDate
-    ? daysBetween(pulse.lastDreamDate, now)
+    ? Math.floor(daysBetween(pulse.lastDreamDate, now))
     : Infinity;
 
   // Critical: no dream baseline, or overdue with known issues
@@ -141,10 +141,10 @@ interface GitUncommittedStatus {
 function detectUncommittedWork(workspaceRoot: string): GitUncommittedStatus {
   try {
     // Count staged + modified tracked files (privacy: count only)
-    const staged = execSync("git diff --cached --name-only", {
+    const staged = execFileSync("git", ["diff", "--cached", "--name-only"], {
       cwd: workspaceRoot, encoding: "utf-8", timeout: 5000,
     }).trim();
-    const modified = execSync("git diff --name-only", {
+    const modified = execFileSync("git", ["diff", "--name-only"], {
       cwd: workspaceRoot, encoding: "utf-8", timeout: 5000,
     }).trim();
 
@@ -157,7 +157,7 @@ function detectUncommittedWork(workspaceRoot: string): GitUncommittedStatus {
     // Estimate age from last commit date
     let days = 0;
     try {
-      const lastCommitDate = execSync("git log -1 --format=%ci", {
+      const lastCommitDate = execFileSync("git", ["log", "-1", "--format=%ci"], {
         cwd: workspaceRoot, encoding: "utf-8", timeout: 5000,
       }).trim();
       if (lastCommitDate) {
