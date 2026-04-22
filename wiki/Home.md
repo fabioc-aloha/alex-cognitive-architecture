@@ -42,9 +42,9 @@ Whether you're writing code, a dissertation, or a business plan, Alex meets you 
 | **Connections** | Learned connections between concepts — Alex's long-term memory |
 | **Episodic Memory** | Records of significant sessions and decisions |
 | **Skills** | Specialized knowledge domains (195 available) |
-| **Instructions** | Behavior rules that auto-activate based on file context (159 available) |
+| **Instructions** | Behavior rules that auto-activate based on file context (160 available) |
 | **Muscles** | Executable scripts that enforce and validate |
-| **Prompts** | Reusable workflow templates (37 available) |
+| **Prompts** | Reusable workflow templates (38 available) |
 | **Agents** | Specialized personas for different tasks (22 available) |
 | **Heir Projects** | Your projects that inherit Alex's cognitive architecture |
 
