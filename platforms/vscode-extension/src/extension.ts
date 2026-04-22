@@ -55,9 +55,9 @@ export function activate(context: vscode.ExtensionContext): void {
     "icon.png",
   );
   participant.followupProvider = {
-    provideFollowups() {
+    provideFollowups(_result, _context) {
       return [
-        { prompt: "/autopilot list", label: "List Autopilot Tasks", command: "autopilot" },
+        { prompt: "Run brain health check", label: "Brain Health Check" },
       ];
     },
   };

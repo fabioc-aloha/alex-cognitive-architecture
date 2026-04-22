@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.2.2] - 2026-04-22
+
+### Security
+
+- **Shell injection fix**: `runMuscleInTerminal` now escapes backslashes and double quotes in arguments to prevent shell metacharacter injection
+- **Token exposure fix**: `setupCopilotPAT` pipes the GitHub token via stdin instead of passing it as a `--body` CLI argument (no longer visible in process list)
+
+### Fixed
+
+- **Error code handling**: `runMuscle` now handles string error codes (`ERR_CHILD_PROCESS_STDIO_MAXBUFFER`) and signal kills (`SIGTERM`/`SIGKILL`) instead of silently returning exit code 1
+- **Followup provider**: Chat followup no longer suggests `/autopilot list` (Autopilot is disabled); now suggests brain health check
+
+---
+
 ## [8.2.1] - 2026-04-22
 
 ### Fixed

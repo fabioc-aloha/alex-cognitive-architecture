@@ -27,7 +27,21 @@ export function runMuscle(
       maxBuffer: 10 * 1024 * 1024,
       timeout: 120_000,
     }, (err, stdout, stderr) => {
-      const exitCode = typeof err?.code === "number" ? err.code : (err ? 1 : 0);
+      let exitCode = 0;
+      if (err) {
+        if (typeof err.code === "number") {
+          exitCode = err.code;
+        } else if (err.signal) {
+          // Process killed by signal (SIGTERM, SIGKILL, etc.)
+          exitCode = 137;
+        } else {
+          exitCode = 1;
+        }
+        // Surface string error codes (e.g., ERR_CHILD_PROCESS_STDIO_MAXBUFFER)
+        if (typeof err.code === "string") {
+          stderr = `${err.code}: ${err.message}\n${stderr ?? ""}`;
+        }
+      }
       resolve({
         code: exitCode,
         stdout: stdout ?? "",
@@ -49,7 +63,11 @@ export function runMuscleInTerminal(
   const musclePath = path.join(workspaceRoot, ".github", "muscles", muscle);
   const terminal = vscode.window.createTerminal(`Alex: ${label}`);
   terminal.show();
-  const quotedArgs = args.map((a) => `"${a}"`).join(" ");
+  const quotedArgs = args.map((a) => {
+    // Escape backslashes and double quotes to prevent shell injection
+    const escaped = a.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+    return `"${escaped}"`;
+  }).join(" ");
   terminal.sendText(`node "${musclePath}" ${quotedArgs}`.trim());
   return terminal;
 }

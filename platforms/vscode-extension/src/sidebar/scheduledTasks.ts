@@ -134,9 +134,10 @@ export async function setupCopilotPAT(workspaceRoot: string): Promise<boolean> {
       return false;
     }
 
-    // Store as repo secret — token piped via stdin, never logged
-    execFileSync("gh", ["secret", "set", "COPILOT_PAT", "--body", token], {
+    // Store as repo secret — token piped via stdin to avoid process list exposure
+    execFileSync("gh", ["secret", "set", "COPILOT_PAT"], {
       cwd: workspaceRoot, timeout: 15_000,
+      input: token,
       stdio: ["pipe", "pipe", "pipe"],
     });
 
