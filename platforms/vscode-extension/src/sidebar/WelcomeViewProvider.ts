@@ -111,7 +111,7 @@ const SETUP_GROUPS: ActionGroup[] = [
       },
       {
         icon: "paintcan",
-        label: "Customize Welcome",
+        label: "Customize for This Project",
         command: "openChat",
         prompt: "Customize the welcome experience for this project — detect the project type, generate taglines, configure the loop menu, set identity and North Star. Use the welcome-experience-customization skill.",
         tooltip: "Personalize sidebar, taglines, loop menu, and identity",
