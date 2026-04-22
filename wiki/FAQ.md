@@ -214,9 +214,10 @@ Automated workflows that run on a cron schedule using GitHub Actions. Alex can w
 ### How do I set up automation?
 
 1. Open the Alex sidebar → **Autopilot** tab
-2. Click **Add Task** and follow the wizard
-3. Enable the task, then click **Generate Workflows**
-4. Commit and push the generated workflow files
+2. Click **Add Task** and follow the 5-step wizard
+3. Commit and push (the wizard creates the task enabled, generates the workflow YAML, and opens the prompt template — all in one step)
+
+For agent-mode tasks, the wizard also checks for the `COPILOT_PAT` secret and offers one-click setup if missing.
 
 ### What's the difference between agent and direct mode?
 
@@ -238,8 +239,8 @@ Yes. Go to your repository's **Actions** tab, find the workflow, and click **Run
 Check these common causes:
 
 1. **Task not enabled** — Toggle it on in the Autopilot tab
-2. **Workflow not pushed** — Generate workflows, commit, and push to GitHub
-3. **PAT expired** — For agent mode, verify `COPILOT_PAT` hasn't expired
+2. **Workflow not pushed** — Commit and push the generated workflow files to GitHub
+3. **PAT missing or expired** — For agent mode, verify `COPILOT_PAT` is set and hasn't expired. The Add Task wizard offers one-click PAT setup if the secret is missing
 4. **Cron timing** — GitHub Actions uses UTC and may delay runs by up to 15 minutes
 
 See [Autopilot — Troubleshooting](Autopilot#troubleshooting) for more.
