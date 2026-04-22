@@ -1,5 +1,8 @@
 ---
-
+description: "Release and publish workflows for versioning, changelogs, and marketplace deployment"
+application: "When preparing releases, publishing extensions, or managing changelogs"
+applyTo: "**/*{CHANGELOG,package,version}*,**/*.vsix"
+currency: 2025-01-01
 ---
 
 # Release Process

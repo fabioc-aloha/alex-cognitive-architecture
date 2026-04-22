@@ -273,13 +273,13 @@ on:
 
 ```powershell
 # Full audit (all 22 sections)
-.\.github\muscles\audit-master-alex.ps1
+node .github/muscles/audit-master-alex.cjs
 
 # Quick audit (master-specific only, sections 1-9)
-.\.github\muscles\audit-master-alex.ps1 -Section quick
+node .github/muscles/audit-master-alex.cjs --section quick
 
 # Specific sections
-.\.github\muscles\audit-master-alex.ps1 -Section 4,7,13
+node .github/muscles/audit-master-alex.cjs --section 4,7,13
 ```
 
 ### Semantic Review Checklist (Manual — Not Scriptable)

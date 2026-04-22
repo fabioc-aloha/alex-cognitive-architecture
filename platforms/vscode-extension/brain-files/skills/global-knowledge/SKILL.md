@@ -242,7 +242,7 @@ Discover and pull new skills from GK via `skills/skill-registry.json`. Commands:
 
 ### Quality Gates
 
-✅ `sync-index.ps1` reports 0 orphaned, 0 unindexed
+✅ Knowledge sync reports 0 orphaned, 0 unindexed
 ✅ Heir contributions documented as insights (if any)
 ✅ Counts in copilot-instructions.md match disk
 ✅ `git status` clean (or changes committed)

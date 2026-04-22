@@ -212,7 +212,7 @@ Add to `.github/instructions/extension-audit-methodology.instructions.md`:
 ### Configuration Validation
 
 Before each release:
-1. Run `scripts/validate-manifest.ps1`
+1. Run `node scripts/release-preflight.cjs`
 2. Review any warnings for try-catch coverage
 3. Test configuration updates in clean VS Code instance
 4. Verify error messages are user-friendly

@@ -16,15 +16,15 @@ currency: 2025-01-01
 
 ## Quick Start
 
-```powershell
+```bash
 # Full preflight check
-scripts/release-preflight.ps1
+node scripts/release-preflight.cjs
 
 # With packaging test
-scripts/release-preflight.ps1 -Package
+node scripts/release-preflight.cjs
 
 # Skip time-consuming tests
-scripts/release-preflight.ps1 -SkipTests
+node scripts/release-preflight.cjs
 ```
 
 ## Version Locations (Must Stay Synchronized)
@@ -53,12 +53,12 @@ scripts/release-preflight.ps1 -SkipTests
 
 ## Full Release Workflow
 
-```powershell
+```bash
 # VS Code Extension release
-scripts/release-vscode.ps1 -BumpType minor
+node scripts/release-vscode.cjs
 
 # M365 Agent release
-scripts/release-m365.ps1 -Validate
+node scripts/release-m365.cjs --validate
 ```
 
 ## Version Bump Only
@@ -88,9 +88,9 @@ git add -A; git commit -m "release: v$v"; git tag "v$v"; git push --tags
 
 | Script                                        | Purpose                                |
 | --------------------------------------------- | -------------------------------------- |
-| `scripts/release-preflight.ps1`               | Pre-release validation                 |
-| `scripts/release-vscode.ps1`                  | Full VS Code release                   |
-| `scripts/release-m365.ps1`                    | M365 agent packaging                   |
+| `scripts/release-preflight.cjs`               | Pre-release validation                 |
+| `scripts/release-vscode.cjs`                  | Full VS Code release                   |
+| `scripts/release-m365.cjs`                    | M365 agent packaging                   |
 | `.github/muscles/build-extension-package.ps1` | Full build (sync + compile + PII scan) |
 | `.github/muscles/sync-architecture.cjs`       | Canonical Master → Heir sync           |
 
@@ -102,4 +102,4 @@ git add -A; git commit -m "release: v$v"; git tag "v$v"; git push --tags
 
 ---
 
-_Scripts: `scripts/release-preflight.ps1`, `scripts/release-vscode.ps1`_
+_Scripts: `scripts/release-preflight.cjs`, `scripts/release-vscode.cjs`_
