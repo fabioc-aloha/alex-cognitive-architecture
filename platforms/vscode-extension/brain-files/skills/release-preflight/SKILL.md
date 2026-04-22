@@ -31,25 +31,22 @@ node scripts/release-preflight.cjs
 
 | #   | Location                                                     | Field               | Example                   |
 | --- | ------------------------------------------------------------ | ------------------- | ------------------------- |
-| 1   | `platforms/vscode-extension/package.json`                    | `version`           | `"5.1.0"`                 |
-| 2   | `CHANGELOG.md`                                               | Latest heading      | `## [5.1.0] - 2026-02-07` |
-| 3   | `.github/copilot-instructions.md`                            | `**Version**:` line | `**Version**: 5.1.0`      |
-| 4   | `platforms/vscode-extension/.github/copilot-instructions.md` | Same as #3          |
-| 5   | `docs/index.html`                                            | Footer version      | `v5.1.0`                  |
-| 6   | `ROADMAP.md`                                                 | Quick Status table  | Master version row        |
-| 7   | Git tag                                                      | Tag name            | `v5.1.0`                  |
+| 1   | `heir/platforms/vscode-extension/package.json` | `version`      | `"8.2.1"`                 |
+| 2   | `heir/CHANGELOG.md`                            | Latest heading | `## [8.2.1] - 2026-04-22` |
+| 3   | `BUILD-MANIFEST.json` (if present)             | `version`      | `"8.2.1"`                 |
+| 4   | Git tag                                        | Tag name       | `v8.2.1`                  |
 
 ## Preflight Gates
 
-| Gate | Check                          | Script Flag           |
-| ---- | ------------------------------ | --------------------- |
-| 0    | PAT configured                 | Always                |
-| 1    | Version sync (all 7 locations) | Always                |
-| 2    | Build passes                   | Always                |
-| 3    | Lint passes                    | Always                |
-| 4    | Tests pass                     | `-SkipTests` to skip  |
-| 5    | Package creates                | `-Package` to include |
-| 6    | Human review                   | Manual                |
+| Gate | Check                          | Script Flag |
+| ---- | ------------------------------ | ----------- |
+| 0    | PAT configured                 | Always      |
+| 1    | Version sync (all 7 locations) | Always      |
+| 2    | VSIX exists                    | Always      |
+| 3    | Git clean                      | Always      |
+| 4    | Git tag available              | Always      |
+| 5    | VSCE_PAT available             | Always      |
+| 6    | Heir sync drift                | Always      |
 
 ## Full Release Workflow
 
