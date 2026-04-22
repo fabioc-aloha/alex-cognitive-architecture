@@ -9,7 +9,6 @@ Complete reference for Alex commands, UI, and features.
 - [Talking to Alex](#talking-to-alex)
 - [Sidebar Panel](#sidebar-panel)
 - [Loop Tab](Loop-Tab)
-- [Autopilot Tab](Autopilot)
 - [Setup Tab](Setup-Tab)
 - [Agents](#agents)
 - [Skills](#skills)
@@ -82,18 +81,7 @@ Buttons reorder automatically by usage frequency (frecency). The Loop tab is con
 
 ### Autopilot Tab
 
-Manage automated recurring tasks powered by GitHub Actions.
-
-| Section | What It Does |
-|---------|-------------|
-| **Task Cards** | Configured automations with status pills, mode, schedule, last-run time, and workflow badges |
-| **Per-Card Actions** | Run Now (dispatch via GitHub Actions), Edit prompt (agent tasks), Toggle (pause/resume), Delete |
-| **Add Task** | Guided 5-step wizard for creating new scheduled tasks |
-| **Generate Workflows** | Convert config to GitHub Actions workflow files |
-| **Edit Config** | Open `scheduled-tasks.json` in the editor |
-| **Actions / Agents** | Direct links to the GitHub repo's Actions and Agents pages |
-
-See [Autopilot](Autopilot) for full documentation.
+> **Temporarily unavailable.** The Autopilot feature is being rebuilt. See [Autopilot](Autopilot) for reference documentation.
 
 ### Setup Tab
 

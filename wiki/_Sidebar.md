@@ -13,7 +13,6 @@
 - [Chat Commands](User-Manual#chat-commands)
 - [Sidebar Panel](User-Manual#sidebar-panel)
   - [Loop Tab](Loop-Tab)
-  - [Autopilot Tab](Autopilot)
   - [Setup Tab](Setup-Tab)
 - [Agents](User-Manual#agents)
 - [Skills](User-Manual#skills)
