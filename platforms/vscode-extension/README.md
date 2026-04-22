@@ -13,8 +13,8 @@ Alex enhances GitHub Copilot with a **cognitive architecture** — a structured 
 | What You Get | How It Works |
 |--------------|--------------|
 | **195 Skills** | Domain knowledge for security, API design, testing, debugging, and more |
-| **159 Instructions** | Behavior rules that auto-load based on file patterns |
-| **37 Prompts** | Reusable workflow templates for common tasks |
+| **160 Instructions** | Behavior rules that auto-load based on file patterns |
+| **38 Prompts** | Reusable workflow templates for common tasks |
 | **22 Agents** | Specialized personas: Builder, Researcher, Validator, Documentarian, and more |
 
 ## Features
