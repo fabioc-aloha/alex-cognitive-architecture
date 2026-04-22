@@ -6,7 +6,7 @@ Get up and running with Alex in 5 minutes.
 
 ## Prerequisites
 
-- **VS Code** 1.100 or later
+- **VS Code** 1.100 or later (1.117+ recommended for persistent autopilot and subagent orchestration)
 - **GitHub Copilot** subscription (Alex uses Copilot's language models)
 - **Node.js** 18+ (for heir project features)
 
@@ -77,6 +77,8 @@ Here are some things you can ask Alex to do:
 | See token costs | Click **Token Cost Report** in Setup tab |
 | Lint a markdown file | Right-click a `.md` file → **Alex: Lint Markdown** |
 | Create a new skill | Click **New Skill** in Setup tab |
+| Create a custom agent | Click **New Agent** in Loop tab, or `Alex: Create Custom Agent` |
+| Switch monorepo package | Click **Set Package Context** in Loop tab, or `Alex: Set Active Package Context` |
 | Consolidate learning | Click **Meditate** or "Let's do a meditation session" |
 | Set up workspace | Click **Initialize Workspace** in Setup tab |
 | Learn about project | "What do you know about this codebase?" |

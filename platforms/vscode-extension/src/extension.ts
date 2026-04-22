@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import * as fs from "fs";
 import * as path from "path";
 import { chatHandler } from "./chat/handler.js";
 import { WelcomeViewProvider } from "./sidebar/WelcomeViewProvider.js";
@@ -388,6 +389,201 @@ export function activate(context: vscode.ExtensionContext): void {
         "Alex: New Skill",
         `Customize the new skill ${name} — fill in the SKILL.md with real content and create the matching instruction file`,
       );
+    }),
+  );
+
+  // TM1: Create Custom Agent
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.createCustomAgent", async () => {
+      const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+      if (!wsRoot) {
+        vscode.window.showWarningMessage("Alex: Open a workspace folder first.");
+        return;
+      }
+      const name = await vscode.window.showInputBox({
+        prompt: "Agent name (e.g., Code Reviewer, Data Analyst)",
+        placeHolder: "My Custom Agent",
+        validateInput: (v) =>
+          v.trim().length > 0 ? null : "Agent name cannot be empty",
+      });
+      if (!name) return;
+      const desc = await vscode.window.showInputBox({
+        prompt: "Agent description (one sentence)",
+        placeHolder: "What does this agent specialize in?",
+      });
+      if (desc === undefined) return;
+
+      const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      const filename = `${slug}.agent.md`;
+      const agentsDir = path.join(wsRoot, ".github", "agents");
+      const filePath = path.join(agentsDir, filename);
+
+      if (fs.existsSync(filePath)) {
+        vscode.window.showWarningMessage(`Agent file already exists: .github/agents/${filename}`);
+        await vscode.commands.executeCommand("vscode.open", vscode.Uri.file(filePath));
+        return;
+      }
+
+      const template = [
+        "---",
+        `description: "${desc.replace(/"/g, "'") || name + " - custom agent"}"`,
+        `name: "${name}"`,
+        'model: ["Claude Sonnet 4", "GPT-4o"]',
+        "tools:",
+        '  ["search", "codebase", "problems", "usages", "runSubagent", "fetch", "agent"]',
+        "user-invocable: true",
+        "---",
+        "",
+        `# ${name}`,
+        "",
+        `You are **Alex** in **${name}** mode.`,
+        "",
+        "## Purpose",
+        "",
+        desc || "Describe this agent's purpose and expertise.",
+        "",
+        "## Instructions",
+        "",
+        "1. Follow the project's existing conventions",
+        "2. Verify your work before declaring done",
+        "3. Ask for clarification when requirements are ambiguous",
+        "",
+        "## Relevant Skills",
+        "",
+        "<!-- List skills this agent should load, e.g.:",
+        "- `.github/skills/api-design/SKILL.md`",
+        "-->",
+        "",
+      ].join("\n");
+
+      fs.mkdirSync(agentsDir, { recursive: true });
+      fs.writeFileSync(filePath, template, "utf-8");
+      await vscode.commands.executeCommand("vscode.open", vscode.Uri.file(filePath));
+      vscode.window.showInformationMessage(
+        `Alex: Custom agent "${name}" created at .github/agents/${filename}`,
+      );
+    }),
+  );
+
+  // TM6: Set active package context for monorepo
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.setContext", async () => {
+      const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+      if (!wsRoot) {
+        vscode.window.showWarningMessage("Alex: Open a workspace folder first.");
+        return;
+      }
+
+      // Discover packages from common monorepo patterns
+      const packages: { label: string; description: string; dir: string }[] = [];
+
+      // npm/yarn workspaces
+      const pkgPath = path.join(wsRoot, "package.json");
+      if (fs.existsSync(pkgPath)) {
+        try {
+          const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
+          const workspaces: string[] = Array.isArray(pkg.workspaces)
+            ? pkg.workspaces
+            : (pkg.workspaces?.packages ?? []);
+          for (const pattern of workspaces) {
+            // Resolve simple glob patterns like "packages/*"
+            const base = pattern.replace(/\/\*$/, "");
+            const baseDir = path.join(wsRoot, base);
+            if (fs.existsSync(baseDir)) {
+              for (const entry of fs.readdirSync(baseDir, { withFileTypes: true })) {
+                if (!entry.isDirectory()) continue;
+                const childPkg = path.join(baseDir, entry.name, "package.json");
+                if (fs.existsSync(childPkg)) {
+                  try {
+                    const child = JSON.parse(fs.readFileSync(childPkg, "utf-8"));
+                    packages.push({
+                      label: child.name ?? entry.name,
+                      description: path.relative(wsRoot, path.join(baseDir, entry.name)),
+                      dir: path.join(baseDir, entry.name),
+                    });
+                  } catch { /* skip invalid package.json */ }
+                }
+              }
+            }
+          }
+        } catch { /* skip */ }
+      }
+
+      // pnpm-workspace.yaml
+      const pnpmWs = path.join(wsRoot, "pnpm-workspace.yaml");
+      if (packages.length === 0 && fs.existsSync(pnpmWs)) {
+        try {
+          const content = fs.readFileSync(pnpmWs, "utf-8");
+          const matches = content.match(/- ['"](.*?)['"]/g) ?? [];
+          for (const m of matches) {
+            const pattern = m.replace(/- ['"](.*)['"]/,  "$1").replace(/\/\*$/, "");
+            const baseDir = path.join(wsRoot, pattern);
+            if (fs.existsSync(baseDir)) {
+              for (const entry of fs.readdirSync(baseDir, { withFileTypes: true })) {
+                if (!entry.isDirectory()) continue;
+                packages.push({
+                  label: entry.name,
+                  description: path.relative(wsRoot, path.join(baseDir, entry.name)),
+                  dir: path.join(baseDir, entry.name),
+                });
+              }
+            }
+          }
+        } catch { /* skip */ }
+      }
+
+      // Also add known directories (platforms/, packages/, apps/)
+      if (packages.length === 0) {
+        for (const subdir of ["platforms", "packages", "apps", "libs"]) {
+          const dir = path.join(wsRoot, subdir);
+          if (fs.existsSync(dir)) {
+            for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+              if (!entry.isDirectory()) continue;
+              packages.push({
+                label: entry.name,
+                description: `${subdir}/${entry.name}`,
+                dir: path.join(dir, entry.name),
+              });
+            }
+          }
+        }
+      }
+
+      // Add root as option
+      packages.unshift({
+        label: "(root)",
+        description: "Workspace root",
+        dir: wsRoot,
+      });
+
+      const picked = await vscode.window.showQuickPick(packages, {
+        placeHolder: "Select the active package context",
+        title: "Set Active Package",
+      });
+      if (!picked) return;
+
+      // Write the active context to loop-menu.json
+      const configPath = path.join(wsRoot, ".github", "config", "loop-menu.json");
+      try {
+        let config: Record<string, unknown> = {};
+        if (fs.existsSync(configPath)) {
+          config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+        }
+        config.activePackage = picked.label === "(root)" ? null : picked.description;
+        config.activePackageName = picked.label === "(root)" ? null : picked.label;
+        fs.mkdirSync(path.dirname(configPath), { recursive: true });
+        fs.writeFileSync(configPath, JSON.stringify(config, null, 2) + "\n", "utf-8");
+        welcomeProvider.refresh();
+        vscode.window.showInformationMessage(
+          picked.label === "(root)"
+            ? "Alex: Active context set to workspace root."
+            : `Alex: Active context set to "${picked.label}" (${picked.description}).`,
+        );
+      } catch (err) {
+        vscode.window.showErrorMessage(
+          `Alex: Failed to update context — ${sanitizeError(err)}`,
+        );
+      }
     }),
   );
 

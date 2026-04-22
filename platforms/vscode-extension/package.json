@@ -231,6 +231,16 @@
         "category": "Alex"
       },
       {
+        "command": "alex.createCustomAgent",
+        "title": "Create Custom Agent",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.setContext",
+        "title": "Set Active Package Context",
+        "category": "Alex"
+      },
+      {
         "command": "alex.insightPipeline",
         "title": "Extract Insights",
         "category": "Alex"

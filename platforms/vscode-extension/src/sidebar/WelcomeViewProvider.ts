@@ -179,6 +179,13 @@ const SETUP_GROUPS: ActionGroup[] = [
         hint: "command",
       },
       {
+        icon: "person-add",
+        label: "New Agent",
+        command: "createCustomAgent",
+        tooltip: "Scaffold a custom agent with frontmatter",
+        hint: "command",
+      },
+      {
         icon: "warning",
         label: "Lint Markdown",
         command: "markdownLint",
@@ -190,6 +197,13 @@ const SETUP_GROUPS: ActionGroup[] = [
         label: "Extract Insights",
         command: "insightPipeline",
         tooltip: "Extract cross-project insights",
+        hint: "command",
+      },
+      {
+        icon: "references",
+        label: "Set Package Context",
+        command: "setContext",
+        tooltip: "Switch active package in monorepo projects",
         hint: "command",
       },
     ],
@@ -503,12 +517,20 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
         await vscode.commands.executeCommand("alex.newSkill");
         break;
 
+      case "createCustomAgent":
+        await vscode.commands.executeCommand("alex.createCustomAgent");
+        break;
+
       case "markdownLint":
         await vscode.commands.executeCommand("alex.markdownLint");
         break;
 
       case "insightPipeline":
         await vscode.commands.executeCommand("alex.insightPipeline");
+        break;
+
+      case "setContext":
+        await vscode.commands.executeCommand("alex.setContext");
         break;
 
       case "openSettings":
