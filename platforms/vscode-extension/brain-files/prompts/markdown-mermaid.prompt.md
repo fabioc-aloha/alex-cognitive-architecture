@@ -1,9 +1,8 @@
 ---
-sem: 1
 description: Create technical documentation with Mermaid diagrams and visual standards
 application: "When creating markdown documentation with diagrams, troubleshooting Mermaid rendering, or applying visual documentation standards"
 agent: Alex
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # /markdown-mermaid - Visual Documentation Excellence

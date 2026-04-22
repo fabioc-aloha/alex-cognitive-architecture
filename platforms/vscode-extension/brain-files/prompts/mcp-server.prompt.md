@@ -1,9 +1,8 @@
 ---
-sem: 1
 mode: agent
 description: Scaffold a complete MCP server with tools, resources, error handling, and VS Code workspace integration
 application: "When scaffolding new projects, files, or architecture components"
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # Create MCP Server

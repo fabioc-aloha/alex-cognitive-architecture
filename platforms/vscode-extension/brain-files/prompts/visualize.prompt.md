@@ -1,9 +1,8 @@
 ---
-sem: 1
 description: Recommend and generate the right chart for your data story
 application: "When analyzing data, creating visualizations, or building reports"
 agent: Alex
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # /visualize - Data Visualization

@@ -1,9 +1,9 @@
 ---
 mode: agent
-sem: 1
+model: claude-opus-4-6
 description: Systematic VS Code extension review for API correctness, security, resource management, and 1.109+ agent platform readiness
 application: "When requesting code reviews, PR feedback, or quality assessment"
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # VS Code Extension Audit
@@ -13,6 +13,12 @@ currency: 2025-01-01
 **Domain**: VS Code extension development, API patterns
 **Duration**: 15-30 minutes depending on extension complexity
 **Output**: Prioritized findings with file links and exact fixes
+
+Create a TODO list for all steps. Mark each in-progress before starting, completed immediately after finishing.
+
+
+
+After ANY file edit, run compilation check. Do not proceed until zero errors. If compilation or tests fail, fix and retry. Maximum 5 iterations per step.
 
 ---
 
@@ -159,3 +165,12 @@ Alex:
 **Cross-reference**: `.github/instructions/vscode-extension-patterns.instructions.md`
 
 
+
+
+## Summary
+
+After completing all steps, generate:
+- Files changed (with counts)
+- Verifications passed (compile, test, lint)
+- Issues encountered and resolutions
+- Anything requiring manual attention

@@ -1,15 +1,21 @@
 ---
-sem: 1
 mode: agent
+model: claude-opus-4-6
 description: Check documents and policies for AI writing tells and suggest improvements for authentic voice
 application: "When generating documentation, READMEs, or technical writing"
 tools: []
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # Document Voice Audit
 
 Analyze the provided document for AI writing patterns and provide specific improvement recommendations.
+
+Create a TODO list for all steps. Mark each in-progress before starting, completed immediately after finishing.
+
+
+
+After ANY file edit, run compilation check. Do not proceed until zero errors. If compilation or tests fail, fix and retry. Maximum 5 iterations per step.
 
 ## Audit Process
 
@@ -36,3 +42,12 @@ Provide:
 ## User Input
 
 Provide the document text or file path to audit.
+
+
+## Summary
+
+After completing all steps, generate:
+- Files changed (with counts)
+- Verifications passed (compile, test, lint)
+- Issues encountered and resolutions
+- Anything requiring manual attention

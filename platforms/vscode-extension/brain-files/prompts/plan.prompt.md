@@ -1,9 +1,9 @@
 ---
-sem: 1
 description: Run a structured 4-phase implementation plan using the VS Code Plan Agent
+mode: agent
 application: "When planning implementation, creating project plans, or organizing tasks"
 agent: Alex
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # /plan — Structured Implementation Planning

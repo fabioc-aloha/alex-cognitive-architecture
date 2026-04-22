@@ -1,9 +1,8 @@
 ---
-sem: 1
 mode: agent
 description: Implement a production-ready Microsoft Graph API integration with least-privilege scopes, auth, error handling, and pagination
 application: "When designing APIs, integrations, or service interfaces"
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # Microsoft Graph API Integration

@@ -1,15 +1,22 @@
 ---
-sem: 1
 description: Investigate a bug or failure using systematic root cause analysis
+mode: agent
+model: claude-opus-4-6
 application: "When debugging issues, investigating failures, or root cause analysis"
 agent: Alex
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # /rca - Root Cause Analysis
 
 
 Find the true source, not symptoms — systematic investigation from observation to permanent fix.
+
+Create a TODO list for all steps. Mark each in-progress before starting, completed immediately after finishing.
+
+
+
+After ANY file edit, run compilation check. Do not proceed until zero errors. If compilation or tests fail, fix and retry. Maximum 5 iterations per step.
 
 ## Process
 
@@ -27,3 +34,12 @@ Describe the bug, error, or failure you're investigating. Include:
 - When it started (context)
 - What you've already tried
 
+
+
+## Summary
+
+After completing all steps, generate:
+- Files changed (with counts)
+- Verifications passed (compile, test, lint)
+- Issues encountered and resolutions
+- Anything requiring manual attention

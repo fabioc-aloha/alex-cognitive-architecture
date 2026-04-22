@@ -54,11 +54,19 @@ let JSZip;
 try {
   JSZip = require('jszip');
 } catch {
-  // When running from workspace, jszip may not be in the local node_modules.
-  // The caller should set NODE_PATH to the extension's node_modules.
-  console.error('ERROR: jszip not found. Ensure NODE_PATH includes the extension node_modules.');
-  console.error('  Post-processing will be skipped -- output may lack professional formatting.');
-  JSZip = null;
+  // Fallback: search common locations relative to the muscle
+  const fallbackPaths = [
+    path.join(__dirname, '..', '..', 'heir', 'platforms', 'vscode-extension', 'node_modules', 'jszip'),
+    path.join(__dirname, '..', '..', 'node_modules', 'jszip'),
+    path.join(__dirname, 'node_modules', 'jszip'),
+  ];
+  for (const p of fallbackPaths) {
+    try { JSZip = require(p); break; } catch { /* continue */ }
+  }
+  if (!JSZip) {
+    console.error('WARNING: jszip not found. Post-processing (formatting, centering) will be limited.');
+    console.error('  Install: npm install jszip  |  Or set NODE_PATH to extension node_modules.');
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -72,11 +80,26 @@ const { findMermaidBlocks } = require(path.join(__dirname, 'shared', 'mermaid-pi
 // ---------------------------------------------------------------------------
 const PAGE_WIDTH_INCHES = 6.5;
 const PAGE_HEIGHT_INCHES = 9.0;
-const MAX_IMAGE_WIDTH_RATIO = 1.00;  // 100% of printable width
-const MAX_IMAGE_HEIGHT_RATIO = 0.40; // 40% of printable height
-const MAX_IMAGE_WIDTH = PAGE_WIDTH_INCHES * MAX_IMAGE_WIDTH_RATIO;   // 6.5"
-const MAX_IMAGE_HEIGHT = PAGE_HEIGHT_INCHES * MAX_IMAGE_HEIGHT_RATIO; // 3.6"
+const MAX_IMAGE_WIDTH_RATIO = 0.90;  // 90% of printable width
+const MAX_IMAGE_HEIGHT_RATIO = 0.60; // 60% of printable height
+const MAX_IMAGE_WIDTH = PAGE_WIDTH_INCHES * MAX_IMAGE_WIDTH_RATIO;   // 5.85"
+const MAX_IMAGE_HEIGHT = PAGE_HEIGHT_INCHES * MAX_IMAGE_HEIGHT_RATIO; // 5.4"
 const PNG_DPI = 96;
+
+// ---------------------------------------------------------------------------
+// Built-in Lua filter for centering images in docx output
+// Pandoc's default reference.docx "Figure" style is center-aligned.
+// This wraps lone-image paragraphs in a Figure-styled Div.
+// ---------------------------------------------------------------------------
+const CENTER_IMAGES_LUA = `
+function Para(el)
+  for _, item in ipairs(el.content) do
+    if item.t == "Image" then
+      return pandoc.Div(el, pandoc.Attr("", {}, {{"custom-style", "Figure"}}))
+    end
+  end
+end
+`;
 
 // ---------------------------------------------------------------------------
 // OOXML namespace
@@ -127,15 +150,16 @@ function calculateOptimalSize(pngPath, mmdContent) {
 function determineImageSizeHeuristic(mmdContent) {
   const lower = mmdContent.toLowerCase();
   const subgraphCount = (lower.match(/subgraph/g) || []).length;
-  if (lower.includes('gantt')) return '{width=6.5in}';
-  if (subgraphCount >= 3) return '{width=6.5in}';
-  if (lower.includes('flowchart lr') || lower.includes('graph lr')) return '{width=6.5in}';
+  const wTag = `{width=${MAX_IMAGE_WIDTH.toFixed(1)}in}`;
+  if (lower.includes('gantt')) return wTag;
+  if (subgraphCount >= 3) return wTag;
+  if (lower.includes('flowchart lr') || lower.includes('graph lr')) return wTag;
   if (lower.includes('flowchart td') || lower.includes('graph td') ||
       lower.includes('flowchart tb') || lower.includes('graph tb')) {
     if (subgraphCount >= 2) return `{height=${MAX_IMAGE_HEIGHT.toFixed(1)}in}`;
-    return '{width=6.5in}';
+    return wTag;
   }
-  return '{width=5.5in}';
+  return wTag;
 }
 
 // ---------------------------------------------------------------------------
@@ -967,11 +991,16 @@ async function build(args) {
     console.log(`\u{1f4ca} Found ${mermaidBlocks.length} Mermaid diagrams`);
 
     // Pre-validate Mermaid syntax before expensive rendering
+    const validTypes = /^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|gantt|pie|quadrantChart|requirementDiagram|gitGraph|mindmap|timeline|sankey|xychart|block|C4Context|C4Container|C4Deployment|C4Dynamic|C4Component|zenuml|packet|architecture|kanban)/;
     for (const block of mermaidBlocks) {
-      const trimmed = block.content.trim();
-      const validTypes = /^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|gantt|pie|quadrantChart|requirementDiagram|gitGraph|mindmap|timeline|sankey|xychart|block)/;
-      if (!validTypes.test(trimmed)) {
-        console.warn(`   \u26a0\ufe0f  Diagram ${block.index + 1}: unrecognized diagram type in first line`);
+      // Skip %%{init}%% directives, comments, and blank lines to find the actual diagram type
+      const lines = block.content.trim().split(/\r?\n/);
+      const typeLine = lines.find(l => {
+        const t = l.trim();
+        return t && !t.startsWith('%%') && !t.startsWith('%% ');
+      }) || '';
+      if (!validTypes.test(typeLine.trim())) {
+        console.warn(`   \u26a0\ufe0f  Diagram ${block.index + 1}: unrecognized diagram type: "${typeLine.trim().slice(0, 40)}"`);
       }
     }
 
@@ -1011,7 +1040,8 @@ async function build(args) {
           }
         }
 
-        const newRef = `![${altText}](${args.imagesDir}/${pngName}){width=5.8in}`;
+        const svgSize = fs.existsSync(pngPath) ? calculateOptimalSize(pngPath, '') : `{width=${MAX_IMAGE_WIDTH.toFixed(1)}in}`;
+        const newRef = `![${altText}](${args.imagesDir}/${pngName})${svgSize}`;
         content = content.replace(fullMatch, newRef);
       }
     }
@@ -1065,6 +1095,11 @@ async function build(args) {
 
     // NOTE: Page size is applied via OOXML post-processing, not pandoc variables.
     // The -V geometry:* flags only work for LaTeX output, not docx.
+
+    // Write built-in centering Lua filter to temp
+    const centerLuaPath = path.join(tempDir, '_center-images.lua');
+    fs.writeFileSync(centerLuaPath, CENTER_IMAGES_LUA, 'utf8');
+    pandocArgs.push(`--lua-filter="${centerLuaPath}"`);
 
     try {
       execSync(
