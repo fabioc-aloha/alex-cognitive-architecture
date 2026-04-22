@@ -49,10 +49,11 @@ Already familiar with Alex? Here's the 60-second version:
 
 1. Open the Alex sidebar → **Autopilot** tab
 2. Click **Add Task** → follow the wizard
-3. Enable the task with the toggle button
-4. Click **Generate Workflows**
-5. Commit and push the generated `.github/workflows/scheduled-*.yml` file
-6. Your task now runs on schedule
+3. Edit the prompt template that opens automatically
+4. Commit and push
+5. Your task now runs on schedule
+
+The wizard creates the task **enabled**, generates the workflow YAML, and opens the prompt template — all in one step. For agent-mode tasks, it also checks for the `COPILOT_PAT` secret and offers one-click setup if missing.
 
 ---
 
@@ -81,19 +82,22 @@ Each task card has action buttons in the bottom row:
 
 | Button | Icon | When Visible | What It Does |
 |--------|------|-------------|-------------|
-| **Run Now** | 🚀 | Agent-mode tasks | Opens the GitHub Actions workflow dispatch page — runs the task in the cloud, same as the scheduled execution. Records a last-run timestamp. Requires a generated workflow. |
+| **Run Now** | 🚀 | Agent tasks (with prompt) or Direct tasks (with muscle) | Dispatches the workflow on GitHub Actions. Records a last-run timestamp. Requires a generated workflow. |
 | **Edit Prompt** | Pencil | Agent-mode tasks only | Opens the prompt template `.md` file in the editor |
 | **Pause** | Pause | Enabled tasks | Disables the task (writes to config) |
 | **Resume** | Play | Disabled tasks | Enables the task (writes to config) |
 
 | **Delete** | Trash | Always | Deletes the task from config (with confirmation) |
 
+### Setup Banner
+
+If any agent-mode tasks exist but the `COPILOT_PAT` repo secret is not configured, a yellow warning banner appears at the bottom of the task list with a **Set Up** button. Clicking it runs the one-click PAT setup (see [Requirements and Setup](#requirements-and-setup)).
+
 ### Panel Buttons
 
 | Button | Icon | What It Does |
 |--------|------|-------------|
 | **Add Task** | + | Opens the guided wizard to create a new task |
-| **Generate Workflows** | Gear | Converts enabled tasks into GitHub Actions YAML files |
 | **Edit Config** | Pencil | Opens `scheduled-tasks.json` in the editor |
 | **Help** | Question mark | Opens this documentation page |
 
@@ -112,11 +116,11 @@ If no tasks are configured, the Autopilot tab shows a centered message with an *
 
 ### Toggling Tasks
 
-Click the **pause** or **resume** button on any task card to disable or enable it. Paused tasks appear at reduced opacity with a gray "Paused" pill. This writes directly to `scheduled-tasks.json`. After toggling, run **Generate Workflows** to update the workflow files.
+Click the **pause** or **resume** button on any task card to disable or enable it. Toggling automatically creates or removes the corresponding workflow YAML file. Paused tasks appear at reduced opacity with a gray "Paused" pill. Commit and push after toggling.
 
 ### Deleting Tasks
 
-Click the trash icon on any task card. A confirmation dialog appears — click **Delete** to remove the task from `scheduled-tasks.json`. After deleting, run **Generate Workflows** to clean up the stale workflow YAML file.
+Click the trash icon on any task card. A confirmation dialog appears — click **Delete** to remove the task from `scheduled-tasks.json` and its workflow file. Commit and push after deleting.
 
 ### Workflow Status Badges
 
@@ -167,18 +171,17 @@ Select **Weekly Monday** (runs every Monday at 8 AM UTC).
 
 Select **(none)** or pick a relevant skill if you have one.
 
-### Step 3: Review What Was Created
+### Step 3: Edit the Prompt Template
 
-The wizard creates:
+The wizard creates everything in one step:
 
-- A new entry in `.github/config/scheduled-tasks.json`
-- A prompt template at `.github/config/scheduled-tasks/weekly-project-summary.md`
+- A new entry in `.github/config/scheduled-tasks.json` (starts **enabled**)
+- A prompt template at `.github/config/scheduled-tasks/weekly-project-summary.md` (opens automatically)
+- A workflow at `.github/workflows/scheduled-weekly-project-summary.yml`
 
-The task starts **disabled**. You can see it in the Autopilot tab as a grayed-out card.
+If the `COPILOT_PAT` secret isn't set up yet, you'll be prompted to configure it (see [Requirements and Setup](#requirements-and-setup)).
 
-### Step 4: Customize the Prompt Template
-
-Open `.github/config/scheduled-tasks/weekly-project-summary.md` and edit it:
+Edit the prompt template that opened:
 
 ```markdown
 # Weekly Project Summary
@@ -204,22 +207,7 @@ Write a weekly project summary based on recent repository activity.
 - Keep technical jargon appropriate for the team
 ```
 
-### Step 5: Enable and Generate
-
-1. Click the **play button** on the task card to enable it
-2. Click **Generate Workflows**
-3. A terminal opens and runs the generator
-
-You'll see output like:
-
-```
-Found 1 task, 1 enabled
-Generated: scheduled-weekly-project-summary.yml
-
-Done. 1 workflow(s) generated.
-```
-
-### Step 6: Commit and Push
+### Step 4: Commit and Push
 
 ```bash
 git add .github/
@@ -229,10 +217,10 @@ git push
 
 The workflow is now active. Every Monday at 8 AM UTC, GitHub Actions will create an issue assigned to Copilot, which reads your prompt template and creates a PR with the summary.
 
-### Step 7: Verify
+### Step 5: Verify
 
 - Check the **Actions** tab on GitHub to see scheduled runs
-- Click **workflow_dispatch** to trigger a manual test run
+- Click **Run Now** on the task card to trigger a manual test run
 - Review the issue Copilot creates and the resulting PR
 
 ---
@@ -322,7 +310,7 @@ Schedule triggers → GitHub Actions → Creates issue → Copilot reads it → 
 
 **Best for:** Writing tasks, analysis, code reviews, documentation updates — anything requiring judgment and creativity.
 
-**Requires:** `COPILOT_PAT` repository secret, Copilot enabled on the repo.
+**Requires:** `COPILOT_PAT` repository secret (one-click setup available), Copilot enabled on the repo. If the PAT is missing, the workflow still creates the issue but logs a warning instead of failing.
 
 ### Direct Mode
 
@@ -356,16 +344,16 @@ The wizard uses native VS Code quick picks — no complex forms. Five steps, eac
 | 4. Schedule | Pick from presets or custom cron | 5-field POSIX cron |
 | 5. Skill | Pick from `.github/skills/` dirs | Optional |
 
-**What the wizard creates:**
+**What the wizard creates (all in one step):**
 
-- Adds a task entry to `scheduled-tasks.json` (starts disabled)
-- For agent mode: scaffolds a prompt template at `.github/config/scheduled-tasks/{id}.md`
+- Adds a task entry to `scheduled-tasks.json` (starts **enabled**)
+- For agent mode: scaffolds a prompt template at `.github/config/scheduled-tasks/{id}.md` and opens it in the editor
+- Generates the workflow YAML at `.github/workflows/scheduled-{id}.yml`
+- For agent mode: checks for `COPILOT_PAT` secret and offers one-click setup if missing
 - The task ID is auto-generated from the name (lowercase, hyphens)
 
 **What the wizard does NOT do:**
 
-- Generate workflow files (click **Generate Workflows** separately)
-- Enable the task (toggle it on when you're ready)
 - Push to GitHub (you commit and push)
 
 ---
@@ -692,7 +680,19 @@ You can customize any seed task by editing the schedule, description, or prompt 
 
 ### Setting Up COPILOT_PAT
 
-For cloud agent tasks, you need a Personal Access Token:
+For cloud agent tasks, you need a `COPILOT_PAT` repository secret. There are two ways to set it up:
+
+#### Option 1: One-Click Setup (Recommended)
+
+If you have the GitHub CLI (`gh`) installed and authenticated:
+
+1. The wizard prompts you automatically when creating your first agent task
+2. Click **"Set Up Automatically"**
+3. Done — your existing `gh auth` token is stored as the `COPILOT_PAT` repo secret
+
+You can also click the **Set Up** button in the yellow banner on the Autopilot tab at any time.
+
+#### Option 2: Manual Setup
 
 1. Go to [GitHub Settings: Fine-grained tokens](https://github.com/settings/tokens?type=beta)
 2. Click **Generate new token**
@@ -704,6 +704,10 @@ For cloud agent tasks, you need a Personal Access Token:
 5. In your repository: **Settings → Secrets and variables → Actions**
 6. Click **New repository secret**
 7. Name: `COPILOT_PAT`, Value: _(paste your token)_
+
+#### What Happens Without COPILOT_PAT?
+
+If the secret isn't configured, agent-mode workflows still run — they create the issue successfully, but the Copilot auto-assignment step logs a warning and skips. You can manually assign Copilot to the issue from the GitHub UI.
 
 ### Setting Up Copilot for Issues
 
@@ -797,7 +801,8 @@ GitHub Actions cron uses UTC. A task scheduled for `0 8 * * *` runs at 8 AM UTC,
 
 1. Verify Copilot coding agent is enabled: **Settings → Copilot → Coding agent**
 2. Check the issue is assigned to `copilot` (not `@copilot`)
-3. Verify `COPILOT_PAT` has the right permissions (issues + PRs + contents)
+3. Verify `COPILOT_PAT` is set — check the Autopilot tab for the yellow setup banner, or run `gh secret list` in your repo
+4. If the "Assign Copilot" step shows a warning in the Actions log, the PAT is missing or expired — click **Set Up** in the Autopilot tab
 4. Check if the PAT has expired
 
 ### Toggle Not Working
