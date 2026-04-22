@@ -65,4 +65,4 @@ Step-by-step guides:
 
 ---
 
-**Version**: 8.1.6
+**Version**: 8.2.0

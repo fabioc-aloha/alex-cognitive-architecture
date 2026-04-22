@@ -51,6 +51,28 @@
             "type": "array",
             "items": { "type": "string" },
             "description": "Task IDs that must complete successfully before this task runs. Used for ordered execution chains."
+          },
+          "changeDetection": {
+            "type": "object",
+            "description": "Adaptive scheduling: skip task when no relevant changes detected since last run",
+            "properties": {
+              "enabled": { "type": "boolean", "description": "Whether to check for changes before running" },
+              "paths": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Glob patterns to watch. Task skips if none of these paths changed since last successful run."
+              },
+              "maxIdleDays": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Force run after this many days even if no changes detected. Prevents indefinite skipping."
+              }
+            },
+            "required": ["enabled", "paths"]
+          },
+          "useWorktree": {
+            "type": "boolean",
+            "description": "Cloud agents create worktree branches instead of committing to main. Creates PR for review."
           }
         }
       }

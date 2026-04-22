@@ -7,6 +7,89 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.2.0] - 2026-04-22
+
+### Added
+
+- **VS Code 1.117 platform adoption**: Documented AHP subagent orchestration, worktree-isolated sessions, auto-approve session modes, and command allowlisting across architecture docs and heir wiki
+- **Autopilot permission persistence**: Recommended `chat.permissions.default: "autopilot"` in heir bootstrap, Setup tab, FAQ, and Getting Started
+- **Adaptive scheduling (AV2)**: `changeDetection` in scheduled-tasks config — skip cloud tasks when no relevant paths changed; force-run after `maxIdleDays` idle; `.last-run-{taskId}` timestamps
+- **Worktree-based cloud dispatch (AV4)**: Cloud agents create `auto/{taskId}-{timestamp}` branches via `useWorktree: true` instead of committing to main
+- **Runaway guard hook (H11)**: `runaway-guard.cjs` PreToolUse hook — 10 destructive patterns, 60s sliding window, warn at 3, deny at 5
+- **Emotional mimicry prevention (SH1)**: 5-row prohibited/grounded response table in emotional-intelligence instruction — blocks Alex from mirroring user distress
+- **User independence score (SH2)**: PA proxy scoring in `rai-response-audit.cjs` — tracks emotional independence, manipulation awareness, attachment flexibility, sycophancy detection
+- **Dependency signal tracking (SH2)**: `prompt-safety-gate.cjs` records session-dependency-signals for PA scoring
+- **Agent session sorting**: Leverages 1.117 session sorting (Created/Updated) in Agent Activity panel
+- **Queued message editing**: Surfaces 1.117 edit-queued-message in multi-step agent workflows
+- **Custom agent template**: Sidebar "Create Custom Agent" button scaffolds `.agent.md` with proper frontmatter
+- **Tool set template**: Scaffold tool restriction config for custom agents
+- **User memory structure template**: Recommended `/memories/` structure for new heirs
+- **Dynamic loop config**: Full `loop-config.json` schema with `projectType`, `projectContext`, layered config (extension → project → user)
+- **Project-type presets**: Data pipeline, monorepo, web app menu presets for dynamic loop
+- **Monorepo context switching**: `setContext` command for switching active package context
+- **Usage telemetry**: `session-tool-log.json` tracks skill, instruction, and agent activations per session
+- **Token cost measurement**: Measures token impact of always-loaded instructions
+- **Cross-reference validation**: `brain-qa.cjs` detects broken internal links between skills, instructions, and docs
+- **Skill conflict detection**: Warns when two skills give contradictory advice on same topic
+- **Extension-only config layer manifest**: Separates configs the extension reads from brain-distributed configs
+- **Scheduled-tasks schema v2**: Added `changeDetection` and `useWorktree` properties to `scheduled-tasks.schema.json`
+
+### Changed
+
+- **`engines.vscode`**: Bumped from `^1.100.0` to `^1.117.0` (1.117 stable released April 12, 2026)
+- **Terminal command safety**: Updated for 1.117 — auto-include output after `send_to_terminal`, background terminal notifications
+- **Instruction-skill overlap (BT1)**: 56 instructions trimmed to lean pointers, ~40K tokens saved (25% reduction)
+- **Prompt overhaul (BT2)**: All 38 prompts classified into tiers and converted — procedural prompts get model/TODO/verify/summary, interactive get mode/currency, declarative get currency
+- **Builder/Validator gates (BT2d)**: Builder gets compilation-first 5-retry loop; Validator gets test verification mandate
+- **Incomplete skills (BT3)**: Triaged 81 incomplete skills — 1 retired, 9 lean instructions written, 71 accepted as standalone
+- **applyTo optimization (BT4)**: Narrowed 5 over-broad patterns (nasa-code-standards, code-review, image-handling, ai-writing-avoidance, doc-hygiene)
+- **Architecture docs (DO1)**: COGNITIVE-ARCHITECTURE.md updated for AHP subagent orchestration layer
+- **User guide (DO2)**: WORKING-WITH-ALEX updated for v8.2 features and current skill/instruction counts
+- **Heir wiki (DO4)**: User Manual, FAQ, Getting Started updated for autopilot persistence, command allowlisting, new templates
+- **Workflow generator**: `generate-scheduled-workflows.cjs` now emits change-detection steps and worktree branch creation
+- **PPTX export**: Fixed Mermaid diagram rendering in PowerPoint export
+
+### Deferred to v8.3
+
+- CR1: Agent response comparison (dual-agent view)
+- CR2: Subagent-powered comparison
+- AV1: Fleet view (multi-repo automation dashboard)
+- AV3: Social media publishing integration
+
+---
+
+## [8.2.0] - 2026-04-22
+
+### Added
+
+- **VS Code 1.117 platform adoption**: AHP subagent orchestration, worktree-isolated sessions, auto-approve session modes, command allowlisting
+- **Autopilot permission persistence**: `chat.permissions.default: "autopilot"` in heir setup
+- **Adaptive scheduling**: `changeDetection` in scheduled-tasks — skip tasks when no relevant paths changed; force-run after `maxIdleDays`
+- **Worktree-based cloud dispatch**: Cloud agents create isolated branches via `useWorktree: true`
+- **Runaway guard hook (H11)**: Detects rapid destructive commands — warn at 3, deny at 5 in 60s window
+- **Emotional mimicry prevention**: Blocks Alex from mirroring user distress patterns
+- **User independence score**: PA proxy scoring tracks emotional independence and sycophancy detection
+- **Custom agent template**: "Create Custom Agent" sidebar button
+- **Tool set template**: Scaffold tool restriction configs for custom agents
+- **User memory structure template**: Recommended `/memories/` structure for new heirs
+- **Dynamic loop config**: `loop-config.json` with project-type presets and monorepo context switching
+- **Usage telemetry**: Skill/instruction/agent activation tracking per session
+- **Token cost measurement**: Measures always-loaded instruction token impact
+- **Cross-reference validation**: Detects broken internal links in brain-qa
+- **Skill conflict detection**: Warns on contradictory skill advice
+
+### Changed
+
+- **`engines.vscode`**: Bumped to `^1.117.0`
+- **56 instructions trimmed**: Lean pointers replace duplicated content (~40K tokens saved)
+- **38 prompts overhauled**: Tier classification with model/TODO/verify/summary gates
+- **81 incomplete skills resolved**: 1 retired, 9 lean instructions added, 71 accepted standalone
+- **5 applyTo patterns narrowed**: Reduced over-broad activation
+- **Architecture docs updated**: Subagent orchestration layer, v8.2 features, heir wiki refresh
+- **Workflow generator**: Change-detection steps and worktree branch creation
+
+---
+
 ## [8.1.6] - 2026-04-21
 
 ### Added

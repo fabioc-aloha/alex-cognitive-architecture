@@ -41,6 +41,14 @@ Tasks use one of two execution modes:
 | **Cloud Agent** | Creates a GitHub issue assigned to Copilot, which reads the instructions and works autonomously | Creative tasks — writing, analysis, code reviews |
 | **Direct** | Runs a script in GitHub Actions, commits results, and opens a PR | Mechanical tasks — audits, builds, syncs, linting |
 
+### Adaptive Scheduling (v8.2.0)
+
+Tasks with `changeDetection` enabled skip execution when no relevant files have changed since the last run. This saves CI minutes and prevents noise PRs. A `maxIdleDays` safety net forces execution even without changes, so tasks never go silent indefinitely.
+
+### Worktree Dispatch (v8.2.0)
+
+Tasks with `useWorktree: true` create an isolated branch (`auto/{taskId}-{timestamp}`) instead of working on main. All changes go to a PR for review. This prevents scheduled tasks from accidentally pushing to main.
+
 ---
 
 ## Quick Start
@@ -516,7 +524,7 @@ GitHub Actions picks up the new cron schedules automatically.
 ```json
 {
   "$schema": "./scheduled-tasks.schema.json",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "tasks": [
     {
       "id": "task-id",
@@ -529,7 +537,13 @@ GitHub Actions picks up the new cron schedules automatically.
       "promptFile": ".github/config/scheduled-tasks/task-id.md",
       "muscle": ".github/muscles/script.cjs",
       "muscleArgs": ["--flag", "value"],
-      "target": "output/directory/"
+      "target": "output/directory/",
+      "changeDetection": {
+        "enabled": true,
+        "paths": [".github/skills/**", ".github/instructions/**"],
+        "maxIdleDays": 7
+      },
+      "useWorktree": true
     }
   ]
 }
@@ -550,6 +564,11 @@ GitHub Actions picks up the new cron schedules automatically.
 | `muscle` | string | No | — | Path to the script to run (direct mode). |
 | `muscleArgs` | string[] | No | `[]` | Arguments passed to the muscle script. |
 | `target` | string | No | — | Output directory (shown as a badge in the UI). |
+| `changeDetection` | object | No | — | Adaptive scheduling (v8.2.0). Skip task when no relevant files changed. |
+| `changeDetection.enabled` | boolean | Yes* | — | Whether to check for changes before running. |
+| `changeDetection.paths` | string[] | Yes* | — | Glob patterns to watch. Task skips if none changed since last run. |
+| `changeDetection.maxIdleDays` | integer | No | 7 | Force run after this many days even if no changes detected. |
+| `useWorktree` | boolean | No | `false` | Create a worktree branch instead of committing to main (v8.2.0). |
 
 ### Validation
 
