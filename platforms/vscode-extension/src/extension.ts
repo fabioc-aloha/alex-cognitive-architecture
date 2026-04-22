@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import * as path from "path";
 import { chatHandler } from "./chat/handler.js";
 import { WelcomeViewProvider } from "./sidebar/WelcomeViewProvider.js";
 import { detectProject } from "./sidebar/projectDetector.js";
@@ -263,6 +264,36 @@ export function activate(context: vscode.ExtensionContext): void {
       }
     }),
   );
+
+  // File converter commands — run muscle scripts via terminal
+  const converterMuscles: Record<string, { muscle: string; label: string; srcExt: string }> = {
+    "alex.convertMdToHtml": { muscle: "md-to-html.cjs", label: "HTML", srcExt: ".md" },
+    "alex.convertMdToWord": { muscle: "md-to-word.cjs", label: "Word", srcExt: ".md" },
+    "alex.convertMdToEml": { muscle: "md-to-eml.cjs", label: "Email", srcExt: ".md" },
+    "alex.convertDocxToMd": { muscle: "docx-to-md.cjs", label: "Markdown", srcExt: ".docx" },
+  };
+
+  for (const [cmdId, cfg] of Object.entries(converterMuscles)) {
+    context.subscriptions.push(
+      vscode.commands.registerCommand(cmdId, async (uri?: vscode.Uri) => {
+        const fileUri = uri ?? vscode.window.activeTextEditor?.document.uri;
+        if (!fileUri || fileUri.scheme !== "file") {
+          vscode.window.showWarningMessage("Alex: Select a file to convert.");
+          return;
+        }
+        const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+        if (!wsRoot) {
+          vscode.window.showWarningMessage("Alex: Open a workspace folder first.");
+          return;
+        }
+        const musclePath = path.join(wsRoot, ".github", "muscles", cfg.muscle);
+        const filePath = fileUri.fsPath;
+        const terminal = vscode.window.createTerminal(`Alex: Convert → ${cfg.label}`);
+        terminal.show();
+        terminal.sendText(`node "${musclePath}" "${filePath}"`);
+      }),
+    );
+  }
 
   // File watcher: hot-reload sidebar when loop config or prompts change
   const loopConfigWatcher = vscode.workspace.createFileSystemWatcher(

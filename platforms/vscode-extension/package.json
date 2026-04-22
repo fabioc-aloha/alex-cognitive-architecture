@@ -149,6 +149,26 @@
         "title": "Refresh Welcome",
         "category": "Alex",
         "icon": "$(refresh)"
+      },
+      {
+        "command": "alex.convertMdToHtml",
+        "title": "Convert Markdown → HTML",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.convertMdToWord",
+        "title": "Convert Markdown → Word",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.convertMdToEml",
+        "title": "Convert Markdown → Email",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.convertDocxToMd",
+        "title": "Convert Word → Markdown",
+        "category": "Alex"
       }
     ],
     "menus": {
@@ -162,6 +182,50 @@
           "command": "alex.refreshWelcome",
           "when": "view == alex.welcomeView",
           "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "alex.convertMdToHtml",
+          "when": "resourceExtname == .md",
+          "group": "alex@1"
+        },
+        {
+          "command": "alex.convertMdToWord",
+          "when": "resourceExtname == .md",
+          "group": "alex@2"
+        },
+        {
+          "command": "alex.convertMdToEml",
+          "when": "resourceExtname == .md",
+          "group": "alex@3"
+        },
+        {
+          "command": "alex.convertDocxToMd",
+          "when": "resourceExtname == .docx",
+          "group": "alex@1"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "alex.convertMdToHtml",
+          "when": "resourceExtname == .md",
+          "group": "alex@1"
+        },
+        {
+          "command": "alex.convertMdToWord",
+          "when": "resourceExtname == .md",
+          "group": "alex@2"
+        },
+        {
+          "command": "alex.convertMdToEml",
+          "when": "resourceExtname == .md",
+          "group": "alex@3"
+        },
+        {
+          "command": "alex.convertDocxToMd",
+          "when": "resourceExtname == .docx",
+          "group": "alex@1"
         }
       ]
     },
