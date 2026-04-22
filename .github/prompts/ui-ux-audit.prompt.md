@@ -1,9 +1,9 @@
 ---
 mode: agent
-sem: 1
+model: claude-opus-4-6
 description: Systematic WCAG AA accessibility and UI/UX audit covering typography, keyboard navigation, screen reader support, and design tokens
 application: "When requesting architecture health checks, quality audits, or validation"
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # UI/UX Accessibility Audit
@@ -13,6 +13,12 @@ currency: 2025-01-01
 **WCAG Level**: AA minimum (Level AAA aspirational)  
 **Duration**: 15-45 minutes depending on UI complexity  
 **Output**: Prioritized issue list with actionable fixes
+
+Create a TODO list for all steps. Mark each in-progress before starting, completed immediately after finishing.
+
+
+
+After ANY file edit, run compilation check. Do not proceed until zero errors. If compilation or tests fail, fix and retry. Maximum 5 iterations per step.
 
 ---
 
@@ -686,3 +692,12 @@ For rapid accessibility check:
 **Validated Against**: Alex v5.8.0 welcomeView.ts accessibility audit (real-world production deployment)
 
 
+
+
+## Summary
+
+After completing all steps, generate:
+- Files changed (with counts)
+- Verifications passed (compile, test, lint)
+- Issues encountered and resolutions
+- Anything requiring manual attention

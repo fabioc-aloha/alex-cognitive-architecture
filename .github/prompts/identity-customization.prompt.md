@@ -2,7 +2,7 @@
 description: "Customize Alex's identity for this project"
 application: "When the user wants to personalize the AI persona in copilot-instructions.md for their heir project"
 mode: agent
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # Customize Project Identity

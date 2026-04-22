@@ -1,9 +1,8 @@
 ---
 mode: agent
-sem: 1
 description: "Add visual memory (reference photos, voice samples, or video styles) to a skill for self-sufficient face-consistent generation"
 application: "When managing visual memory, adding reference photos, or generating face-consistent images"
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # Visual Memory

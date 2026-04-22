@@ -1,9 +1,8 @@
 ---
-sem: 1
 description: Manage brand assets, visual identity, and platform-specific branding
 application: "When managing brand assets, visual identity, or platform-specific branding"
 agent: Alex
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # /brand - Brand Asset Management

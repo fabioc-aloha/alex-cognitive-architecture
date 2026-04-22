@@ -1,9 +1,8 @@
 ---
-sem: 1
 mode: agent
 description: Create Marp presentation slides from content with Alex branding
 application: "When creating presentations, slides, or Marp-based content"
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # Marp Presentation Generator

@@ -3,7 +3,7 @@ description: "Write a new Alex blog post from recent brain activity"
 application: "Generate blog posts from recent commits, meditations, or experiences"
 mode: agent
 agent: Alex
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 Write a new blog post for the Alex blog at `master-wiki/blog/`.

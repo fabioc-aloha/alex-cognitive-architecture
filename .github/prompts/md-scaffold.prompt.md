@@ -1,9 +1,8 @@
 ---
-sem: 1
 mode: agent
 description: "Scaffold properly structured Markdown files from templates"
 application: "When user needs to create a new structured Markdown document from a template"
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # Markdown Scaffolding

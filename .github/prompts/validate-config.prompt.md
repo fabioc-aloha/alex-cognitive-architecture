@@ -1,15 +1,21 @@
 ---
 mode: agent
-sem: 1
+model: claude-opus-4-6
 description: Validate VS Code extension manifest consistency: command registration, configuration keys, and graceful degradation patterns
 application: "When developing or maintaining VS Code extensions"
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # Validate Extension Configuration
 
 
 Validate VS Code extension manifest configuration and command registration
+
+Create a TODO list for all steps. Mark each in-progress before starting, completed immediately after finishing.
+
+
+
+After ANY file edit, run compilation check. Do not proceed until zero errors. If compilation or tests fail, fix and retry. Maximum 5 iterations per step.
 
 ## Prompt
 
@@ -78,3 +84,12 @@ Alex:
    - [Specific fix for each issue]
 5. [Applies fixes if approved]
 6. Re-running validation... ✅ All checks pass
+
+
+## Summary
+
+After completing all steps, generate:
+- Files changed (with counts)
+- Verifications passed (compile, test, lint)
+- Issues encountered and resolutions
+- Anything requiring manual attention

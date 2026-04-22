@@ -1,14 +1,21 @@
 ---
-sem: 1
 description: Run a currency audit — full assessment (freshness + semantic consistency) before stamping dates
+mode: agent
+model: claude-opus-4-6
 application: "When brain-qa shows expired currency dates or when performing scheduled maintenance"
 agent: Brain Ops
-currency: 2026-04-20
+currency: 2026-04-21
 ---
 
 # /currency-audit — Brain File Full Assessment
 
 Full review of brain files — external freshness AND internal consistency — stamp only after all checks pass.
+
+Create a TODO list for all steps. Mark each in-progress before starting, completed immediately after finishing.
+
+
+
+After ANY file edit, run compilation check. Do not proceed until zero errors. If compilation or tests fail, fix and retry. Maximum 5 iterations per step.
 
 ## Workflow
 
@@ -23,3 +30,12 @@ Full review of brain files — external freshness AND internal consistency — s
 4. **Fix and stamp**: Fix ALL issues, then stamp `currency:` to today — partial review does not earn a stamp
 5. **Verify**: Re-run brain-qa, confirm all reviewed files pass
 6. **Report**: Summarize what was updated and any findings worth noting
+
+
+## Summary
+
+After completing all steps, generate:
+- Files changed (with counts)
+- Verifications passed (compile, test, lint)
+- Issues encountered and resolutions
+- Anything requiring manual attention

@@ -1,15 +1,22 @@
 ---
-sem: 1
 description: Manage API keys and secrets with VS Code SecretStorage
+mode: agent
+model: claude-opus-4-6
 application: "When managing secrets, API keys, or credential storage"
 agent: Alex
-currency: 2025-01-01
+currency: 2026-04-21
 ---
 
 # /secrets - Secrets Management
 
 
 Implement secure credential storage using VS Code SecretStorage API for API keys, tokens, and passwords.
+
+Create a TODO list for all steps. Mark each in-progress before starting, completed immediately after finishing.
+
+
+
+After ANY file edit, run compilation check. Do not proceed until zero errors. If compilation or tests fail, fix and retry. Maximum 5 iterations per step.
 
 ## What This Does
 
@@ -90,3 +97,12 @@ if (!apiKey) {
 ## Start
 
 Beginning secrets management. What service needs credential storage, or would you like to review existing code?
+
+
+## Summary
+
+After completing all steps, generate:
+- Files changed (with counts)
+- Verifications passed (compile, test, lint)
+- Issues encountered and resolutions
+- Anything requiring manual attention

@@ -1,25 +1,50 @@
 ---
-description: Systematic debugging session — from error to fix
-application: When investigating build failures, test errors, runtime crashes, or unexpected behavior
+description: "Procedural debugging: reproduce, isolate, fix, verify with test gates"
+application: "When investigating build failures, test errors, runtime crashes, or unexpected behavior"
+mode: agent
 agent: Alex
-currency: 2025-01-01
+model: claude-opus-4-6
+currency: 2026-04-21
 ---
 
 # /debug - Systematic Debugging
 
+Reproduce, isolate, fix, verify. Create a TODO list for all steps. Mark each in-progress before starting, completed immediately after finishing.
 
-Reproduce → Isolate → Hypothesize → Fix → Verify.
+## Step 1: Reproduce
 
-## Process
+1. Confirm the error exists -- run the failing command or test
+2. Capture the exact error output (stack trace, error code, message)
+3. If not reproducible, gather more context before proceeding
 
-1. **Reproduce** — Can you trigger the error consistently?
-2. **Read the error** — Stack trace top-down for cause, bottom-up for context
-3. **Isolate** — What's the smallest failing case?
-4. **Hypothesize** — One theory at a time, test each
-5. **Fix** — Minimal change, run tests
-6. **Verify** — Regression test added, full suite green
+## Step 2: Isolate
 
-## Start
+1. Narrow to the specific file, function, and line
+2. Read the error stack trace top-down for cause, bottom-up for context
+3. Check recent changes that may have introduced the issue
 
-Share the error, stack trace, or describe the unexpected behavior. I'll work through it systematically.
+## Step 3: Hypothesize
+
+1. Form one theory about the root cause with supporting evidence
+2. If multiple theories, rank by likelihood and test highest first
+
+## Step 4: Fix
+
+1. Apply the minimal change that addresses the root cause
+2. Run compilation check -- zero errors required
+3. If compilation fails: fix and retry. Maximum 5 iterations.
+
+## Step 5: Verify
+
+1. Re-run the original failing command/test -- must now pass
+2. Run the full test suite -- zero regressions allowed
+3. If new failures appear: diagnose whether the fix caused them
+
+## Summary
+
+After fix is verified, generate:
+- Root cause (one sentence)
+- Fix applied (file, line, what changed)
+- Verifications passed (compile, specific test, full suite)
+- Regression test added (yes/no)
 

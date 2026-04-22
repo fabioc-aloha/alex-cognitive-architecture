@@ -248,6 +248,180 @@ function scanCrossReferences() {
   });
 }
 
+// --- QA5: Skill Conflict Detection ---
+// Detects potential conflicts where two brain files (skills or instructions)
+// have overlapping applyTo patterns AND overlapping topic keywords.
+// Structural heuristic — flags pairs for manual review, not definitive conflicts.
+
+/**
+ * Extract glob keywords from an applyTo pattern string.
+ * E.g. "**\/*api*,**\/*rest*,**\/*.bicep" → Set{"api","rest","bicep"}
+ */
+function extractApplyToKeywords(applyTo) {
+  if (!applyTo || applyTo === "**" || applyTo === "**/*") return new Set();
+  const keywords = new Set();
+  const segments = applyTo.split(",").map(s => s.trim());
+  for (const seg of segments) {
+    // Extract meaningful identifiers from glob patterns
+    // Match word chars between * or / delimiters: **/*api* → api, **/*.bicep → bicep
+    const matches = seg.matchAll(/\*([a-z][a-z0-9-]+)\*|\.([a-z][a-z0-9]+)/gi);
+    for (const m of matches) {
+      const kw = (m[1] || m[2] || "").toLowerCase();
+      if (kw && kw.length > 2) keywords.add(kw);
+    }
+    // Also match exact folder/file names: **/agents/*, **/test/**
+    const folderMatch = seg.matchAll(/\/([\w-]{3,})\//g);
+    for (const m of folderMatch) {
+      keywords.add(m[1].toLowerCase());
+    }
+  }
+  return keywords;
+}
+
+/**
+ * Extract topic keywords from file name, description, and section headers.
+ * Returns Set of lowercase terms (stop words filtered).
+ */
+function extractTopicKeywords(name, content) {
+  const STOP_WORDS = new Set([
+    "the", "and", "for", "with", "from", "that", "this", "are", "was",
+    "will", "can", "has", "have", "been", "being", "use", "used", "using",
+    "not", "but", "all", "any", "each", "how", "when", "where", "what",
+    "into", "over", "also", "more", "most", "than", "then", "some",
+    "patterns", "best", "practices", "rules", "guidelines", "instructions",
+    "skill", "always", "active", "ensure", "apply", "based", "should",
+  ]);
+
+  const keywords = new Set();
+
+  // From name (split on hyphens)
+  for (const part of name.split("-")) {
+    const lc = part.toLowerCase();
+    if (lc.length > 2 && !STOP_WORDS.has(lc)) keywords.add(lc);
+  }
+
+  // From description in frontmatter
+  const descMatch = content.match(/^description:\s*["']?(.+?)["']?\s*$/m);
+  if (descMatch) {
+    const words = descMatch[1].toLowerCase().replace(/[^a-z0-9\s-]/g, "").split(/\s+/);
+    for (const w of words) {
+      if (w.length > 3 && !STOP_WORDS.has(w)) keywords.add(w);
+    }
+  }
+
+  // From ## section headers
+  const headers = content.matchAll(/^##\s+(.+)$/gm);
+  for (const h of headers) {
+    const words = h[1].toLowerCase().replace(/[^a-z0-9\s-]/g, "").split(/\s+/);
+    for (const w of words) {
+      if (w.length > 3 && !STOP_WORDS.has(w)) keywords.add(w);
+    }
+  }
+
+  return keywords;
+}
+
+/**
+ * Compute set intersection size.
+ */
+function setIntersection(a, b) {
+  const result = new Set();
+  for (const item of a) {
+    if (b.has(item)) result.add(item);
+  }
+  return result;
+}
+
+/**
+ * Scan skills and instructions for potential conflicts.
+ * A conflict = overlapping applyTo AND overlapping topics.
+ */
+function detectSkillConflicts() {
+  const conflicts = [];
+
+  // Collect all brain files with applyTo and topic keywords
+  const entries = [];
+
+  // Skills
+  const skillsDir = path.join(GH, "skills");
+  if (fs.existsSync(skillsDir)) {
+    const dirs = fs.readdirSync(skillsDir, { withFileTypes: true })
+      .filter(d => d.isDirectory());
+    for (const d of dirs) {
+      const fp = path.join(skillsDir, d.name, "SKILL.md");
+      if (!fs.existsSync(fp)) continue;
+      const content = fs.readFileSync(fp, "utf-8");
+      const applyToMatch = content.match(/^applyTo:\s*(.+)$/m);
+      const applyTo = applyToMatch ? applyToMatch[1].trim().replace(/^["']|["']$/g, "") : "";
+      entries.push({
+        type: "skill",
+        name: d.name,
+        applyToKeywords: extractApplyToKeywords(applyTo),
+        topicKeywords: extractTopicKeywords(d.name, content),
+        rawApplyTo: applyTo,
+      });
+    }
+  }
+
+  // Instructions
+  const instrDir = path.join(GH, "instructions");
+  if (fs.existsSync(instrDir)) {
+    const files = fs.readdirSync(instrDir).filter(f => f.endsWith(".instructions.md"));
+    for (const file of files) {
+      const content = fs.readFileSync(path.join(instrDir, file), "utf-8");
+      const name = file.replace(".instructions.md", "");
+      const applyToMatch = content.match(/^applyTo:\s*(.+)$/m);
+      const applyTo = applyToMatch ? applyToMatch[1].trim().replace(/^["']|["']$/g, "") : "";
+      entries.push({
+        type: "instruction",
+        name,
+        applyToKeywords: extractApplyToKeywords(applyTo),
+        topicKeywords: extractTopicKeywords(name, content),
+        rawApplyTo: applyTo,
+      });
+    }
+  }
+
+  // Compare all pairs — skip always-on files (applyTo: ** with no keywords)
+  // and skip trifecta pairs (skill + its own instruction)
+  for (let i = 0; i < entries.length; i++) {
+    for (let j = i + 1; j < entries.length; j++) {
+      const a = entries[i];
+      const b = entries[j];
+
+      // Skip trifecta pairs (matched skill+instruction is expected overlap)
+      if (a.name === b.name) continue;
+
+      // Skip if either has no applyTo keywords (always-on = intentional broad scope)
+      if (a.applyToKeywords.size === 0 || b.applyToKeywords.size === 0) continue;
+
+      // Check applyTo overlap (need ≥2 shared keywords for meaningful overlap)
+      const applyOverlap = setIntersection(a.applyToKeywords, b.applyToKeywords);
+      if (applyOverlap.size < 2) continue;
+
+      // Check topic overlap (need ≥3 shared topic keywords to flag)
+      const topicOverlap = setIntersection(a.topicKeywords, b.topicKeywords);
+      if (topicOverlap.size < 3) continue;
+
+      // Score: applyTo overlap weight + topic overlap weight
+      const score = applyOverlap.size * 3 + topicOverlap.size;
+
+      conflicts.push({
+        fileA: `${a.type}/${a.name}`,
+        fileB: `${b.type}/${b.name}`,
+        applyOverlap: [...applyOverlap],
+        topicOverlap: [...topicOverlap].slice(0, 5), // cap display
+        score,
+      });
+    }
+  }
+
+  // Sort by score descending
+  conflicts.sort((a, b) => b.score - a.score);
+
+  return conflicts;
+}
+
 // --- Ensure quality folder exists ---
 if (!fs.existsSync(QUALITY_DIR)) {
   fs.mkdirSync(QUALITY_DIR, { recursive: true });
@@ -766,7 +940,7 @@ function generateGrid() {
   lines.push("");
   lines.push(`Generated: ${date}`);
   lines.push("");
-  lines.push("> **Scope**: This is a **structural linter**, not a content quality gate. It validates frontmatter and currency freshness — not whether advice is correct, examples are current, or skills conflict. Content accuracy requires semantic review (see below).");
+  lines.push("> **Scope**: This is a **structural linter**, not a content quality gate. It validates frontmatter, currency freshness, cross-references, and potential skill conflicts — not whether advice is correct or examples are current. Content accuracy requires semantic review (see below).");
   lines.push("");
   lines.push("## Pass Criteria");
   lines.push("");
@@ -1166,6 +1340,32 @@ function generateGrid() {
     }
   }
 
+  // ── QA5: Skill Conflict Detection ───────────────────────────────
+  // Detect potential conflicts where two brain files cover the same domain
+  // with overlapping applyTo patterns and shared topic keywords.
+  lines.push("");
+  lines.push("## Skill Conflicts");
+  lines.push("");
+
+  const conflicts = detectSkillConflicts();
+  if (conflicts.length === 0) {
+    lines.push("**Status**: ✅ No potential skill conflicts detected");
+  } else {
+    lines.push(`**Status**: ⚠️ ${conflicts.length} potential conflict(s) — review for contradictory advice`);
+    lines.push("");
+    lines.push("| # | File A | File B | applyTo Overlap | Topic Overlap | Score |");
+    lines.push("|--:|--------|--------|-----------------|---------------|------:|");
+    const top = conflicts.slice(0, 20);
+    for (let i = 0; i < top.length; i++) {
+      const c = top[i];
+      lines.push(`| ${i + 1} | ${c.fileA} | ${c.fileB} | ${c.applyOverlap.join(", ")} | ${c.topicOverlap.join(", ")} | ${c.score} |`);
+    }
+    if (conflicts.length > 20) {
+      lines.push("");
+      lines.push(`*... and ${conflicts.length - 20} more. Run with \`--stdout\` to see all.*`);
+    }
+  }
+
   // ── BE3: Master ↔ Heir Drift Detection ──────────────────────────
   const heirBrain = path.join(ROOT, "heir", ".github");
   if (fs.existsSync(heirBrain)) {
@@ -1239,6 +1439,7 @@ if (typeof module !== 'undefined') {
     scanMuscles,
     scanHooks,
     scanCrossReferences,
+    detectSkillConflicts,
     generateGrid,
     listBrainFiles,
     CURRENCY_MAX_DAYS,
