@@ -25,12 +25,12 @@ After ANY file edit, run compilation check. Do not proceed until zero errors. If
 
 ## Execute
 
-```powershell
+```bash
 # Dry-run first
-.\scripts\upgrade-brain.ps1 -Mode Full -DryRun
+node scripts/upgrade-brain.cjs --mode Full --dry-run
 
 # Execute upgrade
-.\scripts\upgrade-brain.ps1 -Mode Full
+node scripts/upgrade-brain.cjs --mode Full
 ```
 
 ## Post-Upgrade

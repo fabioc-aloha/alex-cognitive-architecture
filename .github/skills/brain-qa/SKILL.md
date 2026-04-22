@@ -122,7 +122,7 @@ The output is written to `.github/quality/brain-health-grid.md`.
 | ------------------------ | ---------------------------------------------------------- |
 | Broken connection target | Update path in frontmatter or body links                   |
 | Missing from heir        | Check `SKILL_EXCLUSIONS` in sync-architecture.cjs          |
-| Out of sync              | Run with `-Fix` or use `build-extension-package.ps1`       |
+| Out of sync              | Run with `-Fix` or use `build-extension-package.cjs`       |
 | Boilerplate description  | Write meaningful description in SKILL.md frontmatter       |
 | Master-only leak         | Remove protected files from heir                           |
 | Missing YAML frontmatter | Add `---\nname:\ndescription:\n---` to SKILL.md            |

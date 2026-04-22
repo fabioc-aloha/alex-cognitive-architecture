@@ -13,12 +13,12 @@ Keep heir projects synchronized with Master Alex brain updates.
 
 | Operation | Command |
 |-----------|---------|
-| **Audit** | `.\scripts\upgrade-brain.ps1 -Mode Audit` |
-| **Dry-run** | `.\scripts\upgrade-brain.ps1 -Mode Upgrade -DryRun` |
-| **Upgrade** | `.\scripts\upgrade-brain.ps1 -Mode Upgrade` |
-| **Full** | `.\scripts\upgrade-brain.ps1 -Mode Full` |
-| **Verify** | `.\scripts\upgrade-brain.ps1 -Mode Verify` |
-| **Rollback** | `.\scripts\upgrade-brain.ps1 -Mode Rollback -Include "name"` |
+| **Audit** | `node scripts/upgrade-brain.cjs --mode Audit` |
+| **Dry-run** | `node scripts/upgrade-brain.cjs --mode Upgrade --dry-run` |
+| **Upgrade** | `node scripts/upgrade-brain.cjs --mode Upgrade` |
+| **Full** | `node scripts/upgrade-brain.cjs --mode Full` |
+| **Verify** | `node scripts/upgrade-brain.cjs --mode Verify` |
+| **Rollback** | `node scripts/upgrade-brain.cjs --mode Rollback --include "name"` |
 
 ## Pre-Upgrade Checklist
 
@@ -29,7 +29,7 @@ Keep heir projects synchronized with Master Alex brain updates.
 
 ## Post-Upgrade Checklist
 
-1. Verify: `.\scripts\upgrade-brain.ps1 -Mode Verify`
+1. Verify: `node scripts/upgrade-brain.cjs --mode Verify`
 2. Curate custom CI from `.backup.md` files
 3. Commit changes in each project
 4. Delete `.github-backup-*` after verification

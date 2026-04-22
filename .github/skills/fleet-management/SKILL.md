@@ -21,7 +21,7 @@ Master Alex evolves continuously — new skills, refined instructions, fixed def
 │  Master Alex (.github/)                                         │
 │    ↓ sync-architecture.cjs                                      │
 │  Extension Brain (platforms/vscode-extension/.github/)          │
-│    ↓ upgrade-brain.ps1                                          │
+│    ↓ upgrade-brain.cjs                                          │
 │  Fleet (C:\Development\*\.github/)                              │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -30,7 +30,7 @@ Master Alex evolves continuously — new skills, refined instructions, fixed def
 
 | Script | Purpose | Location |
 |--------|---------|----------|
-| `upgrade-brain.ps1` | Fleet-wide brain upgrade | `scripts/` |
+| `upgrade-brain.cjs` | Fleet-wide brain upgrade | `scripts/` |
 | `sync-architecture.cjs` | Master → Extension sync | `.github/muscles/` |
 | `sync-to-heir.cjs` | Master → Heir template sync | `scripts/` |
 | `curate-upgrade.cjs` | Post-upgrade curation | `.github/muscles/` |
@@ -59,12 +59,12 @@ node scripts/sync-to-heir.cjs
 
 Discover what needs updating:
 
-```powershell
+```bash
 # Audit all projects in C:\Development
-.\scripts\upgrade-brain.ps1 -Mode Audit
+node scripts/upgrade-brain.cjs --mode Audit
 
 # Audit specific projects
-.\scripts\upgrade-brain.ps1 -Mode Audit -Include "health,pbi"
+node scripts/upgrade-brain.cjs --mode Audit --include "health,pbi"
 ```
 
 Output shows:
@@ -77,15 +77,15 @@ Output shows:
 
 Two-phase approach — mechanical batch + semantic curation:
 
-```powershell
+```bash
 # Dry-run first (always!)
-.\scripts\upgrade-brain.ps1 -Mode Upgrade -DryRun
+node scripts/upgrade-brain.cjs --mode Upgrade --dry-run
 
 # Execute upgrade
-.\scripts\upgrade-brain.ps1 -Mode Upgrade
+node scripts/upgrade-brain.cjs --mode Upgrade
 
 # Or full pipeline: Audit → Upgrade → Verify
-.\scripts\upgrade-brain.ps1 -Mode Full
+node scripts/upgrade-brain.cjs --mode Full
 ```
 
 The script:
@@ -98,8 +98,8 @@ The script:
 
 Confirm deployments succeeded:
 
-```powershell
-.\scripts\upgrade-brain.ps1 -Mode Verify
+```bash
+node scripts/upgrade-brain.cjs --mode Verify
 ```
 
 Checks:
@@ -137,13 +137,12 @@ Override with `-Include` or modify `-Exclude` parameter.
 
 If something goes wrong:
 
-```powershell
+```bash
 # Rollback specific project
-.\scripts\upgrade-brain.ps1 -Mode Rollback -Include "projectname"
+node scripts/upgrade-brain.cjs --mode Rollback --include "projectname"
 
 # Manual rollback (any time before backup deletion)
-Remove-Item "C:\Development\project\.github" -Recurse
-Rename-Item "C:\Development\project\.github-backup-YYYYMMDD" ".github"
+# Remove .github/ and rename .github-backup-YYYYMMDD-HHMMSS/ to .github/
 ```
 
 ## Scheduled Maintenance
@@ -157,8 +156,8 @@ Add to Autopilot for weekly fleet health checks:
   "description": "Audit fleet brain versions and drift",
   "schedule": "0 8 * * 1",
   "mode": "direct",
-  "script": "scripts/upgrade-brain.ps1",
-  "args": "-Mode Audit"
+  "script": "scripts/upgrade-brain.cjs",
+  "args": "--mode Audit"
 }
 ```
 
@@ -199,7 +198,7 @@ Write-Host "Skills: $heirSkills (heir) vs $sourceSkills (source)"
 
 ## Best Practices
 
-1. **Always dry-run first** — `.\scripts\upgrade-brain.ps1 -Mode Upgrade -DryRun`
+1. **Always dry-run first** — `node scripts/upgrade-brain.cjs --mode Upgrade --dry-run`
 2. **Audit before upgrade** — Know what you're changing
 3. **Verify after upgrade** — Confirm success before deleting backups
 4. **Keep backups until satisfied** — `.github-backup-*` is your rollback path

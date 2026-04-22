@@ -6,7 +6,7 @@
  * @requires fs, path
  * @inheritance inheritable
  *
- * After upgrade-brain.ps1 renames .github/ to .github-backup-YYYYMMDD/ and installs
+ * After upgrade-brain.cjs renames .github/ to .github-backup-YYYYMMDD-HHMMSS/ and installs
  * a fresh v8 brain, some project-specific content may not have been auto-restored.
  * This script scans backups, reports findings, auto-restores safe content, and
  * supports interactive curation for copilot-instructions.md merging.
@@ -63,11 +63,11 @@ function parseArgs() {
 
 // ── Constants ───────────────────────────────────────────────────────────────
 
-// Brain-managed directories — content installed by upgrade-brain.ps1
+// Brain-managed directories — content installed by upgrade-brain.cjs
 const BRAIN_SUBDIRS = ['instructions', 'skills', 'prompts', 'agents', 'muscles', 'config', 'hooks', 'assets'];
 const BRAIN_ROOT_FILES = ['copilot-instructions.md', '.alex-brain-version'];
 
-// Already auto-restored by upgrade-brain.ps1
+// Already auto-restored by upgrade-brain.cjs
 const AUTO_RESTORED_DIRS = ['workflows', 'ISSUE_TEMPLATE', 'episodic', 'memory', 'domain-knowledge'];
 const AUTO_RESTORED_FILES = ['PULL_REQUEST_TEMPLATE.md', 'dependabot.yml', 'CODEOWNERS', 'FUNDING.yml', 'MEMORY.md'];
 
@@ -262,7 +262,7 @@ function invokeScan(opts) {
     console.log(`\n${C.white('  Next steps:')}`);
     console.log('    1. node .github/muscles/curate-upgrade.cjs --mode AutoRestore      (safe auto-copy)');
     console.log('    2. node .github/muscles/curate-upgrade.cjs --mode Curate --include X (CI merging)');
-    console.log('    3. upgrade-brain.ps1 -Mode Verify             (confirm brain intact)');
+    console.log('    3. node scripts/upgrade-brain.cjs --mode Verify  (confirm brain intact)');
     console.log('    4. node .github/muscles/curate-upgrade.cjs --mode Clean             (remove backups)');
   }
 }

@@ -10,13 +10,13 @@ currency: 2025-01-01
 
 > Finalize brain upgrades by recovering project-specific content from backups
 
-After `upgrade-brain.ps1` runs, each project has a `.github-backup-YYYYMMDD/` directory containing the pre-upgrade brain. This skill guides the curation process: scan backups, identify what needs attention, and merge project-specific content into the fresh v8 brain.
+After `upgrade-brain.cjs` runs, each project has a `.github-backup-YYYYMMDD-HHMMSS/` directory containing the pre-upgrade brain. This skill guides the curation process: scan backups, identify what needs attention, and merge project-specific content into the fresh v8 brain.
 
 ---
 
 ## When to Use
 
-- After running `upgrade-brain.ps1 -Mode Upgrade` or `-Mode Full`
+- After running `node scripts/upgrade-brain.cjs --mode Upgrade` or `--mode Full`
 - After the VS Code extension's Initialize command on a project
 - When a project reports missing customizations post-upgrade
 - To clean up `.github-backup-*` directories fleet-wide
@@ -139,7 +139,7 @@ The v8 brain installs standard config files. Some projects had custom config:
 1. Scan:       node .github/muscles/curate-upgrade.cjs --mode Scan
 2. AutoRestore: node .github/muscles/curate-upgrade.cjs --mode AutoRestore  (safe auto-copy)
 3. Manual:     node .github/muscles/curate-upgrade.cjs --mode Curate --include "project"  (CI merging)
-4. Verify:     upgrade-brain.ps1 -Mode Verify  (confirm brain intact)
+4. Verify:     node scripts/upgrade-brain.cjs --mode Verify  (confirm brain intact)
 5. Clean:      node .github/muscles/curate-upgrade.cjs --mode Clean  (remove backups)
 ```
 
@@ -147,7 +147,7 @@ The v8 brain installs standard config files. Some projects had custom config:
 
 ## Safety Rules
 
-1. **Never delete backups before verifying** — run `upgrade-brain.ps1 -Mode Verify` first
+1. **Never delete backups before verifying** — run `node scripts/upgrade-brain.cjs --mode Verify` first
 2. **Never overwrite brain dirs** — only copy non-brain content from backups
 3. **CI merging is additive** — add project context to v8 template, don't replace it
 4. **When in doubt, keep the backup** — disk is cheap, lost data isn't
