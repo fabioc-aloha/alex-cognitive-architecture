@@ -1,6 +1,6 @@
 ---
 description: "Finalize brain upgrades by curating project-specific content from .github-backup-* directories"
-application: "After running upgrade-brain.ps1 or extension Initialize, when .github-backup-* directories exist"
+application: "After running upgrade-brain.cjs or extension Initialize, when .github-backup-* directories exist"
 applyTo: "**/*upgrade*,**/*curat*,**/*backup*,**/*finalize*"
 currency: 2025-01-01
 ---
@@ -24,6 +24,6 @@ When `.github-backup-*` directories exist after brain upgrade. Skill: `.github/s
 
 ## Safety
 
-- Never delete backups before `upgrade-brain.ps1 -Mode Verify`
+- Never delete backups before `node scripts/upgrade-brain.cjs --mode Verify`
 - Never overwrite brain dirs from backup
 - CI merging is additive — add project context, don't replace v8 template
