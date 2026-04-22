@@ -8,6 +8,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
+import { execFileSync } from "child_process";
 import { escHtml, escAttr } from "./htmlUtils.js";
 import { recordTaskStart, recordTaskEnd } from "./agentMetricsCollector.js";
 
@@ -77,6 +78,76 @@ function cronToHuman(cron: string): string {
   }
 
   return cron;
+}
+
+// ── GitHub PAT Helpers ────────────────────────────────────────────
+
+/** Check if COPILOT_PAT secret exists in the repo. */
+export function hasCopilotPAT(workspaceRoot: string): boolean {
+  try {
+    const out = execFileSync("gh", ["secret", "list", "--json", "name"], {
+      cwd: workspaceRoot, encoding: "utf-8", timeout: 10_000,
+      stdio: ["pipe", "pipe", "pipe"],
+    });
+    const secrets = JSON.parse(out) as Array<{ name: string }>;
+    return secrets.some((s) => s.name === "COPILOT_PAT");
+  } catch {
+    return false; // gh not available or not authenticated
+  }
+}
+
+/**
+ * One-click PAT setup: stores the user's existing `gh auth token` as the
+ * COPILOT_PAT repo secret. Returns true on success.
+ */
+export async function setupCopilotPAT(workspaceRoot: string): Promise<boolean> {
+  const choice = await vscode.window.showInformationMessage(
+    "Autopilot needs a GitHub token (repo secret) to assign Copilot to issues. " +
+    "Set it up now using your existing GitHub CLI auth?",
+    { modal: true },
+    "Set Up Automatically",
+    "I'll Do It Manually",
+  );
+
+  if (choice === "I'll Do It Manually") {
+    void vscode.env.openExternal(
+      vscode.Uri.parse("https://github.com/settings/personal-access-tokens/new"),
+    );
+    void vscode.window.showInformationMessage(
+      "Create a fine-grained PAT with Issues (read/write) and Contents (read/write) permissions, " +
+      "then run: gh secret set COPILOT_PAT in your repo.",
+    );
+    return false;
+  }
+
+  if (choice !== "Set Up Automatically") return false;
+
+  try {
+    // Get user's existing gh token
+    const token = execFileSync("gh", ["auth", "token"], {
+      cwd: workspaceRoot, encoding: "utf-8", timeout: 10_000,
+      stdio: ["pipe", "pipe", "pipe"],
+    }).trim();
+
+    if (!token) {
+      vscode.window.showErrorMessage("Could not retrieve GitHub CLI token. Run `gh auth login` first.");
+      return false;
+    }
+
+    // Store as repo secret — token piped via stdin, never logged
+    execFileSync("gh", ["secret", "set", "COPILOT_PAT", "--body", token], {
+      cwd: workspaceRoot, timeout: 15_000,
+      stdio: ["pipe", "pipe", "pipe"],
+    });
+
+    vscode.window.showInformationMessage("COPILOT_PAT secret created. Copilot can now be auto-assigned to issues.");
+    return true;
+  } catch {
+    vscode.window.showErrorMessage(
+      "Failed to set up COPILOT_PAT. Make sure `gh` CLI is installed and you're authenticated (`gh auth login`).",
+    );
+    return false;
+  }
 }
 
 // ── Git Helpers ───────────────────────────────────────────────────
@@ -613,17 +684,23 @@ jobs:
 
       - name: Assign Copilot to issue
         if: steps.create.outputs.issue_url != ''
+        continue-on-error: true
         env:
-          GH_TOKEN: \${{ github.token }}
+          GH_TOKEN: \${{ secrets.COPILOT_PAT || github.token }}
         run: |
           ISSUE_NUM=$(echo "\${{ steps.create.outputs.issue_url }}" | grep -oE '[0-9]+$')
-          gh api --method POST \\
+          gh api \\
+            --method POST \\
             -H "Accept: application/vnd.github+json" \\
             -H "X-GitHub-Api-Version: 2022-11-28" \\
             "/repos/\${{ github.repository }}/issues/\${ISSUE_NUM}/assignees" \\
-            -f 'assignees[]=copilot-swe-agent[bot]' \\
-            -f 'agent_assignment[target_repo]=\${{ github.repository }}' \\
-            -f 'agent_assignment[base_branch]=main'
+            --input - <<< '{
+            "assignees": ["copilot-swe-agent[bot]"],
+            "agent_assignment": {
+              "target_repo": "'"\${{ github.repository }}"'",
+              "base_branch": "main"
+            }
+          }' || echo "::warning::Could not auto-assign Copilot. Add a COPILOT_PAT repo secret for automatic assignment."
 `;
 }
 
@@ -758,10 +835,11 @@ export function renderScheduledTasks(
 
       // Per-task action buttons
       const isRunning = runInfo && (runInfo.status === "queued" || runInfo.status === "in_progress");
-      const runNowBtn = t.mode === "agent" && t.promptFile
+      const canRun = (t.mode === "agent" && t.promptFile) || (t.mode === "direct" && t.muscle);
+      const runNowBtn = canRun
         ? (isRunning
             ? `<button class="schedule-action-btn schedule-action-running" disabled title="Running…"><span class="codicon codicon-loading codicon-modifier-spin"></span></button>`
-            : `<button class="schedule-action-btn schedule-action-run" data-command="runTask" data-file="${escAttr(t.id)}" title="${wfExists ? "Run on GitHub Actions" : "Run now in Copilot Chat"}"><span class="codicon codicon-rocket"></span></button>`)
+            : `<button class="schedule-action-btn schedule-action-run" data-command="runTask" data-file="${escAttr(t.id)}" title="${wfExists ? "Run on GitHub Actions" : "Run now"}"><span class="codicon codicon-rocket"></span></button>`)
         : "";
       const viewRunBtn = runInfo?.runUrl
         ? `<button class="schedule-action-btn" data-command="openExternal" data-file="${escAttr(runInfo.runUrl)}" title="View run on GitHub"><span class="codicon codicon-link-external"></span></button>`
@@ -829,6 +907,20 @@ export function renderScheduledTasks(
       <button class="action-btn" data-command="openScheduleConfig">
         <span class="codicon codicon-edit"></span>
         <span class="btn-label">Edit Config</span>
+      </button>
+    </div>`;
+  }
+
+  // PAT setup banner — show if any agent tasks exist but PAT is not configured
+  const hasAgentTasks = tasks.some((t) => t.mode === "agent");
+  if (hasAgentTasks && workspaceRoot && !hasCopilotPAT(workspaceRoot)) {
+    html += `
+    <div class="schedule-setup-banner">
+      <span class="codicon codicon-warning"></span>
+      <span>Set up <strong>COPILOT_PAT</strong> to auto-assign Copilot to issues.</span>
+      <button class="action-btn" data-command="setupCopilotPAT" style="margin-left:auto">
+        <span class="codicon codicon-key"></span>
+        <span class="btn-label">Set Up</span>
       </button>
     </div>`;
   }
@@ -1012,7 +1104,7 @@ export async function addTaskWizard(workspaceRoot: string): Promise<boolean> {
     description,
     mode: modePick.mode,
     schedule: cron,
-    enabled: false,
+    enabled: true,
     ...(skill ? { skill } : {}),
     ...(modePick.mode === "agent"
       ? { promptFile: `.github/config/scheduled-tasks/${id}.md` }
@@ -1048,16 +1140,35 @@ export async function addTaskWizard(workspaceRoot: string): Promise<boolean> {
         ].join("\n");
         fs.writeFileSync(tplPath, template, "utf-8");
       }
+      // Open the prompt template for editing
+      void vscode.commands.executeCommand(
+        "vscode.open",
+        vscode.Uri.file(tplPath),
+      );
     }
 
-    // Generate workflow file if task is enabled
-    if (task.enabled) {
-      generateWorkflow(workspaceRoot, task);
+    // Generate workflow file
+    generateWorkflow(workspaceRoot, task);
+
+    // For agent mode, ensure COPILOT_PAT secret exists (one-click setup)
+    if (modePick.mode === "agent" && !hasCopilotPAT(workspaceRoot)) {
+      void setupCopilotPAT(workspaceRoot);
     }
 
-    vscode.window.showInformationMessage(
-      `Task "${name}" added (disabled). Enable it from the Autopilot tab to activate.`,
-    );
+    // Guide user on next steps
+    const nextSteps = modePick.mode === "agent"
+      ? `Task "${name}" created with workflow. Edit the prompt template, then commit & push to activate on GitHub.`
+      : `Task "${name}" created with workflow. Commit & push to activate on GitHub.`;
+    const action = modePick.mode === "agent" ? "Edit Prompt" : "View Workflow";
+    void vscode.window.showInformationMessage(nextSteps, action).then((choice) => {
+      if (choice === "Edit Prompt" && task.promptFile) {
+        const fp = path.join(workspaceRoot, task.promptFile);
+        void vscode.commands.executeCommand("vscode.open", vscode.Uri.file(fp));
+      } else if (choice === "View Workflow") {
+        const fp = workflowPath(workspaceRoot, task.id);
+        void vscode.commands.executeCommand("vscode.open", vscode.Uri.file(fp));
+      }
+    });
     return true;
   }
   return false;
@@ -1340,6 +1451,25 @@ export const SCHEDULE_CSS = `
     }
     .schedule-section-header strong {
       flex: 1;
+    }
+    .schedule-setup-banner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      margin: 8px 0;
+      border-radius: 6px;
+      background: var(--vscode-inputValidation-warningBackground, rgba(205, 145, 0, 0.1));
+      border: 1px solid var(--vscode-inputValidation-warningBorder, #cda100);
+      font-size: 12px;
+    }
+    .schedule-setup-banner .codicon-warning {
+      color: var(--vscode-inputValidation-warningBorder, #cda100);
+      flex-shrink: 0;
+    }
+    .schedule-setup-banner .action-btn {
+      flex-shrink: 0;
+      width: auto;
     }
 `;
 

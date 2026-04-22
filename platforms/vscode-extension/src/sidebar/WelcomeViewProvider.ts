@@ -12,7 +12,7 @@ import {
 } from "../frecency.js";
 import { getTagline, loadTaglineConfig } from "../taglines.js";
 import { loadLoopGroups } from "./loopMenu.js";
-import { loadScheduledTasks, toggleTask, deleteTask, addTaskWizard, renderScheduledTasks, getGitHubRepoUrl, hasWorkflow, generateWorkflow, removeWorkflow, recordTaskRun, dispatchAndMonitor, getRunInfo, clearRunInfo, SCHEDULE_CSS } from "./scheduledTasks.js";
+import { loadScheduledTasks, toggleTask, deleteTask, addTaskWizard, renderScheduledTasks, getGitHubRepoUrl, hasWorkflow, generateWorkflow, removeWorkflow, recordTaskRun, dispatchAndMonitor, getRunInfo, clearRunInfo, setupCopilotPAT, SCHEDULE_CSS } from "./scheduledTasks.js";
 import { renderAgentActivity, refreshAgentActivityAsync, AGENT_ACTIVITY_CSS } from "./agentActivity.js";
 import { recordTaskStart, recordTaskEnd } from "./agentMetricsCollector.js";
 import { escHtml, escAttr } from "./htmlUtils.js";
@@ -527,6 +527,13 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
         if (this.workspaceRoot) {
           const added = await addTaskWizard(this.workspaceRoot);
           if (added) this.refresh();
+        }
+        break;
+
+      case "setupCopilotPAT":
+        if (this.workspaceRoot) {
+          await setupCopilotPAT(this.workspaceRoot);
+          this.refresh();
         }
         break;
 
