@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.2.3] - 2026-04-22
+
+### Added
+
+- **Brain Ops loop group**: 6-button sidebar group (Sync to Heir, Publish Heir, Fleet Audit, Brain QA, Upgrade Heirs, Release)
+- **Rituals loop group**: 3-button sidebar group (Meditate, Dream, Self-Assess) with thematic icons
+- **Tagline expansion**: 18 → 25 taglines including architecture, collaboration, and project identity themes
+- **Welcome-experience-customization trifecta**: New skill + instruction + prompt for guided welcome customization
+
+### Changed
+
+- **Customize Welcome button**: Label changed to "Customize for This Project" for clarity
+
+---
+
 ## [8.2.2] - 2026-04-22
 
 ### Security

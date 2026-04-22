@@ -42,6 +42,11 @@
  * @currency 2026-04-20
  */
 
+process.on("uncaughtException", (err) => {
+  console.error(`\x1b[31m[FATAL] ${err.message}\x1b[0m`);
+  process.exit(1);
+});
+
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
@@ -1043,6 +1048,35 @@ async function build(args) {
         const svgSize = fs.existsSync(pngPath) ? calculateOptimalSize(pngPath, '') : `{width=${MAX_IMAGE_WIDTH.toFixed(1)}in}`;
         const newRef = `![${altText}](${args.imagesDir}/${pngName})${svgSize}`;
         content = content.replace(fullMatch, newRef);
+      }
+    }
+
+    // Phase 2b: Convert HTML <img src="...svg"> tags to PNG
+    const htmlImgSvgPattern = /<img\s+[^>]*src=["']([^"']+\.svg)["'][^>]*\/?>/gi;
+    let htmlSvgMatch;
+    while ((htmlSvgMatch = htmlImgSvgPattern.exec(content)) !== null) {
+      const [fullTag, svgRelPath] = htmlSvgMatch;
+      const svgPath = path.join(sourceDir, svgRelPath);
+
+      if (fs.existsSync(svgPath)) {
+        const pngName = path.basename(svgPath, '.svg') + '.png';
+        const pngPath = path.join(imagesDir, pngName);
+
+        if (!fs.existsSync(pngPath)) {
+          process.stdout.write(`\u{1f5bc}\ufe0f  Converting SVG (HTML img): ${path.basename(svgPath)}... `);
+          if (convertSvgToPng(svgPath, pngPath)) {
+            console.log('\u2713');
+          } else {
+            console.log('\u2717');
+          }
+        }
+
+        // Extract alt text from tag if present
+        const altMatch = fullTag.match(/alt=["']([^"']*)["']/i);
+        const altText = altMatch ? altMatch[1] : path.basename(svgPath, '.svg');
+        const imgSize = fs.existsSync(pngPath) ? calculateOptimalSize(pngPath, '') : `{width=${MAX_IMAGE_WIDTH.toFixed(1)}in}`;
+        const newRef = `![${altText}](${args.imagesDir}/${pngName})${imgSize}`;
+        content = content.replace(fullTag, newRef);
       }
     }
 

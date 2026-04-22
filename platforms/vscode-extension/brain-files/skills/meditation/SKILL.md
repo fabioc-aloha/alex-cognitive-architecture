@@ -74,6 +74,20 @@ Dream produces the diagnostic report; meditation decides what to fix.
 | Cross-project pattern | `/memories/` (user memory) |
 | Repo-specific fact | `/memories/repo/` (repo memory) |
 
+### Welcome Experience Check (optional, during Record)
+
+After recording insights, assess whether the welcome experience still fits:
+
+| Question | If drifted | Config to update |
+|----------|-----------|-----------------|
+| Do taglines still reflect the project direction? | Regenerate | `.github/config/taglines.json` |
+| Does the loop menu match actual workflows? | Add/remove groups | `.github/config/loop-menu.json` |
+| Has the project phase changed? | Update phase | `loop-menu.json` → `projectPhase` |
+| Is the identity/persona still accurate? | Revise identity layer | `.github/copilot-instructions.md` |
+| Does the North Star still inspire? | Refresh vision | `NORTH-STAR.md` |
+
+Trigger: Run this check when meditation surfaces project evolution, phase transitions, or domain pivots. Use the `welcome-experience-customization` skill for the full workflow.
+
 ## Facilitation Techniques
 
 ### Socratic Probing

@@ -21,3 +21,4 @@ Full protocol in `.github/skills/meditation/SKILL.md`.
 | Cross-project pattern | `/memories/` (user memory) |
 | Repo-specific fact | `/memories/repo/` (repo memory) |
 | Fleet insight | `AI-Memory/insights/GI-*.md` |
+| Welcome experience drift | `.github/config/` (taglines, loop menu, identity) — see `welcome-experience-customization` skill |
