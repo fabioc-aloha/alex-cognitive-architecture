@@ -1184,9 +1184,6 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     <button class="tab active" role="tab" id="tab-btn-loop" data-tab="loop" aria-selected="true" aria-controls="tab-loop">
       <span class="codicon codicon-sync"></span> Loop
     </button>
-    <button class="tab" role="tab" id="tab-btn-autopilot" data-tab="autopilot" aria-selected="false" aria-controls="tab-autopilot">
-      <span class="codicon codicon-radio-tower"></span> Autopilot
-    </button>
     <button class="tab" role="tab" id="tab-btn-setup" data-tab="setup" aria-selected="false" aria-controls="tab-setup">
       <span class="codicon codicon-gear"></span> Setup
     </button>
@@ -1203,12 +1200,6 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
   <!-- Setup Tab -->
   <div id="tab-setup" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-setup">
     ${renderGroups(SETUP_GROUPS)}
-  </div>
-
-  <!-- Autopilot Tab -->
-  <div id="tab-autopilot" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-autopilot">
-    ${this.workspaceRoot ? renderAgentActivity(this.workspaceRoot) : ""}
-    ${renderScheduledTasks(this.workspaceRoot ? loadScheduledTasks(this.workspaceRoot) : [], this.workspaceRoot ? getGitHubRepoUrl(this.workspaceRoot) : undefined, this.workspaceRoot)}
   </div>
 
   <script nonce="${nonce}">
