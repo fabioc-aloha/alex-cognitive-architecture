@@ -19,7 +19,12 @@ const BRAIN_SUBDIRS = [
   "hooks",
 ];
 
-const BRAIN_ROOT_FILES = ["copilot-instructions.md"];
+const BRAIN_ROOT_FILES = [
+  "copilot-instructions.md",
+  "ABOUT.md",
+  "NORTH-STAR.md",
+  "EXTERNAL-API-REGISTRY.md",
+];
 const BRAIN_DIR = "brain-files";
 const TARGET_DIR = ".github";
 const VERSION_FILE = ".github/.alex-brain-version";
