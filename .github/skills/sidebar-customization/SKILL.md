@@ -10,6 +10,8 @@ currency: 2025-01-01
 
 Customize the Alex sidebar tabs for your project — add buttons, create scheduled tasks, and tailor workflows to your team's needs.
 
+> **For full welcome experience customization** (loop menu + taglines + identity + North Star in one pass), see the `welcome-experience-customization` skill.
+
 ## Quick Reference
 
 | Tab | Config File | What It Controls |

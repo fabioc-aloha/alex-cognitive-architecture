@@ -67,6 +67,8 @@ Hard-won patterns from production experience. Each entry records a specific gotc
 - **Config + content file separation**: JSON config defines structure, separate .md files hold content. Loader resolves file references at runtime. Cache per session, invalidate on refresh.
 - **Verify every field when transcribing code to config**: When extracting hardcoded data to JSON, icon names, descriptions, and field values will silently drift. Cross-check every field against the source.
 - **Hardcoded paths in build scripts rot**: When directory structure changes (e.g., `platforms/` → `heir/platforms/`), build scripts with hardcoded paths break silently. Use config or resolve relative to manifest files.
+- **Release scripts must build their own artifacts**: Never assume a pre-built artifact exists. Build → validate → publish → then commit/tag/push. Irreversible git ops (commit, tag, push) must come AFTER artifact validation succeeds — not before.
+- **Preflight version-mismatch is a gate, not a warning**: If the VSIX filename doesn't match package.json version, that's a hard stop — not a warning to scroll past.
 
 ## Quality Process
 

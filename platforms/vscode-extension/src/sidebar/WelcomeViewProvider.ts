@@ -109,6 +109,14 @@ const SETUP_GROUPS: ActionGroup[] = [
         tooltip: "Find or create the shared AI-Memory knowledge store",
         hint: "command",
       },
+      {
+        icon: "paintcan",
+        label: "Customize Welcome",
+        command: "openChat",
+        prompt: "Customize the welcome experience for this project — detect the project type, generate taglines, configure the loop menu, set identity and North Star. Use the welcome-experience-customization skill.",
+        tooltip: "Personalize sidebar, taglines, loop menu, and identity",
+        hint: "chat",
+      },
     ],
   },
   {
