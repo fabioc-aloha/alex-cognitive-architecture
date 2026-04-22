@@ -125,6 +125,26 @@ export async function bootstrapBrainFiles(
     const githubDir = path.join(workspaceRoot, TARGET_DIR);
     fs.mkdirSync(githubDir, { recursive: true });
 
+    // Backup existing brain dirs before overwriting (upgrade only, not fresh install)
+    if (installedVersion) {
+      const now = new Date();
+      const ts = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}-${String(now.getHours()).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}${String(now.getSeconds()).padStart(2, "0")}`;
+      const backupDir = path.join(workspaceRoot, `.github-backup-${ts}`);
+      fs.mkdirSync(backupDir, { recursive: true });
+      for (const subdir of BRAIN_SUBDIRS) {
+        const existing = path.join(githubDir, subdir);
+        if (fs.existsSync(existing)) {
+          copyDirSync(existing, path.join(backupDir, subdir));
+        }
+      }
+      for (const file of BRAIN_ROOT_FILES) {
+        const existing = path.join(githubDir, file);
+        if (fs.existsSync(existing)) {
+          fs.copyFileSync(existing, path.join(backupDir, file));
+        }
+      }
+    }
+
     // Deploy each brain subdirectory atomically via staging
     for (const subdir of BRAIN_SUBDIRS) {
       const srcSub = path.join(sourcePath, subdir);

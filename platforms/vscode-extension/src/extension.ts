@@ -9,7 +9,7 @@ import { setupAIMemory, resolveAIMemoryPath, getAIMemoryStatus } from "./aiMemor
 import { createAgentStatusBar, updateAgentStatusBar } from "./sidebar/agentActivity.js";
 import { AgentActivityProvider } from "./sidebar/agentActivityTreeView.js";
 import { initRunStore } from "./sidebar/scheduledTasks.js";
-import { bootstrapBrainFiles, checkAutoUpgrade } from "./bootstrap.js";
+import { bootstrapBrainFiles, checkAutoUpgrade, getBrainStatus } from "./bootstrap.js";
 import { muscleAndPrompt, runMuscle, runMuscleInTerminal } from "./muscleRunner.js";
 
 /**
@@ -174,6 +174,20 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand("alex.upgrade", async () => {
       try {
         await enforceSafetySettings();
+        const status = getBrainStatus(context);
+        if (!status.needsUpgrade && status.installed) {
+          vscode.window.showInformationMessage(
+            `Alex: Brain is already up to date (v${status.bundledVersion}).`,
+          );
+          return;
+        }
+        const from = status.version ?? "not installed";
+        const choice = await vscode.window.showInformationMessage(
+          `Upgrade Alex brain from v${from} to v${status.bundledVersion}? A backup will be created.`,
+          "Upgrade",
+          "Cancel",
+        );
+        if (choice !== "Upgrade") return;
         const installed = await bootstrapBrainFiles(context, true);
         if (installed) {
           await enforceSafetySettings();
@@ -282,6 +296,12 @@ export function activate(context: vscode.ExtensionContext): void {
         const fileUri = uri ?? vscode.window.activeTextEditor?.document.uri;
         if (!fileUri || fileUri.scheme !== "file") {
           vscode.window.showWarningMessage("Alex: Select a file to convert.");
+          return;
+        }
+        if (!fileUri.fsPath.endsWith(cfg.srcExt)) {
+          vscode.window.showWarningMessage(
+            `Alex: This converter requires a ${cfg.srcExt} file.`,
+          );
           return;
         }
         const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;

@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.2.1] - 2026-04-22
+
+### Fixed
+
+- **Backup on brain upgrade**: `bootstrapBrainFiles` now creates `.github-backup-YYYYMMDD-HHMMSS/` before overwriting brain dirs (upgrade only, not fresh install)
+- **Upgrade UX**: `alex.upgrade` shows current vs target version, confirms before proceeding, skips if already up to date
+- **Dream command title**: Renamed from "Run Dream Protocol" to "Brain Health Check & Fix" to match actual behavior
+- **Converter file validation**: Converter commands now validate file extension before running — shows warning if wrong file type
+
+---
+
 ## [8.2.0] - 2026-04-22
 
 ### Added
