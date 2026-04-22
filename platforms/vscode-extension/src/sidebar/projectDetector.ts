@@ -116,7 +116,7 @@ function extractCommands(root: string, pkg: Record<string, unknown> | null): Pic
   if (!result.testCommand && fileExists(root, "go.mod")) result.testCommand = "go test ./...";
 
   // Release scripts
-  const releasePatterns = ["scripts/release.ps1", "scripts/release.sh", "scripts/release-vscode.ps1", "scripts/release.cjs"];
+  const releasePatterns = ["scripts/release-vscode.cjs", "scripts/release-full.cjs", "scripts/release.cjs", "scripts/release.sh", "scripts/release.ps1"];
   for (const p of releasePatterns) {
     if (fileExists(root, p)) {
       result.releaseScript = p;
