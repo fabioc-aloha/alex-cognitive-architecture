@@ -8,6 +8,7 @@ import { setupAIMemory, resolveAIMemoryPath, getAIMemoryStatus } from "./aiMemor
 import { createAgentStatusBar, updateAgentStatusBar } from "./sidebar/agentActivity.js";
 import { AgentActivityProvider } from "./sidebar/agentActivityTreeView.js";
 import { initRunStore } from "./sidebar/scheduledTasks.js";
+import { bootstrapBrainFiles, checkAutoUpgrade } from "./bootstrap.js";
 
 /**
  * Sanitize error messages for user display — strips file system paths
@@ -136,24 +137,19 @@ export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand("alex.initialize", async () => {
       try {
-        // Enforce safety settings during initialization
         await enforceSafetySettings();
-
-        // Ensure AI-Memory is set up before initializing the workspace
-        const memPath = resolveAIMemoryPath();
-        if (!memPath) {
-          const setup = await vscode.window.showInformationMessage(
-            "Alex: Set up AI-Memory for cross-project knowledge sharing?",
-            "Setup AI-Memory",
-            "Skip",
-          );
-          if (setup === "Setup AI-Memory") {
-            await setupAIMemory();
+        const choice = await vscode.window.showInformationMessage(
+          "Install the Alex brain in this workspace?",
+          "Install",
+          "Cancel",
+        );
+        if (choice === "Install") {
+          const installed = await bootstrapBrainFiles(context, true);
+          if (installed) {
+            await enforceSafetySettings();
+            welcomeProvider.refresh();
           }
         }
-        await vscode.commands.executeCommand("workbench.action.chat.open", {
-          query: "Initialize this workspace with Alex's cognitive architecture",
-        });
       } catch (err) {
         vscode.window.showErrorMessage(
           `Initialize failed: ${sanitizeError(err)}`,
@@ -165,24 +161,12 @@ export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand("alex.upgrade", async () => {
       try {
-        // Enforce safety settings during upgrade
         await enforceSafetySettings();
-
-        // Check AI-Memory during upgrade — offer setup if not found
-        const memPath = resolveAIMemoryPath();
-        if (!memPath) {
-          const setup = await vscode.window.showInformationMessage(
-            "Alex: AI-Memory not found. Set it up for cross-project knowledge sharing?",
-            "Setup AI-Memory",
-            "Skip",
-          );
-          if (setup === "Setup AI-Memory") {
-            await setupAIMemory();
-          }
+        const installed = await bootstrapBrainFiles(context, true);
+        if (installed) {
+          await enforceSafetySettings();
+          welcomeProvider.refresh();
         }
-        await vscode.commands.executeCommand("workbench.action.chat.open", {
-          query: "Upgrade this workspace's cognitive architecture to the latest version",
-        });
       } catch (err) {
         vscode.window.showErrorMessage(
           `Upgrade failed: ${sanitizeError(err)}`,
@@ -336,6 +320,11 @@ export function activate(context: vscode.ExtensionContext): void {
     skillPartialWatcher.onDidCreate(refreshOnChange),
     skillPartialWatcher.onDidDelete(refreshOnChange),
   );
+
+  // Auto-upgrade: check if bundled brain is newer than installed
+  checkAutoUpgrade(context).then(() => {
+    welcomeProvider.refresh();
+  });
 }
 
 export function deactivate(): void {
