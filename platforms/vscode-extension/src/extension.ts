@@ -9,6 +9,7 @@ import { createAgentStatusBar, updateAgentStatusBar } from "./sidebar/agentActiv
 import { AgentActivityProvider } from "./sidebar/agentActivityTreeView.js";
 import { initRunStore } from "./sidebar/scheduledTasks.js";
 import { bootstrapBrainFiles, checkAutoUpgrade } from "./bootstrap.js";
+import { muscleAndPrompt, runMuscle, runMuscleInTerminal } from "./muscleRunner.js";
 
 /**
  * Sanitize error messages for user display — strips file system paths
@@ -122,10 +123,20 @@ export function activate(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("alex.dream", async () => {
+      const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+      if (!wsRoot) {
+        vscode.window.showWarningMessage("Alex: Open a workspace folder first.");
+        return;
+      }
       try {
-        await vscode.commands.executeCommand("workbench.action.chat.open", {
-          query: "/dream",
-        });
+        // Muscle first: run brain-qa to generate health grid
+        await muscleAndPrompt(
+          wsRoot,
+          "brain-qa.cjs",
+          [],
+          "Alex: Brain QA",
+          "Review the brain health grid at .github/quality/brain-health-grid.md and fix the top priority issues",
+        );
       } catch (err) {
         vscode.window.showErrorMessage(
           `Dream protocol failed: ${sanitizeError(err)}`,
@@ -285,6 +296,117 @@ export function activate(context: vscode.ExtensionContext): void {
       }),
     );
   }
+
+  // ── Muscle-backed commands ──────────────────────────────────────
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.brainQA", async () => {
+      const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+      if (!wsRoot) {
+        vscode.window.showWarningMessage("Alex: Open a workspace folder first.");
+        return;
+      }
+      await muscleAndPrompt(wsRoot, "brain-qa.cjs", [], "Alex: Brain QA");
+    }),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.validateSkills", async () => {
+      const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+      if (!wsRoot) {
+        vscode.window.showWarningMessage("Alex: Open a workspace folder first.");
+        return;
+      }
+      await muscleAndPrompt(
+        wsRoot,
+        "validate-skills.cjs",
+        [],
+        "Alex: Validate Skills",
+        "Review the skill validation results and fix any issues found",
+      );
+    }),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.markdownLint", async () => {
+      const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+      const fileUri = vscode.window.activeTextEditor?.document.uri;
+      if (!wsRoot || !fileUri || fileUri.scheme !== "file") {
+        vscode.window.showWarningMessage("Alex: Open a markdown file first.");
+        return;
+      }
+      await muscleAndPrompt(
+        wsRoot,
+        "markdown-lint.cjs",
+        [fileUri.fsPath],
+        "Alex: Markdown Lint",
+        "Fix the markdown lint issues found in the current file",
+      );
+    }),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.tokenCostReport", async () => {
+      const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+      if (!wsRoot) {
+        vscode.window.showWarningMessage("Alex: Open a workspace folder first.");
+        return;
+      }
+      await muscleAndPrompt(
+        wsRoot,
+        "token-cost-report.cjs",
+        [],
+        "Alex: Token Cost Report",
+      );
+    }),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.newSkill", async () => {
+      const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+      if (!wsRoot) {
+        vscode.window.showWarningMessage("Alex: Open a workspace folder first.");
+        return;
+      }
+      const name = await vscode.window.showInputBox({
+        prompt: "Skill name (kebab-case, e.g., my-new-skill)",
+        placeHolder: "my-new-skill",
+        validateInput: (v) =>
+          /^[a-z][a-z0-9-]*$/.test(v) ? null : "Use kebab-case (lowercase, hyphens)",
+      });
+      if (!name) return;
+      const desc = await vscode.window.showInputBox({
+        prompt: "Skill description",
+        placeHolder: "What does this skill do?",
+      });
+      const args = [name];
+      if (desc) args.push("--description", desc);
+      await muscleAndPrompt(
+        wsRoot,
+        "new-skill.cjs",
+        args,
+        "Alex: New Skill",
+        `Customize the new skill ${name} — fill in the SKILL.md with real content and create the matching instruction file`,
+      );
+    }),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.insightPipeline", async () => {
+      const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+      if (!wsRoot) {
+        vscode.window.showWarningMessage("Alex: Open a workspace folder first.");
+        return;
+      }
+      await muscleAndPrompt(
+        wsRoot,
+        "insight-pipeline.cjs",
+        [],
+        "Alex: Insight Pipeline",
+        "Review the extracted insights and promote the most valuable ones to global knowledge",
+      );
+    }),
+  );
 
   // File watcher: hot-reload sidebar when loop config or prompts change
   const loopConfigWatcher = vscode.workspace.createFileSystemWatcher(

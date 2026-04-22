@@ -70,12 +70,15 @@ What skills do you have for code review?
 
 Here are some things you can ask Alex to do:
 
-| What You Want | What to Say |
-|---------------|-------------|
-| Check brain health | "Run a dream to check your health" |
-| Consolidate learning | "Let's do a meditation session" |
-| See current status | "What's your current cognitive status?" |
-| Set up workspace | "Initialize this workspace for Alex" |
+| What You Want | What to Say or Do |
+|---------------|-------------------|
+| Check brain health | Click **Brain Health Check** in Setup tab, or "Run a dream" |
+| Validate skills | Click **Validate Skills** in Setup tab |
+| See token costs | Click **Token Cost Report** in Setup tab |
+| Lint a markdown file | Right-click a `.md` file → **Alex: Lint Markdown** |
+| Create a new skill | Click **New Skill** in Setup tab |
+| Consolidate learning | Click **Meditate** or "Let's do a meditation session" |
+| Set up workspace | Click **Initialize Workspace** in Setup tab |
 | Learn about project | "What do you know about this codebase?" |
 
 ## Configure Your Workspace

@@ -19,12 +19,13 @@ The Setup tab contains workspace management, brain health tools, memory access, 
 
 ## Overview
 
-The Setup tab has six groups:
+The Setup tab has seven groups:
 
 | Group | Purpose | Default State |
 |-------|---------|--------------|
 | **Workspace** | Initialize and upgrade your project | Expanded |
 | **Brain Status** | Health maintenance and cognitive processes | Expanded |
+| **Tools** | Muscle-backed development utilities | Collapsed |
 | **User Memory** | Access memory files, agents, prompts, and MCP config | Collapsed |
 | **Environment** | Extension settings | Collapsed |
 | **Learn** | Documentation and support links | Collapsed |
@@ -67,21 +68,38 @@ Updates your project's brain files to the latest version. This brings in new ski
 
 ## Brain Status
 
-Cognitive health maintenance and deep self-assessment tools.
+Cognitive health maintenance and deep self-assessment tools. Brain Status commands follow the **muscle-first** pattern: they run a code-based muscle script to gather real data, then optionally open a chat session for AI-assisted follow-up.
 
 ### Run Dream Protocol
 
-The dream protocol is Alex's primary maintenance process. It validates the entire cognitive architecture, detects issues, and repairs what it can.
+The dream protocol is Alex's primary maintenance process. It runs the `brain-qa.cjs` muscle to scan the cognitive architecture, then offers to open chat for fixing any issues found.
 
 **What it does:**
 
-- Validates all architecture connections between skills and instructions
-- Checks file integrity and frontmatter syntax
-- Detects drift between workspace files and expected state
-- Produces a health report with inventory counts and issue list
-- Repairs minor issues automatically
+1. Runs the brain health quality grid scanner (`brain-qa.cjs`)
+2. Displays results in the **Alex: Brain QA** output channel
+3. Generates `.github/quality/brain-health-grid.md` with the full health report
+4. Offers to open Copilot Chat for AI-assisted issue resolution
 
-**When to use:** Regularly — at least once a week. The Health Pulse widget in the Loop tab will show "Attention" or "Critical" when a dream is overdue. You can also trigger it with `@alex dream` in chat.
+**When to use:** Regularly — at least once a week. The Health Pulse widget in the Loop tab will show "Attention" or "Critical" when a dream is overdue.
+
+### Brain Health Check
+
+Runs the brain health quality grid without the chat follow-up. Useful for a quick status check.
+
+**What it does:** Runs `brain-qa.cjs` and displays results in the output channel. Checks frontmatter completeness, currency dates, trifecta integrity, cross-references, and token waste.
+
+### Validate Skills
+
+Checks all skills for VS Code Agent Skills compliance. Runs the `validate-skills.cjs` muscle, then offers chat to fix any failures.
+
+**What it does:** Validates skill frontmatter, required fields, file structure, and naming conventions. Reports pass/fail for each skill.
+
+### Token Cost Report
+
+Measures the token cost of all brain files. Runs `token-cost-report.cjs` and displays results in the output channel.
+
+**What it does:** Calculates character count and estimated token cost for every instruction, skill, prompt, and agent. Identifies the most expensive always-loaded files. Useful for optimizing brain file size.
 
 ### Meditate
 
@@ -111,6 +129,32 @@ A deep self-assessment and growth planning session. This is Alex's most comprehe
 - Assesses cognitive health holistically
 
 **When to use:** Periodically for strategic review, or when you want to understand the full state of the architecture and plan improvements.
+
+---
+
+## Tools
+
+Muscle-backed development utilities for building and maintaining skills.
+
+### New Skill
+
+Scaffolds a properly structured skill from a template. Prompts for a skill name (kebab-case), runs `new-skill.cjs` to create the directory structure, then opens chat to help customize the SKILL.md content.
+
+**What it creates:**
+
+- `.github/skills/{name}/SKILL.md` with proper frontmatter
+- Matching `.github/instructions/{name}.instructions.md` stub
+- Ready for you to fill in domain knowledge
+
+### Lint Markdown
+
+Pre-conversion markdown validator. Runs `markdown-lint.cjs` on the current file, then offers chat to fix any issues.
+
+**What it checks:** Markdown structure, Mermaid diagram syntax, SVG validity, frontmatter completeness, and converter-specific requirements. Also available via right-click context menu on `.md` files.
+
+### Extract Insights
+
+Runs the insight extraction pipeline (`insight-pipeline.cjs`) to find cross-project patterns, then offers chat to promote valuable insights to global knowledge.
 
 ---
 
@@ -226,9 +270,12 @@ Version and licensing information.
 
 | Process | Speed | Scope | Interactive? |
 |---------|-------|-------|-------------|
-| **Dream** | Fast | File validation and repair | No — runs automatically |
-| **Meditate** | Medium | Knowledge consolidation | Yes — conversational |
-| **Self-Actualize** | Slow | Full architecture assessment | Yes — deep conversation |
+| **Dream** | Fast | Brain health scan + fix | Muscle first, then chat |
+| **Brain Health Check** | Fast | Health scan only | Muscle only (output channel) |
+| **Validate Skills** | Fast | Skill compliance check | Muscle first, then chat |
+| **Token Cost Report** | Fast | Token cost analysis | Muscle only (output channel) |
+| **Meditate** | Medium | Knowledge consolidation | Chat conversation |
+| **Self-Actualize** | Slow | Full architecture assessment | Chat conversation |
 
 Dream is maintenance. Meditate is learning. Self-Actualize is strategic planning.
 

@@ -11,7 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Muscle-first philosophy**: Commands now run code muscles first, then open chat for AI follow-up — not just prompts
+- **muscleRunner utility**: `runMuscle()`, `runMuscleInTerminal()`, `muscleAndPrompt()` — reusable muscle execution with output channel display
+- **Brain Health Check** (`alex.brainQA`): Runs `brain-qa.cjs` and displays health grid in output channel
+- **Validate Skills** (`alex.validateSkills`): Runs `validate-skills.cjs` with chat follow-up for fixes
+- **Token Cost Report** (`alex.tokenCostReport`): Runs `token-cost-report.cjs` to measure brain file costs
+- **Markdown Lint** (`alex.markdownLint`): Runs `markdown-lint.cjs` on current file, available via right-click context menu
+- **New Skill** (`alex.newSkill`): Interactive skill scaffold with name input + `new-skill.cjs` + chat customization
+- **Extract Insights** (`alex.insightPipeline`): Runs `insight-pipeline.cjs` with chat follow-up for promotion
+- **Sidebar TOOLS group**: New collapsible group with New Skill, Lint Markdown, and Extract Insights buttons
 - **Quality tooling**: Brain activation tracking in post-tool-use hook, token cost measurement muscle, cross-reference validation in brain-qa
+
+### Changed
+
+- **Dream protocol**: Now runs `brain-qa.cjs` muscle first (generates health grid), then offers chat to fix issues — replaces prompt-only behavior
+- **Brain Status group**: Expanded from 3 buttons to 7 — adds Brain Health Check, Validate Skills, Token Cost Report alongside Dream, Meditate, Self-Actualize
+- **Bootstrap mechanism**: Restored `bootstrapBrainFiles()` with atomic staging, path traversal guard, version stamping, and auto-upgrade detection
 
 ### Fixed
 

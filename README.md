@@ -22,11 +22,13 @@ Alex enhances GitHub Copilot with a **cognitive architecture** — domain knowle
 ## Features
 
 - **Brain Bootstrap** — One-click install of the cognitive architecture into any workspace
-- **3-Tab Sidebar** — Loop (creative workflow + health monitoring), Autopilot (scheduled maintenance), Setup (configuration) — brand-aligned indigo design
+- **Muscle-First Commands** — Brain health, skill validation, token cost, markdown lint, and more run real code first, then open chat for AI follow-up
+- **3-Tab Sidebar** — Loop (creative workflow + health monitoring), Autopilot (scheduled maintenance), Setup (configuration + tools) — brand-aligned indigo design
 - **Health Pulse** — Real-time brain health monitoring with ritual tracking and actionable nudges
 - **Creative Loop** — Ideate → Plan → Build → Test → Release → Improve workflow
 - **Autopilot** — Scheduled task system with Run Now, pause/resume, last-run tracking, and GitHub Actions integration
 - **Chat Participant** — `@alex` in Copilot Chat with context-aware routing
+- **File Converters** — 11 format converters (Markdown ↔ HTML/Word/PDF/PPTX/EPUB/LaTeX/Email/Plain Text) via right-click context menu
 - **Specialized Agents** — Builder, Researcher, Validator, Documentarian, Planner, Presenter, and more
 
 ## Platforms

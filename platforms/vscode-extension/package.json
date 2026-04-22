@@ -204,6 +204,36 @@
         "command": "alex.convertPptxToMd",
         "title": "Convert PowerPoint → Markdown",
         "category": "Alex"
+      },
+      {
+        "command": "alex.brainQA",
+        "title": "Brain Health Check",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.validateSkills",
+        "title": "Validate Skills",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.markdownLint",
+        "title": "Lint Markdown",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.tokenCostReport",
+        "title": "Token Cost Report",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.newSkill",
+        "title": "New Skill",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.insightPipeline",
+        "title": "Extract Insights",
+        "category": "Alex"
       }
     ],
     "menus": {
@@ -261,6 +291,11 @@
           "group": "alex@8"
         },
         {
+          "command": "alex.markdownLint",
+          "when": "resourceExtname == .md",
+          "group": "alex-tools@1"
+        },
+        {
           "command": "alex.convertDocxToMd",
           "when": "resourceExtname == .docx",
           "group": "alex@1"
@@ -316,6 +351,11 @@
           "command": "alex.convertMdToTxt",
           "when": "resourceExtname == .md",
           "group": "alex@8"
+        },
+        {
+          "command": "alex.markdownLint",
+          "when": "resourceExtname == .md",
+          "group": "alex-tools@1"
         },
         {
           "command": "alex.convertDocxToMd",

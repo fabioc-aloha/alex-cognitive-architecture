@@ -102,7 +102,8 @@ Workspace management, brain maintenance, memory access, and settings.
 | Section | What It Does |
 |---------|-------------|
 | **Workspace** | Initialize or upgrade your cognitive architecture |
-| **Brain Status** | Dream protocol, meditation, and self-actualization |
+| **Brain Status** | Dream protocol, brain health check, skill validation, token cost report, meditation, and self-actualization |
+| **Tools** | New skill scaffold, markdown lint, insight extraction |
 | **User Memory** | Quick access to memories, prompts, and MCP config |
 | **Environment** | Extension settings |
 | **Learn** | Wiki and issue tracker links |

@@ -122,7 +122,28 @@ const SETUP_GROUPS: ActionGroup[] = [
         icon: "symbol-event",
         label: "Run Dream Protocol",
         command: "dream",
-        tooltip: "Autonomous architecture maintenance",
+        tooltip: "Run brain health check then fix issues",
+        hint: "command",
+      },
+      {
+        icon: "shield",
+        label: "Brain Health Check",
+        command: "brainQA",
+        tooltip: "Generate brain health quality grid",
+        hint: "command",
+      },
+      {
+        icon: "check-all",
+        label: "Validate Skills",
+        command: "validateSkills",
+        tooltip: "Check all skills for compliance",
+        hint: "command",
+      },
+      {
+        icon: "dashboard",
+        label: "Token Cost Report",
+        command: "tokenCostReport",
+        tooltip: "Measure brain file token costs",
         hint: "command",
       },
       {
@@ -140,6 +161,36 @@ const SETUP_GROUPS: ActionGroup[] = [
         prompt: "Run a self-actualization assessment — evaluate architecture completeness, identify growth areas, and plan improvements",
         tooltip: "Deep self-assessment and growth",
         hint: "chat",
+      },
+    ],
+  },
+  {
+    id: "tools",
+    label: "TOOLS",
+    icon: "tools",
+    desc: "Muscle-backed development utilities",
+    collapsed: true,
+    buttons: [
+      {
+        icon: "add",
+        label: "New Skill",
+        command: "newSkill",
+        tooltip: "Scaffold a new skill from template",
+        hint: "command",
+      },
+      {
+        icon: "warning",
+        label: "Lint Markdown",
+        command: "markdownLint",
+        tooltip: "Validate current file for converter readiness",
+        hint: "command",
+      },
+      {
+        icon: "lightbulb",
+        label: "Extract Insights",
+        command: "insightPipeline",
+        tooltip: "Extract cross-project insights",
+        hint: "command",
       },
     ],
   },
@@ -434,6 +485,30 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
 
       case "dream":
         await vscode.commands.executeCommand("alex.dream");
+        break;
+
+      case "brainQA":
+        await vscode.commands.executeCommand("alex.brainQA");
+        break;
+
+      case "validateSkills":
+        await vscode.commands.executeCommand("alex.validateSkills");
+        break;
+
+      case "tokenCostReport":
+        await vscode.commands.executeCommand("alex.tokenCostReport");
+        break;
+
+      case "newSkill":
+        await vscode.commands.executeCommand("alex.newSkill");
+        break;
+
+      case "markdownLint":
+        await vscode.commands.executeCommand("alex.markdownLint");
+        break;
+
+      case "insightPipeline":
+        await vscode.commands.executeCommand("alex.insightPipeline");
         break;
 
       case "openSettings":
