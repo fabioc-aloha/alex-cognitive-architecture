@@ -27,6 +27,11 @@
 
 'use strict';
 
+process.on("uncaughtException", (err) => {
+  console.error(`\x1b[31m[FATAL] ${err.message}\x1b[0m`);
+  process.exit(1);
+});
+
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
