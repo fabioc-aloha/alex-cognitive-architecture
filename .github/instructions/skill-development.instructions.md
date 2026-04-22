@@ -1,5 +1,8 @@
 ---
-
+description: "Skill development protocol for iterative skill improvement and testing"
+application: "When developing, testing, or refining brain skills"
+applyTo: "**/.github/skills/**,**/*skill*dev*"
+currency: 2025-01-01
 ---
 
 # Skill Development Protocol

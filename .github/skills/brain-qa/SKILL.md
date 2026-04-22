@@ -231,4 +231,4 @@ After running the script, Alex should check:
 
 ---
 
-_Script: `.github/muscles/brain-qa.ps1`_
+_Script: `.github/muscles/brain-qa.cjs`_

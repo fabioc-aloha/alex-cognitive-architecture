@@ -1,5 +1,8 @@
 ---
-
+description: "User configuration management for runtime settings and preferences"
+application: "When managing user configuration, settings, or preference systems"
+applyTo: "**/*config*,**/*settings*,**/*preferences*"
+currency: 2025-01-01
 ---
 
 # User Config Management

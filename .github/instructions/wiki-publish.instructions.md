@@ -1,5 +1,8 @@
 ---
-
+description: "Wiki publishing procedures for GitHub Wiki synchronization and link rewriting"
+application: "When publishing or syncing content to GitHub Wiki"
+applyTo: "**/*wiki*,**/*publish*wiki*"
+currency: 2025-01-01
 ---
 
 # Wiki Publish Procedure

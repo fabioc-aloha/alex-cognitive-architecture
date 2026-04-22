@@ -73,7 +73,6 @@ Internal links must be rewritten from relative paths to flat wiki page names (no
 | `./MEDITATION.md` | `MEDITATION` |
 | `../architecture/COGNITIVE-ARCHITECTURE.md` | `COGNITIVE-ARCHITECTURE` |
 | `../assets/banner-rituals.svg` | `banner-rituals.svg` |
-| `../../.github/prompts/dream.prompt.md` | Full GitHub repo URL |
 | `./README.md` (within a folder) | Mapped per folder prefix table above |
 
 Link rewriting is handled by `scripts/publish-master-wiki.cjs`.

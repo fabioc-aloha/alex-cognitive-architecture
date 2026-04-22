@@ -308,7 +308,6 @@ For dissertations involving scale or instrument development:
 - [academic-research](.github/skills/academic-research/SKILL.md) — Research methodology
 - [practitioner-research](.github/skills/practitioner-research/SKILL.md) — DBA/practitioner methodology
 - [socratic-questioning](.github/skills/socratic-questioning/SKILL.md) — Question handling techniques
-- [gamma-presentations](.github/skills/gamma-presentations/SKILL.md) — AI-powered presentation generation
 
 ---
 

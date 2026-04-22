@@ -288,7 +288,7 @@ This skill provides domain-agnostic protocols. Heir projects should extend it wi
 
 | Domain    | Implementation                                                            | Reference                                                                         |
 | --------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Health KB | 3 trifectas (research, audit, sync) with full 7-discipline implementation | `.github/skills/health-research/SKILL.md`, `health-audit/`, `health-report-sync/` |
+| Health KB | Health assessment with 7-discipline implementation | `.github/skills/health-pulse/SKILL.md` |
 
 ---
 

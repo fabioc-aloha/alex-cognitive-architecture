@@ -505,60 +505,13 @@ Minds & Machines emphasizes philosophical arguments about:
 
 ### The 5-Phase Drafting Process
 
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {
-  'primaryColor': '#cce5ff',
-  'primaryTextColor': '#333',
-  'primaryBorderColor': '#57606a',
-  'lineColor': '#57606a',
-  'secondaryColor': '#e6d5f2',
-  'tertiaryColor': '#c2f0d8',
-  'background': '#ffffff',
-  'mainBkg': '#cce5ff',
-  'secondBkg': '#e6d5f2',
-  'tertiaryBkg': '#c2f0d8',
-  'textColor': '#333',
-  'border1Color': '#57606a',
-  'border2Color': '#57606a',
-  'arrowheadColor': '#57606a',
-  'fontFamily': 'ui-sans-serif, system-ui, sans-serif',
-  'fontSize': '14px',
-  'nodeBorder': '1.5px',
-  'clusterBkg': '#f6f8fa',
-  'clusterBorder': '#d0d7de',
-  'edgeLabelBackground': '#ffffff'
-}}}%%
-flowchart LR
-    subgraph "Phase 1: Preparation"
-        A[Literature review] --> B[Outline creation]
-        B --> C[Key arguments mapped]
-    end
-    
-    subgraph "Phase 2: Rough Draft"
-        C --> D[Write messy first draft]
-        D --> E[Focus on getting ideas down]
-    end
-    
-    subgraph "Phase 3: Revision"
-        E --> F[Structural revision]
-        F --> G[Paragraph-level clarity]
-        G --> H[Sentence-level polish]
-    end
-    
-    subgraph "Phase 4: Feedback"
-        H --> I[Peer review]
-        I --> J[Advisor review]
-        J --> K[Incorporate feedback]
-    end
-    
-    subgraph "Phase 5: Submission"
-        K --> L[Final formatting]
-        L --> M[Submission]
-    end
-    
-    style D fill:#fff3e0,stroke:#ef6c00
-    style M fill:#e8f5e9,stroke:#2e7d32
-```
+**Preparation → Rough Draft → Revision → Feedback → Submission**
+
+1. **Preparation** (1-2 weeks): Literature review → Outline creation → Key arguments mapped
+2. **Rough Draft**: Write messy first draft → Focus on getting ideas down
+3. **Revision**: Structural revision → Paragraph-level clarity → Sentence-level polish
+4. **Feedback**: Peer review → Advisor review → Incorporate feedback
+5. **Submission**: Final formatting → Submission
 
 ### Phase 1: Preparation (1-2 weeks)
 
