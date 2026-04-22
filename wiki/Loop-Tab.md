@@ -163,6 +163,25 @@ Tools for maintaining project quality over time. These are especially useful for
 
 ---
 
+## Customize for This Project
+
+The Loop tab includes a **Customize for This Project** button (paintcan icon) in the **WORKSPACE** group at the bottom of the sidebar. Clicking it launches a guided wizard in Copilot Chat that walks you through:
+
+1. **Taglines** — Add project-specific taglines that rotate in the sidebar header
+2. **Loop groups** — Add new button groups tailored to your workflow (e.g., Brain Ops, Rituals, CI/CD)
+3. **Buttons** — Add, remove, or rearrange buttons within any group
+4. **Icons and labels** — Choose from VS Code Codicon icons and set descriptive labels
+
+The wizard reads your current `loop-menu.json` and `taglines.json`, asks what you want to change, and writes the updates for you. No manual JSON editing required.
+
+You can also run the wizard anytime by typing in Copilot Chat:
+
+```
+@alex /customize-welcome
+```
+
+---
+
 ## Dynamic Configuration
 
 The Loop tab is config-driven. Instead of hardcoded buttons, the entire layout comes from `.github/config/loop-menu.json`. This means:

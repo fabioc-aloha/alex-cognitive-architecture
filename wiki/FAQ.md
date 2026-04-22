@@ -111,11 +111,12 @@ No — the agent picker in VS Code Copilot Chat is a **VS Code built-in feature*
 
 What you CAN customize:
 
-| What | Config File | Controls |
-|------|-------------|----------|
-| **Loop tab buttons** | `.github/config/loop-menu.json` | Button groups, labels, prompts |
-| **Autopilot tasks** | `.github/config/scheduled-tasks.json` | Scheduled automation |
-| **Agent definitions** | `.github/agents/*.agent.md` | Agent names, descriptions, instructions |
+| What | How | Controls |
+|------|-----|----------|
+| **Loop tab buttons** | Click **Customize for This Project** in sidebar, or edit `.github/config/loop-menu.json` | Button groups, labels, prompts |
+| **Taglines** | Click **Customize for This Project**, or edit `.github/config/taglines.json` | Rotating sidebar header text |
+| **Autopilot tasks** | Edit `.github/config/scheduled-tasks.json` | Scheduled automation |
+| **Agent definitions** | Edit `.github/agents/*.agent.md` | Agent names, descriptions, instructions |
 
 What you CANNOT customize via Alex:
 

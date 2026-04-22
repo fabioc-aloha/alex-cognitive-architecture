@@ -76,6 +76,7 @@ Your primary workspace — guided workflows for every phase of development.
 | **Research & Learn** | Socratic learning, deep research, data analysis, literature review |
 | **Communicate** | Presentations, data stories, meeting notes, email drafting |
 | **Project Health** | Vision alignment, health checks, doc audits, security, tech debt, dependencies |
+| **Workspace** | Customize for This Project — launches a guided wizard to tailor taglines, groups, and buttons |
 
 Buttons reorder automatically by usage frequency (frecency). The Loop tab is config-driven — its content adapts to your project type and lifecycle phase. See [Loop Tab](Loop-Tab) for full documentation.
 
