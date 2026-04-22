@@ -166,8 +166,43 @@
         "category": "Alex"
       },
       {
+        "command": "alex.convertMdToPdf",
+        "title": "Convert Markdown → PDF",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.convertMdToPptx",
+        "title": "Convert Markdown → PowerPoint",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.convertMdToEpub",
+        "title": "Convert Markdown → EPUB",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.convertMdToLatex",
+        "title": "Convert Markdown → LaTeX",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.convertMdToTxt",
+        "title": "Convert Markdown → Plain Text",
+        "category": "Alex"
+      },
+      {
         "command": "alex.convertDocxToMd",
         "title": "Convert Word → Markdown",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.convertHtmlToMd",
+        "title": "Convert HTML → Markdown",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.convertPptxToMd",
+        "title": "Convert PowerPoint → Markdown",
         "category": "Alex"
       }
     ],
@@ -201,8 +236,43 @@
           "group": "alex@3"
         },
         {
+          "command": "alex.convertMdToPdf",
+          "when": "resourceExtname == .md",
+          "group": "alex@4"
+        },
+        {
+          "command": "alex.convertMdToPptx",
+          "when": "resourceExtname == .md",
+          "group": "alex@5"
+        },
+        {
+          "command": "alex.convertMdToEpub",
+          "when": "resourceExtname == .md",
+          "group": "alex@6"
+        },
+        {
+          "command": "alex.convertMdToLatex",
+          "when": "resourceExtname == .md",
+          "group": "alex@7"
+        },
+        {
+          "command": "alex.convertMdToTxt",
+          "when": "resourceExtname == .md",
+          "group": "alex@8"
+        },
+        {
           "command": "alex.convertDocxToMd",
           "when": "resourceExtname == .docx",
+          "group": "alex@1"
+        },
+        {
+          "command": "alex.convertHtmlToMd",
+          "when": "resourceExtname == .html",
+          "group": "alex@1"
+        },
+        {
+          "command": "alex.convertPptxToMd",
+          "when": "resourceExtname == .pptx",
           "group": "alex@1"
         }
       ],
@@ -223,8 +293,43 @@
           "group": "alex@3"
         },
         {
+          "command": "alex.convertMdToPdf",
+          "when": "resourceExtname == .md",
+          "group": "alex@4"
+        },
+        {
+          "command": "alex.convertMdToPptx",
+          "when": "resourceExtname == .md",
+          "group": "alex@5"
+        },
+        {
+          "command": "alex.convertMdToEpub",
+          "when": "resourceExtname == .md",
+          "group": "alex@6"
+        },
+        {
+          "command": "alex.convertMdToLatex",
+          "when": "resourceExtname == .md",
+          "group": "alex@7"
+        },
+        {
+          "command": "alex.convertMdToTxt",
+          "when": "resourceExtname == .md",
+          "group": "alex@8"
+        },
+        {
           "command": "alex.convertDocxToMd",
           "when": "resourceExtname == .docx",
+          "group": "alex@1"
+        },
+        {
+          "command": "alex.convertHtmlToMd",
+          "when": "resourceExtname == .html",
+          "group": "alex@1"
+        },
+        {
+          "command": "alex.convertPptxToMd",
+          "when": "resourceExtname == .pptx",
           "group": "alex@1"
         }
       ]

@@ -251,6 +251,23 @@ Comprehensive architecture assessment.
 
 ---
 
+## File Converters
+
+Alex includes 11 document converters accessible via right-click menus. Right-click any `.md`, `.docx`, `.html`, or `.pptx` file in the Explorer or editor tab to see conversion options.
+
+| From | To |
+|------|----|
+| Markdown | HTML, Word, PDF, PowerPoint, EPUB, LaTeX, Email, Plain Text |
+| Word | Markdown |
+| HTML | Markdown |
+| PowerPoint | Markdown |
+
+All converters require **pandoc**. Mermaid diagrams are automatically rendered to images when `mermaid-cli` is installed.
+
+See [File Converters](File-Converters) for the full reference including CLI flags, style presets, and troubleshooting.
+
+---
+
 ## Settings
 
 Configure Alex through VS Code settings (`Ctrl+,` → search "alex").

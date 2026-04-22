@@ -270,7 +270,14 @@ export function activate(context: vscode.ExtensionContext): void {
     "alex.convertMdToHtml": { muscle: "md-to-html.cjs", label: "HTML", srcExt: ".md" },
     "alex.convertMdToWord": { muscle: "md-to-word.cjs", label: "Word", srcExt: ".md" },
     "alex.convertMdToEml": { muscle: "md-to-eml.cjs", label: "Email", srcExt: ".md" },
+    "alex.convertMdToPdf": { muscle: "md-to-pdf.cjs", label: "PDF", srcExt: ".md" },
+    "alex.convertMdToPptx": { muscle: "md-to-pptx.cjs", label: "PowerPoint", srcExt: ".md" },
+    "alex.convertMdToEpub": { muscle: "md-to-epub.cjs", label: "EPUB", srcExt: ".md" },
+    "alex.convertMdToLatex": { muscle: "md-to-latex.cjs", label: "LaTeX", srcExt: ".md" },
+    "alex.convertMdToTxt": { muscle: "md-to-txt.cjs", label: "Plain Text", srcExt: ".md" },
     "alex.convertDocxToMd": { muscle: "docx-to-md.cjs", label: "Markdown", srcExt: ".docx" },
+    "alex.convertHtmlToMd": { muscle: "html-to-md.cjs", label: "Markdown", srcExt: ".html" },
+    "alex.convertPptxToMd": { muscle: "pptx-to-md.cjs", label: "Markdown", srcExt: ".pptx" },
   };
 
   for (const [cmdId, cfg] of Object.entries(converterMuscles)) {

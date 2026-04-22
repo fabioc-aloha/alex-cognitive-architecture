@@ -17,6 +17,7 @@
   - [Setup Tab](Setup-Tab)
 - [Agents](User-Manual#agents)
 - [Skills](User-Manual#skills)
+- [File Converters](File-Converters)
 - [Memory System](User-Manual#memory-system)
 - [Health Processes](User-Manual#health-processes)
 - [Settings](User-Manual#settings)
