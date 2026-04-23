@@ -13,10 +13,9 @@ v8.0.0 is a clean-room rebuild. The extension code is entirely new, but your bra
 | **Build system** | webpack | esbuild |
 | **Terminology** | "Neural", "Synapse" | "Architecture", "Connection" |
 | **Architecture model** | Skill + Instruction + Prompt | Skill + Instruction + Muscle (trifecta) |
-| **Sidebar** | Single panel | 3-tab (Loop, Autopilot, Setup) |
+| **Sidebar** | Single panel | 2-tab (Loop, Setup) |
 | **Health monitoring** | Manual checks | Automatic Health Pulse |
 | **CLI tools** | Imported from extension | Standalone scripts |
-| **Scheduled tasks** | Not available | Autopilot v1 |
 | **Extension name** | `alex-vscode-extension` | `alex-cognitive-architecture` |
 
 ## Upgrade Steps

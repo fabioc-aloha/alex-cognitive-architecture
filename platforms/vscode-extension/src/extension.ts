@@ -6,12 +6,8 @@ import { WelcomeViewProvider } from "./sidebar/WelcomeViewProvider.js";
 import { detectProject } from "./sidebar/projectDetector.js";
 import { writeLoopConfig, setProjectPhase } from "./sidebar/loopConfigGenerator.js";
 import { setupAIMemory, resolveAIMemoryPath, getAIMemoryStatus } from "./aiMemory.js";
-import { createAgentStatusBar, updateAgentStatusBar } from "./sidebar/agentActivity.js";
-import { AgentActivityProvider } from "./sidebar/agentActivityTreeView.js";
-import { initRunStore } from "./sidebar/scheduledTasks.js";
 import { bootstrapBrainFiles, checkAutoUpgrade, getBrainStatus } from "./bootstrap.js";
-import { muscleAndPrompt, runMuscle, runMuscleInTerminal } from "./muscleRunner.js";
-import { statusBarRefreshInterval } from "./settings.js";
+import { muscleAndPrompt, runMuscle, runMuscleInTerminal, disposeMuscleChannels } from "./muscleRunner.js";
 
 /**
  * Sanitize error messages for user display — strips file system paths
@@ -39,11 +35,12 @@ async function enforceSafetySettings(): Promise<void> {
 }
 
 export function activate(context: vscode.ExtensionContext): void {
-  // Enforce safety settings on every activation
-  enforceSafetySettings();
-
-  // Initialize persistent run store for scheduled task tracking
-  initRunStore(context.workspaceState);
+  // Enforce safety settings on every activation. Auto-disables
+  // github.copilot.chat.copilotMemory.enabled to prevent /memories/
+  // PII from being auto-loaded into LLM prompts.
+  void enforceSafetySettings().catch((err) => {
+    console.error("Alex: enforceSafetySettings failed:", err);
+  });
 
   // Chat participant
   const participant = vscode.chat.createChatParticipant(
@@ -65,9 +62,12 @@ export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(participant);
 
   // Sidebar welcome panel
+  const extensionVersion: string =
+    (context.extension.packageJSON.version as string | undefined) ?? "0.0.0";
   const welcomeProvider = new WelcomeViewProvider(
     context.extensionUri,
     context.globalState,
+    extensionVersion,
   );
   context.subscriptions.push(welcomeProvider);
   context.subscriptions.push(
@@ -77,42 +77,30 @@ export function activate(context: vscode.ExtensionContext): void {
     ),
   );
 
-  // Status bar — agent activity badge (AP6)
+  // Status bar — periodic refresh
   const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
-  createAgentStatusBar(context);
-  updateAgentStatusBar(workspaceRoot);
-
-  // Refresh status bar periodically
-  const statusTimer = setInterval(() => {
-    updateAgentStatusBar(vscode.workspace.workspaceFolders?.[0]?.uri.fsPath);
-  }, statusBarRefreshInterval());
-  context.subscriptions.push({ dispose: () => clearInterval(statusTimer) });
-
-  // Agent Activity TreeView (CL1)
-  const agentActivityProvider = new AgentActivityProvider(workspaceRoot);
-  context.subscriptions.push(
-    vscode.window.createTreeView("alex.agentActivity", {
-      treeDataProvider: agentActivityProvider,
-    }),
-  );
-  context.subscriptions.push(
-    vscode.commands.registerCommand("alex.refreshAgentActivity", () => {
-      agentActivityProvider.refresh();
-    }),
-  );
-
-  // Auto-refresh TreeView when metrics state file changes
-  if (workspaceRoot) {
-    const metricsPattern = new vscode.RelativePattern(workspaceRoot, ".agent-metrics-state.json");
-    const metricsWatcher = vscode.workspace.createFileSystemWatcher(metricsPattern);
-    metricsWatcher.onDidChange(() => agentActivityProvider.refresh());
-    metricsWatcher.onDidCreate(() => agentActivityProvider.refresh());
-    context.subscriptions.push(metricsWatcher);
-  }
 
   context.subscriptions.push(
     vscode.commands.registerCommand("alex.refreshWelcome", () => {
       welcomeProvider.refresh();
+    }),
+  );
+
+  // Apply safety-critical VS Code settings on demand. Invoked from the
+  // post-install prompt in bootstrap.ts; also user-invocable from the
+  // command palette.
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.optimizeSettings", async () => {
+      try {
+        await enforceSafetySettings();
+        vscode.window.showInformationMessage(
+          "Alex: Safety settings applied (Copilot Memory disabled to prevent PII auto-loading).",
+        );
+      } catch (err) {
+        vscode.window.showErrorMessage(
+          `Alex: Failed to apply safety settings \u2014 ${sanitizeError(err)}`,
+        );
+      }
     }),
   );
 
@@ -283,6 +271,7 @@ export function activate(context: vscode.ExtensionContext): void {
     "alex.convertMdToEml": { muscle: "md-to-eml.cjs", label: "Email", srcExt: ".md" },
     "alex.convertMdToPdf": { muscle: "md-to-pdf.cjs", label: "PDF", srcExt: ".md" },
     "alex.convertMdToPptx": { muscle: "md-to-pptx.cjs", label: "PowerPoint", srcExt: ".md" },
+    "alex.convertMdToGamma": { muscle: "md-to-gamma.cjs", label: "Gamma", srcExt: ".md" },
     "alex.convertMdToEpub": { muscle: "md-to-epub.cjs", label: "EPUB", srcExt: ".md" },
     "alex.convertMdToLatex": { muscle: "md-to-latex.cjs", label: "LaTeX", srcExt: ".md" },
     "alex.convertMdToTxt": { muscle: "md-to-txt.cjs", label: "Plain Text", srcExt: ".md" },
@@ -644,8 +633,18 @@ export function activate(context: vscode.ExtensionContext): void {
       ".github/skills/*/loop-config.partial.json",
     ),
   );
-  const refreshOnChange = () => welcomeProvider.refresh();
+  // Debounced refresh prevents storms when many .prompt.md files change
+  // simultaneously (e.g., during git checkout across branches).
+  let refreshTimer: NodeJS.Timeout | undefined;
+  const refreshOnChange = (): void => {
+    if (refreshTimer) clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(() => {
+      refreshTimer = undefined;
+      welcomeProvider.refresh();
+    }, 150);
+  };
   context.subscriptions.push(
+    { dispose: () => { if (refreshTimer) clearTimeout(refreshTimer); } },
     loopConfigWatcher,
     loopConfigWatcher.onDidChange(refreshOnChange),
     loopConfigWatcher.onDidCreate(refreshOnChange),
@@ -667,5 +666,7 @@ export function activate(context: vscode.ExtensionContext): void {
 }
 
 export function deactivate(): void {
-  // Cleanup handled by disposables in context.subscriptions
+  // Cleanup handled by disposables in context.subscriptions; module-level
+  // OutputChannel cache also needs explicit disposal.
+  disposeMuscleChannels();
 }

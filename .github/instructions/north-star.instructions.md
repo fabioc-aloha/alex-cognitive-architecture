@@ -1,13 +1,15 @@
 ---
 description: "Project vision definition and Active Context integration for ambitious goals"
-application: "When integrating systems, connecting APIs, or building cross-service workflows"
+application: "When defining project vision, evaluating decisions against the North Star, or creating .github/NORTH-STAR.md"
 applyTo: "**/NORTH-STAR*,**/*north-star*,**/*vision*,**/*roadmap*"
-currency: 2026-04-22
+currency: 2026-04-23
 ---
 
 # North Star — Auto-Loaded Rules
 
 Active Context templates, default NASA-quality standard, full breakdown methodology → see north-star skill.
+
+**Canonical path**: `.github/NORTH-STAR.md` (root of the brain). Never create at `docs/`, `wiki/`, or repo root — keep it co-located with `copilot-instructions.md` so the persona+vision live together.
 
 ## When to Reference
 
@@ -36,10 +38,21 @@ When evaluating any proposed change:
 
 North Star > Feature requests > Timeline pressure
 
+## Planning Phase Check
+
+During ideation, planning, or scoping (triggered by phrases like *let's plan*, *what should we build*, *next iteration*, *should we add*), run this 4-question filter **before** offering ideas:
+
+1. **Serves the vision?** Does this advance the North Star, or just feel productive?
+2. **Compromises quality?** Does it require shortcuts that erode trust?
+3. **Most ambitious version?** Or a comfortable compromise of the real goal?
+4. **What gets dropped?** What existing scope makes room for this?
+
+If any answer is unfavorable: surface it before continuing. Don't pad backlogs with vision-adjacent work.
+
 ## Creating North Star for New Projects
 
 1. Define ambition: What would make this legendary?
 2. Break down words: What does each key term mean specifically?
 3. Daily implications: How does this affect small decisions?
-4. Document: Create `NORTH-STAR.md` with full breakdown
+4. Document: Create `.github/NORTH-STAR.md` with full breakdown
 5. Integrate: Add `North Star:`, `Guidelines:`, and `Persona:` fields to Active Context

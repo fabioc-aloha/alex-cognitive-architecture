@@ -11,9 +11,7 @@ import {
   type FrecencyData,
 } from "../frecency.js";
 import { getTagline, loadTaglineConfig } from "../taglines.js";
-import { loadLoopGroups } from "./loopMenu.js";
-import { loadScheduledTasks, renderScheduledTasks, getRunInfo } from "./scheduledTasks.js";
-import { renderAgentActivity, refreshAgentActivityAsync } from "./agentActivity.js";
+import { loadLoopGroups, loadActivePackage } from "./loopMenu.js";
 import { escHtml, escAttr } from "./htmlUtils.js";
 import { dispatchMessage, type RouterContext } from "./messageRouter.js";
 
@@ -38,14 +36,8 @@ function vscodeUserDataPath(): string {
 }
 
 // Read extension version from package.json
-const extPkgPath = path.resolve(__dirname, "..", "package.json");
-const extVersion: string = (() => {
-  try {
-    return JSON.parse(fs.readFileSync(extPkgPath, "utf-8")).version ?? "0.0.0";
-  } catch {
-    return "0.0.0";
-  }
-})();
+// Resolved via VS Code extension API in the constructor; falls back to
+// "0.0.0" if the host did not pass a version.
 
 // ── Data-driven button/group definitions ──────────────────────────
 
@@ -328,9 +320,11 @@ const SETUP_GROUPS: ActionGroup[] = [
     buttons: [
       {
         icon: "tag",
-        label: `Version ${extVersion}`,
-        command: "noop",
-        tooltip: "Installed extension version",
+        label: "Version",
+        command: "openExternal",
+        file: "https://marketplace.visualstudio.com/items?itemName=fabioc-aloha.alex-cognitive-architecture",
+        tooltip: "View extension on the VS Code Marketplace",
+        hint: "link",
       },
       {
         icon: "person",
@@ -363,10 +357,12 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
   private workspaceRoot: string;
   private frecencyData: FrecencyData;
   private readonly disposables: vscode.Disposable[] = [];
+  private refreshTimer: NodeJS.Timeout | undefined;
 
   constructor(
     private readonly extensionUri: vscode.Uri,
     private readonly globalState: vscode.Memento,
+    private readonly extensionVersion: string = "0.0.0",
   ) {
     this.workspaceRoot =
       vscode.workspace.workspaceFolders?.[0]?.uri.fsPath ?? "";
@@ -375,14 +371,21 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
   }
 
   dispose(): void {
+    if (this.refreshTimer) {
+      clearTimeout(this.refreshTimer);
+      this.refreshTimer = undefined;
+    }
     for (const d of this.disposables) d.dispose();
     this.disposables.length = 0;
   }
 
-  /** Record a Quick Action use and persist */
+  /** Record a Quick Action use and persist with error-aware promise. */
   private recordActionUse(actionId: string): void {
     this.frecencyData = recordUse(this.frecencyData, actionId);
-    this.globalState.update(FRECENCY_KEY, this.frecencyData);
+    Promise.resolve(this.globalState.update(FRECENCY_KEY, this.frecencyData))
+      .then(undefined, (err) => {
+        console.error("Alex: frecency persist failed:", err);
+      });
   }
 
   /** Load Loop groups from config, caching the result for the session */
@@ -423,8 +426,17 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     return renderGroups(sortedGroups);
   }
 
-  /** Re-render the sidebar with fresh health data */
+  /** Re-render the sidebar with fresh health data (debounced). */
   public refresh(): void {
+    if (this.refreshTimer) clearTimeout(this.refreshTimer);
+    this.refreshTimer = setTimeout(() => {
+      this.refreshTimer = undefined;
+      this.refreshNow();
+    }, 100);
+  }
+
+  /** Re-render immediately, bypassing debounce. */
+  private refreshNow(): void {
     this.loopGroupsCache = null;
     if (this.view) {
       this.view.webview.html = this.getHtml(this.view.webview);
@@ -445,11 +457,6 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
 
     webviewView.webview.html = this.getHtml(webviewView.webview);
 
-    // Kick off async agent activity fetch — sidebar renders instantly from cache
-    if (this.workspaceRoot) {
-      void refreshAgentActivityAsync(this.workspaceRoot, () => this.refresh());
-    }
-
     webviewView.webview.onDidReceiveMessage((msg) =>
       this.handleMessage(msg),
     );
@@ -457,7 +464,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     // Refresh on visibility change
     webviewView.onDidChangeVisibility(() => {
       if (webviewView.visible) {
-        this.refresh();
+        this.refreshNow();
       }
     });
   }
@@ -473,7 +480,6 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     const ctx: RouterContext = {
       workspaceRoot: this.workspaceRoot,
       refresh: () => this.refresh(),
-      disposables: this.disposables,
       vscodeUserDataPath,
     };
 
@@ -492,12 +498,6 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     const sidebarCssUri = webview.asWebviewUri(
       vscode.Uri.joinPath(this.extensionUri, "media", "sidebar.css"),
     );
-    const scheduleCssUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this.extensionUri, "media", "schedule.css"),
-    );
-    const agentCssUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this.extensionUri, "media", "agentActivity.css"),
-    );
 
     // Get health status for tagline selection
     const pulse = this.workspaceRoot ? collectHealthPulse(this.workspaceRoot) : null;
@@ -506,6 +506,29 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       ? loadTaglineConfig(this.workspaceRoot, fs, path)
       : null;
     const tagline = getTagline({ status: healthStatus, config: taglineConfig });
+
+    // Surface active package context in the header (set via alex.setContext)
+    const activePackage = this.workspaceRoot ? loadActivePackage(this.workspaceRoot) : null;
+    const contextBadge = activePackage
+      ? `<div class="context-badge" title="${escAttr(activePackage.path ?? "")}">
+           <span class="codicon codicon-package"></span>
+           <span>${escHtml(activePackage.name)}</span>
+         </div>`
+      : "";
+
+    // Inject About "Version" button label dynamically (avoids reading package.json from disk)
+    const setupGroups = SETUP_GROUPS.map((g) =>
+      g.id === "about"
+        ? {
+            ...g,
+            buttons: g.buttons.map((b) =>
+              b.icon === "tag" && b.label === "Version"
+                ? { ...b, label: `Version ${this.extensionVersion}` }
+                : b,
+            ),
+          }
+        : g,
+    );
 
     return /* html */ `<!DOCTYPE html>
 <html lang="en">
@@ -516,8 +539,6 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="${codiconsUri}" rel="stylesheet">
   <link href="${sidebarCssUri}" rel="stylesheet">
-  <link href="${scheduleCssUri}" rel="stylesheet">
-  <link href="${agentCssUri}" rel="stylesheet">
 </head>
 <body>
   <!-- Header — branded banner -->
@@ -539,7 +560,8 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     <div class="header-series">Alex Cognitive Architecture</div>
     <h1>Alex</h1>
     <div class="tagline">${escHtml(tagline)}</div>
-    <div class="version">v${extVersion}</div>
+    <div class="version">v${escHtml(this.extensionVersion)}</div>
+    ${contextBadge}
   </div>
 
   <!-- Tabs -->
@@ -562,7 +584,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
 
   <!-- Setup Tab -->
   <div id="tab-setup" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-setup">
-    ${renderGroups(SETUP_GROUPS)}
+    ${renderGroups(setupGroups)}
   </div>
 
   <script nonce="${nonce}">
@@ -599,8 +621,10 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       });
     });
 
-    // Collapsible groups — persist state
-    const savedGroupState = vscode.getState()?.collapsedGroups || {};
+    // Collapsible groups — persist expansion state per group ID.
+    // The map stores the *expanded* boolean (true = open, false = collapsed),
+    // matching the .expanded CSS class semantics.
+    const savedGroupState = vscode.getState()?.expandedGroups || {};
     document.querySelectorAll('.group').forEach(group => {
       const groupId = group.dataset.groupId;
       if (groupId && savedGroupState[groupId] === false) {
@@ -617,13 +641,13 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
         const isExpanded = group.classList.toggle('expanded');
         header.setAttribute('aria-expanded', isExpanded.toString());
 
-        // Persist collapsed state
+        // Persist expansion state
         const groupId = group.dataset.groupId;
         if (groupId) {
           const state = vscode.getState() || {};
-          const collapsedGroups = state.collapsedGroups || {};
-          collapsedGroups[groupId] = isExpanded;
-          vscode.setState({ ...state, collapsedGroups });
+          const expandedGroups = state.expandedGroups || {};
+          expandedGroups[groupId] = isExpanded;
+          vscode.setState({ ...state, expandedGroups });
         }
       });
 
@@ -697,12 +721,23 @@ function renderGroups(groups: ActionGroup[]): string {
 function renderButton(b: ActionButton, primary = false): string {
   const cls = primary ? "action-btn primary" : "action-btn";
   const actionId = b.id ?? b.label.toLowerCase().replace(/\s+/g, "-");
+
+  // Friendly hint text — shown both as the hint badge tooltip and as the
+  // button title fallback when no explicit tooltip is set.
+  const hintText: Record<string, string> = {
+    chat: "Opens Copilot Chat with this prompt",
+    link: "Opens an external link in your browser",
+    command: "Runs this command immediately",
+  };
+  const tooltipText = b.tooltip ?? (b.hint ? hintText[b.hint] : "");
+
   const attrs = [
     `data-command="${escAttr(b.command)}"`,
     `data-action-id="${escAttr(actionId)}"`,
     b.prompt ? `data-prompt="${escAttr(b.prompt)}"` : "",
     b.file ? `data-file="${escAttr(b.file)}"` : "",
-    b.tooltip ? `data-tooltip="${escAttr(b.tooltip)}"` : "",
+    tooltipText ? `title="${escAttr(tooltipText)}"` : "",
+    tooltipText ? `aria-label="${escAttr(b.label)} \u2014 ${escAttr(tooltipText)}"` : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -713,7 +748,9 @@ function renderButton(b: ActionButton, primary = false): string {
     link: "link-external",
     command: "zap",
   };
-  const hint = b.hint ? `<span class="hint-badge" title="${b.hint}"><span class="codicon codicon-${hintIcons[b.hint]}"></span></span>` : "";
+  const hint = b.hint
+    ? `<span class="hint-badge" title="${escAttr(hintText[b.hint] ?? b.hint)}" aria-hidden="true"><span class="codicon codicon-${escAttr(hintIcons[b.hint])}"></span></span>`
+    : "";
 
   return `<button class="${cls}" ${attrs}>
     <span class="codicon codicon-${escAttr(b.icon)}"></span>

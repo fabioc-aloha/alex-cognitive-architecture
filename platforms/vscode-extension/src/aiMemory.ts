@@ -11,11 +11,23 @@ import * as os from "os";
 
 // ── Path discovery ────────────────────────────────────────────────
 
+// Cache discovered paths for the lifetime of the extension host. Disk
+// scans of the home directory are surprisingly costly when OneDrive is
+// syncing. Cleared by clearAIMemoryCache() after setupAIMemory creates
+// new folders.
+let discoveryCache: string[] | null = null;
+
+/** Invalidate the discovery cache. Call after creating a new AI-Memory folder. */
+export function clearAIMemoryCache(): void {
+  discoveryCache = null;
+}
+
 /**
  * Scan common locations for an existing AI-Memory folder.
- * Returns all candidate paths that actually exist on disk.
+ * Returns all candidate paths that actually exist on disk. Memoized.
  */
 export function discoverAIMemoryPaths(): string[] {
+  if (discoveryCache) return discoveryCache;
   const found: string[] = [];
   const home = os.homedir();
 
@@ -54,6 +66,7 @@ export function discoverAIMemoryPaths(): string[] {
     if (fs.existsSync(fallback)) found.push(fallback);
   }
 
+  discoveryCache = found;
   return found;
 }
 
@@ -382,6 +395,9 @@ export async function setupAIMemory(): Promise<string | undefined> {
 
   try {
     const created = ensureAIMemoryStructure(chosenPath);
+
+    // Discovery cache may now be stale (folder may have been newly created)
+    clearAIMemoryCache();
 
     // Save to user settings
     await vscode.workspace

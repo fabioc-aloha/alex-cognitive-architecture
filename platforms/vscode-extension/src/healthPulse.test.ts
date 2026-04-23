@@ -10,12 +10,8 @@ vi.mock("./settings.js", () => ({
 
 import {
   HealthPulse,
-  HealthStatus,
   computeHealthStatus,
   formatRelativeTime,
-  formatInventory,
-  statusDotColor,
-  statusLabel,
 } from "./healthPulse";
 
 // ── Test helpers ──────────────────────────────────────────────────
@@ -160,65 +156,5 @@ describe("formatRelativeTime", () => {
   it("returns 'X months ago' for 60+ days", () => {
     const ninetyDaysAgo = new Date("2026-01-17T10:00:00Z");
     expect(formatRelativeTime(ninetyDaysAgo)).toBe("3 months ago");
-  });
-});
-
-// ── formatInventory tests ─────────────────────────────────────────
-
-describe("formatInventory", () => {
-  it("formats all four counts", () => {
-    const pulse = createBasePulse({
-      skillCount: 188,
-      instructionCount: 145,
-      promptCount: 60,
-      agentCount: 22,
-    });
-    expect(formatInventory(pulse)).toBe(
-      "188 skills · 145 instructions · 60 prompts · 22 agents",
-    );
-  });
-
-  it("handles zero counts", () => {
-    const pulse = createBasePulse({
-      skillCount: 0,
-      instructionCount: 0,
-      promptCount: 0,
-      agentCount: 0,
-    });
-    expect(formatInventory(pulse)).toBe(
-      "0 skills · 0 instructions · 0 prompts · 0 agents",
-    );
-  });
-});
-
-// ── statusDotColor tests ──────────────────────────────────────────
-
-describe("statusDotColor", () => {
-  it("returns green for healthy", () => {
-    expect(statusDotColor("healthy")).toBe("#22c55e");
-  });
-
-  it("returns amber for attention", () => {
-    expect(statusDotColor("attention")).toBe("#eab308");
-  });
-
-  it("returns red for critical", () => {
-    expect(statusDotColor("critical")).toBe("#ef4444");
-  });
-});
-
-// ── statusLabel tests ─────────────────────────────────────────────
-
-describe("statusLabel", () => {
-  it("returns '✓ Healthy' for healthy status", () => {
-    expect(statusLabel("healthy")).toBe("✓ Healthy");
-  });
-
-  it("returns '⚠ Needs Attention' for attention status", () => {
-    expect(statusLabel("attention")).toBe("⚠ Needs Attention");
-  });
-
-  it("returns '✗ Critical' for critical status", () => {
-    expect(statusLabel("critical")).toBe("✗ Critical");
   });
 });

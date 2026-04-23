@@ -10,6 +10,8 @@ currency: 2026-04-22
 
 > Choose the right chart for the story, not just the data shape. Every chart should make an argument.
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 ## Metadata
 
 | Field              | Value                                                                                                                          |

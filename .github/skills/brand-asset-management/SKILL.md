@@ -10,6 +10,8 @@ currency: 2026-04-22
 
 Expert in Alex brand hierarchy, visual identity systems, asset deployment, and platform-specific branding guidelines.
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 ## Capabilities
 
 - Manage brand hierarchy (CorreaX → Alex → Platform heirs)

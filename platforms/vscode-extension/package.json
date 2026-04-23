@@ -77,18 +77,6 @@
           "description": "How often the status bar refreshes agent activity (minutes).",
           "minimum": 1
         },
-        "alex.autopilot.pollIntervalMs": {
-          "type": "number",
-          "default": 5000,
-          "description": "Polling interval for GitHub Actions workflow status (milliseconds).",
-          "minimum": 1000
-        },
-        "alex.autopilot.maxPollAttempts": {
-          "type": "number",
-          "default": 120,
-          "description": "Max poll attempts before giving up on a dispatched workflow.",
-          "minimum": 10
-        },
         "alex.health.dreamOverdueCriticalDays": {
           "type": "number",
           "default": 14,
@@ -112,12 +100,6 @@
           "default": 7,
           "description": "Days since last heir sync before marking as stale.",
           "minimum": 1
-        },
-        "alex.metrics.retentionDays": {
-          "type": "number",
-          "default": 90,
-          "description": "How many days to retain agent metric run logs.",
-          "minimum": 7
         }
       }
     },
@@ -136,10 +118,6 @@
           "type": "webview",
           "id": "alex.welcomeView",
           "name": "Welcome"
-        },
-        {
-          "id": "alex.agentActivity",
-          "name": "Agent Activity"
         }
       ]
     },
@@ -150,16 +128,7 @@
         "name": "alex",
         "description": "Your cognitive learning partner — ask anything, create anything, grow together.",
         "isSticky": true,
-        "commands": [
-          {
-            "name": "autopilot",
-            "description": "Manage scheduled Autopilot tasks — list, status, run"
-          },
-          {
-            "name": "cloud",
-            "description": "Dispatch Autopilot tasks to GitHub Actions for cloud execution"
-          }
-        ]
+        "commands": []
       }
     ],
     "commands": [
@@ -199,16 +168,15 @@
         "category": "Alex"
       },
       {
-        "command": "alex.refreshAgentActivity",
-        "title": "Refresh Agent Activity",
-        "category": "Alex",
-        "icon": "$(refresh)"
-      },
-      {
         "command": "alex.refreshWelcome",
         "title": "Refresh Welcome",
         "category": "Alex",
         "icon": "$(refresh)"
+      },
+      {
+        "command": "alex.optimizeSettings",
+        "title": "Optimize VS Code Settings",
+        "category": "Alex"
       },
       {
         "command": "alex.convertMdToHtml",
@@ -233,6 +201,11 @@
       {
         "command": "alex.convertMdToPptx",
         "title": "Convert Markdown → PowerPoint",
+        "category": "Alex"
+      },
+      {
+        "command": "alex.convertMdToGamma",
+        "title": "Convert Markdown → Gamma (preprocess)",
         "category": "Alex"
       },
       {
@@ -309,11 +282,6 @@
     "menus": {
       "view/title": [
         {
-          "command": "alex.refreshAgentActivity",
-          "when": "view == alex.agentActivity",
-          "group": "navigation"
-        },
-        {
           "command": "alex.refreshWelcome",
           "when": "view == alex.welcomeView",
           "group": "navigation"
@@ -346,19 +314,24 @@
           "group": "alex@5"
         },
         {
-          "command": "alex.convertMdToEpub",
+          "command": "alex.convertMdToGamma",
           "when": "resourceExtname == .md",
           "group": "alex@6"
         },
         {
-          "command": "alex.convertMdToLatex",
+          "command": "alex.convertMdToEpub",
           "when": "resourceExtname == .md",
           "group": "alex@7"
         },
         {
-          "command": "alex.convertMdToTxt",
+          "command": "alex.convertMdToLatex",
           "when": "resourceExtname == .md",
           "group": "alex@8"
+        },
+        {
+          "command": "alex.convertMdToTxt",
+          "when": "resourceExtname == .md",
+          "group": "alex@9"
         },
         {
           "command": "alex.markdownLint",
@@ -408,19 +381,24 @@
           "group": "alex@5"
         },
         {
-          "command": "alex.convertMdToEpub",
+          "command": "alex.convertMdToGamma",
           "when": "resourceExtname == .md",
           "group": "alex@6"
         },
         {
-          "command": "alex.convertMdToLatex",
+          "command": "alex.convertMdToEpub",
           "when": "resourceExtname == .md",
           "group": "alex@7"
         },
         {
-          "command": "alex.convertMdToTxt",
+          "command": "alex.convertMdToLatex",
           "when": "resourceExtname == .md",
           "group": "alex@8"
+        },
+        {
+          "command": "alex.convertMdToTxt",
+          "when": "resourceExtname == .md",
+          "group": "alex@9"
         },
         {
           "command": "alex.markdownLint",

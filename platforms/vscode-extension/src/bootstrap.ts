@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
+import * as crypto from "crypto";
 import { writeLoopConfig } from "./sidebar/loopConfigGenerator.js";
 import { resolveAIMemoryPath, setupAIMemory } from "./aiMemory.js";
 
@@ -151,7 +152,9 @@ export async function bootstrapBrainFiles(
       if (!fs.existsSync(srcSub)) continue;
 
       const destSub = path.join(githubDir, subdir);
-      const stagingSub = destSub + `.staging-${Date.now()}`;
+      // Collision-resistant staging suffix: timestamp + random nonce
+      // protects against simultaneous bootstrap invocations.
+      const stagingSub = destSub + `.staging-${Date.now()}-${crypto.randomBytes(4).toString("hex")}`;
 
       copyDirSync(srcSub, stagingSub);
 

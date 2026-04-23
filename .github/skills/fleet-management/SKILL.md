@@ -143,18 +143,10 @@ node scripts/upgrade-brain.cjs --mode Rollback --include "projectname"
 
 ## Scheduled Maintenance
 
-Add to Autopilot for weekly fleet health checks:
+Run fleet health checks weekly via GitHub Actions or manual invocation:
 
-```json
-{
-  "id": "fleet-health",
-  "name": "Fleet Health Check",
-  "description": "Audit fleet brain versions and drift",
-  "schedule": "0 8 * * 1",
-  "mode": "direct",
-  "script": "scripts/upgrade-brain.cjs",
-  "args": "--mode Audit"
-}
+```bash
+node scripts/upgrade-brain.cjs --mode Audit
 ```
 
 ## Version Stamps

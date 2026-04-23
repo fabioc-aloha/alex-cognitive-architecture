@@ -62,6 +62,12 @@ interface LoopGroupConfig {
 interface LoopMenuConfig {
   groups: LoopGroupConfig[];
   projectPhase?: ProjectPhase;
+  /**
+   * Optional active-context badge (set via a future alex.setContext command).
+   * Renders in the welcome view header to indicate which package/module the
+   * user is currently focused on.
+   */
+  activePackage?: { name: string; path?: string } | null;
 }
 
 interface SkillPartialConfig {
@@ -232,6 +238,31 @@ function resolveButton(b: LoopButtonConfig, promptDir: string): ActionButton {
  *
  * @param extensionRoot — absolute path to the workspace root directory
  */
+/**
+ * Read the active-package context from loop-menu.json. Returns null when
+ * unset, when the file is missing, or on parse error. Used by the welcome
+ * view to render an optional context badge in the header.
+ */
+export function loadActivePackage(
+  workspaceRoot: string,
+): { name: string; path?: string } | null {
+  const configPath = path.join(
+    workspaceRoot,
+    ".github",
+    "config",
+    "loop-menu.json",
+  );
+  if (!fs.existsSync(configPath)) return null;
+  try {
+    const config = JSON.parse(
+      fs.readFileSync(configPath, "utf-8"),
+    ) as LoopMenuConfig;
+    return config.activePackage ?? null;
+  } catch {
+    return null;
+  }
+}
+
 export function loadLoopGroups(extensionRoot: string): ActionGroup[] {
   const configPath = path.join(
     extensionRoot,
@@ -258,7 +289,6 @@ export function loadLoopGroups(extensionRoot: string): ActionGroup[] {
   // Phase 3: Merge skill partials
   const skillPartials = loadSkillPartials(extensionRoot);
   const mergedGroups = mergeGroups(config.groups, skillPartials);
-
   // Phase 4: Filter by project phase
   const phaseFiltered = filterByPhase(mergedGroups, config.projectPhase);
 

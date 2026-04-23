@@ -57,7 +57,6 @@ Tutorials aligned with [LearnAI Playbooks](https://learnai.correax.com/):
 | Tutorial | Time | What You'll Learn |
 |----------|------|-------------------|
 | [Building Your Own Skill](TUTORIAL-Build-Skill.md) | 45 min | Create a domain-specific capability |
-| [Setting Up Autopilot Tasks](TUTORIAL-Autopilot.md) | 20 min | Automate recurring work |
 
 ---
 

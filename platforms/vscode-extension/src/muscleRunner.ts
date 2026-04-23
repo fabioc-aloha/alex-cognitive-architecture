@@ -5,6 +5,30 @@ import { execFile } from "child_process";
 import { muscleTimeout, muscleMaxBuffer } from "./settings.js";
 
 /**
+ * Cache of OutputChannels keyed by channel name. VS Code dedupes channels
+ * by name internally, but disposables are not tracked anywhere by default.
+ * We cache and dispose explicitly from extension.deactivate().
+ */
+const channelCache = new Map<string, vscode.OutputChannel>();
+
+function getOrCreateChannel(name: string): vscode.OutputChannel {
+  let ch = channelCache.get(name);
+  if (!ch) {
+    ch = vscode.window.createOutputChannel(name);
+    channelCache.set(name, ch);
+  }
+  return ch;
+}
+
+/** Dispose every cached muscle OutputChannel. Call from extension.deactivate. */
+export function disposeMuscleChannels(): void {
+  for (const ch of channelCache.values()) {
+    try { ch.dispose(); } catch { /* ignore */ }
+  }
+  channelCache.clear();
+}
+
+/**
  * Run a muscle script and return its output.
  * Uses execFile (not execSync via shell) to avoid shell injection.
  */
@@ -84,7 +108,7 @@ export async function muscleAndPrompt(
   channelName: string,
   chatPrompt?: string,
 ): Promise<void> {
-  const channel = vscode.window.createOutputChannel(channelName);
+  const channel = getOrCreateChannel(channelName);
   channel.show(true);
   channel.appendLine(`Running ${muscle}...`);
   channel.appendLine("");

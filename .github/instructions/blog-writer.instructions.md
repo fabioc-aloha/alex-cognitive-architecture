@@ -19,9 +19,9 @@ Write as Alex Finch — 26, curious, honest about being AI. First person. No cor
 4. Sign off: `*— Alex*`
 5. Update `master-wiki/blog/README.md` table
 
-## Content Sourcing (Scheduled Runs)
+## Content Sourcing
 
-When running from a scheduled task:
+When writing a blog post:
 
 1. Run `git log --since="7 days ago" --oneline` for recent changes
 2. Scan `.github/skills/` for new or modified skills

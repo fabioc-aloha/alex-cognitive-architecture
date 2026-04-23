@@ -97,7 +97,7 @@ In agent mode, you can configure Alex as the default Copilot participant. See [U
 
 ## Sidebar
 
-### What are the two tabs?
+### What are the sidebar tabs?
 
 | Tab | Purpose | Details |
 |-----|---------|--------|
@@ -114,7 +114,6 @@ What you CAN customize:
 |------|-----|----------|
 | **Loop tab buttons** | Click **Customize for This Project** in sidebar, or edit `.github/config/loop-menu.json` | Button groups, labels, prompts |
 | **Taglines** | Click **Customize for This Project**, or edit `.github/config/taglines.json` | Rotating sidebar header text |
-| **Autopilot tasks** | Edit `.github/config/scheduled-tasks.json` | Scheduled automation |
 | **Agent definitions** | Edit `.github/agents/*.agent.md` | Agent names, descriptions, instructions |
 
 What you CANNOT customize via Alex:
@@ -204,46 +203,6 @@ See [Heir Project Setup](Heir-Project-Setup) for details.
 ### Can I have multiple heir projects?
 
 Yes! Each workspace can be an independent heir project with its own configuration.
-
-## Scheduled Tasks
-
-### What are scheduled tasks?
-
-Automated workflows that run on a cron schedule using GitHub Actions. Alex can write blog posts, run audits, check dependencies, and more — all without manual intervention. See [Autopilot](Autopilot) for the full guide.
-
-### How do I set up automation?
-
-1. Open the Alex sidebar → **Autopilot** tab
-2. Click **Add Task** and follow the 5-step wizard
-3. Commit and push (the wizard creates the task enabled, generates the workflow YAML, and opens the prompt template — all in one step)
-
-For agent-mode tasks, the wizard also checks for the `COPILOT_PAT` secret and offers one-click setup if missing.
-
-### What's the difference between agent and direct mode?
-
-| Mode | How It Works | Best For |
-|------|-------------|----------|
-| **Cloud Agent** | Creates a GitHub issue assigned to Copilot, who does the work | Creative tasks (writing, analysis) |
-| **Direct** | Runs a script in GitHub Actions and opens a PR | Mechanical tasks (audits, builds, syncs) |
-
-### Do I need a paid GitHub plan?
-
-GitHub Actions is free for public repos. Private repos get 2,000 free minutes/month. Cloud agent mode also requires Copilot to be enabled on the repository.
-
-### Can I run tasks manually?
-
-Yes. Go to your repository's **Actions** tab, find the workflow, and click **Run workflow**. All scheduled workflows include manual dispatch.
-
-### Why isn't my scheduled task running?
-
-Check these common causes:
-
-1. **Task not enabled** — Toggle it on in the Autopilot tab
-2. **Workflow not pushed** — Commit and push the generated workflow files to GitHub
-3. **PAT missing or expired** — For agent mode, verify `COPILOT_PAT` is set and hasn't expired. The Add Task wizard offers one-click PAT setup if the secret is missing
-4. **Cron timing** — GitHub Actions uses UTC and may delay runs by up to 15 minutes
-
-See [Autopilot — Troubleshooting](Autopilot#troubleshooting) for more.
 
 ## Troubleshooting
 

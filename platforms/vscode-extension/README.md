@@ -28,7 +28,6 @@ One-click install deploys the full cognitive architecture into any workspace. Sk
 The Alex sidebar gives you quick access to:
 
 - **Loop Tab** — Creative workflow integration (Ideate → Plan → Build → Test → Release → Improve)
-- **Autopilot Tab** — Scheduled tasks, recurring maintenance, and automation
 - **Setup Tab** — Configure Alex for your project
 
 ### Specialized Agents
@@ -52,15 +51,6 @@ Keep the brain healthy with built-in maintenance rituals:
 - **Dream** — Validate and repair the architecture (weekly)
 - **Meditate** — Consolidate recent learning (after major sessions)
 - **Self-Actualize** — Deep architecture assessment (monthly)
-
-### Autopilot
-
-Schedule recurring brain maintenance tasks that run automatically:
-
-- **Task Cards** — Visual dashboard of scheduled and one-time tasks
-- **Enable/Disable Toggles** — Control which tasks run automatically
-- **Interval Configuration** — Set frequency per task
-- **Workflow Generator** — Create custom scheduled workflows from project analysis
 
 ### Settings Optimization
 

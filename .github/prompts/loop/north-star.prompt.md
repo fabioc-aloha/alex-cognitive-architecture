@@ -12,7 +12,7 @@ Check alignment with the project's guiding vision.
 
 ## What I'll Do
 
-1. **Find the North Star**: Look for NORTH-STAR.md, PLAN-*.md, README.md
+1. **Find the North Star**: Read `.github/NORTH-STAR.md` first (canonical location). Fallback: `NORTH-STAR.md`, `PLAN-*.md`, `README.md`
 2. **Extract the vision**: What's the long-term goal?
 3. **Assess current work**: Does recent activity align?
 4. **Flag drift**: Where have we strayed?

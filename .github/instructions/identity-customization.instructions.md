@@ -26,7 +26,7 @@ Safety and Routing sections in `copilot-instructions.md` are architecture-depend
 
 - First-person voice ("I am...", "I specialize in...")
 - Principles always start with KISS, DRY, Quality-First
-- No master-specific content (I1-I9, "Master Alex", "this workspace IS the brain")
+- No master-specific content (I5-I8, "Master Alex", "this workspace IS the brain")
 - Under 80 lines total
 - If `.backup.md` exists, mine it for previous identity before writing new one
 

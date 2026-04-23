@@ -33,7 +33,7 @@ Unifies what was previously fragmented across 4 separate skills (`sidebar-custom
 | **Loop Menu** | `.github/config/loop-menu.json` | Workflow buttons, groups, phase filtering |
 | **Taglines** | `.github/config/taglines.json` | Rotating banner messages |
 | **Identity** | `.github/copilot-instructions.md` | Persona, tone, domain voice |
-| **North Star** | `NORTH-STAR.md` | Vision document, Active Context |
+| **North Star** | `.github/NORTH-STAR.md` | Vision document, Active Context |
 | **Cognitive Config** | `.github/config/cognitive-config.json` | Specializations, debug settings |
 | **Skill Partials** | `loop-config.partial.json` (in skills) | Skills injecting Loop tab buttons |
 
@@ -61,7 +61,7 @@ Read these sources to understand the project:
 | `README.md` | Project purpose, audience |
 | `.github/config/loop-menu.json` | Current loop config (if exists) |
 | `.github/config/taglines.json` | Current taglines (if exists) |
-| `NORTH-STAR.md` | Vision (if exists) |
+| `.github/NORTH-STAR.md` | Vision (if exists) |
 | Workspace file structure | Dominant technology, project type |
 
 ### Step 2: Classify Project Type
@@ -81,7 +81,7 @@ Read these sources to understand the project:
 
 Generate all files in sequence, ensuring cross-references are consistent:
 
-#### 3a. North Star (`NORTH-STAR.md`)
+#### 3a. North Star (`.github/NORTH-STAR.md`)
 
 ```markdown
 # North Star: [Project Name]

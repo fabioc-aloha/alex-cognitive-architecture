@@ -10,3 +10,5 @@ currency: 2026-04-22
 Quick-reference for software releases. See [release-preflight skill](.github/skills/release-preflight/SKILL.md) for detailed procedures.
 
 Full protocol in `.github/skills/release-preflight/SKILL.md`.
+
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence

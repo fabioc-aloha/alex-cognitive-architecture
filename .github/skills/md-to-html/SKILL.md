@@ -12,6 +12,8 @@ currency: 2026-04-22
 
 > Write in Markdown, share as a polished web page — zero dependencies for viewers
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 Convert Markdown documents into self-contained HTML files with embedded CSS, base64 images, and Mermaid diagram rendering. Ready for quick-share distribution, offline viewing, print, or email attachment.
 
 ---

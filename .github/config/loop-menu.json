@@ -2,6 +2,7 @@
   "$schema": "./loop-config.schema.json",
   "$comment": "Loop tab menu configuration — source of truth for sidebar Loop groups and buttons. Prompts are loaded from .github/prompts/loop/{promptFile} at runtime.",
   "version": "1.0",
+  "projectType": "generic",
   "groups": [
     {
       "id": "creative-loop",

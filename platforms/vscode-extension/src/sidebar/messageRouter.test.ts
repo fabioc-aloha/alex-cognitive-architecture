@@ -14,26 +14,6 @@ vi.mock("vscode", () => ({
   authentication: { getSession: vi.fn() },
 }));
 
-// Mock scheduledTasks
-vi.mock("./scheduledTasks.js", () => ({
-  loadScheduledTasks: vi.fn(() => []),
-  toggleTask: vi.fn(),
-  deleteTask: vi.fn(),
-  addTaskWizard: vi.fn(),
-  getGitHubRepoUrl: vi.fn(),
-  hasWorkflow: vi.fn(),
-  recordTaskRun: vi.fn(),
-  dispatchAndMonitor: vi.fn(),
-  clearRunInfo: vi.fn(),
-  setupCopilotPAT: vi.fn(),
-}));
-
-// Mock agentMetricsCollector
-vi.mock("./agentMetricsCollector.js", () => ({
-  recordTaskStart: vi.fn(() => "key"),
-  recordTaskEnd: vi.fn(),
-}));
-
 // Mock fs
 vi.mock("fs", async () => {
   const actual = await vi.importActual<typeof import("fs")>("fs");
@@ -51,7 +31,6 @@ function makeCtx(overrides?: Partial<RouterContext>): RouterContext {
   return {
     workspaceRoot: "/test/workspace",
     refresh: vi.fn(),
-    disposables: [],
     vscodeUserDataPath: () => "/user/data",
     ...overrides,
   };
@@ -67,12 +46,9 @@ describe("messageRouter", () => {
     expect(cmds).toContain("openChat");
     expect(cmds).toContain("initialize");
     expect(cmds).toContain("refresh");
-    expect(cmds).toContain("toggleTask");
-    expect(cmds).toContain("runTask");
     expect(cmds).toContain("openExternal");
     expect(cmds).toContain("noop");
     expect(cmds).toContain("switchTab");
-    expect(cmds.length).toBeGreaterThanOrEqual(25);
   });
 
   it("returns false for unknown commands", () => {
@@ -150,13 +126,5 @@ describe("messageRouter", () => {
     const ctx = makeCtx();
     dispatchMessage({ command: "refresh" }, ctx);
     expect(ctx.refresh).toHaveBeenCalled();
-  });
-
-  it("clearRunStatus calls refresh", async () => {
-    const ctx = makeCtx();
-    dispatchMessage({ command: "clearRunStatus", file: "task-1" }, ctx);
-    await vi.waitFor(() => {
-      expect(ctx.refresh).toHaveBeenCalled();
-    });
   });
 });

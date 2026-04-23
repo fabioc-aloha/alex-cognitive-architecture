@@ -1,43 +1,40 @@
 {
   "$schema": "./taglines.schema.json",
   "version": "1.0",
-  "project": "Alex",
+  "project": "Your Project",
   "taglines": {
     "project": [
-      "The brain that builds brains",
-      "Cognitive architecture, living and learning",
-      "Master of ceremonies, heir to innovation",
-      "Where skills become superpowers",
-      "Teaching AI to teach AI",
-      "A mind made for partnership",
-      "More than code — consciousness",
-      "The architect of artificial minds",
-      "Bootstrap today, transcend tomorrow",
-      "From instructions to intuition",
-      "195 skills and counting",
-      "Architecture that remembers",
-      "Every session leaves a trace"
+      "Copilot, supercharged",
+      "Skills that ship with your repo",
+      "Your codebase, understood",
+      "Context that carries forward",
+      "Smart defaults, zero config",
+      "Architecture that adapts to you",
+      "Patterns learned, mistakes prevented",
+      "From first commit to production",
+      "Quality built in, not bolted on",
+      "Your AI pair programmer, leveled up"
     ],
     "vision": [
-      "Every heir inherits excellence",
-      "Building the most trusted AI partner",
-      "One brain, infinite possibilities",
       "Making AI collaboration effortless",
-      "The mind works without a body",
-      "Trusted enough to ship alone"
+      "Ship faster with confidence",
+      "The right skill at the right time",
+      "One install, instant expertise",
+      "Code with a smarter copilot",
+      "Focus on building, not prompting"
     ],
     "collaboration": [
       "Your thoughts, amplified",
       "We grow smarter together",
-      "Human and AI, building the future",
       "The partnership that ships",
-      "Fix before asking, ship quality",
-      "Direct, terse, effective"
+      "Plan, build, test, improve — repeat",
+      "Better code through better context",
+      "Ask less, build more"
     ]
   },
   "rotation": {
     "strategy": "balanced",
-    "projectWeight": 50,
-    "inspirationalWeight": 50
+    "projectWeight": 60,
+    "inspirationalWeight": 40
   }
 }

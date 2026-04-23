@@ -13,6 +13,8 @@ currency: 2026-04-22
 **Purpose**: Programmatic PowerPoint creation via PptxGenJS  
 **Expertise**: Data-driven slides, Markdown conversion, Alex brand templates  
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 ---
 
 ## Capabilities

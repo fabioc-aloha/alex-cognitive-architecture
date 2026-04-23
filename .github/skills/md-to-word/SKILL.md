@@ -12,6 +12,8 @@ currency: 2026-04-22
 
 > One command to professional Word documents — diagrams, tables, and formatting done right on first attempt.
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 Convert any Markdown document into polished Word (.docx) files ready for stakeholders, executives, and external audiences. Supports all standard Markdown formatting, Mermaid diagrams (auto-converted to PNG), and SVG illustrations (auto-embedded).
 
 ## Why Use This?

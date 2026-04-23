@@ -30,18 +30,6 @@ export function statusBarRefreshInterval(): number {
   return cfg().get<number>("statusBar.refreshIntervalMinutes", 5) * 60 * 1000;
 }
 
-// ── Autopilot (task dispatcher) ───────────────────────────────────
-
-/** Polling interval for GitHub Actions workflow status in ms (default: 5 000). */
-export function autopilotPollInterval(): number {
-  return cfg().get<number>("autopilot.pollIntervalMs", 5_000);
-}
-
-/** Max poll attempts before giving up (default: 120 → ~10 min at 5s). */
-export function autopilotMaxPollAttempts(): number {
-  return cfg().get<number>("autopilot.maxPollAttempts", 120);
-}
-
 // ── Health Pulse ──────────────────────────────────────────────────
 
 /** Days without dream before status = critical (default: 14). */
@@ -62,11 +50,4 @@ export function syncStaleCriticalDays(): number {
 /** Days since last sync before marking stale (default: 7). */
 export function syncStaleDays(): number {
   return cfg().get<number>("health.syncStaleDays", 7);
-}
-
-// ── Metrics ───────────────────────────────────────────────────────
-
-/** Retention period for agent metrics in ms (default: 90 days). */
-export function metricsRetentionMs(): number {
-  return cfg().get<number>("metrics.retentionDays", 90) * 24 * 60 * 60 * 1000;
 }

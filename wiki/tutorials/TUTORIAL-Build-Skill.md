@@ -342,7 +342,6 @@ code
 
 - Share your skill with the team by committing to version control
 - Consider promoting stable skills to the global brain
-- [Setting Up Autopilot Tasks](TUTORIAL-Autopilot.md) — Automate using your new skill
 
 ---
 

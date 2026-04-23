@@ -10,6 +10,8 @@ currency: 2026-04-22
 
 > Choose the right presentation tool for your use case — Slides, Pitch, or Auto.
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 Alex has three presentation generation capabilities. This skill provides the decision framework for selecting the optimal tool based on requirements.
 
 ---

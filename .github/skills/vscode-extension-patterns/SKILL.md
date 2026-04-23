@@ -230,7 +230,6 @@ const handlers = { click: () => config.value };
 | `chat.agentSkillsLocations` | Auto-load skills |
 | `chat.useAgentsMdFile` | Load AGENTS.md |
 | `chat.hooks.enabled` | Lifecycle hooks |
-| `chat.autopilot.enabled` | Autopilot mode |
 
 **Agent file** (`.github/agents/my.agent.md`):
 ```yaml

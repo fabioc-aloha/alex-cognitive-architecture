@@ -12,6 +12,8 @@ currency: 2026-04-22
 
 > Ingest Word documents into your Markdown workflow — clean, linted, version-control ready
 
+> **Staleness Watch**: See [EXTERNAL-API-REGISTRY.md](../../EXTERNAL-API-REGISTRY.md) for source URLs and recheck cadence
+
 Convert .docx files into clean, linted Markdown with extracted images, normalized headings, and cleaned table formatting. The reverse converter for ingesting external documents into a Markdown-based workflow.
 
 ---

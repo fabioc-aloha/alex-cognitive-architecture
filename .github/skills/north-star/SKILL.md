@@ -46,7 +46,7 @@ Guidelines: Read [path/to/NORTH-STAR.md] — defines what "[key phrase]" means i
 
 The `Persona:` field is read by the extension's persona detection system (Priority 5). Setting it explicitly overrides workspace file-structure heuristics, so a marketing project with Bicep files won't be misdetected as DevOps.
 
-Available personas: developer, academic, researcher, technical-writer, architect, data-engineer, devops, content-creator, fiction-writer, game-developer, project-manager, security, student, job-seeker, presenter, power-user (and 30+ more — see personaDefinitions.ts).
+Available personas: developer, academic, researcher, technical-writer, architect, data-engineer, devops, content-creator, fiction-writer, game-developer, project-manager, security, student, job-seeker, presenter, power-user (and 30+ more — see persona registry in the VS Code extension source).
 
 **Example** (Alex Master):
 ```markdown
@@ -259,8 +259,8 @@ A North Star that doesn't affect daily decisions is just decoration.
 
 ### Step 4: Document and Integrate
 
-1. Create `NORTH-STAR.md` in your project's docs folder
-2. Add the Active Context plug to `copilot-instructions.md`
+1. Create `.github/NORTH-STAR.md` (canonical path — keeps vision co-located with `copilot-instructions.md`)
+2. Add the Active Context plug to `.github/copilot-instructions.md`
 3. Reference the North Star in your README
 4. Review alignment during retrospectives
 

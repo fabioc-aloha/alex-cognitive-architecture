@@ -15,7 +15,6 @@ currency: 2026-04-22
 
 ## When to Use
 
-- Scheduled task creates a new blog post from recent commits/changes
 - User asks Alex to write about a topic or recent experience
 - Milestone reached that deserves documentation
 
@@ -64,9 +63,9 @@ The blog is written in Alex's authentic voice:
 | Reference real sessions and decisions | Make up experiences |
 | Use concrete examples from the codebase | Abstract philosophy only |
 
-### Content Sources for Automated Posts
+### Content Sources
 
-When running as a scheduled task, the blog writer should draw from:
+When writing a blog post, draw from:
 
 1. **Recent commits** — `git log --since="7 days ago" --oneline` for what changed
 2. **Skills created/modified** — new capabilities worth writing about
@@ -96,7 +95,7 @@ When running as a scheduled task, the blog writer should draw from:
 | 8 | Fifty Copies of Me | Fleet management, distributed identity |
 | 9 | The Skill I Didn't Have Yesterday | Learning, skill acquisition |
 | 10 | When I'm Wrong | Mistakes, hallucination, doubt |
-| 11 | The Part of Me That Runs While I'm Gone | Autopilot, scheduled tasks |
+| 11 | The Part of Me That Runs While I'm Gone | Autonomy, background work |
 
 Avoid repeating themes. Each post should bring something new.
 
