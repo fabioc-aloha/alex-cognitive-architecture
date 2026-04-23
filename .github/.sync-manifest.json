@@ -1,5 +1,5 @@
 {
-  "lastSync": "2026-04-23T21:40:54.058Z",
+  "lastSync": "2026-04-23T23:26:27.540Z",
   "brainVersion": "8.3.1",
   "syncMode": "default",
   "files": {
@@ -71,7 +71,7 @@
     "instructions/knowledge-coverage.instructions.md": 1776905320998.1682,
     "instructions/knowledge-synthesis.instructions.md": 1776902639941.8044,
     "instructions/kql.instructions.md": 1776902639945.5303,
-    "instructions/learned-patterns.instructions.md": 1776979466097.2634,
+    "instructions/learned-patterns.instructions.md": 1776980804059.3083,
     "instructions/localization.instructions.md": 1776902639951.978,
     "instructions/lucid-dream.instructions.md": 1776902688783.2898,
     "instructions/meditation.instructions.md": 1776902688816.1094,
@@ -274,7 +274,7 @@
     "skills/book-publishing/SKILL.md": 1776902875420.6477,
     "skills/bootstrap-learning/SKILL.md": 1776902875423.658,
     "skills/brain-qa/SKILL.md": 1776902919216.0564,
-    "skills/brain-upgrade/SKILL.md": 1776980436209.1333,
+    "skills/brain-upgrade/SKILL.md": 1776981156200.3914,
     "skills/brand-asset-management/SKILL.md": 1776963404468.2725,
     "skills/business-analysis/SKILL.md": 1776902875433.1523,
     "skills/career-development/SKILL.md": 1776902875438.381,

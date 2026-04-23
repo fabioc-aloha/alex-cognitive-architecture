@@ -21,12 +21,14 @@ Safety fixes for the brain-upgrade pipeline across all three executors (fleet sc
 - **Extension semver gate**: `bootstrap.ts` now uses `>=` comparison (was strict `!==`), preventing accidental downgrades when running an older VSIX against a newer installed brain.
 - **Heir identity preservation in extension**: `bootstrap.ts` now captures `identity`, `upgradeLock`, `lockReason` from the pre-upgrade `brain-version.json` and re-applies them after install. Previously these fields were overwritten on every upgrade.
 - **CI backup in extension**: `bootstrap.ts` now saves the pre-upgrade `copilot-instructions.md` as `copilot-instructions.backup.md` for Phase 2 reconciliation. Matches the shared core's behavior.
+- **NORTH-STAR backup for LLM curation**: Both the shared core and the extension now save the pre-upgrade `NORTH-STAR.md` as `NORTH-STAR.backup.md`. NORTH-STAR is a semantic document — unlike config files (mechanically preserved), the LLM decides in Phase 2 whether to keep, merge, or relocate it (the old copy may have been placed in the wrong directory). The fresh template is installed as the active `NORTH-STAR.md`. Skill documents the curation decision tree.
 - **Release preflight parity check**: New check in `scripts/release-preflight.cjs` fails when `BRAIN_SUBDIRS` or `BRAIN_ROOT_FILES` drift between `bootstrap.ts` (TS) and `brain-upgrade-core.cjs` (CJS shared core). Caught real drift (missing `brain-version.json` in the TS array) on its first run.
 - **Report → Validate → Approve ritual**: New `/propose-change` prompt and `master-wiki/decisions/change-proposals/` archive for non-trivial refactors. Template + README + first worked example (`brain-upgrade-v8.3/`). Documented as a pattern in `learned-patterns.instructions.md`.
 - **Test coverage**: 3 new tests for skip-when-equal, force-bypasses-skip, and `compareSemver` ordering. Total 174/174 green (was 171).
 
 ### Changed
 
+- **NORTH-STAR is now LLM-curated, not mechanically preserved**: Previously the shared core copied the heir's `NORTH-STAR.md` from backup back into place on every upgrade. It is now removed from `HEIR_MANAGED_ROOT_FILES` and flows through Phase 2 LLM reconciliation instead (saved as `NORTH-STAR.backup.md`). This also handles cases where the old file was in the wrong directory.
 - **Brain-upgrade trifecta refactor**: Three executors (fleet script, extension bootstrap, muscle CLI) now share one Phase 1 mechanical contract via `.github/muscles/shared/brain-upgrade-core.cjs`. The extension mirrors the shared core in TypeScript because CJS can't be imported cross-boundary; the preflight parity check prevents silent drift.
 - **Trifecta self-protection**: Four paths are now protected from backup-restore to prevent a half-applied trifecta refactor from being overwritten by its predecessor: `.github/skills/brain-upgrade/SKILL.md`, `.github/instructions/brain-upgrade.instructions.md`, `.github/muscles/brain-upgrade.cjs`, `.github/muscles/shared/brain-upgrade-core.cjs`.
 - **Authoritative version stamp**: `brain-version.json` is the single source of truth. Legacy `.alex-brain-version` is no longer written and is removed on upgrade (preserved in backup for rollback).
@@ -38,7 +40,7 @@ Safety fixes for the brain-upgrade pipeline across all three executors (fleet sc
 
 ### Known Limitations
 
-- The extension does not yet preserve `NORTH-STAR.md` or heir-managed config files (`loop-menu.json`, `taglines.json`, `markdown-light.css`). Use `scripts/upgrade-brain.cjs` or the CLI muscle for heirs where this matters. Tracked for full parity port.
+- The extension does not yet preserve heir-managed config files (`loop-menu.json`, `taglines.json`, `markdown-light.css`). Use `scripts/upgrade-brain.cjs` or the CLI muscle for heirs where this matters. Tracked for full parity port.
 
 ---
 
