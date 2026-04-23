@@ -116,8 +116,6 @@ For safety-critical projects, apply NASA/JPL Power of 10 rules during review:
 
 **Trigger**: User mentions "mission-critical", "NASA standards", "high reliability", or "safety-critical"
 
-**Reference**: `.github/instructions/nasa-code-standards.instructions.md`
-
 ## Review Timing
 
 | PR Size | Expected Review Time | If Larger |

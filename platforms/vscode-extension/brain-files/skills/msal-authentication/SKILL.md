@@ -3,7 +3,7 @@ name: msal-authentication
 description: Microsoft Authentication Library (MSAL) patterns for React/SPA applications with Entra ID
 tier: standard
 applyTo: "**/*auth*,**/*msal*,**/*login*,**/*identity*,**/*entra*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # MSAL Authentication

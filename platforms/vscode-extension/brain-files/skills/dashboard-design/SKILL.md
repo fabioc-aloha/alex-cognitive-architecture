@@ -3,7 +3,7 @@ name: dashboard-design
 description: "Dashboard layout patterns, KPI card design, filter architecture, narrative flow through panels, and self-contained HTML generation"
 tier: standard
 applyTo: "**/*dashboard*,**/*kpi*,**/*panel*,**/*layout*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Dashboard Design

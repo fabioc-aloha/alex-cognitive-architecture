@@ -3,7 +3,7 @@ name: pii-privacy-regulations
 description: Handling personally identifiable information under European and Australian privacy regulations.
 tier: extended
 applyTo: '**/*privacy*,**/*PII*,**/*personal*,**/*GDPR*,**/*data-protection*,**/*consent*,**/*user-data*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # PII & Privacy Regulations Skill

@@ -3,7 +3,7 @@ name: performance-profiling
 description: CPU, memory, network bottleneck analysis — systematic performance investigation
 tier: standard
 applyTo: '**/*profile*,**/*performance*,**/*benchmark*,**/*bottleneck*,**/*optimize*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Performance Profiling Skill

@@ -3,7 +3,7 @@ name: executive-storytelling
 description: Data-driven narrative construction, stakeholder management, and influencing senior leadership decisions
 tier: standard
 applyTo: '**/*executive*,**/*leadership*,**/*stakeholder*,**/*narrative*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Skill: Executive Storytelling

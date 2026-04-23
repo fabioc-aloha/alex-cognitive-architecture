@@ -3,7 +3,7 @@ name: game-design
 description: Game mechanics, level design, player psychology, systems balancing, and narrative design for game developers.
 tier: extended
 applyTo: '**/*game*,**/*gameplay*,**/*level-design*,**/*player*,**/*npc*,**/*quest*,**/*gamedev*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Game Design Skill

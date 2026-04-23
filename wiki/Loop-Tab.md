@@ -31,7 +31,7 @@ The Loop tab contains:
 
 1. **Health Pulse** — A live status widget showing your brain's health
 2. **Chat with Alex** — Primary call-to-action to start a conversation
-3. **Five collapsible groups** — 28+ guided workflows organized by category
+3. **Collapsible groups** — Guided workflows organized by category
 
 Each button opens Copilot Chat with a pre-written prompt that guides Alex through a specific task. You don't need to remember commands or write detailed prompts — just click and go.
 
@@ -56,7 +56,6 @@ The health pulse widget sits at the top of the Loop tab. It gives you an at-a-gl
 
 - **Status label** — Healthy, Attention, Critical, or Unknown
 - **Last Dream** — How long since the last dream cycle (e.g., "2 hours ago")
-- **Inventory** — Count of skills, instructions, prompts, and agents in your workspace
 - **Nudges** — Actionable suggestions when something needs attention
 
 ### Nudges

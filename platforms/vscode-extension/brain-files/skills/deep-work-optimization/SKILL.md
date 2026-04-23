@@ -3,7 +3,7 @@ name: deep-work-optimization
 description: Focus blocks, distraction management, and flow state triggers for cognitively demanding work
 tier: extended
 applyTo: '**/*focus*,**/*deep-work*,**/*flow*,**/*productivity*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Skill: Deep Work Optimization

@@ -3,7 +3,7 @@ name: "skill-development"
 description: "Track desired capabilities and proactively acquire them through user collaboration"
 tier: standard
 applyTo: '**/*skill*,**/*capability*,**/*learning*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Skill Development

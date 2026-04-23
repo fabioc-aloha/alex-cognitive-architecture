@@ -1,7 +1,7 @@
 ---
 description: "Portable memory export for porting Alex context to other AI work surfaces"
 application: "When managing cognitive memory or porting context to other surfaces"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Memory Export Instructions

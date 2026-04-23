@@ -1,0 +1,102 @@
+/* Agent Activity panel */
+.agent-activity {
+  margin: var(--spacing-sm, 8px) 0;
+}
+.agent-activity-empty {
+  padding: var(--spacing-xl, 24px) var(--spacing-lg, 16px);
+  text-align: center;
+  color: var(--vscode-descriptionForeground);
+}
+.agent-activity-empty .codicon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: var(--spacing-sm, 8px);
+  opacity: 0.5;
+}
+.agent-empty-title {
+  font-size: var(--font-lg, 13px);
+  font-weight: 600;
+  color: var(--vscode-foreground);
+  margin: var(--spacing-xs, 4px) 0;
+}
+.agent-empty-hint {
+  font-size: var(--font-sm, 11px);
+  color: var(--vscode-descriptionForeground);
+  line-height: 1.5;
+  margin: 0;
+}
+.agent-section {
+  margin-bottom: var(--spacing-md, 12px);
+}
+.agent-section-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--spacing-xs, 4px) var(--spacing-sm, 8px);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--vscode-descriptionForeground);
+}
+.agent-section-header .codicon {
+  font-size: 13px;
+  opacity: 0.7;
+}
+.agent-badge {
+  background: var(--vscode-badge-background);
+  color: var(--vscode-badge-foreground);
+  border-radius: 8px;
+  padding: 0 6px;
+  font-size: 10px;
+  font-weight: 600;
+  min-width: 16px;
+  text-align: center;
+}
+.agent-pr-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm, 8px);
+  padding: var(--spacing-sm, 8px);
+  cursor: pointer;
+  border-radius: var(--radius-sm, 4px);
+  transition: background 0.12s ease;
+}
+.agent-pr-row:hover {
+  background: var(--vscode-list-hoverBackground);
+}
+.agent-pr-row:focus-visible {
+  outline: 2px solid var(--accent, #6366f1);
+  outline-offset: -2px;
+}
+.agent-pr-row .codicon {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.agent-pr-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.agent-pr-title {
+  font-size: var(--font-md, 12px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.agent-pr-meta {
+  font-size: var(--font-xs, 10px);
+  color: var(--vscode-descriptionForeground);
+  margin-top: 1px;
+}
+.agent-pr-arrow {
+  opacity: 0;
+  font-size: 12px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  transition: opacity 0.12s;
+  color: var(--vscode-descriptionForeground);
+}
+.agent-pr-row:hover .agent-pr-arrow {
+  opacity: 0.6;
+}

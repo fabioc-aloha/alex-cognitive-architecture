@@ -3,7 +3,7 @@ name: "knowledge-synthesis"
 description: "Cross-project pattern recognition — abstract, generalize, connect, store at the highest true level"
 tier: standard
 applyTo: "**/*knowledge*,**/*insight*,**/*pattern*,**/*global*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Knowledge Synthesis Skill
@@ -18,7 +18,7 @@ currency: 2025-01-01
 | --------------------------------------------------------------- | ------------------------------------------------------------------- |
 | "In Alex extension, skill links break when files are renamed"   | "Connection metadata breaks when target files are renamed"          |
 | "We migrated knowledge files to skills/"                        | "When reorganizing knowledge files, update all internal references" |
-| "Alex's dream runs brain-qa.ps1"                                | "Automated health checks should run validation scripts"             |
+| "Alex's dream runs brain-qa.cjs"                                | "Automated health checks should run validation scripts"             |
 
 **Test**: Would this insight help someone who's never seen this project?
 

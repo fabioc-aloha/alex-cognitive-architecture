@@ -4,7 +4,7 @@ description: '**Domain**: AI Infrastructure'
 tier: standard
 applyTo: '**/*mcp*,**/mcp.json,**/*model-context-protocol*'
 user-invokable: false
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # MCP Development Skill

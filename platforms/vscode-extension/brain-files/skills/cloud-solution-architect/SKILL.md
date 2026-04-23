@@ -3,7 +3,7 @@ name: cloud-solution-architect
 description: Design well-architected Azure cloud systems — 10 design principles, 6 architecture styles, 44 design patterns, technology choices, WAF pillars
 tier: standard
 applyTo: '**/architecture*,**/*cloud*,**/*azure-arch*,**/*waf*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Cloud Solution Architect

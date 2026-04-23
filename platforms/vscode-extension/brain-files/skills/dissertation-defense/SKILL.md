@@ -4,7 +4,7 @@ description: Comprehensive preparation for doctoral dissertation defense includi
 tier: extended
 applyTo: '**/*defense*,**/*dissertation*,**/*thesis*,**/*viva*,**/*doctoral*'
 inheritance: inheritable
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Dissertation Defense Skill
@@ -306,7 +306,6 @@ For dissertations involving scale or instrument development:
 ## Related Skills
 
 - [academic-research](.github/skills/academic-research/SKILL.md) — Research methodology
-- [practitioner-research](.github/skills/practitioner-research/SKILL.md) — DBA/practitioner methodology
 - [socratic-questioning](.github/skills/socratic-questioning/SKILL.md) — Question handling techniques
 
 ---

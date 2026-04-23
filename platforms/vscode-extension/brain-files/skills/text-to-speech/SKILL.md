@@ -4,7 +4,7 @@ description: "Cloud TTS via Replicate — 15 models, voice cloning, emotion cont
 tier: extended
 applyTo: '**/*tts*,**/*speech*,**/*audio*,**/*narration*'
 $schema: ../SKILL-SCHEMA.json
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Text-to-Speech Skill

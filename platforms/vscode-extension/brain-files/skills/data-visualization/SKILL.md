@@ -3,7 +3,7 @@ name: data-visualization
 description: Story-intent chart selection, color theory, annotation patterns, decluttering rules, and the "title = insight" principle for data-driven visuals
 tier: standard
 applyTo: "**/*chart*,**/*visual*,**/*plot*,**/*graph*,**/*dashboard*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Skill: Data Visualization

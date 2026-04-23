@@ -2,7 +2,7 @@
 description: "Research-first development workflow — pre-project knowledge encoding and 4-dimension gap analysis"
 application: "When analyzing data, building visualizations, or creating reports"
 applyTo: "**/research/**,**/*research*,**/*gap-analysis*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Research-First Workflow
@@ -80,7 +80,7 @@ For each research document:
 1. Identify **reusable patterns** (not project-specific config)
 2. Create 1-3 skills per doc in `.github/skills/{name}/SKILL.md`
 3. Ensure complete frontmatter (applyTo, description)
-4. Follow [skill-building](../skills/skill-building/SKILL.md) quality gates
+4. Follow [skill-creator](../skills/skill-creator/SKILL.md) quality gates
 
 ### 1.2 Create Instructions
 

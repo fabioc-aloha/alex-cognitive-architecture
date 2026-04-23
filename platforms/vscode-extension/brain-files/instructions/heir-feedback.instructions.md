@@ -2,7 +2,7 @@
 description: "Submit feedback, bug reports, and feature requests from heir projects to Master Alex"
 application: "When reporting bugs, requesting features, or providing feedback from heir projects"
 applyTo: "**/*feedback*,**/*bug-report*,**/*feature-request*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Heir Feedback Protocol

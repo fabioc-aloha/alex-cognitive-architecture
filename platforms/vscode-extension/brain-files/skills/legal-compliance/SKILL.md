@@ -3,7 +3,7 @@ name: legal-compliance
 description: Legal research, contract analysis, regulatory compliance, and case law citation for legal professionals.
 tier: extended
 applyTo: '**/*legal*,**/*compliance*,**/*contract*,**/*regulation*,**/*law*,**/*attorney*,**/*litigation*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Legal Compliance Skill

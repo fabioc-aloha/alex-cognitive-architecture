@@ -4,7 +4,7 @@ description: "Microsoft Foundry agent deployment, orchestration, and cloud-nativ
 tier: extended
 applyTo: '**/*foundry*,**/*agent*platform*,**/*orchestrat*'
 user-invokable: false
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Foundry Agent Platform Skill

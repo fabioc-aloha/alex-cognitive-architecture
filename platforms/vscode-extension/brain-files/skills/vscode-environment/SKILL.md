@@ -3,7 +3,7 @@ name: vscode-environment
 description: Optimal workspace setup for productivity.
 tier: standard
 applyTo: '**/.vscode/**,**/settings.json,**/launch.json,**/tasks.json,**/extensions.json'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # VS Code Environment Skill

@@ -2,7 +2,7 @@
 description: "Automated pre-publish quality gates — preventing regressions through build pipeline enforcement"
 application: "During deployment, release preparation, or publishing workflows"
 applyTo: "**/quality-gate*,**/scripts/quality*,**/*prepublish*,**/package.json"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Automated Quality Gates Instructions

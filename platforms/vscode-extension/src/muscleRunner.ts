@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as fs from "fs";
 import { execFile } from "child_process";
+import { muscleTimeout, muscleMaxBuffer } from "./settings.js";
 
 /**
  * Run a muscle script and return its output.
@@ -24,8 +25,8 @@ export function runMuscle(
   return new Promise((resolve) => {
     execFile("node", [musclePath, ...args], {
       cwd: workspaceRoot,
-      maxBuffer: 10 * 1024 * 1024,
-      timeout: 120_000,
+      maxBuffer: muscleMaxBuffer(),
+      timeout: muscleTimeout(),
     }, (err, stdout, stderr) => {
       let exitCode = 0;
       if (err) {

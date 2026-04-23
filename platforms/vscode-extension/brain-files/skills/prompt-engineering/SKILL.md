@@ -3,7 +3,7 @@ name: prompt-engineering
 description: Craft effective prompts that get the best results from language models.
 tier: standard
 applyTo: '**/*prompt*,**/*llm*,**/*ai*,**/*copilot*,**/*agent*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Prompt Engineering Skill

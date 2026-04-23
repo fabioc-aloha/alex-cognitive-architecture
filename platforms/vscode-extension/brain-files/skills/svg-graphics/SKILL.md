@@ -3,7 +3,7 @@ name: svg-graphics
 description: Scalable, accessible, theme-aware visuals
 tier: standard
 applyTo: '**/*.svg,**/*icon*,**/*graphic*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # SVG Graphics Skill

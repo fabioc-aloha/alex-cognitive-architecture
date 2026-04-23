@@ -11,6 +11,7 @@ import { AgentActivityProvider } from "./sidebar/agentActivityTreeView.js";
 import { initRunStore } from "./sidebar/scheduledTasks.js";
 import { bootstrapBrainFiles, checkAutoUpgrade, getBrainStatus } from "./bootstrap.js";
 import { muscleAndPrompt, runMuscle, runMuscleInTerminal } from "./muscleRunner.js";
+import { statusBarRefreshInterval } from "./settings.js";
 
 /**
  * Sanitize error messages for user display — strips file system paths
@@ -81,10 +82,10 @@ export function activate(context: vscode.ExtensionContext): void {
   createAgentStatusBar(context);
   updateAgentStatusBar(workspaceRoot);
 
-  // Refresh status bar periodically (every 5 minutes)
+  // Refresh status bar periodically
   const statusTimer = setInterval(() => {
     updateAgentStatusBar(vscode.workspace.workspaceFolders?.[0]?.uri.fsPath);
-  }, 5 * 60 * 1000);
+  }, statusBarRefreshInterval());
   context.subscriptions.push({ dispose: () => clearInterval(statusTimer) });
 
   // Agent Activity TreeView (CL1)

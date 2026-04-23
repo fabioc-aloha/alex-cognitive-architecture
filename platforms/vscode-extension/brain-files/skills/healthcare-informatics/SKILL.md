@@ -3,7 +3,7 @@ name: healthcare-informatics
 description: Clinical terminology, healthcare compliance (HIPAA/HITECH), patient safety, and health data management.
 tier: extended
 applyTo: '**/*health*,**/*clinical*,**/*medical*,**/*patient*,**/*hipaa*,**/*ehr*,**/*pharma*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Healthcare Informatics Skill

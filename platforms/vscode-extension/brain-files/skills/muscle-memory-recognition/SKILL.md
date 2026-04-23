@@ -3,7 +3,7 @@ name: muscle-memory-recognition
 description: Identify opportunities to build automation scripts (muscles) from repetitive or heavy-lifting tasks
 tier: standard
 applyTo: '**/*muscle*,**/*automat*,**/*script*,**/*repetitive*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Muscle Memory Recognition
@@ -123,11 +123,11 @@ IF (cross-platform required OR heir-critical):
 {action}-{target}.{ext}
 
 Examples:
-- validate-skills.ps1
-- sync-architecture.cjs
-- normalize-paths.ps1
+- validate-skills.cjs
+- sync-to-heir.cjs
+- normalize-paths.cjs
 - gamma-generator.cjs
-- brain-qa.ps1
+- brain-qa.cjs
 ```
 
 ## Integration Checklist

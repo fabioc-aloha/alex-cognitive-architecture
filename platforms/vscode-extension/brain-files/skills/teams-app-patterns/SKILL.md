@@ -4,7 +4,7 @@ description: Full Teams app development patterns.
 tier: standard
 user-invokable: false
 applyTo: '**/*teams*,**/*manifest*,**/*m365*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Teams App Patterns Skill

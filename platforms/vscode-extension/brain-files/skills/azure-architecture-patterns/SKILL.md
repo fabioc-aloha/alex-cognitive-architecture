@@ -3,7 +3,7 @@ name: azure-architecture-patterns
 description: Well-Architected Framework principles and Azure best practices
 tier: standard
 applyTo: '**/*azure*,**/*cloud*,**/*waf*,**/*architecture*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Azure Architecture Patterns

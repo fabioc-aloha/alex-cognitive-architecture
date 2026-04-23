@@ -2,7 +2,7 @@
 description: "Practical guide for heirs to create project trifectas and apply research-first development"
 application: "When exploring new domains, synthesizing knowledge, or building expertise"
 applyTo: "**/*heir*,**/*readiness*,**/*bootstrap*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Heir Project Improvement
@@ -344,8 +344,6 @@ For **safety-critical**, **mission-critical**, or **high-reliability** heir proj
 - [ ] Optional chaining on all object access
 - [ ] Compiler warnings = 0
 ```
-
-**Reference**: `.github/instructions/nasa-code-standards.instructions.md`
 
 **When to apply**: User mentions "mission-critical", "safety-critical", "NASA standards", "high reliability", or the heir manages critical infrastructure (medical, aerospace, financial, infrastructure).
 

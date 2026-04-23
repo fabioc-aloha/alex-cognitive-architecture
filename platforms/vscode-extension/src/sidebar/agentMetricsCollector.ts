@@ -8,6 +8,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import { metricsRetentionMs } from "../settings.js";
 
 // ── Types ─────────────────────────────────────────────────────────
 
@@ -27,7 +28,10 @@ interface RunRecord {
 // ── Constants ─────────────────────────────────────────────────────
 
 const STATE_FILE = ".agent-metrics-state.json";
-const RETENTION_MS = 90 * 24 * 60 * 60 * 1000; // 90 days (matches config)
+
+function retentionMs(): number {
+  return metricsRetentionMs();
+}
 
 // ── In-memory run log for rate/duration aggregation ───────────────
 
@@ -83,7 +87,7 @@ function writeRunLog(workspaceRoot: string, log: RunLog): void {
 
 /** Remove entries older than retention window. */
 function pruneRunLog(log: RunLog): RunLog {
-  const cutoff = Date.now() - RETENTION_MS;
+  const cutoff = Date.now() - retentionMs();
   return { runs: log.runs.filter((r) => r.completedAt > cutoff) };
 }
 

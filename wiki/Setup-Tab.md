@@ -206,8 +206,12 @@ Opens VS Code settings filtered to Alex-specific configuration options. All sett
 
 | Setting | Description |
 |---------|-------------|
-| `alex.verbosity` | Response length preference (`brief`, `standard`, `detailed`) |
-| Other settings | Vary by extension version — check the settings page for the full list |
+| `alex.aiMemory.path` | Custom path to the shared AI-Memory folder |
+| `alex.muscle.timeout` | Timeout for muscle script execution (ms) |
+| `alex.muscle.maxBufferMB` | Maximum output buffer for muscle scripts (MB) |
+| `alex.statusBar.refreshIntervalMinutes` | Status bar health refresh interval |
+| `alex.health.*` | Health thresholds for dream and sync staleness |
+| `alex.metrics.retentionDays` | Usage metrics retention period |
 
 ### Recommended VS Code Settings
 

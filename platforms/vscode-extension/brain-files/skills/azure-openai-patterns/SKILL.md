@@ -3,7 +3,7 @@ name: azure-openai-patterns
 description: Azure OpenAI API patterns for rate limiting, function calling, error handling, and token optimization
 tier: standard
 applyTo: "**/*openai*,**/*chat*,**/*llm*,**/*gpt*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Azure OpenAI Patterns

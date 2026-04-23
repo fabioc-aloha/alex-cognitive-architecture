@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.3.0] - 2026-04-22
+
+### Quality Release
+
+Pure quality release — zero new features. All effort on correctness, performance, documentation accuracy, and developer experience.
+
+### Changed
+
+- **Extension architecture**: Decomposed 2 god files — `WelcomeViewProvider` (1,400→725 lines) via message router extraction + CSS externalization; `scheduledTasks` (1,480→53-line barrel) into 5 focused modules (taskStore, workflowGenerator, taskDispatcher, scheduledTasksUI, types)
+- **Performance**: Consolidated 4 always-on instructions → 2 (epistemic-calibration, proactive-awareness absorptions), saving ~701 tokens/request. Trimmed 2 largest skills (-296 lines)
+- **11 extension settings**: Muscle timeout/buffer, status bar refresh, autopilot intervals, dream thresholds, sync stale days, metrics retention — all previously hardcoded
+- **Release script ordering**: Publish to marketplace BEFORE git commit/tag/push (irreversible ops after validation)
+- **Preflight gates**: VSIX version mismatch and missing CHANGELOG entry promoted from WARN to FAIL
+- **VS Code engine**: Minimum raised to 1.117.0
+
+### Fixed
+
+- **19 broken cross-references** from v8.x modernization (deleted/renamed muscles, skills, instructions)
+- **342 stale currency stamps** updated after structural and content review
+- **Wiki accuracy**: 34 issues across 10 heir wiki pages — stale counts, removed Autopilot tab references, corrected Initialize flow description, replaced nonexistent settings
+- **Architecture docs**: Updated counts, version refs, and engine requirements across 6 master wiki files + both READMEs
+- **Heir sync consistency**: Reconciled BRAIN_SUBDIRS (added hooks), aligned BRAIN_ROOT_FILES, removed master-only hooks.json from sync
+
+### Added
+
+- **Test suite**: 152 node:test + 163 vitest = 315 tests (was 5 vitest tests pre-v8.3.0)
+- **CI workflow**: `brain-qa.yml` runs npm test + brain-qa + self-contained checks on push/PR
+- **10 new test files**: htmlUtils, muscleRunner, bootstrap, scheduledTasks, messageRouter, sync-brain-files, upgrade-brain, publish-heir, release-preflight, converter-qa
+- **Message router**: Typed route table replacing 28-case switch statement
+
+---
+
 ## [8.2.3] - 2026-04-22
 
 ### Added

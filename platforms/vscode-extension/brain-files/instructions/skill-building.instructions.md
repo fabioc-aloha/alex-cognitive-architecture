@@ -2,14 +2,14 @@
 description: "Skill building procedure for creating reusable brain skills from experience"
 application: "When creating, updating, or reviewing brain skills"
 applyTo: "**/.github/skills/**,**/*skill*build*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Skill Building Procedure
 
-Templates, quality checklists, depth rubric, staleness patterns → see `skill-building` skill.
+Templates, quality checklists, depth rubric, staleness patterns → see `skill-creator` skill.
 
-Full protocol in `.github/skills/skill-building/SKILL.md`.
+Full protocol in `.github/skills/skill-creator/SKILL.md`.
 
 ## Quick Reference
 

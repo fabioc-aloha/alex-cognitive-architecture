@@ -3,7 +3,7 @@ name: mcp-builder
 description: Build MCP servers for LLM tool integration — Python (FastMCP), Node/TypeScript (MCP SDK), or C#/.NET (Microsoft MCP SDK)
 tier: standard
 applyTo: '**/mcp*,**/*mcp-server*,**/*model-context-protocol*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # MCP Server Development Guide

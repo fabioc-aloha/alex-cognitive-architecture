@@ -33,7 +33,7 @@ If you had the old `alex-vscode-extension`, uninstall it first — the new exten
 
 ### 2. Update Brain Files
 
-Run **Alex: Install / Update Brain** from the Command Palette (`Ctrl+Shift+P`) to get the latest brain files. This updates your `.github/` directory with v8 skills, instructions, and prompts.
+Run **Alex: Upgrade Architecture** from the Command Palette (`Ctrl+Shift+P`) to get the latest brain files. This updates your `.github/` directory with v8 skills, instructions, and prompts.
 
 ### 3. Terminology in Custom Files
 
@@ -80,8 +80,8 @@ No action needed. Your existing skills and instructions work as before.
 
 After upgrading, verify everything works:
 
-1. Open the Alex sidebar — you should see 3 tabs (Loop, Autopilot, Setup)
-2. Check the Loop tab — Health Pulse should show "Healthy" with skill counts
+1. Open the Alex sidebar — you should see 2 tabs (Loop, Setup)
+2. Check the Loop tab — Health Pulse should show "Healthy"
 3. Run a Dream cycle (`Alex: Dream`) — should complete without errors
 4. Open Copilot Chat — `@alex` should respond normally
 

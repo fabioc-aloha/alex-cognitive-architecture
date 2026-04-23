@@ -3,7 +3,7 @@ name: career-development
 description: Resume crafting, interview preparation, job search strategy, and professional growth planning.
 tier: extended
 applyTo: '**/*resume*,**/*cv*,**/*interview*,**/*job*,**/*career*,**/*cover-letter*,**/*portfolio*,**/*linkedin*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Career Development Skill

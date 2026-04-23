@@ -10,7 +10,7 @@
 
 ### User Manual
 
-- [Chat Commands](User-Manual#chat-commands)
+- [Talking to Alex](User-Manual#talking-to-alex)
 - [Sidebar Panel](User-Manual#sidebar-panel)
   - [Loop Tab](Loop-Tab)
   - [Setup Tab](Setup-Tab)
@@ -64,4 +64,4 @@ Step-by-step guides:
 
 ---
 
-**Version**: 8.2.3
+**Version**: 8.3.0

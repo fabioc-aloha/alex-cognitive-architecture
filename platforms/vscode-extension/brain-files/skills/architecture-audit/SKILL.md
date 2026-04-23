@@ -3,7 +3,7 @@ name: architecture-audit
 description: Comprehensive **project** consistency review across code, documentation, diagrams, and configuration
 tier: standard
 applyTo: '**/*audit*,**/*review*,**/*consistency*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Architecture Audit
@@ -273,13 +273,13 @@ on:
 
 ```powershell
 # Full audit (all 22 sections)
-node .github/muscles/audit-master-alex.cjs
+node .github/muscles/brain-qa.cjs
 
-# Quick audit (master-specific only, sections 1-9)
-node .github/muscles/audit-master-alex.cjs --section quick
+# Quick audit (sections 1-9)
+node .github/muscles/brain-qa.cjs --mode quick
 
 # Specific sections
-node .github/muscles/audit-master-alex.cjs --section 4,7,13
+node .github/muscles/brain-qa.cjs --mode quick --quiet
 ```
 
 ### Semantic Review Checklist (Manual — Not Scriptable)

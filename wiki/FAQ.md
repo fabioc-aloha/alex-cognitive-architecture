@@ -17,7 +17,7 @@ Alex is a cognitive learning partner that lives in VS Code. Unlike traditional A
 | **Memory** | Session only | Persistent connections + episodic |
 | **Learning** | None | Continuous through meditation |
 | **Agents** | Single | 22 specialized agents |
-| **Skills** | Generic | 194 domain-specific |
+| **Skills** | Generic | 195 domain-specific |
 | **Adaptation** | None | Project-aware persona |
 
 ### Does Alex require a separate subscription?
@@ -40,7 +40,7 @@ See [Getting Started](Getting-Started) for detailed instructions.
 
 ### What VS Code version do I need?
 
-VS Code 1.100 or later. VS Code 1.117+ is recommended for the best experience (persistent autopilot mode, improved terminal handling).
+VS Code 1.117 or later.
 
 ### Does Alex work with VS Code forks (Cursor, etc.)?
 
@@ -97,12 +97,11 @@ In agent mode, you can configure Alex as the default Copilot participant. See [U
 
 ## Sidebar
 
-### What are the three tabs?
+### What are the two tabs?
 
 | Tab | Purpose | Details |
-|-----|---------|---------|
+|-----|---------|--------|
 | **Loop** | Guided workflows for development | [Loop Tab](Loop-Tab) |
-| **Autopilot** | Automated recurring tasks | [Autopilot](Autopilot) |
 | **Setup** | Workspace config, brain health, memory | [Setup Tab](Setup-Tab) |
 
 ### Can I customize which agents appear in VS Code Copilot's @ dropdown?
@@ -277,7 +276,7 @@ This validates and repairs the connection network.
 
 ### Alex is slow
 
-- Reduce `alex.verbosity` to `brief`
+- Check if your project has many large skill files — consider trimming or splitting
 - Check active skill count (too many = slower)
 - Clear old episodic memory
 

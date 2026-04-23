@@ -10,7 +10,7 @@ metadata:
     triggers: [content safety, guardrail, input defense, output validation, content filter, kill switch, safety layer, responsible AI implementation]
     context: Working on content safety implementation, guardrails, or Azure Content Safety API integration
   prerequisites: []
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Content Safety Implementation

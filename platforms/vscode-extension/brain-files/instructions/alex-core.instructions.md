@@ -2,7 +2,7 @@
 description: "Alex core cognitive architecture and meta-cognitive protocols"
 application: "When following alex core workflows or troubleshooting related issues"
 excludeAgent: "coding-agent"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Alex Core Cognitive Architecture

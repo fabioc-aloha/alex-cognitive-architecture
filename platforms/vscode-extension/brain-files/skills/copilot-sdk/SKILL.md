@@ -3,7 +3,7 @@ name: copilot-sdk
 description: Build applications powered by GitHub Copilot using the Copilot SDK — session management, custom tools, streaming, hooks, MCP servers, BYOK, deployment patterns
 tier: standard
 applyTo: '**/copilot*,**/*copilot-sdk*,**/*github-copilot*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # GitHub Copilot SDK

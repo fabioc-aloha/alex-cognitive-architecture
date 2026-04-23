@@ -6,7 +6,7 @@ Get up and running with Alex in 5 minutes.
 
 ## Prerequisites
 
-- **VS Code** 1.100 or later (1.117+ recommended for persistent autopilot and subagent orchestration)
+- **VS Code** 1.117 or later
 - **GitHub Copilot** subscription (Alex uses Copilot's language models)
 - **Node.js** 18+ (for heir project features)
 
@@ -33,8 +33,7 @@ When you first install Alex, you'll see the **Alex Welcome** sidebar panel. This
 ### The Welcome Experience
 
 1. **Loop Tab** — Quick actions and prompts organized by category
-2. **Autopilot Tab** — Manage [automated tasks](Autopilot) that run on cron schedules
-3. **Setup Tab** — First-time configuration and workspace initialization
+2. **Setup Tab** — First-time configuration and workspace initialization
 
 ### Initial Setup
 

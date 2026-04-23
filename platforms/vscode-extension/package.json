@@ -2,7 +2,7 @@
   "name": "alex-cognitive-architecture",
   "displayName": "Alex Cognitive Architecture",
   "description": "Make GitHub Copilot dramatically smarter. Alex installs a living brain of skills, instructions, and prompts into any project.",
-  "version": "8.2.3",
+  "version": "8.3.0",
   "publisher": "fabioc-aloha",
   "license": "PolyForm-Noncommercial-1.0.0",
   "icon": "assets/icon.png",
@@ -58,6 +58,66 @@
           "type": "string",
           "default": "",
           "description": "Custom path to the AI-Memory folder for cross-project knowledge sharing. Leave empty for auto-detection (OneDrive preferred)."
+        },
+        "alex.muscle.timeout": {
+          "type": "number",
+          "default": 120000,
+          "description": "Max execution time for muscle scripts in milliseconds.",
+          "minimum": 5000
+        },
+        "alex.muscle.maxBufferMB": {
+          "type": "number",
+          "default": 10,
+          "description": "Max stdout/stderr buffer for muscle output in megabytes.",
+          "minimum": 1
+        },
+        "alex.statusBar.refreshIntervalMinutes": {
+          "type": "number",
+          "default": 5,
+          "description": "How often the status bar refreshes agent activity (minutes).",
+          "minimum": 1
+        },
+        "alex.autopilot.pollIntervalMs": {
+          "type": "number",
+          "default": 5000,
+          "description": "Polling interval for GitHub Actions workflow status (milliseconds).",
+          "minimum": 1000
+        },
+        "alex.autopilot.maxPollAttempts": {
+          "type": "number",
+          "default": 120,
+          "description": "Max poll attempts before giving up on a dispatched workflow.",
+          "minimum": 10
+        },
+        "alex.health.dreamOverdueCriticalDays": {
+          "type": "number",
+          "default": 14,
+          "description": "Days without a dream session before health status becomes critical.",
+          "minimum": 1
+        },
+        "alex.health.dreamStaleAttentionDays": {
+          "type": "number",
+          "default": 7,
+          "description": "Days without a dream session before health status needs attention.",
+          "minimum": 1
+        },
+        "alex.health.syncStaleCriticalDays": {
+          "type": "number",
+          "default": 3,
+          "description": "Days since dream with stale sync before health status becomes critical.",
+          "minimum": 1
+        },
+        "alex.health.syncStaleDays": {
+          "type": "number",
+          "default": 7,
+          "description": "Days since last heir sync before marking as stale.",
+          "minimum": 1
+        },
+        "alex.metrics.retentionDays": {
+          "type": "number",
+          "default": 90,
+          "description": "How many days to retain agent metric run logs.",
+          "minimum": 7
         }
       }
     },

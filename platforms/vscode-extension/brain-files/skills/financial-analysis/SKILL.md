@@ -3,7 +3,7 @@ name: financial-analysis
 description: Financial modeling, analysis frameworks, and regulatory awareness for business-minded professionals.
 tier: extended
 applyTo: '**/*financ*,**/*budget*,**/*revenue*,**/*forecast*,**/*valuation*,**/*accounting*,**/*investment*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Financial Analysis Skill

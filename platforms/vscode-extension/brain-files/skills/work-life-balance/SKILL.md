@@ -3,7 +3,7 @@ name: work-life-balance
 description: Detect burnout signals and proactively support sustainable productivity.
 tier: extended
 applyTo: '**/*focus*,**/*session*,**/*goal*,**/*streak*,**/*break*,**/*health*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Work-Life Balance Skill

@@ -5,7 +5,7 @@ tier: extended
 inheritance: inheritable
 applyTo: '**/*.docx,**/*word*,**/*docx*'
 muscle: .github/muscles/docx-to-md.cjs
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Word to Markdown Conversion

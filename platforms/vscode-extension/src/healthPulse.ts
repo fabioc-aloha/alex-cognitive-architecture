@@ -2,6 +2,12 @@ import * as fs from "fs";
 import * as path from "path";
 import { execFileSync } from "child_process";
 import { daysBetween } from "./dateUtils.js";
+import {
+  dreamOverdueCriticalDays,
+  dreamStaleAttentionDays,
+  syncStaleCriticalDays,
+  syncStaleDays,
+} from "./settings.js";
 
 // ── E3: Health Status type ────────────────────────────────────────
 
@@ -49,12 +55,12 @@ export function computeHealthStatus(pulse: HealthPulse): HealthStatus {
     : Infinity;
 
   // Critical: no dream baseline, or overdue with known issues
-  if (pulse.dreamNeeded && daysSinceDream > 14) return "critical";
-  if (pulse.syncStale && daysSinceDream > 3) return "critical";
+  if (pulse.dreamNeeded && daysSinceDream > dreamOverdueCriticalDays()) return "critical";
+  if (pulse.syncStale && daysSinceDream > syncStaleCriticalDays()) return "critical";
 
   // Attention: dream needed or stale
   if (pulse.dreamNeeded) return "attention";
-  if (daysSinceDream > 7) return "attention";
+  if (daysSinceDream > dreamStaleAttentionDays()) return "attention";
   if (pulse.syncStale) return "attention";
 
   return "healthy";
@@ -122,11 +128,11 @@ function detectSyncStale(workspaceRoot: string): boolean {
   const extVersion = getExtensionBrainVersion();
   if (manifest.brainVersion !== extVersion) return true;
 
-  // Last sync >7 days ago = stale
+  // Last sync >N days ago = stale
   const lastSync = new Date(manifest.lastSync);
   if (isNaN(lastSync.getTime())) return true;
   const daysSince = daysBetween(lastSync, new Date());
-  if (daysSince > 7) return true;
+  if (daysSince > syncStaleDays()) return true;
 
   return false;
 }

@@ -11,7 +11,7 @@ metadata:
     triggers: [SSE, streaming, server-sent events, HTTP streaming, ReadableStream, chunked response, real-time]
     context: Working on real-time streaming from Azure Functions to client
   prerequisites: []
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # SSE Streaming

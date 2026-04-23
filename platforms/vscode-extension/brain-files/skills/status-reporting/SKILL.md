@@ -3,7 +3,7 @@ name: "status-reporting"
 description: "Create stakeholder-friendly project status updates and progress reports"
 tier: standard
 applyTo: '**/*status*,**/*report*,**/*update*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Status Reporting Skill

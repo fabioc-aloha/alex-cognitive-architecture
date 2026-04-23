@@ -3,7 +3,7 @@ name: project-deployment
 description: Universal deployment patterns for any project type.
 tier: standard
 applyTo: '**/*release*,**/*deploy*,**/*publish*,**/package.json,**/pyproject.toml,**/*.csproj,**/Cargo.toml'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Project Deployment Skill

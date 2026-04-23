@@ -4,7 +4,7 @@ description: "Store and manage voice samples for TTS cloning — portable, versi
 tier: standard
 applyTo: '**/*voice*,**/*audio*memory*,**/*clone*voice*'
 $schema: ../SKILL-SCHEMA.json
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Audio Memory Skill

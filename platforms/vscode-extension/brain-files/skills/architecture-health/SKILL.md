@@ -3,7 +3,7 @@ name: "architecture-health"
 description: "Diagnose cognitive architecture health — connection integrity, memory balance, link density, and drift detection"
 tier: standard
 applyTo: '**/*health*,**/*cognitive*,**/*drift*,**/*architecture*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Architecture Health Skill
@@ -88,7 +88,7 @@ leaf   = skill with 1 connection (normal for specialized skills)
 
 | System | Role |
 | ------ | ---- |
-| **Dream** (muscle: brain-qa.ps1) | Automated structural checks — the "X-ray" |
+| **Dream** (muscle: brain-qa.cjs) | Automated structural checks — the "X-ray" |
 | **Architecture Health** (this) | Interpretation framework — the "radiologist" |
 | **Meditation** | Consolidation after diagnosis — the "surgery" |
 | **Self-Actualization** | Comprehensive assessment — the "full physical" |

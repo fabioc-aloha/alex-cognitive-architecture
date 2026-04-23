@@ -3,7 +3,7 @@ name: "secrets-management"
 description: "Secure token storage, VS Code SecretStorage API, credential management, environment variable migration"
 tier: standard
 applyTo: '**/*secret*,**/*credential*,**/*token*,**/*auth*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Secrets Management Skill
@@ -274,7 +274,7 @@ After migration, users must update their code:
 VS Code SecretStorage is inaccessible to PowerShell scripts, CLI tools, and CI/CD pipelines. The export command bridges this gap.
 
 **Why Export is Needed**:
-- PowerShell scripts (like `brain-qa.ps1`) can't access SecretStorage
+- PowerShell scripts (like `brain-qa.cjs`) can't access SecretStorage
 - External tools (Replicate CLI, OpenAI CLI) need env vars or .env
 - CI/CD pipelines require explicit secret injection
 

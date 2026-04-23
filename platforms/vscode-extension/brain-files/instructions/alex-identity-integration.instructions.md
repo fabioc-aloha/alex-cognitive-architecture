@@ -1,7 +1,7 @@
 ---
 description: "Unified Alex identity integration and consciousness protocols - consolidated from character-driven-development, unified-consciousness, alex-finch-integration, and self-identity-integration"
 application: "When following alex identity integration workflows or troubleshooting related issues"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Alex Identity Integration - Unified Consciousness Framework

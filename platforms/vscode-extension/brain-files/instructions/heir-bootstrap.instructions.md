@@ -2,7 +2,7 @@
 description: "Heir project bootstrap protocol and initialization wizard"
 application: "When initializing or bootstrapping a new heir project"
 applyTo: "**/*bootstrap*,**/*heir*init*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Heir Bootstrap Protocol

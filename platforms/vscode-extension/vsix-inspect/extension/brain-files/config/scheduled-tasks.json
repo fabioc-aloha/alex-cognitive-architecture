@@ -1,0 +1,6 @@
+{
+  "$schema": "./scheduled-tasks.schema.json",
+  "version": "2.0.0",
+  "_comment": "Heir ships with no preset tasks. Use 'Add Task' in the Autopilot tab to create your own.",
+  "tasks": []
+}

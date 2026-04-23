@@ -2,7 +2,7 @@
 description: "A/B benchmarking protocol for measuring whether cognitive architecture artifacts improve output quality"
 application: "When following cognitive benchmarking workflows or troubleshooting related issues"
 applyTo: "**/*benchmark*,**/*eval*harness*,**/*quality-score*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Cognitive Architecture Benchmarking

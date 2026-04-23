@@ -2,7 +2,7 @@
 description: "AI character reference generation with templates, scenario architecture, and model selection"
 application: "When generating character references, persona images, or AI character assets"
 applyTo: "**/*character*,**/*persona*image*,**/*reference*gen*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # AI Character Reference Generation — Auto-Loaded Rules

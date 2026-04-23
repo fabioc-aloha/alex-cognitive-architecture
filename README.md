@@ -14,19 +14,18 @@ Alex enhances GitHub Copilot with a **cognitive architecture** — domain knowle
 
 | Component | Count | Role |
 |-----------|-------|------|
-| **Skills** | 194 | Domain knowledge for security, API design, testing, debugging, and more |
-| **Instructions** | 169 | Behavior rules that auto-load based on file patterns |
-| **Prompts** | 40 | Reusable workflow templates for common tasks |
+| **Skills** | 195 | Domain knowledge for security, API design, testing, debugging, and more |
+| **Instructions** | 167 | Behavior rules that auto-load based on file patterns |
+| **Prompts** | 41 | Reusable workflow templates for common tasks |
 | **Agents** | 22 | Specialized personas: Builder, Researcher, Validator, and more |
 
 ## Features
 
 - **Brain Bootstrap** — One-click install of the cognitive architecture into any workspace
 - **Muscle-First Commands** — Brain health, skill validation, token cost, markdown lint, and more run real code first, then open chat for AI follow-up
-- **3-Tab Sidebar** — Loop (creative workflow + health monitoring), Autopilot (scheduled maintenance), Setup (configuration + tools) — brand-aligned indigo design
+- **2-Tab Sidebar** — Loop (creative workflow + health monitoring), Setup (configuration + tools) — brand-aligned indigo design
 - **Health Pulse** — Real-time brain health monitoring with ritual tracking and actionable nudges
 - **Creative Loop** — Ideate → Plan → Build → Test → Release → Improve workflow
-- **Autopilot** — Scheduled task system with Run Now, pause/resume, last-run tracking, and GitHub Actions integration
 - **Chat Participant** — `@alex` in Copilot Chat with context-aware routing
 - **File Converters** — 11 format converters (Markdown ↔ HTML/Word/PDF/PPTX/EPUB/LaTeX/Email/Plain Text) via right-click context menu
 - **Specialized Agents** — Builder, Researcher, Validator, Documentarian, Planner, Presenter, and more
@@ -58,7 +57,7 @@ Use Alex's cognitive tools from any MCP-compatible client (Claude Desktop, Cline
 
 ## Requirements
 
-- **VS Code** 1.100 or later
+- **VS Code** 1.117 or later
 - **GitHub Copilot** subscription
 
 ## License

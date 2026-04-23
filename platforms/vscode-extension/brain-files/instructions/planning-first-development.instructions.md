@@ -2,7 +2,7 @@
 description: "Planning-first development discipline: strategic artifacts (PLAN, UX vision, UI specs, visual guidance, tracker) must exist before implementation code"
 application: "When generating images, managing visual assets, or maintaining brand consistency"
 applyTo: "**/PLAN*,**/*plan*,**/*spec*,**/*design*,**/*ux*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Planning-First Development

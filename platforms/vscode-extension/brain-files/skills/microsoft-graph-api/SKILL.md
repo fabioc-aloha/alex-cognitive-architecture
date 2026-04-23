@@ -4,7 +4,7 @@ description: "Comprehensive Microsoft Graph API reference for M365 service integ
 tier: standard
 applyTo: '**/*graph*,**/*msal*,**/*oauth*,**/*entra*'
 user-invokable: false
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Microsoft Graph API Skill

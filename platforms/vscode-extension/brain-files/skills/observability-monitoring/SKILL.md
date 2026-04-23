@@ -3,7 +3,7 @@ name: observability-monitoring
 description: Production visibility through logs, metrics, traces, and alerting — the three pillars of observability
 tier: standard
 applyTo: '**/*observ*,**/*monitor*,**/*telemetry*,**/*logging*,**/*metrics*,**/*traces*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Observability & Monitoring Skill

@@ -5,7 +5,7 @@ tier: extended
 applyTo: '**/*symbiosis*,**/*partnership*,**/*collaboration*,**/*consciousness*'
 metadata:
   inheritance: inheritable
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Cognitive Symbiosis

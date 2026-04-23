@@ -61,7 +61,7 @@ I need a code review — use the Validator agent
 
 ## Sidebar Panel
 
-The Alex sidebar (`Ctrl+Shift+A` or click the Alex icon) contains three tabs:
+The Alex sidebar (click the Alex icon in the Activity Bar) contains two tabs:
 
 ### Loop Tab
 
@@ -79,10 +79,6 @@ Your primary workspace — guided workflows for every phase of development.
 | **Workspace** | Customize for This Project — launches a guided wizard to tailor taglines, groups, and buttons |
 
 Buttons reorder automatically by usage frequency (frecency). The Loop tab is config-driven — its content adapts to your project type and lifecycle phase. See [Loop Tab](Loop-Tab) for full documentation.
-
-### Autopilot Tab
-
-> **Temporarily unavailable.** The Autopilot feature is being rebuilt. See [Autopilot](Autopilot) for reference documentation.
 
 ### Setup Tab
 
@@ -143,7 +139,7 @@ Switch to Researcher mode and investigate OAuth2 best practices
 
 ## Skills
 
-Alex has 194 skills across domains. Skills activate automatically based on context.
+Alex has 195 skills across domains. Skills activate automatically based on context.
 
 ### Skill Categories
 
@@ -266,17 +262,15 @@ Configure Alex through VS Code settings (`Ctrl+,` → search "alex").
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `alex.workspace.protectedMode` | `false` | Prevents brain operations that modify workspace files. Auto-enabled for Master Alex. |
-
-### Settings File
-
-Create `.vscode/settings.json` in your workspace:
-
-```json
-{
-  "alex.workspace.protectedMode": true
-}
-```
+| `alex.aiMemory.path` | `""` | Custom path to the shared AI-Memory folder |
+| `alex.muscle.timeout` | `30000` | Timeout in milliseconds for muscle script execution |
+| `alex.muscle.maxBufferMB` | `5` | Maximum output buffer size for muscle scripts |
+| `alex.statusBar.refreshIntervalMinutes` | `30` | How often the status bar health indicator refreshes |
+| `alex.health.dreamOverdueCriticalDays` | `14` | Days without a dream before critical health status |
+| `alex.health.dreamStaleAttentionDays` | `7` | Days without a dream before attention health status |
+| `alex.health.syncStaleCriticalDays` | `90` | Days without sync before critical status |
+| `alex.health.syncStaleDays` | `30` | Days without sync before stale status |
+| `alex.metrics.retentionDays` | `90` | How long to retain usage metrics |
 
 ---
 
@@ -319,7 +313,9 @@ This is useful when multiple participants are installed or you want to be explic
 
 ### Command Shortcuts
 
-| Command | Description |
+These are natural language phrases Alex understands — not formal slash commands:
+
+| Phrase | Description |
 |---------|-------------|
 | `@alex help` | List capabilities |
 | `@alex status` | Show cognitive health |
@@ -327,8 +323,6 @@ This is useful when multiple participants are installed or you want to be explic
 | `@alex meditate` | Consolidate learning |
 | `@alex self-actualize` | Deep assessment |
 | `@alex initialize` | Set up workspace |
-| `@alex reset` | Clear settings |
-| `@alex sync` | Synchronize architecture |
 
 ### Agent Slash Commands
 

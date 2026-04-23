@@ -5,7 +5,7 @@ tier: extended
 applyTo: '**/*book*,**/*publish*,**/*pdf*,**/*pandoc*'
 metadata:
   inheritance: inheritable
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Book Publishing

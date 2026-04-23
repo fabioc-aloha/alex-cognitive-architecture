@@ -3,7 +3,7 @@ name: project-management
 description: "Alex project management patterns: rapid AI-assisted iteration, meditation-based retrospectives, session-focused work, and safety-first release gates."
 tier: standard
 applyTo: '**/*project*,**/*tracker*,**/*sprint*,**/*iteration*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Project Management Skill
@@ -153,7 +153,7 @@ Our roadmap is a **living document**, not a frozen spec.
 | Changelog | Entry for this version | Visual review |
 | Committed | No uncommitted changes | `git status` |
 
-See [release-management.instructions.md](../../instructions/release-management.instructions.md) for full protocol.
+See [release-process.instructions.md](../../instructions/release-process.instructions.md) for full protocol.
 
 ### If User Says "Just Publish"
 

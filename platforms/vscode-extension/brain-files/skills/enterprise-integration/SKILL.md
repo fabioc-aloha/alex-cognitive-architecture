@@ -3,7 +3,7 @@ name: enterprise-integration
 description: Patterns for Microsoft Graph, Microsoft Entra ID, and enterprise feature integration in VS Code extensions
 tier: standard
 applyTo: '**/enterprise/**,**/graph/**,**/auth/**'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Enterprise Integration Skill

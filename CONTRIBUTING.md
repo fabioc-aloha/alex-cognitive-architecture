@@ -71,8 +71,8 @@ This produces `alex-cognitive-architecture-X.X.X.vsix` in the extension director
 ### Testing Locally
 
 ```bash
-# Install the VSIX in your VS Code
-code --install-extension alex-cognitive-architecture-8.0.0.vsix
+# Install the VSIX in your VS Code (version number will match package.json)
+code --install-extension alex-cognitive-architecture-<version>.vsix
 ```
 
 Then open a workspace, click the Alex sidebar icon, and run **Install Brain**.

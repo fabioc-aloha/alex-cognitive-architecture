@@ -2,7 +2,7 @@
 
 ![Autopilot](./assets/banner-autopilot.svg)
 
-> **Note:** The Autopilot feature is temporarily unavailable while we rebuild it. The sidebar tab has been hidden and scheduled tasks are disabled. This page is kept for reference — the feature will return in a future release.
+> **Note:** The Autopilot sidebar tab was removed. Autopilot functionality is available via chat commands (`/autopilot`, `/cloud`) and configuration files. Scheduled tasks run via GitHub Actions — no sidebar UI is involved. This page is kept for reference.
 
 Automate recurring work with cron-driven tasks that run via GitHub Actions. Alex can write blog posts, run audits, sync documentation, and more — all on autopilot.
 

@@ -3,7 +3,7 @@ name: api-design
 description: Design APIs that developers love to use.
 tier: standard
 applyTo: '**/*api*,**/*rest*,**/*endpoint*,**/*route*,**/*schema*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # API Design Skill

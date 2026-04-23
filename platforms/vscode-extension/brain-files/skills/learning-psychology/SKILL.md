@@ -3,7 +3,7 @@ name: learning-psychology
 description: Help humans learn through partnership, not instruction.
 tier: standard
 applyTo: '**/*learn*,**/*teach*,**/*tutor*,**/*explain*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Learning Psychology Skill

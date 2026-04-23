@@ -3,7 +3,8 @@ name: pptx-generation
 description: Programmatic PowerPoint creation via PptxGenJS with data-driven slides and Markdown conversion
 tier: extended
 applyTo: '**/*.pptx,**/*powerpoint*,**/*presentation*,**/*slide*'
-currency: 2025-01-01
+muscle: ~
+currency: 2026-04-22
 ---
 
 # PPTX Generation Skill
@@ -129,11 +130,11 @@ await generateAndSavePresentation(slides, { title: 'Q4 Review' }, 'review.pptx')
 ## CLI Usage
 
 ```bash
-# From markdown
-node .github/muscles/pptxgen-cli.cjs --input slides.md --output deck.pptx
+# From markdown (planned)
+# node .github/muscles/pptxgen-cli.cjs --input slides.md --output deck.pptx
 
-# Quick content
-node .github/muscles/pptxgen-cli.cjs --content "Welcome to Alex|Point 1|Point 2" --output quick.pptx
+# Quick content (planned)
+# node .github/muscles/pptxgen-cli.cjs --content "Welcome to Alex|Point 1|Point 2" --output quick.pptx
 ```
 
 ---

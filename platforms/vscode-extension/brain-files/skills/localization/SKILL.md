@@ -3,7 +3,7 @@ name: "localization"
 description: "**Domain**: Software localization, internationalization, multilingual application development"
 tier: extended
 applyTo: '**/*i18n*,**/*l10n*,**/*localization*,**/*translation*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Localization & Internationalization (i18n/l10n)
@@ -149,143 +149,34 @@ function getWithFallback<T>(
 
 ### Cross-Domain Insight: Dialects as Inheritance Trees
 
-Regional dialect variants mirror **software inheritance patterns**. Understanding this enables elegant multi-variant localization:
+Regional dialect variants mirror **software inheritance patterns**:
 
 | OOP Concept | Dialect Analog | Example |
 |-------------|----------------|----------|
-| Base class | Parent dialect | Açoriano (Azores Portuguese) |
-| Derived class | Regional variant | Manezinho (Florianópolis) |
-| Inherited members | Preserved features | "tu" pronoun, maritime vocabulary |
-| Method overrides | Modified features | Simplified verb conjugations |
-| New members | Local additions | Gaúcho influences |
-| Abstract class | Proto-language | Common ancestor |
+| Base class | Parent dialect | Standard language |
+| Derived class | Regional variant | Regional dialect |
+| Method overrides | Modified features | Simplified conjugations |
+| Multiple inheritance | Migration lineage | Dialect inheriting from two regions |
 
-### Real Example: Portuguese Dialect Genealogy
-
-```
-pt (Portuguese)
-├── pt-PT (European Portuguese)
-│   ├── pt-PT-azores (Açoriano)
-│   │   └── pt-BR-floripa (Manezinho) ← Migration 1748-1756
-│   └── pt-PT-madeira (Madeirense)
-└── pt-BR (Brazilian Portuguese)
-    ├── pt-BR-floripa (Manezinho) ← Also inherits from Açoriano!
-    ├── pt-BR-nordeste (Nordestino)
-    └── pt-BR-gaucho (Gaúcho)
-```
-
-**Key Insight**: Manezinho demonstrates **multiple inheritance** — it inherits from both Açoriano (historical migration) and Brazilian Portuguese (geographic context).
-
-### Dialect-Aware Fallback Chain
+**Key Pattern**: Build CLDR-style fallback chains that reflect linguistic genealogy. When a dialect term is missing, walk the chain: `locale → regional → standard → default`.
 
 ```typescript
-// Extended CLDR-style fallback with dialect awareness
+// Dialect-aware fallback chains
 const DIALECT_FALLBACKS: Record<string, string[]> = {
-  // Portuguese dialects with historical lineage
-  'pt-BR-floripa': ['pt-BR-floripa', 'pt-PT-azores', 'pt-BR', 'pt', 'en'],  // Manezinho
-  'pt-PT-azores': ['pt-PT-azores', 'pt-PT', 'pt', 'en'],                    // Açoriano
-  'pt-BR-nordeste': ['pt-BR-nordeste', 'pt-BR', 'pt', 'en'],
-
-  // Spanish dialects
-  'es-419': ['es-419', 'es', 'en'],           // Latin American Spanish
-  'es-MX': ['es-MX', 'es-419', 'es', 'en'],   // Mexican inherits from LatAm
-  'es-AR': ['es-AR', 'es-419', 'es', 'en'],   // Rioplatense Spanish
-
-  // German dialects
-  'de-AT': ['de-AT', 'de', 'en'],             // Austrian German
-  'de-CH': ['de-CH', 'de', 'en'],             // Swiss German
-
-  // Chinese variants
-  'zh-Hans': ['zh-Hans', 'zh', 'en'],
-  'zh-Hant': ['zh-Hant', 'zh', 'en'],
-  'zh-Hant-HK': ['zh-Hant-HK', 'zh-Hant', 'zh', 'en'],  // Cantonese influence
+  'pt-BR': ['pt-BR', 'pt', 'en'],
+  'es-MX': ['es-MX', 'es-419', 'es', 'en'],
+  'zh-Hant-HK': ['zh-Hant-HK', 'zh-Hant', 'zh', 'en'],
 };
-```
-
-### Dialect Feature Overrides
-
-```typescript
-interface DialectFeatures {
-  pronouns: {
-    informal: string;      // 'tu' vs 'você'
-    formalAddress: string; // 'o senhor' vs 'você'
-  };
-  verbConjugation: 'full' | 'simplified' | 'merged';
-  vocabulary: Record<string, string>;  // Regional word overrides
-  prosody: string;                      // Speech pattern description
-}
-
-const DIALECT_FEATURES: Record<string, Partial<DialectFeatures>> = {
-  'pt': {
-    pronouns: { informal: 'tu', formalAddress: 'o senhor' },
-    verbConjugation: 'full',
-  },
-  'pt-BR': {
-    pronouns: { informal: 'você', formalAddress: 'o senhor' },
-    verbConjugation: 'simplified',  // Override: dropped 'tu' conjugations
-  },
-  'pt-PT-azores': {
-    pronouns: { informal: 'tu', formalAddress: 'vossemecê' },  // Archaic!
-    verbConjugation: 'full',
-    vocabulary: {
-      'ocean': 'mar alto',      // Maritime vocabulary
-      'storm': 'temporal',
-      'boat': 'canoa',
-    },
-    prosody: 'slower cadence, vowel reduction',
-  },
-  'pt-BR-floripa': {
-    // Inherits Açoriano 'tu' but Brazilian simplified conjugation
-    pronouns: { informal: 'tu', formalAddress: 'o senhor' },
-    verbConjugation: 'merged',  // 'tu vai' (tu + você conjugation)
-    vocabulary: {
-      'ocean': 'mar alto',      // Inherited from Açoriano
-      'beach': 'praia',         // Standard Brazilian
-      'bus': 'baleeira',        // Local Florianópolis term!
-    },
-    prosody: 'sing-song intonation (from Azorean heritage)',
-  },
-};
-
-// Merge features up the inheritance chain
-function getDialectFeatures(locale: string): DialectFeatures {
-  const chain = DIALECT_FALLBACKS[locale] || [locale, 'en'];
-  const merged: Partial<DialectFeatures> = {};
-
-  // Walk chain in reverse (base → derived) to allow overrides
-  for (const loc of [...chain].reverse()) {
-    const features = DIALECT_FEATURES[loc];
-    if (features) {
-      Object.assign(merged, features);
-      if (features.vocabulary) {
-        merged.vocabulary = { ...merged.vocabulary, ...features.vocabulary };
-      }
-    }
-  }
-
-  return merged as DialectFeatures;
-}
 ```
 
 ### When to Use Dialect-Level Localization
 
 | Use Case | Recommendation |
 |----------|----------------|
-| Marketing/brand voice | ✅ Dialect-specific for authenticity |
-| Legal/compliance text | ❌ Use standard regional variant |
-| UI labels | ⚠️ Only if market requires (Catalan in Barcelona) |
-| User-generated content | ✅ Let users express naturally |
-| Documentation | ⚠️ Standard variant, note dialect differences |
-
-### Historical Linguistics as Requirements
-
-Dialect inheritance isn't arbitrary — it reflects **real migration patterns**:
-
-- **1748-1756**: Azorean migration to Santa Catarina, Brazil → Manezinho
-- **16th century**: Portuguese colonization → Brazilian Portuguese branches
-- **19th century**: Italian/German immigration to Southern Brazil → Gaúcho influences
-
-Understanding these migrations helps predict which features a dialect inherits vs. develops independently.
+| Marketing/brand voice | Dialect-specific for authenticity |
+| Legal/compliance text | Standard regional variant |
+| UI labels | Only if market requires |
+| Documentation | Standard variant, note dialect differences |
 
 ---
 
@@ -577,45 +468,7 @@ function getFontFamily(locale: string): string {
 
 ## Pseudo-Localization (Testing)
 
-```typescript
-function pseudoLocalize(text: string): string {
-  // 1. Preserve placeholders
-  const placeholders: string[] = [];
-  let processed = text.replace(/\{[^}]+\}/g, (match) => {
-    placeholders.push(match);
-    return `__PH${placeholders.length - 1}__`;
-  });
-
-  // 2. Transform characters (simulates accented text)
-  processed = processed
-    .replace(/a/g, 'à').replace(/A/g, 'À')
-    .replace(/e/g, 'é').replace(/E/g, 'É')
-    .replace(/i/g, 'í').replace(/I/g, 'Í')
-    .replace(/o/g, 'ó').replace(/O/g, 'Ó')
-    .replace(/u/g, 'ú').replace(/U/g, 'Ú');
-
-  // 3. Add ~30% padding (simulates German expansion)
-  const padding = '~'.repeat(Math.ceil(processed.length * 0.3));
-
-  // 4. Wrap with markers (reveals untranslated strings)
-  processed = `[${processed}${padding}]`;
-
-  // 5. Restore placeholders
-  placeholders.forEach((ph, i) => {
-    processed = processed.replace(`__PH${i}__`, ph);
-  });
-
-  return processed;
-}
-
-// "Welcome, {name}!" → "[Wélcómé, {name}!~~~~~~]"
-```
-
-**Benefits:**
-- Reveals untranslated/hardcoded strings (missing `[...]` markers)
-- Tests text expansion before real translations
-- Works in development without translation files
-- Identifies layout issues early
+Use pseudo-localization to find i18n bugs before real translations. See the implementation in the Language-Specific section below.
 
 ---
 
@@ -834,21 +687,6 @@ Localization effort scales non-linearly. Plan accordingly:
 | **4. Maintenance** | Ongoing string management, LQA | 200+ hours/year | Sustained quality |
 
 **Key insight**: Phase 1 (foundation) is the critical path. A well-architected Phase 1 makes Phases 2-4 incremental. A poor Phase 1 requires rework at every subsequent phase.
-
-### Text Expansion Ratios
-
-Translations are almost never the same length as English source:
-
-| Target Language | Expansion | Example |
-|----------------|-----------|---------|
-| German | +30% | "Settings" → "Einstellungen" |
-| French | +20% | "File" → "Fichier" |
-| Japanese | -30% | "Settings" → "設定" |
-| Arabic | +25% | Variable depending on formality |
-| Portuguese (BR) | +20% | "Dashboard" → "Painel de Controle" |
-| Chinese | -50% | "Configuration" → "配置" |
-
-**UI Impact**: Design with 40% expansion budget for Western languages. Use `min-width` not `width` for buttons and labels.
 
 ### Browser Language Detection with sessionStorage Bridge
 

@@ -3,7 +3,7 @@ name: frontend-design-review
 description: Review and create distinctive frontend interfaces — design system compliance, three quality pillars (Frictionless, Quality Craft, Trustworthy), accessibility
 tier: standard
 applyTo: '**/*.{html,jsx,tsx,vue,svelte,css,scss},**/components/**,**/ui/**'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Frontend Design Review

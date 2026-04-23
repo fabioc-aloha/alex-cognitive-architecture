@@ -2,7 +2,7 @@
 applyTo: "**/*dream*,**/*meditation*,**/*consolidation*"
 description: "Detailed protocol triggers for dream, meditation, and knowledge consolidation"
 application: "When following protocol triggers workflows or troubleshooting related issues"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Protocol Triggers Reference
@@ -41,7 +41,7 @@ Dream produces the diagnostic; meditation decides what to fix.
 
 ## Dream State Triggers
 
-- Architecture health uncertain → Run `node .github/muscles/dream-cli.cjs`
+- Architecture health uncertain → Run `node .github/muscles/brain-qa.cjs`
 - Post-meditation chain (see conditions above)
 - Before major releases → Validate architecture integrity
 - After file reorganizations → Check for broken references

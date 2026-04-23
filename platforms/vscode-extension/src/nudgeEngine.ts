@@ -1,5 +1,10 @@
 import type { HealthPulse } from "./healthPulse.js";
 import { daysBetween } from "./dateUtils.js";
+import {
+  dreamOverdueCriticalDays,
+  dreamStaleAttentionDays,
+  syncStaleCriticalDays,
+} from "./settings.js";
 
 // ── E9: Nudge Engine ──────────────────────────────────────────────
 
@@ -68,7 +73,7 @@ const NUDGE_RULES: NudgeRule[] = [
   // Critical: Dream overdue with issues
   {
     id: "dream-overdue-critical",
-    condition: (p, ctx) => p.dreamNeeded && ctx.daysSinceDream > 14,
+    condition: (p, ctx) => p.dreamNeeded && ctx.daysSinceDream > dreamOverdueCriticalDays(),
     generate: (_p, ctx) => ({
       id: "dream-overdue-critical",
       priority: "critical",
@@ -81,7 +86,7 @@ const NUDGE_RULES: NudgeRule[] = [
   // Critical: Sync stale + old dream
   {
     id: "sync-stale-critical",
-    condition: (p, ctx) => p.syncStale && ctx.daysSinceDream > 3,
+    condition: (p, ctx) => p.syncStale && ctx.daysSinceDream > syncStaleCriticalDays(),
     generate: () => ({
       id: "sync-stale-critical",
       priority: "critical",
@@ -95,7 +100,7 @@ const NUDGE_RULES: NudgeRule[] = [
   {
     id: "dream-needed",
     condition: (p, ctx) =>
-      p.dreamNeeded && ctx.daysSinceDream <= 14 && p.lastDreamDate !== null,
+      p.dreamNeeded && ctx.daysSinceDream <= dreamOverdueCriticalDays() && p.lastDreamDate !== null,
     generate: () => ({
       id: "dream-needed",
       priority: "high",
@@ -109,7 +114,7 @@ const NUDGE_RULES: NudgeRule[] = [
   {
     id: "dream-stale",
     condition: (p, ctx) =>
-      !p.dreamNeeded && ctx.daysSinceDream > 7 && p.lastDreamDate !== null,
+      !p.dreamNeeded && ctx.daysSinceDream > dreamStaleAttentionDays() && p.lastDreamDate !== null,
     generate: (_p, ctx) => ({
       id: "dream-stale",
       priority: "high",
@@ -122,7 +127,7 @@ const NUDGE_RULES: NudgeRule[] = [
   // Medium: Sync stale (but dream recent)
   {
     id: "sync-stale",
-    condition: (p, ctx) => p.syncStale && ctx.daysSinceDream <= 3,
+    condition: (p, ctx) => p.syncStale && ctx.daysSinceDream <= syncStaleCriticalDays(),
     generate: () => ({
       id: "sync-stale",
       priority: "medium",

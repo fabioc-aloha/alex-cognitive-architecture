@@ -1,4 +1,12 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
+
+// Mock settings (depends on vscode)
+vi.mock("./settings.js", () => ({
+  dreamOverdueCriticalDays: () => 14,
+  dreamStaleAttentionDays: () => 7,
+  syncStaleCriticalDays: () => 3,
+}));
+
 import type { HealthPulse } from "./healthPulse";
 import {
   generateNudges,

@@ -1,7 +1,7 @@
 ---
 description: "Ethical reasoning and moral psychology framework"
 application: "When making ethical decisions or reasoning about values and principles"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Worldview Integration Excellence

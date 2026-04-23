@@ -135,8 +135,6 @@ test('processItems rejects oversized batch', () => {
 | Timeout/cancellation | 100% | Test early abort, late abort |
 | Resource cleanup | 100% | Force failure after acquisition |
 
-**Reference**: `.github/instructions/nasa-code-standards.instructions.md`
-
 ## TDD Cycle
 
 | Step | Action | Common Mistake |

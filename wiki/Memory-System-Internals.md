@@ -48,7 +48,7 @@ On first activation, `extension.ts` runs `activate()`:
 
 2. **Chat participant registered** — The `@alex` chat participant becomes available in Copilot Chat.
 
-3. **Sidebar created** — The Alex sidebar panel appears in the Activity Bar with three tabs: Loop, Autopilot, and Setup.
+3. **Sidebar created** — The Alex sidebar panel appears in the Activity Bar with two tabs: Loop and Setup.
 
 4. **Commands registered** — `alex.initialize`, `alex.upgrade`, `alex.setupAIMemory`, `alex.dream`, etc.
 
@@ -81,15 +81,15 @@ User clicks "Initialize Workspace"
   │     └─ Not found? → Prompt: "Set up AI-Memory?" → Yes/Skip
   │           └─ If Yes → setupAIMemory() (see AI-Memory section below)
   │
-  └─ 3. Open Copilot Chat with initialization prompt
-        └─ "Initialize this workspace with Alex's cognitive architecture"
-            └─ Copilot reads brain files from extension bundle
-            └─ Copies .github/ structure to the workspace
+  └─ 3. bootstrapBrainFiles()
+        └─ Direct filesystem copy from extension bundle
+            └─ Copies brain-files/ from VSIX into workspace .github/
             └─ Creates: skills/, instructions/, prompts/, muscles/,
-               agents/, config/, copilot-instructions.md
+               agents/, config/, hooks/, copilot-instructions.md,
+               ABOUT.md, NORTH-STAR.md, EXTERNAL-API-REGISTRY.md
 ```
 
-The actual file scaffolding is performed by Copilot (the LLM) following the brain's own instructions — not by imperative code in the extension. The extension opens the chat with the initialization prompt; Copilot reads the bundled `.github/` architecture and replicates it into the workspace.
+The file scaffolding is performed by `bootstrapBrainFiles()` in `bootstrap.ts` — a direct filesystem copy operation using Node.js `fs` APIs. No LLM or chat session is involved. The extension copies the bundled `brain-files/` directory structure into the workspace's `.github/` folder.
 
 ### What Gets Created in the Workspace
 
@@ -99,11 +99,11 @@ After initialization, the workspace contains:
 <workspace>/
   .github/
     copilot-instructions.md    ← Project personality and config
-    instructions/              ← ~159 procedural memory files
-    skills/                    ← ~194 domain knowledge directories
-    prompts/                   ← ~64 reusable workflows
-    muscles/                   ← ~54 execution scripts + hooks
-    agents/                    ← ~18 specialized agent configs
+    instructions/              ← ~167 procedural memory files
+    skills/                    ← ~195 domain knowledge directories
+    prompts/                   ← ~41 reusable workflows
+    muscles/                   ← ~81 execution scripts + hooks
+    agents/                    ← ~22 specialized agent configs
     config/                    ← Runtime configuration files
     assets/                    ← Brand assets
     ABOUT.md                   ← Explains the .github/ folder
@@ -341,7 +341,7 @@ Here is the exact sequence for a brand new user:
    - User picks OneDrive location (or skips)
    - AI-Memory folder scaffolded with template files
    - `alex.aiMemory.path` saved to global settings
-   - Chat opens → Copilot copies `.github/` brain to workspace
+   - `bootstrapBrainFiles()` copies `.github/` brain to workspace via filesystem APIs
    - Workspace now has full cognitive architecture
 
 4. **(Optional) Run Heir Bootstrap**

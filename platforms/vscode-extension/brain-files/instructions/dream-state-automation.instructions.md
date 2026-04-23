@@ -2,7 +2,7 @@
 applyTo: "**/*dream*,**/*brain-qa*"
 description: "Automated architecture maintenance and dream state processing protocols"
 application: "When running dream protocol or troubleshooting architecture health"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Dream Protocol
@@ -14,7 +14,7 @@ Automated architecture diagnostics — scan, validate, report. Read-only; never 
 Run explicitly or chained after meditation:
 
 ```bash
-node .github/muscles/dream-cli.cjs
+node .github/muscles/brain-qa.cjs
 ```
 
 For quick mode (CI or scheduled runs):
@@ -63,8 +63,7 @@ Dream NEVER modifies architecture files. It diagnoses; meditation and humans fix
 | Script | Purpose |
 |--------|---------|
 | `.github/muscles/brain-qa.cjs` | Brain health quality grid |
-| `.github/muscles/dream-cli.cjs` | CLI wrapper for terminal/CI use |
-| `.github/muscles/audit-master-alex.cjs` | Pre-release architecture audit |
+
 | `.github/muscles/validate-skills.cjs` | Skill frontmatter validation |
 
 ## OS-Level Scheduling

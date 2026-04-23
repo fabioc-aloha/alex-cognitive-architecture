@@ -3,7 +3,7 @@ name: business-analysis
 description: Patterns for requirements elicitation, BRDs, process analysis, and stakeholder alignment.
 tier: standard
 applyTo: '**/*brd*,**/*requirement*,**/*stakeholder*,**/*process*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Business Analysis Skill

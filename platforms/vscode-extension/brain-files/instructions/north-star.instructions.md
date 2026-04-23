@@ -2,7 +2,7 @@
 description: "Project vision definition and Active Context integration for ambitious goals"
 application: "When integrating systems, connecting APIs, or building cross-service workflows"
 applyTo: "**/NORTH-STAR*,**/*north-star*,**/*vision*,**/*roadmap*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # North Star — Auto-Loaded Rules

@@ -3,7 +3,7 @@ name: "bootstrap-learning"
 description: "Domain-agnostic knowledge acquisition — from zero to structured expertise through conversational learning"
 tier: standard
 applyTo: '**/*learn*,**/*bootstrap*,**/*knowledge*,**/*domain*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Bootstrap Learning Skill

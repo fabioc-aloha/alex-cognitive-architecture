@@ -4,7 +4,7 @@ description: "Clear documentation through visual excellence"
 tier: standard
 inheritance: inheritable
 applyTo: '**/*.md,**/*mermaid*,**/*diagram*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Markdown & Mermaid
@@ -237,119 +237,24 @@ flowchart LR
 
 ## 🏷️ Shields.io Badges
 
-### Badge Anatomy
-
-Badges use [Shields.io](https://shields.io) - a free service for generating status badges.
-
-**URL Structure:**
-
-```text
-https://img.shields.io/badge/{LABEL}-{MESSAGE}-{COLOR}?{OPTIONS}
-```
-
-**Markdown Syntax:**
+Badges use [Shields.io](https://shields.io). URL structure: `https://img.shields.io/badge/{LABEL}-{MESSAGE}-{COLOR}?{OPTIONS}`
 
 ```markdown
-[![Alt Text](https://img.shields.io/badge/Label-Message-color?options)](#)
+[![Alt Text](https://img.shields.io/badge/Label-Message-color?style=for-the-badge&logo=iconname&logoColor=white)](#)
 ```
 
-### Style Options
+| Style | Parameter |
+| ----- | --------- |
+| Flat | `style=flat` |
+| **For-the-Badge** | `style=for-the-badge` |
 
-| Style | Appearance | Parameter |
-| ----- | ---------- | --------- |
-| Flat | Minimal | `style=flat` |
-| Flat-Square | Squared corners | `style=flat-square` |
-| Plastic | Gradient | `style=plastic` |
-| **For-the-Badge** | Large, bold | `style=for-the-badge` |
-| Social | GitHub-like | `style=social` |
+| Encode | As |
+| ------ | -- |
+| Space | `_` or `%20` |
+| Dash | `--` |
+| Underscore | `__` |
 
-### Common Color Names
-
-| Color | Name | Hex |
-| ----- | ---- | --- |
-| 🔵 | `blue` | `#007ec6` |
-| 🟢 | `green` | `#97ca00` |
-| 🟡 | `gold` / `yellow` | `#dfb317` |
-| 🟠 | `orange` | `#fe7d37` |
-| 🔴 | `red` | `#e05d44` |
-| 🟣 | `purple` | `#9f4bc9` |
-| 🔷 | `cyan` | `#25c2a0` |
-| ⚫ | `gray` / `grey` | `#555555` |
-
-**Custom Hex**: Use any hex without `#` → `?color=1f2328`
-
-### Adding Icons (Simple Icons)
-
-Shields.io integrates with [Simple Icons](https://simpleicons.org/) for brand logos:
-
-```markdown
-[![VS Code](https://img.shields.io/badge/VS_Code-Extension-blue?logo=visualstudiocode&logoColor=white)](#)
-```
-
-**Parameters:**
-
-- `logo=iconname` - Icon from Simple Icons (lowercase, no spaces)
-- `logoColor=white` - Icon color (usually white for dark backgrounds)
-
-### Badge Templates
-
-**Version Badge:**
-
-```markdown
-[![Version](https://img.shields.io/badge/Version-1.0.0-gold?style=for-the-badge&logo=trophy&logoColor=white)](#)
-```
-
-**Domain/Category Badge:**
-
-```markdown
-[![Domain](https://img.shields.io/badge/Domain-DIAGRAMMING-blue?style=for-the-badge&logo=graduation-cap&logoColor=white)](#)
-```
-
-**Quality Badge:**
-
-```markdown
-[![Quality](https://img.shields.io/badge/Quality-Enterprise_Grade-green?style=for-the-badge&logo=shield-alt&logoColor=white)](#)
-```
-
-**Status Badge:**
-
-```markdown
-[![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)](#)
-[![Status](https://img.shields.io/badge/Status-Beta-orange?style=for-the-badge)](#)
-[![Status](https://img.shields.io/badge/Status-Deprecated-red?style=for-the-badge)](#)
-```
-
-### Document Header Pattern
-
-Professional documents use a badge row at the top:
-
-```markdown
-# Document Title
-
-[![Version](https://img.shields.io/badge/Version-1.0.0-gold?style=for-the-badge&logo=trophy&logoColor=white)](#) [![Domain](https://img.shields.io/badge/Domain-TOPIC-blue?style=for-the-badge)](#)
-
-> Description tagline
-
----
-```
-
-### Special Characters in Badges
-
-| Character | Encode As |
-| --------- | --------- |
-| Space | `_` (underscore) or `%20` |
-| Dash | `--` (double dash) |
-| Underscore | `__` (double underscore) |
-
-### Dynamic Badges (Advanced)
-
-For live data from repos:
-
-```markdown
-[![GitHub Stars](https://img.shields.io/github/stars/owner/repo?style=for-the-badge)](#)
-[![NPM Version](https://img.shields.io/npm/v/package-name?style=for-the-badge)](#)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/owner/repo/ci.yml?style=for-the-badge)](#)
-```
+Icons from [Simple Icons](https://simpleicons.org/) via `logo=iconname&logoColor=white`. Colors: `blue`, `green`, `gold`, `red`, `purple`, or custom hex without `#`.
 
 ---
 
@@ -485,22 +390,7 @@ web_server.style.fill: "#f3e5f5"
 
 ### ⚡ Quick Start — Pastel v2 Template
 
-**See the MANDATORY template at the top of this skill.** That template is authoritative. This section is a quick reminder:
-
-```text
-%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#57606a', 'primaryColor': '#ddf4ff', 'primaryBorderColor': '#0969da', 'primaryTextColor': '#1f2328', 'edgeLabelBackground': '#ffffff'}}}%%
-flowchart LR
-    A[Source]:::blue -->|transform| B[Process]:::purple --> C[Output]:::green
-
-    classDef blue fill:#ddf4ff,color:#0550ae,stroke:#80ccff
-    classDef green fill:#d3f5db,color:#1a7f37,stroke:#6fdd8b
-    classDef purple fill:#d8b9ff,color:#6639ba,stroke:#bf8aff
-    classDef gold fill:#fff8c5,color:#9a6700,stroke:#d4a72c
-    classDef red fill:#ffebe9,color:#cf222e,stroke:#f5a3a3
-    classDef neutral fill:#eaeef2,color:#24292f,stroke:#d0d7de
-
-    linkStyle default stroke:#57606a,stroke-width:1.5px
-```
+**Use the MANDATORY template at the top of this skill.** Copy-paste from there — it is the single source of truth.
 
 **Four things every diagram needs:**
 
@@ -588,18 +478,7 @@ A -->|"label"| B  Alternative label syntax
 linkStyle default stroke:#57606a,stroke-width:1.5px
 ```
 
-**Complete Example**:
-
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#57606a', 'primaryColor': '#ddf4ff', 'primaryBorderColor': '#0969da', 'primaryTextColor': '#1f2328', 'edgeLabelBackground': '#ffffff'}}}%%
-flowchart LR
-    A[Source]:::blue -->|Transform| B[Target]:::green
-
-    classDef blue fill:#ddf4ff,color:#0550ae,stroke:#80ccff
-    classDef green fill:#d3f5db,color:#1a7f37,stroke:#6fdd8b
-
-    linkStyle default stroke:#57606a,stroke-width:1.5px
-```
+**Complete Example**: Use the MANDATORY template at the top, with only the classDefs you need.
 
 **Key Principles**:
 1. **Light fills** (#fff1e5, #ddf4ff) — Easy on the eyes
@@ -682,19 +561,6 @@ Add as FIRST line inside mermaid block:
 ### classDef Reusable Styles
 
 Define style classes once and apply to multiple nodes. Cleaner than per-node `style` directives.
-
-```text
-flowchart LR
-    A[Source]:::input --> B[Process]:::action --> C[Output]:::success
-
-    classDef input fill:#ddf4ff,color:#0550ae,stroke:#80ccff
-    classDef action fill:#fff8c5,color:#9a6700,stroke:#d4a72c
-    classDef success fill:#d3f5db,color:#1a7f37,stroke:#6fdd8b
-    classDef error fill:#ffebe9,color:#cf222e,stroke:#f5a3a3
-    classDef neutral fill:#eaeef2,color:#24292f,stroke:#d0d7de
-    classDef special fill:#d8b9ff,color:#6639ba,stroke:#bf8aff
-    classDef bronze fill:#fff1e5,color:#953800,stroke:#ffb77c
-```
 
 **Pastel v2 classDef Quick Reference** (copy-paste ready):
 

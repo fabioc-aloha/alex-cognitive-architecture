@@ -3,7 +3,7 @@ name: release-preflight
 description: Pre-checks, version consistency, and deployment discipline.
 tier: standard
 applyTo: "**/*release*,**/*publish*,**/*deploy*,**/*version*,**/package.json,**/CHANGELOG*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Release Preflight Skill
@@ -88,8 +88,6 @@ git add -A; git commit -m "release: v$v"; git tag "v$v"; git push --tags
 | `scripts/release-preflight.cjs`               | Pre-release validation                 |
 | `scripts/release-vscode.cjs`                  | Full VS Code release                   |
 | `scripts/release-m365.cjs`                    | M365 agent packaging                   |
-| `.github/muscles/build-extension-package.ps1` | Full build (sync + compile + PII scan) |
-| `.github/muscles/sync-architecture.cjs`       | Canonical Master → Heir sync           |
 
 ## Triggers
 

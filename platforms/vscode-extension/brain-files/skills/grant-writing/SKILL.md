@@ -3,7 +3,7 @@ name: grant-writing
 description: Translate research vision into funded reality.
 tier: extended
 applyTo: '**/*grant*,**/*funding*,**/*proposal*,**/*nsf*,**/*nih*,**/*research*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Grant Writing Skill

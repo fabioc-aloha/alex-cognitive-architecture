@@ -3,7 +3,7 @@ name: "heir-bootstrap"
 description: "Post-Initialize wizard that tailors Alex's cognitive architecture to a specific heir project through interactive 10-phase configuration"
 tier: standard
 applyTo: '**/*heir*,**/*bootstrap*,**/*initialize*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Heir Bootstrap Wizard

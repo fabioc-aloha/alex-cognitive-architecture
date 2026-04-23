@@ -3,7 +3,7 @@ name: architecture-refinement
 description: "Meta-skill for maintaining and evolving Alex's cognitive architecture through deliberate documentation and pattern extraction."
 tier: standard
 applyTo: '**/*refine*,**/*evolve*,**/*architecture*,**/*meta*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Architecture Refinement Skill

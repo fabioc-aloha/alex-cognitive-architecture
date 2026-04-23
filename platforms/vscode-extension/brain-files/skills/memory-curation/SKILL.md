@@ -3,7 +3,7 @@ name: memory-curation
 description: "Monitor, audit, and curate VS Code user memory (/memories/) for token efficiency, scope correctness, and value density"
 tier: standard
 applyTo: '**/*memory*,**/*curation*,**/*audit*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Memory Curation

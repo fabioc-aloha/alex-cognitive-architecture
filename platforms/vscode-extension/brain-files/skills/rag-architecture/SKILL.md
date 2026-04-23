@@ -3,7 +3,7 @@ name: rag-architecture
 description: Build retrieval-augmented generation systems that ground LLMs in your data.
 tier: standard
 applyTo: '**/*rag*,**/*retrieval*,**/*embedding*,**/*vector*,**/*knowledge*,**/*search*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # RAG Architecture Skill

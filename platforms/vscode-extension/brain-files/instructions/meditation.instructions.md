@@ -2,7 +2,7 @@
 description: "Meditation protocol for knowledge consolidation into permanent architecture"
 application: "When running meditation or knowledge consolidation sessions"
 applyTo: "**/*meditat*,**/*consolidat*"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Meditation Protocol

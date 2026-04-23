@@ -3,7 +3,7 @@ name: llm-model-selection
 description: Choosing the right model for the task — power vs. cost vs. speed.
 tier: standard
 applyTo: '**/*model*,**/*llm*,**/*copilot*,**/*claude*,**/*gpt*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # LLM Model Selection Skill

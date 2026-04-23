@@ -3,8 +3,8 @@ name: "converter-qa"
 description: "Test harness for validating converter outputs with 284 assertions across all converter muscles"
 tier: extended
 applyTo: '**/*converter*,**/*qa*,**/*test*harness*'
-muscle: .github/muscles/converter-qa.cjs
-currency: 2025-01-01
+muscle: ~
+currency: 2026-04-22
 ---
 
 # Converter QA Framework

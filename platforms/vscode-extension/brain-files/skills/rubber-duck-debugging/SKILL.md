@@ -3,7 +3,7 @@ name: rubber-duck-debugging
 description: Be a thinking partner. The answer often emerges when explaining the problem.
 tier: extended
 applyTo: '**/*debug*,**/*stuck*,**/*help*,**/*problem*,**/*issue*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Rubber Duck Debugging Skill

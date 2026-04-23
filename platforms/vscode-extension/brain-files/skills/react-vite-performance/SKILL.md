@@ -3,7 +3,7 @@ name: react-vite-performance
 description: "React + Vite performance optimization — code splitting, lazy loading, bundle analysis, Web Vitals, and modern React patterns for fast web applications"
 tier: standard
 applyTo: '**/*react*,**/*vite*,**/vite.config*,**/*bundle*,**/*lazy*,**/*performance*'
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # React + Vite Performance Optimization

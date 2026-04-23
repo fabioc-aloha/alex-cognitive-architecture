@@ -2,7 +2,7 @@
 description: "Token cost reduction for cognitive architecture files -- instruction/skill overlap, waste pattern detection, applyTo optimization"
 application: "When implementing token waste elimination or reviewing code that uses these patterns"
 applyTo: "**/.github/instructions/*.md,**/.github/skills/*/SKILL.md,**/.github/prompts/*.md"
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Token Waste Elimination -- Auto-Loaded Rules

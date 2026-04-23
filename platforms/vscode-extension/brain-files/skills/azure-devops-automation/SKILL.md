@@ -4,7 +4,7 @@ description: CI/CD pipelines, infrastructure as code, and deployment automation 
 tier: standard
 applyTo: '**/*devops*,**/*pipeline*,**/*cicd*,**/*ci-cd*,**/*yaml*'
 user-invokable: false
-currency: 2025-01-01
+currency: 2026-04-22
 ---
 
 # Skill: Azure DevOps Automation
