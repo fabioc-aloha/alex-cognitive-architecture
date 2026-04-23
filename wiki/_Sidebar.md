@@ -64,4 +64,4 @@ Step-by-step guides:
 
 ---
 
-**Version**: 8.3.0
+**Version**: 8.3.1

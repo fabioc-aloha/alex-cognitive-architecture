@@ -1,10 +1,10 @@
 {
-  "version": "8.3.0",
-  "architecture": "Alex Cognitive Architecture",
-  "identity": "Alex",
-  "compatibility": ">=8.0.0",
-  "upgradeLock": false,
-  "lockReason": null,
-  "lastSync": null,
-  "_notes": "Single source of truth for brain version. Synced to heirs during brain sync. Set identity plus upgradeLock=true in a customized heir to opt out of fleet upgrades. MASTER-ALEX-PROTECTED.json and alex.workspace.protectedMode remain supported as fallback safety gates."
+   "version": "8.3.1",
+   "architecture": "Alex Cognitive Architecture",
+   "identity": "Alex",
+   "compatibility": ">=8.0.0",
+   "upgradeLock": true,
+   "lockReason": "Master Alex source of truth — protected from fleet upgrades",
+   "lastSync": null,
+   "_notes": "Single source of truth for brain version. Synced to heirs during brain sync. Set identity plus upgradeLock=true in a customized heir to opt out of fleet upgrades. MASTER-ALEX-PROTECTED.json and alex.workspace.protectedMode remain supported as fallback safety gates."
 }

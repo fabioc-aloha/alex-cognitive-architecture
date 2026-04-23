@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.3.1] - 2026-04-23
+
+### Beta — Upgrade Safety Hardening
+
+Safety fixes for the brain-upgrade pipeline across all three executors (fleet script, VS Code extension, LLM-callable muscle). Personal beta release for internal fleet testing; no breaking changes.
+
+### Added
+
+- **Skip-if-up-to-date gate**: `upgradeProject` in the shared core now short-circuits when the installed `brain-version.json` `version` is ≥ the target. A new `--force` flag on both `scripts/upgrade-brain.cjs` and `.github/muscles/brain-upgrade.cjs` bypasses the gate for intentional reinstalls. Skipped projects never create a backup.
+- **Semver helpers** in `brain-upgrade-core.cjs`: `parseSemver`, `compareSemver`, `readInstalledVersion` (dep-free).
+- **Extension upgrade-lock support**: `bootstrap.ts` now honors `brain-version.json.upgradeLock`, `alex.workspace.protectedMode` setting, and the master kill-switch marker. Previously only the marker file was checked.
+- **Extension semver gate**: `bootstrap.ts` now uses `>=` comparison (was strict `!==`), preventing accidental downgrades when running an older VSIX against a newer installed brain.
+- **Heir identity preservation in extension**: `bootstrap.ts` now captures `identity`, `upgradeLock`, `lockReason` from the pre-upgrade `brain-version.json` and re-applies them after install. Previously these fields were overwritten on every upgrade.
+- **CI backup in extension**: `bootstrap.ts` now saves the pre-upgrade `copilot-instructions.md` as `copilot-instructions.backup.md` for Phase 2 reconciliation. Matches the shared core's behavior.
+- **Release preflight parity check**: New check in `scripts/release-preflight.cjs` fails when `BRAIN_SUBDIRS` or `BRAIN_ROOT_FILES` drift between `bootstrap.ts` (TS) and `brain-upgrade-core.cjs` (CJS shared core). Caught real drift (missing `brain-version.json` in the TS array) on its first run.
+- **Report → Validate → Approve ritual**: New `/propose-change` prompt and `master-wiki/decisions/change-proposals/` archive for non-trivial refactors. Template + README + first worked example (`brain-upgrade-v8.3/`). Documented as a pattern in `learned-patterns.instructions.md`.
+- **Test coverage**: 3 new tests for skip-when-equal, force-bypasses-skip, and `compareSemver` ordering. Total 174/174 green (was 171).
+
+### Changed
+
+- **Brain-upgrade trifecta refactor**: Three executors (fleet script, extension bootstrap, muscle CLI) now share one Phase 1 mechanical contract via `.github/muscles/shared/brain-upgrade-core.cjs`. The extension mirrors the shared core in TypeScript because CJS can't be imported cross-boundary; the preflight parity check prevents silent drift.
+- **Trifecta self-protection**: Four paths are now protected from backup-restore to prevent a half-applied trifecta refactor from being overwritten by its predecessor: `.github/skills/brain-upgrade/SKILL.md`, `.github/instructions/brain-upgrade.instructions.md`, `.github/muscles/brain-upgrade.cjs`, `.github/muscles/shared/brain-upgrade-core.cjs`.
+- **Authoritative version stamp**: `brain-version.json` is the single source of truth. Legacy `.alex-brain-version` is no longer written and is removed on upgrade (preserved in backup for rollback).
+- **Welcome panel defaults to Setup tab**: Stale persisted tab state (from a deleted tab in a prior version) no longer produces a blank panel. Source-level fix; dist rebuild happens at next publish.
+
+### Fixed
+
+- **Self-contained check**: Removed master-only relative path references in the brain-upgrade trifecta docs (replaced with plain code spans) so the doc works identically in master and heirs.
+
+### Known Limitations
+
+- The extension does not yet preserve `NORTH-STAR.md` or heir-managed config files (`loop-menu.json`, `taglines.json`, `markdown-light.css`). Use `scripts/upgrade-brain.cjs` or the CLI muscle for heirs where this matters. Tracked for full parity port.
+
+---
+
 ## [8.3.0] - 2026-04-22
 
 ### Quality Release

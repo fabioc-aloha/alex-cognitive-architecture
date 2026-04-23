@@ -1,22 +1,45 @@
 #!/usr/bin/env node
 /**
- * @muscle curate-upgrade
- * @description Curate project-specific content from .github-backup-* after brain upgrade
+ * @muscle brain-upgrade
+ * @description LLM-callable per-project brain upgrade — Phase 1 mechanics + Phase 2 semantic helpers
  * @platform node
  * @requires fs, path
  * @inheritance inheritable
+ * @currency 2026-04-23
  *
- * After upgrade-brain.cjs renames .github/ to .github-backup-YYYYMMDD-HHMMSS/ and installs
- * a fresh v8 brain, some project-specific content may not have been auto-restored.
- * This script scans backups, reports findings, auto-restores safe content, and
- * supports interactive curation for copilot-instructions.md merging.
+ * This is the muscle half of the `brain-upgrade` trifecta (skill + instruction + muscle).
+ * The same per-project Phase 1 contract used by the fleet orchestrator
+ * (scripts/upgrade-brain.cjs) lives in the shared core module:
+ *   .github/muscles/shared/brain-upgrade-core.cjs
+ *
+ * Three executors, one contract:
+ *   - scripts/upgrade-brain.cjs   → fleet upgrade (Master-only, iterates projects)
+ *   - VS Code extension bootstrap → single-project upgrade from the cockpit
+ *   - this muscle                 → single-project upgrade driven by the LLM
+ *
+ * Phase 1 modes (mechanical):
+ *   Audit     — detect whether the current project is a recognized Alex brain
+ *   Upgrade   — backup .github, install fresh brain, auto-preserve, auto-restore
+ *   Verify    — check that the brain is installed correctly against a brain source
+ *   Rollback  — restore from the most recent .github-backup-*
+ *
+ * Phase 2 modes (semantic, LLM-assisting):
+ *   Scan        — inventory unrestored content in the backup
+ *   AutoRestore — copy safe non-brain content from backup (skips protected trifecta paths)
+ *   Curate      — interactive copilot-instructions.md reconciliation
+ *   Clean       — delete the backup (after user consent)
  *
  * Usage:
- *   node .github/muscles/curate-upgrade.cjs --mode Scan
- *   node .github/muscles/curate-upgrade.cjs --mode AutoRestore --dry-run
- *   node .github/muscles/curate-upgrade.cjs --mode Curate --include "CorreaX"
- *   node .github/muscles/curate-upgrade.cjs --mode Clean --include "ChessCoach,AlexBooks"
- * @currency 2026-04-20
+ *   # Phase 1 (single project, defaults to CWD)
+ *   node .github/muscles/brain-upgrade.cjs --mode Upgrade  --brain-source C:/path/to/fresh/.github
+ *   node .github/muscles/brain-upgrade.cjs --mode Verify   --brain-source C:/path/to/fresh/.github
+ *   node .github/muscles/brain-upgrade.cjs --mode Rollback
+ *
+ *   # Phase 2 (fleet-wide by default; --include to narrow)
+ *   node .github/muscles/brain-upgrade.cjs --mode Scan
+ *   node .github/muscles/brain-upgrade.cjs --mode AutoRestore --dry-run
+ *   node .github/muscles/brain-upgrade.cjs --mode Curate --include "CorreaX"
+ *   node .github/muscles/brain-upgrade.cjs --mode Clean  --include "ChessCoach,AlexBooks"
  */
 
 'use strict';
@@ -25,6 +48,18 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 
+const core = require(path.join(__dirname, 'shared', 'brain-upgrade-core.cjs'));
+const {
+  PROTECTED_TRIFECTA_PATHS,
+  isProtectedTrifectaPath,
+  detectAlexBrain,
+  isProtectedProject,
+  buildBackupSuffix,
+  upgradeProject,
+  verifyProject,
+  rollbackProject,
+} = core;
+
 // ── CLI Parsing ─────────────────────────────────────────────────────────────
 
 function parseArgs() {
@@ -32,9 +67,13 @@ function parseArgs() {
   const opts = {
     mode: null,
     targetDir: process.platform === 'win32' ? 'C:\\Development' : path.join(require('os').homedir(), 'Development'),
+    projectDir: process.cwd(),
+    brainSource: null,
+    brainVersion: null,
     include: [],
     exclude: ['AlexMaster', 'pbi', 'pbi-test', 'GCX_Master', 'GCX_Copilot', 'cXpert', 'Lahai'],
     dryRun: false,
+    force: false,
   };
 
   for (let i = 0; i < args.length; i++) {
@@ -43,18 +82,38 @@ function parseArgs() {
       opts.mode = args[++i];
     } else if (arg === '--target-dir' && args[i + 1]) {
       opts.targetDir = args[++i];
+    } else if (arg === '--project-dir' && args[i + 1]) {
+      opts.projectDir = path.resolve(args[++i]);
+    } else if (arg === '--brain-source' && args[i + 1]) {
+      opts.brainSource = path.resolve(args[++i]);
+    } else if (arg === '--brain-version' && args[i + 1]) {
+      opts.brainVersion = args[++i];
     } else if (arg === '--include' && args[i + 1]) {
       opts.include = args[++i].split(',').map(s => s.trim()).filter(Boolean);
     } else if (arg === '--exclude' && args[i + 1]) {
       opts.exclude = args[++i].split(',').map(s => s.trim()).filter(Boolean);
     } else if (arg === '--dry-run') {
       opts.dryRun = true;
+    } else if (arg === '--force') {
+      opts.force = true;
     }
   }
 
-  const validModes = ['scan', 'autorestore', 'curate', 'clean'];
+  const phase1Modes = ['audit', 'upgrade', 'verify', 'rollback'];
+  const phase2Modes = ['scan', 'autorestore', 'curate', 'clean'];
+  const validModes = [...phase1Modes, ...phase2Modes];
   if (!opts.mode || !validModes.includes(opts.mode.toLowerCase())) {
-    console.error(`Usage: node curate-upgrade.cjs --mode <${validModes.join('|')}> [--target-dir <path>] [--include "a,b"] [--exclude "x,y"] [--dry-run]`);
+    console.error(`Usage: node brain-upgrade.cjs --mode <${validModes.join('|')}>`);
+    console.error('  Phase 1 (single project): Audit | Upgrade | Verify | Rollback');
+    console.error('    --project-dir <path>    (default: cwd)');
+    console.error('    --brain-source <path>   (required for Upgrade / Verify)');
+    console.error('    --brain-version <ver>   (optional; defaults to brain source package version or "unknown")');
+    console.error('  Phase 2 (fleet-wide):     Scan | AutoRestore | Curate | Clean');
+    console.error('    --target-dir <path>     (default: C:\\Development on Windows)');
+    console.error('    --include "a,b"         (restrict to listed projects)');
+    console.error('    --exclude "x,y"         (skip listed projects)');
+    console.error('  --dry-run                  (simulate)');
+    console.error('  --force                    (reinstall even if installed version >= target)');
     process.exit(1);
   }
   opts.mode = opts.mode.toLowerCase();
@@ -66,6 +125,7 @@ function parseArgs() {
 // Brain-managed directories — content installed by upgrade-brain.cjs
 const BRAIN_SUBDIRS = ['instructions', 'skills', 'prompts', 'agents', 'muscles', 'config', 'hooks', 'assets'];
 const BRAIN_ROOT_FILES = ['copilot-instructions.md', '.alex-brain-version'];
+const AUTO_PRESERVED_ROOT_FILES = ['NORTH-STAR.md', 'brain-version.json'];
 
 // Already auto-restored by upgrade-brain.cjs
 const AUTO_RESTORED_DIRS = ['workflows', 'ISSUE_TEMPLATE', 'episodic', 'memory', 'domain-knowledge'];
@@ -182,6 +242,7 @@ function getUnrestoredContent(backupPath) {
       findings.unknownDirs.push({ name: entry.name, fileCount });
     } else {
       if (BRAIN_ROOT_FILES.includes(entry.name)) continue;
+      if (AUTO_PRESERVED_ROOT_FILES.includes(entry.name)) continue;
       if (AUTO_RESTORED_FILES.includes(entry.name)) continue;
       if (entry.name === 'copilot-instructions.backup.md') continue;
       if (SKIP_FILES.includes(entry.name)) {
@@ -260,10 +321,10 @@ function invokeScan(opts) {
 
   if (needsCuration > 0) {
     console.log(`\n${C.white('  Next steps:')}`);
-    console.log('    1. node .github/muscles/curate-upgrade.cjs --mode AutoRestore      (safe auto-copy)');
-    console.log('    2. node .github/muscles/curate-upgrade.cjs --mode Curate --include X (CI merging)');
-    console.log('    3. node scripts/upgrade-brain.cjs --mode Verify  (confirm brain intact)');
-    console.log('    4. node .github/muscles/curate-upgrade.cjs --mode Clean             (remove backups)');
+    console.log('    1. node .github/muscles/brain-upgrade.cjs --mode AutoRestore      (safe auto-copy)');
+    console.log('    2. node .github/muscles/brain-upgrade.cjs --mode Curate --include X (CI merging)');
+    console.log('    3. node scripts/upgrade-brain.cjs --mode Verify  (mechanical sanity check)');
+    console.log('    4. node .github/muscles/brain-upgrade.cjs --mode Clean             (remove backups — asks first)');
   }
 }
 
@@ -293,8 +354,12 @@ function invokeAutoRestore(opts) {
 
     writeProject(p.name, 'auto-restoring');
 
-    // Copy root files
+    // Copy root files — protected trifecta files are never restored from backup
     for (const f of findings.rootFiles) {
+      if (isProtectedTrifectaPath(f)) {
+        writeWarn(`refuse to restore ${f} (protected trifecta path)`);
+        continue;
+      }
       const source = path.join(backupPath, f);
       const target = path.join(ghDir, f);
       if (fs.existsSync(target)) {
@@ -308,8 +373,12 @@ function invokeAutoRestore(opts) {
       restored++;
     }
 
-    // Copy unknown directories
+    // Copy unknown directories — protected trifecta dirs are never restored from backup
     for (const d of findings.unknownDirs) {
+      if (isProtectedTrifectaPath(d.name) || PROTECTED_TRIFECTA_PATHS.some(p => p.startsWith(d.name + '/'))) {
+        writeWarn(`refuse to restore ${d.name}/ (contains protected trifecta files)`);
+        continue;
+      }
       const source = path.join(backupPath, d.name);
       const target = path.join(ghDir, d.name);
       if (fs.existsSync(target)) {
@@ -455,12 +524,159 @@ function invokeClean(opts) {
   console.log(`\n  Cleaned: ${cleaned} | Blocked: ${blocked}`);
 }
 
+// ── Phase 1: Single-project modes (LLM-callable, cockpit-callable) ──────────
+
+function resolveBrainVersion(opts) {
+  if (opts.brainVersion) return opts.brainVersion;
+  // Try to read from the brain source's extension package.json (Master layout)
+  if (opts.brainSource) {
+    const extPkg = path.resolve(opts.brainSource, '..', 'platforms', 'vscode-extension', 'package.json');
+    if (fs.existsSync(extPkg)) {
+      try {
+        return JSON.parse(fs.readFileSync(extPkg, 'utf8')).version;
+      } catch { /* fall through */ }
+    }
+    // Fallback: brain-version.json version field
+    const bv = path.join(opts.brainSource, 'brain-version.json');
+    if (fs.existsSync(bv)) {
+      try {
+        const parsed = JSON.parse(fs.readFileSync(bv, 'utf8'));
+        if (parsed && parsed.version) return parsed.version;
+      } catch { /* fall through */ }
+    }
+  }
+  return 'unknown';
+}
+
+function phase1Logger() {
+  return {
+    phase:  writePhase,
+    action: writeAction,
+    ok:     writeOK,
+    warn:   writeWarn,
+    err:    t => console.log(`    ${C.red(`✗ ${t}`)}`),
+  };
+}
+
+function invokeAuditSingle(opts) {
+  writePhase('AUDIT — Single-project eligibility check');
+  const gen = detectAlexBrain(opts.projectDir);
+  const locked = isProtectedProject(opts.projectDir);
+
+  writeProject(path.basename(opts.projectDir), opts.projectDir);
+  if (!gen) {
+    writeWarn('not a recognized Alex brain (no .github, or unrecognized copilot-instructions.md)');
+    console.log('    Upgrade will be refused. Fix by initializing a brain here, or pointing --project-dir elsewhere.');
+    return;
+  }
+  writeAction(`brain generation: ${gen}`);
+  if (locked) {
+    writeWarn('upgrade-locked (brain-version.json lock OR MASTER-ALEX-PROTECTED.json OR alex.workspace.protectedMode)');
+  } else {
+    writeOK('eligible for upgrade');
+  }
+}
+
+function invokeUpgradeSingle(opts) {
+  writePhase('UPGRADE — Single-project Phase 1 mechanical install');
+
+  if (!opts.brainSource) {
+    console.log(C.red('    --brain-source <path> is required for Upgrade mode'));
+    process.exit(1);
+  }
+  if (isProtectedProject(opts.projectDir)) {
+    writeWarn('project is upgrade-locked — refusing to proceed');
+    process.exit(1);
+  }
+  // Allow upgrading a non-brain folder (initialize case) or an existing brain
+  const gen = detectAlexBrain(opts.projectDir);
+  if (!gen && fs.existsSync(path.join(opts.projectDir, '.github'))) {
+    writeWarn('.github exists but is not a recognized Alex brain — refusing to proceed');
+    console.log('    Move or remove the existing .github first, or use a different --project-dir.');
+    process.exit(1);
+  }
+
+  const brainVersion = resolveBrainVersion(opts);
+  writeAction(`brain source: ${opts.brainSource}`);
+  writeAction(`target:       ${opts.projectDir}`);
+  writeAction(`version:      ${brainVersion}`);
+
+  const result = upgradeProject({
+    projectPath: opts.projectDir,
+    brainSource: opts.brainSource,
+    brainVersion,
+    backupSuffix: buildBackupSuffix(),
+    dryRun: opts.dryRun,
+    force: opts.force,
+    logger: phase1Logger(),
+  });
+
+  if (result.ok) {
+    if (result.skipped) {
+      writeOK(`skipped (${result.reason || 'up-to-date'}${result.installedVersion ? ` @ v${result.installedVersion}` : ''})`);
+      return;
+    }
+    writeOK('upgraded');
+    if (!opts.dryRun && result.backupDir) {
+      console.log(`\n${C.white('  Next step: Phase 2 semantic curation via the LLM')}`);
+      console.log('    node .github/muscles/brain-upgrade.cjs --mode Scan --target-dir ' + path.dirname(opts.projectDir));
+      console.log('    then follow the brain-upgrade skill for Phase 2 reconciliation.');
+    }
+  } else {
+    console.log(C.red(`    ✗ FAILED: ${result.error}`));
+    process.exit(1);
+  }
+}
+
+function invokeVerifySingle(opts) {
+  writePhase('VERIFY — Single-project brain integrity check');
+  if (!opts.brainSource) {
+    console.log(C.red('    --brain-source <path> is required for Verify mode'));
+    process.exit(1);
+  }
+  const brainVersion = resolveBrainVersion(opts);
+  const result = verifyProject({ projectPath: opts.projectDir, brainSource: opts.brainSource, brainVersion });
+  writeProject(path.basename(opts.projectDir), opts.projectDir);
+  if (result.ok) {
+    writeOK(`PASS (v${brainVersion})`);
+  } else {
+    console.log(C.red('    ✗ FAIL'));
+    for (const i of result.issues) console.log(C.red(`      - ${i}`));
+    process.exit(1);
+  }
+}
+
+function invokeRollbackSingle(opts) {
+  writePhase('ROLLBACK — Single-project restore from most recent backup');
+  const result = rollbackProject({ projectPath: opts.projectDir, dryRun: opts.dryRun, logger: phase1Logger() });
+  if (result.ok) {
+    writeOK(`restored from ${result.restoredFrom}`);
+  } else {
+    writeWarn(result.error);
+    process.exit(1);
+  }
+}
+
 // ── Main ────────────────────────────────────────────────────────────────────
 
 async function main() {
   const opts = parseArgs();
 
   switch (opts.mode) {
+    // Phase 1 (single project, mechanical)
+    case 'audit':
+      invokeAuditSingle(opts);
+      break;
+    case 'upgrade':
+      invokeUpgradeSingle(opts);
+      break;
+    case 'verify':
+      invokeVerifySingle(opts);
+      break;
+    case 'rollback':
+      invokeRollbackSingle(opts);
+      break;
+    // Phase 2 (fleet-wide, LLM-assisting)
     case 'scan':
       invokeScan(opts);
       break;

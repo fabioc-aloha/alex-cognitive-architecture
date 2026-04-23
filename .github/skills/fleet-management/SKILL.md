@@ -32,7 +32,7 @@ Master Alex evolves continuously — new skills, refined instructions, fixed def
 |--------|---------|----------|
 | `upgrade-brain.cjs` | Fleet-wide brain upgrade | `scripts/` |
 | `sync-to-heir.cjs` | Master → Heir template sync | `scripts/` |
-| `curate-upgrade.cjs` | Post-upgrade curation | `.github/muscles/` |
+| `brain-upgrade.cjs` | Per-project upgrade + post-upgrade curation (trifecta muscle) | `.github/muscles/` |
 
 ## Workflow
 
@@ -110,7 +110,7 @@ Projects with custom CI need manual curation:
 
 ```powershell
 # Scan backups for custom content
-node .github/muscles/curate-upgrade.cjs --mode Scan
+node .github/muscles/brain-upgrade.cjs --mode Scan
 
 # Review each project's backup
 # Merge project-specific content back into fresh CI

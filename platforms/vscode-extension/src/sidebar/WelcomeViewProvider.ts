@@ -566,16 +566,16 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
 
   <!-- Tabs -->
   <div class="tabs" role="tablist">
-    <button class="tab active" role="tab" id="tab-btn-loop" data-tab="loop" aria-selected="true" aria-controls="tab-loop">
+    <button class="tab" role="tab" id="tab-btn-loop" data-tab="loop" aria-selected="false" aria-controls="tab-loop">
       <span class="codicon codicon-sync"></span> Loop
     </button>
-    <button class="tab" role="tab" id="tab-btn-setup" data-tab="setup" aria-selected="false" aria-controls="tab-setup">
+    <button class="tab active" role="tab" id="tab-btn-setup" data-tab="setup" aria-selected="true" aria-controls="tab-setup">
       <span class="codicon codicon-gear"></span> Setup
     </button>
   </div>
 
   <!-- Loop Tab -->
-  <div id="tab-loop" class="tab-panel active" role="tabpanel" aria-labelledby="tab-btn-loop">
+  <div id="tab-loop" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-loop">
     <!-- Chat CTA -->
     ${renderButton({ icon: "comment-discussion", label: "Chat with Alex", command: "openChat", hint: "chat" }, true)}
 
@@ -583,16 +583,21 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
   </div>
 
   <!-- Setup Tab -->
-  <div id="tab-setup" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-setup">
+  <div id="tab-setup" class="tab-panel active" role="tabpanel" aria-labelledby="tab-btn-setup">
     ${renderGroups(setupGroups)}
   </div>
 
   <script nonce="${nonce}">
     const vscode = acquireVsCodeApi();
 
-    // Tab switching with state persistence
-    const savedTab = vscode.getState()?.activeTab || 'loop';
-    if (savedTab !== 'loop') {
+    // Tab switching — default to Setup so initialize/upgrade are always reachable.
+    // Validate any persisted tab against the known list before restoring; stale
+    // values (from deleted tabs in prior versions) fall back to the default.
+    const KNOWN_TABS = ['loop', 'setup'];
+    const DEFAULT_TAB = 'setup';
+    const persisted = vscode.getState()?.activeTab;
+    const savedTab = KNOWN_TABS.includes(persisted) ? persisted : DEFAULT_TAB;
+    if (savedTab !== DEFAULT_TAB) {
       document.querySelectorAll('.tab').forEach(t => {
         t.classList.remove('active');
         t.setAttribute('aria-selected', 'false');
@@ -605,6 +610,9 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       }
       const activePanel = document.getElementById('tab-' + savedTab);
       if (activePanel) activePanel.classList.add('active');
+    } else if (persisted !== DEFAULT_TAB) {
+      // Repair stale state so future opens don't re-trigger the mismatch.
+      vscode.setState({ ...(vscode.getState() || {}), activeTab: DEFAULT_TAB });
     }
 
     document.querySelectorAll('.tab').forEach(tab => {
