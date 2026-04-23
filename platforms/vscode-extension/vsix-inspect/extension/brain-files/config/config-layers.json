@@ -26,17 +26,12 @@
         "loop-config.schema.json",
         "taglines.json",
         "taglines.schema.json",
-        "scheduled-tasks.json",
-        "scheduled-tasks.schema.json",
-        "scheduled-tasks/",
         "markdown-light.css"
       ]
     },
     "runtime-state": {
       "description": "Transient session state written by hooks/muscles. Not distributed to heirs.",
       "files": [
-        ".scheduled-tasks-state.json",
-        "agent-metrics.json",
         "assignment-log.json",
         "correlation-vector.json",
         "rai-reliance-metrics.json",
