@@ -12,6 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **Welcome panel: force Setup as landing tab**: `WelcomeViewProvider.ts` no longer restores the persisted `activeTab` on panel open. Heirs reported the Welcome menu crashing / failing to render on the Loop tab; forcing Setup on every open guarantees initialize/upgrade actions remain reachable. In-session clicks still persist so the chosen tab survives panel re-renders within the same session.
+- **Welcome panel: Safe Mode fallback**: every data source (`healthPulse`, `tagline`, `activePackage`, loop groups) is wrapped in try/catch with a typed fallback. If `getHtml()` throws, the panel now renders a minimal CSP-locked Setup view with Initialize, Upgrade, Show Diagnostics, and Retry buttons instead of a blank webview.
+- **Brain upgrade: preserve `EXTERNAL-API-REGISTRY.md`**: both executors (shared core and `bootstrap.ts`) now save the pre-upgrade registry as `EXTERNAL-API-REGISTRY.backup.md` for Phase 2 LLM curation.
+- **Sync-to-heir: sanitize `brain-version.json`**: Master lock state (`upgradeLock`, `lockReason`, etc.) is stripped at the sync boundary so heirs don't inherit self-protection and silently skip fleet upgrades.
+
+### Added
+
+- **Diagnostics OutputChannel** + `alex.showDiagnostics` command: timestamped logger for activation and Welcome-view events, reachable from the command palette and Safe Mode recovery buttons.
+- **Scan muscle**: new `NORTH_STAR_CUSTOM` and `API_REGISTRY_CUSTOM` findings so Phase 2 curation covers all three `.backup.md` files.
 
 ---
 
