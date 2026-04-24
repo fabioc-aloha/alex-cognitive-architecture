@@ -260,6 +260,14 @@ export async function bootstrapBrainFiles(
       try { oldNorthStarContent = fs.readFileSync(oldNorthStarPath, "utf-8"); } catch { /* best effort */ }
     }
 
+    // Save old EXTERNAL-API-REGISTRY.md for Phase 2 LLM curation. Heirs
+    // append project-specific API sections that must survive upgrades.
+    const oldApiRegistryPath = path.join(githubDir, "EXTERNAL-API-REGISTRY.md");
+    let oldApiRegistryContent: string | null = null;
+    if (installedVersion && fs.existsSync(oldApiRegistryPath)) {
+      try { oldApiRegistryContent = fs.readFileSync(oldApiRegistryPath, "utf-8"); } catch { /* best effort */ }
+    }
+
     // Deploy each brain subdirectory atomically via staging
     for (const subdir of BRAIN_SUBDIRS) {
       const srcSub = path.join(sourcePath, subdir);
@@ -323,6 +331,17 @@ export async function bootstrapBrainFiles(
         fs.writeFileSync(
           path.join(githubDir, "NORTH-STAR.backup.md"),
           oldNorthStarContent,
+          "utf-8",
+        );
+      } catch { /* best effort */ }
+    }
+
+    // Save old EXTERNAL-API-REGISTRY as .backup.md for Phase 2 LLM curation.
+    if (oldApiRegistryContent !== null) {
+      try {
+        fs.writeFileSync(
+          path.join(githubDir, "EXTERNAL-API-REGISTRY.backup.md"),
+          oldApiRegistryContent,
           "utf-8",
         );
       } catch { /* best effort */ }

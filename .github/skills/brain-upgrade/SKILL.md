@@ -91,10 +91,11 @@ Phase 2 relies on these contract guarantees from whichever executor ran:
 
 - `.vscode/settings.json` merged additively — existing user values win, new essential defaults fill gaps only
 
-### Old CI and NORTH-STAR preserved for Phase 2
+### Old CI, NORTH-STAR, and EXTERNAL-API-REGISTRY preserved for Phase 2
 
 - `copilot-instructions.md` from backup saved as `copilot-instructions.backup.md` for the LLM to reconcile
 - `NORTH-STAR.md` from backup saved as `NORTH-STAR.backup.md` for LLM-led curation (may also need relocation if previously misplaced)
+- `EXTERNAL-API-REGISTRY.md` from backup saved as `EXTERNAL-API-REGISTRY.backup.md` so project-specific API sections (e.g., domain pipelines, publishing specs) can be merged into the fresh template
 
 If any guarantee is missing, stop Phase 2 and report the mechanical gap rather than paper over it.
 
@@ -140,6 +141,7 @@ Read the report. Per project, the scan lists:
 - `UNKNOWN_DIR` — directories not in the brain and not in the auto-restore list
 - `CI_CUSTOM` — `copilot-instructions.backup.md` exists and needs reconciliation
 - `NORTH_STAR_CUSTOM` — `NORTH-STAR.backup.md` exists and needs LLM curation
+- `API_REGISTRY_CUSTOM` — `EXTERNAL-API-REGISTRY.backup.md` exists and needs LLM merge
 - `OLD_ARTIFACT` — known-obsolete files (e.g., pre-v8 `hooks.json`)
 
 ### Step 2 — Reconcile `copilot-instructions.md` semantically
@@ -177,6 +179,24 @@ If `.github/NORTH-STAR.backup.md` exists, the LLM decides its fate. NORTH-STAR i
 | Old NORTH-STAR is stale/abandoned | Archive or discard |
 
 When done, delete `NORTH-STAR.backup.md`.
+
+### Step 2c — Merge `EXTERNAL-API-REGISTRY.md` semantically
+
+If `.github/EXTERNAL-API-REGISTRY.backup.md` exists, the fresh master template has been installed as the active `EXTERNAL-API-REGISTRY.md`. Heirs commonly append project-specific API sections (e.g. "Book Publishing Pipeline", "KDP Specs", "Healthcare FHIR Endpoints") to the bottom of the registry. Those must survive the upgrade.
+
+| Situation | Action |
+|-----------|--------|
+| Backup has project-specific sections appended after the master template content | Append those sections to the fresh `EXTERNAL-API-REGISTRY.md` (additive) |
+| Backup matches the master template verbatim (no custom sections) | Keep the fresh copy, delete the backup |
+| Backup diverges from master template in its shared sections | Trust the fresh template for shared sections; only port project-specific additions |
+| Backup contains stale API references no longer used | Discard — don't carry forward obsolete APIs |
+
+Rules:
+
+- **Additive only** — never replace fresh master sections with backup content wholesale
+- **Project-specific sections first** — look below any heading that matches master's structure; those are the heir's additions
+- **Preserve the fresh template's structure** — master-owned sections stay master-owned
+- When done, delete `EXTERNAL-API-REGISTRY.backup.md`.
 
 ### Step 3 — Review non-standard content semantically
 

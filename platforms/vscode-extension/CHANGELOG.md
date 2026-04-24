@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.3.2] - 2026-04-23
+
+### Fixed
+
+- **Welcome panel: force Setup as landing tab**: `WelcomeViewProvider.ts` no longer restores the persisted `activeTab` on panel open. Heirs reported the Welcome menu crashing / failing to render on the Loop tab; forcing Setup on every open guarantees initialize/upgrade actions remain reachable. In-session clicks still persist so the chosen tab survives panel re-renders within the same session.
+
+---
+
 ## [8.3.1] - 2026-04-23
 
 ### Beta — Upgrade Safety Hardening

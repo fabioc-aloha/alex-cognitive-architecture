@@ -8,6 +8,7 @@ import { writeLoopConfig, setProjectPhase } from "./sidebar/loopConfigGenerator.
 import { setupAIMemory, resolveAIMemoryPath, getAIMemoryStatus } from "./aiMemory.js";
 import { bootstrapBrainFiles, checkAutoUpgrade, getBrainStatus } from "./bootstrap.js";
 import { muscleAndPrompt, runMuscle, runMuscleInTerminal, disposeMuscleChannels } from "./muscleRunner.js";
+import { initDiagnostics, disposeDiagnostics, logInfo, logError } from "./diagnostics.js";
 
 /**
  * Sanitize error messages for user display — strips file system paths
@@ -35,10 +36,22 @@ async function enforceSafetySettings(): Promise<void> {
 }
 
 export function activate(context: vscode.ExtensionContext): void {
+  // Initialize the diagnostic OutputChannel as early as possible so any
+  // subsequent failure during activation has somewhere to land. The channel
+  // is also exposed via the "Alex: Show Diagnostics" command.
+  const diag = initDiagnostics();
+  const bundledVersion =
+    (context.extension.packageJSON.version as string | undefined) ?? "0.0.0";
+  logInfo(
+    "activate",
+    `extension v${bundledVersion} activating (workspace=${vscode.workspace.workspaceFolders?.length ?? 0} folder(s))`,
+  );
+
   // Enforce safety settings on every activation. Auto-disables
   // github.copilot.chat.copilotMemory.enabled to prevent /memories/
   // PII from being auto-loaded into LLM prompts.
   void enforceSafetySettings().catch((err) => {
+    logError("activate", "enforceSafetySettings failed", err);
     console.error("Alex: enforceSafetySettings failed:", err);
   });
 
@@ -83,6 +96,14 @@ export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand("alex.refreshWelcome", () => {
       welcomeProvider.refresh();
+    }),
+  );
+
+  // Surface the diagnostic OutputChannel so users can share it when the
+  // Welcome view fails to render or a command misbehaves.
+  context.subscriptions.push(
+    vscode.commands.registerCommand("alex.showDiagnostics", () => {
+      diag.show(true);
     }),
   );
 
@@ -669,4 +690,5 @@ export function deactivate(): void {
   // Cleanup handled by disposables in context.subscriptions; module-level
   // OutputChannel cache also needs explicit disposal.
   disposeMuscleChannels();
+  disposeDiagnostics();
 }

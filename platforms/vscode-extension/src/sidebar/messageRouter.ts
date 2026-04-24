@@ -88,6 +88,7 @@ const COMMAND_PROXIES: Record<string, string> = {
   markdownLint: "alex.markdownLint",
   insightPipeline: "alex.insightPipeline",
   setContext: "alex.setContext",
+  showDiagnostics: "alex.showDiagnostics",
 };
 
 for (const [cmd, vsCmd] of Object.entries(COMMAND_PROXIES)) {

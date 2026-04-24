@@ -482,6 +482,16 @@ function upgradeProject({
         if (!dryRun) fs.copyFileSync(oldNorthStar, path.join(ghDir, "NORTH-STAR.backup.md"));
         logger.action("save old NORTH-STAR -> NORTH-STAR.backup.md (Phase 2 LLM curation)");
       }
+
+      // Save old EXTERNAL-API-REGISTRY for Phase 2 LLM curation. Heirs often
+      // append project-specific API sections (e.g. "Book Publishing Pipeline",
+      // "KDP Specs") to the bottom of the master template. These sections must
+      // survive upgrades — Phase 2 merges them back into the fresh template.
+      const oldApiRegistry = path.join(restoreSource, "EXTERNAL-API-REGISTRY.md");
+      if (fs.existsSync(oldApiRegistry)) {
+        if (!dryRun) fs.copyFileSync(oldApiRegistry, path.join(ghDir, "EXTERNAL-API-REGISTRY.backup.md"));
+        logger.action("save old EXTERNAL-API-REGISTRY -> EXTERNAL-API-REGISTRY.backup.md (Phase 2 LLM curation)");
+      }
     }
 
     return { ok: true, backupDir };

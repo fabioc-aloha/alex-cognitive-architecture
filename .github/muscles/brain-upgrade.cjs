@@ -230,6 +230,8 @@ function getUnrestoredContent(backupPath) {
     rootFiles: [],
     unknownDirs: [],
     customCI: false,
+    customNorthStar: false,
+    customApiRegistry: false,
     oldArtifacts: [],
   };
 
@@ -245,6 +247,8 @@ function getUnrestoredContent(backupPath) {
       if (AUTO_PRESERVED_ROOT_FILES.includes(entry.name)) continue;
       if (AUTO_RESTORED_FILES.includes(entry.name)) continue;
       if (entry.name === 'copilot-instructions.backup.md') continue;
+      if (entry.name === 'NORTH-STAR.backup.md') continue;
+      if (entry.name === 'EXTERNAL-API-REGISTRY.backup.md') continue;
       if (SKIP_FILES.includes(entry.name)) {
         findings.oldArtifacts.push(entry.name);
         continue;
@@ -259,6 +263,31 @@ function getUnrestoredContent(backupPath) {
     const content = fs.readFileSync(oldCI, 'utf8');
     if (/(?:## (?:Project|Active) Context|## Coding Standards|## Tech Stack|## Architecture)/i.test(content)) {
       findings.customCI = true;
+    }
+  }
+
+  // Check if old NORTH-STAR diverges from the Master template
+  // (Master ships a detailed vision doc; heirs typically rewrite it.
+  //  Flag any NORTH-STAR whose first non-empty H1 doesn't reference
+  //  "most advanced and trusted AI partner" — the Master's tagline.)
+  const oldNorthStar = path.join(backupPath, 'NORTH-STAR.md');
+  if (fs.existsSync(oldNorthStar)) {
+    const content = fs.readFileSync(oldNorthStar, 'utf8');
+    if (content.trim().length > 0 && !/most advanced and trusted AI partner/i.test(content)) {
+      findings.customNorthStar = true;
+    }
+  }
+
+  // Check if old EXTERNAL-API-REGISTRY has project-specific API sections.
+  // Fresh template has "## API Categories" placeholder; any additional
+  // ## section with a body is project customization.
+  const oldApiRegistry = path.join(backupPath, 'EXTERNAL-API-REGISTRY.md');
+  if (fs.existsSync(oldApiRegistry)) {
+    const content = fs.readFileSync(oldApiRegistry, 'utf8');
+    // Count H2 sections that aren't template placeholders
+    const projectSections = (content.match(/^## (?!API Categories|Usage Notes|Template|Placeholder)[A-Z]/gmi) || []).length;
+    if (projectSections > 0) {
+      findings.customApiRegistry = true;
     }
   }
 
@@ -287,7 +316,7 @@ function invokeScan(opts) {
     const backupName = getLatestBackupName(p.fullPath);
 
     const findings = getUnrestoredContent(backupPath);
-    const hasWork = findings.rootFiles.length > 0 || findings.unknownDirs.length > 0 || findings.customCI;
+    const hasWork = findings.rootFiles.length > 0 || findings.unknownDirs.length > 0 || findings.customCI || findings.customNorthStar || findings.customApiRegistry;
 
     if (hasWork) {
       writeProject(p.name, `backup: ${backupName}`);
@@ -303,6 +332,14 @@ function invokeScan(opts) {
       }
       if (findings.customCI) {
         writeWarn('CI_CUSTOM: copilot-instructions.md has project-specific sections');
+        totalFindings++;
+      }
+      if (findings.customNorthStar) {
+        writeWarn('NORTH_STAR_CUSTOM: NORTH-STAR.md diverges from Master template — see NORTH-STAR.backup.md');
+        totalFindings++;
+      }
+      if (findings.customApiRegistry) {
+        writeWarn('API_REGISTRY_CUSTOM: EXTERNAL-API-REGISTRY.md has project-specific sections — see EXTERNAL-API-REGISTRY.backup.md');
         totalFindings++;
       }
       for (const a of findings.oldArtifacts) {

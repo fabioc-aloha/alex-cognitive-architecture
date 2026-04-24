@@ -14,6 +14,8 @@ import { getTagline, loadTaglineConfig } from "../taglines.js";
 import { loadLoopGroups, loadActivePackage } from "./loopMenu.js";
 import { escHtml, escAttr } from "./htmlUtils.js";
 import { dispatchMessage, type RouterContext } from "./messageRouter.js";
+import { logInfo, logError } from "../diagnostics.js";
+import type { HealthStatus } from "../healthPulse.js";
 
 const VIEW_ID = "alex.welcomeView";
 
@@ -439,7 +441,12 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
   private refreshNow(): void {
     this.loopGroupsCache = null;
     if (this.view) {
-      this.view.webview.html = this.getHtml(this.view.webview);
+      try {
+        this.view.webview.html = this.getHtml(this.view.webview);
+      } catch (err) {
+        console.error("Alex: Welcome view refresh failed, using fallback:", err);
+        this.view.webview.html = this.getFallbackHtml(this.view.webview, err);
+      }
     }
   }
 
@@ -448,6 +455,11 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     _context: vscode.WebviewViewResolveContext,
     _token: vscode.CancellationToken,
   ): void {
+    const t0 = Date.now();
+    logInfo(
+      "welcome",
+      `resolveWebviewView start (workspaceRoot=${this.workspaceRoot || "<none>"}, version=${this.extensionVersion})`,
+    );
     this.view = webviewView;
 
     webviewView.webview.options = {
@@ -455,7 +467,18 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       localResourceRoots: [this.extensionUri],
     };
 
-    webviewView.webview.html = this.getHtml(webviewView.webview);
+    // Defense-in-depth: if anything in getHtml throws (corrupt config, fs
+    // permission issues, etc.), fall back to a minimal Setup panel so the
+    // user can still reach Initialize/Upgrade and recover. A blank crashed
+    // webview is the worst possible UX for a heir that needs upgrading.
+    try {
+      webviewView.webview.html = this.getHtml(webviewView.webview);
+      logInfo("welcome", `resolveWebviewView ok (${Date.now() - t0}ms)`);
+    } catch (err) {
+      logError("welcome", "getHtml threw, using fallback", err);
+      console.error("Alex: Welcome view render failed, using fallback:", err);
+      webviewView.webview.html = this.getFallbackHtml(webviewView.webview, err);
+    }
 
     webviewView.webview.onDidReceiveMessage((msg) =>
       this.handleMessage(msg),
@@ -464,6 +487,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     // Refresh on visibility change
     webviewView.onDidChangeVisibility(() => {
       if (webviewView.visible) {
+        logInfo("welcome", "visibility->visible, refreshing");
         this.refreshNow();
       }
     });
@@ -499,22 +523,54 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
       vscode.Uri.joinPath(this.extensionUri, "media", "sidebar.css"),
     );
 
-    // Get health status for tagline selection
-    const pulse = this.workspaceRoot ? collectHealthPulse(this.workspaceRoot) : null;
-    const healthStatus = pulse?.status ?? "unknown";
-    const taglineConfig = this.workspaceRoot
-      ? loadTaglineConfig(this.workspaceRoot, fs, path)
-      : null;
-    const tagline = getTagline({ status: healthStatus, config: taglineConfig });
+    // Data gathering — each source is individually guarded so a single bad
+    // file can't blank the entire panel. Any failure falls back to a safe
+    // default and logs the root cause for diagnostics.
+    let healthStatus: HealthStatus | "unknown" = "unknown";
+    let tagline = "Ready to help";
+    let contextBadge = "";
+    try {
+      const pulse = this.workspaceRoot ? collectHealthPulse(this.workspaceRoot) : null;
+      healthStatus = pulse?.status ?? "unknown";
+      logInfo("welcome.data", `healthPulse status=${healthStatus}`);
+    } catch (err) {
+      logError("welcome.data", "collectHealthPulse failed", err);
+      console.error("Alex: collectHealthPulse failed:", err);
+    }
+    try {
+      const taglineConfig = this.workspaceRoot
+        ? loadTaglineConfig(this.workspaceRoot, fs, path)
+        : null;
+      tagline = getTagline({ status: healthStatus, config: taglineConfig });
+    } catch (err) {
+      logError("welcome.data", "tagline load failed", err);
+      console.error("Alex: tagline load failed:", err);
+    }
+    try {
+      const activePackage = this.workspaceRoot ? loadActivePackage(this.workspaceRoot) : null;
+      contextBadge = activePackage
+        ? `<div class="context-badge" title="${escAttr(activePackage.path ?? "")}">
+             <span class="codicon codicon-package"></span>
+             <span>${escHtml(activePackage.name)}</span>
+           </div>`
+        : "";
+    } catch (err) {
+      logError("welcome.data", "activePackage load failed", err);
+      console.error("Alex: activePackage load failed:", err);
+    }
 
-    // Surface active package context in the header (set via alex.setContext)
-    const activePackage = this.workspaceRoot ? loadActivePackage(this.workspaceRoot) : null;
-    const contextBadge = activePackage
-      ? `<div class="context-badge" title="${escAttr(activePackage.path ?? "")}">
-           <span class="codicon codicon-package"></span>
-           <span>${escHtml(activePackage.name)}</span>
-         </div>`
-      : "";
+    // Loop groups — guarded inside getLoopGroups, but double-guard here for
+    // the render path so a malformed skill partial can't kill the panel.
+    let loopGroupsHtml = "";
+    try {
+      const groups = this.getLoopGroups();
+      logInfo("welcome.data", `loop groups loaded (count=${groups.length})`);
+      loopGroupsHtml = this.renderGroupsWithFrecency(groups);
+    } catch (err) {
+      logError("welcome.data", "loop tab render failed", err);
+      console.error("Alex: Loop tab render failed:", err);
+      loopGroupsHtml = `<div class="error-notice">Loop menu unavailable. Check <code>.github/config/loop-menu.json</code> and skill partials.</div>`;
+    }
 
     // Inject About "Version" button label dynamically (avoids reading package.json from disk)
     const setupGroups = SETUP_GROUPS.map((g) =>
@@ -579,7 +635,7 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     <!-- Chat CTA -->
     ${renderButton({ icon: "comment-discussion", label: "Chat with Alex", command: "openChat", hint: "chat" }, true)}
 
-    ${this.renderGroupsWithFrecency(this.getLoopGroups())}
+    ${loopGroupsHtml}
   </div>
 
   <!-- Setup Tab -->
@@ -590,29 +646,14 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
   <script nonce="${nonce}">
     const vscode = acquireVsCodeApi();
 
-    // Tab switching — default to Setup so initialize/upgrade are always reachable.
-    // Validate any persisted tab against the known list before restoring; stale
-    // values (from deleted tabs in prior versions) fall back to the default.
-    const KNOWN_TABS = ['loop', 'setup'];
+    // Tab switching — ALWAYS force Setup as the landing tab so initialize/upgrade
+    // are reachable even if a prior-session crash left the Loop tab mid-render.
+    // Persisted state is intentionally ignored on open; it's still written on
+    // click so the user's in-session choice survives panel re-renders.
     const DEFAULT_TAB = 'setup';
-    const persisted = vscode.getState()?.activeTab;
-    const savedTab = KNOWN_TABS.includes(persisted) ? persisted : DEFAULT_TAB;
-    if (savedTab !== DEFAULT_TAB) {
-      document.querySelectorAll('.tab').forEach(t => {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      const activeTab = document.querySelector('.tab[data-tab="' + savedTab + '"]');
-      if (activeTab) {
-        activeTab.classList.add('active');
-        activeTab.setAttribute('aria-selected', 'true');
-      }
-      const activePanel = document.getElementById('tab-' + savedTab);
-      if (activePanel) activePanel.classList.add('active');
-    } else if (persisted !== DEFAULT_TAB) {
-      // Repair stale state so future opens don't re-trigger the mismatch.
-      vscode.setState({ ...(vscode.getState() || {}), activeTab: DEFAULT_TAB });
+    const state = vscode.getState() || {};
+    if (state.activeTab !== DEFAULT_TAB) {
+      vscode.setState({ ...state, activeTab: DEFAULT_TAB });
     }
 
     document.querySelectorAll('.tab').forEach(tab => {
@@ -689,6 +730,58 @@ export class WelcomeViewProvider implements vscode.WebviewViewProvider {
     });
 
 
+  </script>
+</body>
+</html>`;
+  }
+
+  /**
+   * Minimal-chrome fallback rendered when getHtml throws. Keeps the Setup
+   * tab buttons (Initialize / Upgrade / Show Diagnostics) reachable so the
+   * user can always recover even when config files are corrupt or the
+   * workspace is in an unexpected state.
+   */
+  private getFallbackHtml(webview: vscode.Webview, err: unknown): string {
+    const nonce = getNonce();
+    const errMsg = err instanceof Error ? err.message : String(err);
+    const safeMsg = escHtml(errMsg);
+    const version = escHtml(this.extensionVersion);
+    return /* html */ `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: var(--vscode-font-family); color: var(--vscode-foreground); padding: 12px; }
+    h2 { margin-top: 0; font-size: 1.1em; }
+    .notice { background: var(--vscode-inputValidation-warningBackground); border: 1px solid var(--vscode-inputValidation-warningBorder); padding: 8px; border-radius: 4px; margin-bottom: 12px; font-size: 0.85em; }
+    .err { font-family: var(--vscode-editor-font-family); font-size: 0.8em; opacity: 0.8; white-space: pre-wrap; word-break: break-word; }
+    button { display: block; width: 100%; text-align: left; padding: 8px 10px; margin-bottom: 6px; background: var(--vscode-button-secondaryBackground); color: var(--vscode-button-secondaryForeground); border: 1px solid var(--vscode-button-border, transparent); border-radius: 3px; cursor: pointer; font-size: 0.9em; }
+    button:hover { background: var(--vscode-button-secondaryHoverBackground); }
+    .version { opacity: 0.6; font-size: 0.75em; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <h2>Alex — Safe Mode</h2>
+  <div class="notice">
+    The Welcome view could not render normally. You can still initialize or
+    upgrade this workspace, and share diagnostics to help us investigate.
+    <div class="err">${safeMsg}</div>
+  </div>
+  <button data-command="initialize">Initialize Workspace</button>
+  <button data-command="upgrade">Upgrade Architecture</button>
+  <button data-command="showDiagnostics">Show Diagnostics</button>
+  <button data-command="refresh">Retry Welcome View</button>
+  <div class="version">v${version}</div>
+  <script nonce="${nonce}">
+    const vscode = acquireVsCodeApi();
+    document.querySelectorAll('button[data-command]').forEach((b) => {
+      b.addEventListener('click', () => {
+        vscode.postMessage({ command: b.dataset.command });
+      });
+    });
   </script>
 </body>
 </html>`;
