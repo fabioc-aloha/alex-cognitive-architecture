@@ -739,4 +739,29 @@ describe("MCP Server Integration", () => {
 
 ---
 
+## MCP Tool Handoff QA Decision Table (PL1)
+
+MCP tool calls are inherently synchronous — the tool returns a result and the interaction ends. This creates the same silent-handoff failure mode as extension commands: a write operation succeeds mechanically but the caller never learns that semantic review is needed.
+
+Review every MCP tool handler against this table:
+
+| # | Check | Pass | Fail | Action on Fail |
+|---|-------|------|------|----------------|
+| 1 | **Write tools gate on cross-project isolation** — tools that write to AI-Memory or global scope enforce SK2 boundary | SK2 decision table rows evaluated before write | Direct write with no isolation check | Add SK2 gate; return structured warning if check fails |
+| 2 | **Read tools don't mutate** — search/status tools have no side effects | Tool only reads files, returns data | Tool writes logs, creates files, or modifies state | Split into read tool + write tool; or explicitly document side effects |
+| 3 | **Error vs review distinction** — tool result distinguishes "error" from "semantic review pending" | Result includes `status: "review-required"` when artifacts need LLM review | Only returns `success` or `error`; no handoff signal | Add `semanticReviewRequired: true` + `reviewArtifact` path to result schema |
+| 4 | **PII filter on outputs** — tool results don't leak absolute paths with usernames or credentials | Paths are relative; no credentials in output | `C:\Users\name\...` paths or tokens in result JSON | Apply `stripPII()` before returning; use relative paths |
+| 5 | **Decision logging** — write operations log to PE1 decision log | `logPhase2Decision()` called with tool name, action, rationale | Write completes with no audit trail | Integrate `phase2-decision-log.cjs` into tool handler |
+| 6 | **Input validation** — tool validates all required fields before acting | Missing fields return descriptive error | Tool throws or returns empty result on bad input | Validate schema; return structured error with field requirements |
+| 7 | **Scope visibility** — tool result includes scope metadata for caller's routing | Result includes `scope: "project"` or `scope: "global"` | Caller can't determine if result crosses project boundary | Add scope field to result schema |
+| 8 | **Backup before overwrite** — tools that modify existing files preserve the original | `.backup.md` created before overwrite; path included in result | Original content lost on write | Create backup; include `backupPath` in result |
+
+**Known findings in `alex-cognitive-tools` (v1.1.0)**:
+- `alex_knowledge_save` fails rows 1, 3, 5, 8 — writes directly to AI-Memory with no isolation check, no decision logging, no review signal, and no backup of existing content.
+- `alex_health_check` passes (read-only, no mutations).
+- `alex_memory_search` and `alex_knowledge_search` pass (read-only).
+- `alex_architecture_status` passes (read-only).
+
+---
+
 *MCP Development skill — Building AI-accessible tools and data sources*

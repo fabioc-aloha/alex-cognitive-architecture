@@ -190,3 +190,18 @@ const previousRequests = context.history.filter(
 | Use progress for long operations | Leave user waiting silently |
 | Limit to one participant per extension | Create multiple participants |
 | Ask consent for costly operations | Auto-execute destructive actions |
+
+## Chat Intent Routing QA Decision Table (PL2)
+
+When a chat participant routes user intent to an action (muscle execution, file modification, or LLM judgment), evaluate the routing decision against this table. The goal: never silently auto-decide between a mechanical action and a semantic follow-up.
+
+| # | Check | Pass | Fail | Action on Fail |
+|---|-------|------|------|----------------|
+| 1 | **Mechanical vs semantic classification** — handler knows whether the request needs script execution, LLM judgment, or both | Request classified as M (muscle), S (LLM-only), or H (hybrid with handoff) | Handler treats all requests the same way | Classify intent; route M to muscle, S to LLM, H to muscle-then-prompt |
+| 2 | **Hybrid handoff signal** — when a muscle runs and produces artifacts, the chat response references the decision table for Phase 2 | Response includes skill reference + table rows the LLM should evaluate | Muscle result returned as plain text with no follow-up guidance | Use `skillPrompt()` helper from muscleRunner.ts to generate Phase 2 prompt |
+| 3 | **No silent auto-decision** — when multiple valid actions exist, participant surfaces the choice to the user | QuickPick, follow-up buttons, or explicit question before acting | Handler picks one action without user input | Add follow-up provider or QuickPick for ambiguous intents |
+| 4 | **Cancellation respected** — long-running operations check CancellationToken | Token checked before each phase; early exit on cancellation | Operation runs to completion ignoring cancel | Add `token.isCancellationRequested` checks between phases |
+| 5 | **Error context preserved** — when an operation fails, the error includes enough context for the user to retry or escalate | Error message includes: what was attempted, what failed, suggested next step | Generic "something went wrong" or raw exception text | Wrap errors with action context; suggest concrete recovery steps |
+| 6 | **Decision table reference in response** — when the LLM makes a judgment, the response cites which decision table row matched | "Based on row N of [table name]: [rationale]" | LLM responds with freeform judgment and no table reference | Reference the specific skill + decision table in the system prompt |
+
+**Current state of `handler.ts`**: Minimal stub — delegates entirely to Copilot via workspace context. This is architecturally correct (Cardinal Rule I6: architecture doesn't depend on extension). The decision table applies when/if the handler gains intent-routing logic in the future.
