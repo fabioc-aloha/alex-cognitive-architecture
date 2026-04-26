@@ -63,6 +63,25 @@ Memory files are LLM context, not human documentation. Every line costs tokens. 
 6. **Prompt check**: Prompts should be workflow steps only (20-40 lines). No code blocks or reference tables that exist in skills
 7. **Savings**: Re-run muscle, compare before/after
 
+## Waste Triage Decision Table (AC3)
+
+Not all scanner findings are actionable. Triage before fixing:
+
+| Finding | True Waste? | Action | Rationale |
+|---|---|---|---|
+| Mermaid in a Mermaid-teaching skill | **No** — instructional content | Skip | The diagram IS the lesson |
+| Mermaid in a non-diagram skill | **Yes** — rendering directive | Remove or replace with table | LLM can't render Mermaid in chat |
+| Code block in a muscle-authoring skill | **No** — reference example | Skip | Shows correct muscle patterns |
+| Code block >20 lines in instruction | **Yes** — belongs in muscle | Move to `.github/muscles/` | Instructions should be thin |
+| Instruction >50 lines WITH matching skill | **Yes** — overlap | Trim to decision tables + routing pointer | Skill holds the detail |
+| Instruction >50 lines WITHOUT matching skill | **Maybe** — review | Split if two concerns; keep if single dense domain | No skill to defer to |
+| Duplicate content across instruction + skill | **Yes** — redundancy | Keep in skill, trim from instruction | Single source of truth |
+| Template >15 lines inline | **Yes** — bloat | Move to resource file | Templates rarely change |
+| Hardcoded count that matches reality | **Yes** — future drift | Replace with "see catalog" or remove | Counts rot on next edit |
+| Historical note in a plan/ADR | **No** — archival | Skip | Plans are point-in-time records |
+
+**Rule**: When uncertain, check if the content helps the LLM make better decisions. If yes → keep. If it's for human eyes only → remove or move.
+
 ## When to Run
 
 - After harvesting skills (inherited waste)

@@ -142,6 +142,25 @@ When reorganizing:
 3. Verify line count stayed within budget
 4. Start a new conversation to test auto-load
 
+## Memory Note Value-Density Decision Table (AC4)
+
+When deciding what to do with each memory note during curation:
+
+| Note State | Passes 3-Workspace Test? | Duplicate Elsewhere? | Action |
+|---|---|---|---|
+| Active universal pattern | Yes | No | **Keep** verbatim |
+| Active universal pattern | Yes | Yes (in skill/instruction) | **Delete** — skill is source of truth |
+| Project-specific insight | No | N/A | **Move** to `/memories/repo/` or delete |
+| Stale pattern (outdated tool/API) | N/A | N/A | **Delete** — no longer actionable |
+| Two notes covering same topic | N/A | Internal overlap | **Merge** into one concise entry |
+| Infrequently used but valid | Yes | No | **Keep** — value isn't frequency |
+| Session scratch that leaked | No | N/A | **Delete** — belongs in `/memories/session/` |
+| Sensitive data (token, path with username) | N/A | N/A | **Delete immediately** — PII filter violation |
+| Pattern confirmed across 3+ sessions | Yes | No | **Promote** — add heading, mark as battle-tested |
+| Pattern contradicted by new evidence | N/A | N/A | **Review** — update or delete with rationale |
+
+**Budget rule**: When over 150 lines, triage ruthlessly. Delete duplicates first, then merge overlaps, then move project-specific notes.
+
 ## Integration with Meditation
 
 The meditation protocol should include a memory curation checkpoint:

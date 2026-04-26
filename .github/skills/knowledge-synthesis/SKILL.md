@@ -65,6 +65,23 @@ Before creating new knowledge, check: does this extend an existing pattern?
 | "I wish I'd known this earlier" | Onboarding knowledge → insight worth capturing |
 | "This is not obvious"           | Non-obvious insight → capture the *why*        |
 
+## Promotion Candidacy Decision Table (TR5)
+
+When deciding whether to promote a finding to global knowledge:
+
+| Criterion | Threshold | If Fails |
+|---|---|---|
+| Observed in 2+ independent projects | Required | Keep as GI-* insight; wait for second observation |
+| Passes cross-project isolation stripping | Required | Strip project specifics first; if nothing useful remains, discard |
+| Abstraction still true after generalizing | Required | Stay at lower abstraction level |
+| Not a near-duplicate of existing GK-* | Required | Extend existing pattern instead of creating new |
+| Actionable — reader can do something with it | Required | Rewrite with concrete action; if impossible, discard |
+| Non-obvious — not common knowledge in the domain | Recommended | Demote to reference note; don't waste pattern space |
+| Includes at least one concrete example | Recommended | Add example before promoting |
+| Timestamped with discovery context | Recommended | Add `discoveredFrom` and date |
+
+**Minimum bar**: All "Required" rows must pass. Failing any "Required" criterion = not ready for promotion.
+
 ## Promotion Checklist (Insight → Pattern)
 
 Before promoting a GI-\_ insight to GK-\_ pattern:

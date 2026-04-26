@@ -260,6 +260,23 @@ For auditing many files efficiently:
 
 ---
 
+## Stale File Decision Table (AC2)
+
+When a file's currency stamp is expired or missing, decide before acting:
+
+| Condition | Content Changed? | Action | Stamp? |
+|---|---|---|---|
+| Stamp expired, content still accurate | No | Re-stamp unchanged | Yes — review confirmed validity |
+| Stamp expired, minor drift (terminology, links) | Yes — minor | Edit then re-stamp | Yes — after fixes land |
+| Stamp expired, material staleness (deprecated APIs, wrong patterns) | Yes — major | Full rewrite of stale sections, then stamp | Yes — after full review |
+| Stamp missing, file is active and current | N/A | Add stamp with today's date | Yes — review confirms currency |
+| Stamp expired, file covers a dead domain (sunset API, retired tool) | N/A | Mark `lifecycle: deprecated` + add `supersededBy` if successor exists | No — deprecated files don't get stamped |
+| Stamp expired, file is historical record (plan, ADR, postmortem) | N/A | Mark `lifecycle: stable` with long reviewEvery (or exempt) | Yes — stamp means "confirmed intentionally historical" |
+| Stamp expired, `lifecycle: external-dependent` | Check upstream | Research latest upstream docs before deciding | Only after upstream verification |
+| Stamp expired, `lifecycle: experimental` | Check if promoted | Decide: promote to evolving, archive, or keep experimenting | Only if keeping active |
+
+**Rule**: Never re-stamp without reviewing. A stamp is an attestation, not a date bump.
+
 ## Related Skills
 
 - [doc-hygiene](../doc-hygiene/SKILL.md) — Anti-drift rules for living documents

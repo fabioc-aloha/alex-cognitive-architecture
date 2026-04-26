@@ -155,6 +155,25 @@ When repairing architecture issues, use this proven pattern:
 
 **Key principle:** Iterative validation catches cascading errors before they compound. Each phase builds on previous fixes.
 
+## Finding Triage Decision Table (AC1)
+
+When brain-qa produces findings, classify each one before acting:
+
+| Finding Class | Example | Action | Rationale |
+|---|---|---|---|
+| **fm=0** (missing frontmatter) | Skill lacks `name` or `description` | **Fix now** — add frontmatter | Blocks load-time discovery; zero-cost fix |
+| **fm=0** (invalid type/lifecycle) | `type: unknown` | **Fix now** — correct to valid enum | Blocks all typed-frontmatter consumers (FM4+) |
+| **tri=0** (missing trifecta partner) | Skill has no instruction | **Track as debt** — unless skill is `extended` tier | Many extended skills are standalone by design |
+| **self-contained fail** | SKILL.md references file that doesn't exist | **Fix now** — update path or remove reference | Broken reference = runtime failure |
+| **sync drift** (master ≠ heir) | Instruction differs by 2 lines | **Fix now** — run `sync-to-heir.cjs` | Drift compounds; cheap to fix |
+| **applyTo missing** | Domain instruction has no glob | **Fix now** — add glob pattern | Without it, loads on every request (token waste) |
+| **stale currency** | Date >365d on stable file | **Fix if material** — check if content actually changed | Stale date ≠ stale content; verify before re-stamping |
+| **boilerplate description** | "Description of skill" | **Fix now** — write real description | LLM uses description for routing; boilerplate = invisible skill |
+| **token budget warning** | copilot-instructions.md >300 lines | **Review** — may be false positive if content is dense | Size threshold is heuristic; check value density |
+| **no decision table** | Skill SKILL.md has <3 table rows | **Track as debt** — unless skill is pure reference | Not all skills need decision tables (e.g., reference-only skills) |
+
+**Priority order**: fm=0 > self-contained fail > sync drift > boilerplate > tri=0 > stale currency > token budget.
+
 ## Semantic Review Checklist (Manual — Not Scriptable)
 
 After running the script, Alex should check:

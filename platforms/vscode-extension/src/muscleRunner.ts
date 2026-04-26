@@ -54,6 +54,17 @@ export function skillPrompt(
  *   2 = semantic-review-required — muscle succeeded mechanically,
  *       findings need LLM-assisted review in chat
  *
+ * Scan-mode convention (HI3):
+ *   Muscles that produce inventories needing semantic review should support
+ *   a `--mode Scan` (or `--mode Audit`) argument that:
+ *     - Writes structured output to a known file (`.json` or `.md` in `.github/quality/`)
+ *     - Exits 0 if no findings, 2 if findings need LLM review
+ *     - stdout contains a human-readable summary; the file contains the full report
+ *   Template: `brain-upgrade --mode Scan` — scans fleet, writes per-project report,
+ *   exits 2 when `.backup.md` files need curation.
+ *   Consumers: `brain-qa.cjs`, `validate-skills.cjs`, `audit-token-waste.cjs`,
+ *   `dream-cli.cjs`, `audit-frontmatter.cjs`.
+ *
  * Run a muscle script and return its output.
  * Uses execFile (not execSync via shell) to avoid shell injection.
  */
