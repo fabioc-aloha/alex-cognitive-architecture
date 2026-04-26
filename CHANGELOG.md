@@ -7,6 +7,70 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.3.3] - 2026-04-25
+
+### Heir Feedback Sweep
+
+Processed 9 feedback items submitted by heir projects (`fabioc-aloha`, `alexbooks`, `aloha`, `health`) via `AI-Memory/feedback/`. All items resolved and feedback queue cleared.
+
+### Added
+
+- **Skill `book-launch-content`**: New skill capturing the "dogfood the book's thesis on its own manuscript" pattern observed in AlexBooks. Includes inventory step, 4-pattern catalog, 6-beat launch-post structure, anti-patterns, and checklist. Triggers on book/manuscript paths and launch-content phrases.
+- **Frontmatter Pre-Write Gate** in `skill-building` and `skill-creator` skills: required-fields table per artifact type (skill / instruction / prompt / agent) is now enforced at authoring time, not at next `/dream`. Prompts user inline when fields are missing; auto-stamps `currency:` only (semantic fields stay author-decided). Resolves the recurring "skill written → brain-qa fails later" pattern reported 3 times in 60 days.
+- **Meditation 5th R — Resolve**: Added explicit close step to the meditation skill (Review → Relate → Reinforce → Record → **Resolve**). Resolve summarizes persisted artifacts, evaluates dream chaining criteria explicitly, and emits a one-line session summary so meditations no longer end ambiguously.
+- **Episodic Memory section** in `meditation/SKILL.md`: clarifies when to write `.github/episodic/meditation-YYYY-MM-DD-{topic}.md` vs `/memories/session/`, with file-naming conventions and the heir-portability note.
+- **User Section Token Budget** in `identity-customization.instructions.md`: explicit rule that the `## User` section in `copilot-instructions.md` carries name + preferences only; all other identity fields (role, education, location, links) live in `AI-Memory/user-profile.json`. Includes template and migration guidance.
+
+### Fixed
+
+- **Heir-aware `verifyProject` in `brain-upgrade-core.cjs`**: `--mode Verify` previously compared heir file counts against Master's full inventory, producing guaranteed false failures (heirs intentionally receive a filtered subset). Verify now detects Master via `isProtectedProject()` and applies a structural check to heirs (folder exists, non-empty) instead of strict file counts.
+- **Markdown preview styling for heirs**: Added `"markdown.styles": [".github/config/markdown-light.css"]` to `ESSENTIAL_SETTINGS` in `brain-upgrade-core.cjs`. The CSS shipped with the brain but the setting that loads it was missing; heirs now get GitHub-flavored preview styling on next upgrade via additive merge (existing user settings preserved).
+- **Heir fallback for missing `dream-report.json`**: Meditation skill now states explicitly that a missing dream report is treated as never-dreamed (overdue), removing the micro-friction in fresh heirs that have not yet run `/dream`.
+- **Heir fallback for missing welcome configs**: Welcome Experience Check skips when `taglines.json` or `loop-menu.json` does not exist (heir has not run welcome customization yet) instead of probing for files that aren't there.
+
+### Changed
+
+- `.github/skills/meditation/SKILL.md` renamed framework from "4 R's" to "5 R's" with the new Resolve step.
+
+### Notes
+
+- `EXTERNAL-API-REGISTRY.md` auto-preservation (requested by AlexBooks heir) was already implemented in v8.3.2 (`brain-upgrade-core.cjs:486-493`); confirmed and closed.
+- v8.3.0 Phase 1 NORTH-STAR/copilot-instructions overwrite bug (reported by AlexBooks heir) was already fixed in v8.3.1; confirmed and closed.
+
+---
+
+## [8.3.3] - 2026-04-25
+
+### Heir Feedback Sweep
+
+Processed 9 feedback items submitted by heir projects (`fabioc-aloha`, `alexbooks`, `aloha`, `health`) via `AI-Memory/feedback/`. All items resolved and feedback queue cleared.
+
+### Added
+
+- **Skill `book-launch-content`**: New skill capturing the "dogfood the book's thesis on its own manuscript" pattern observed in AlexBooks. Includes inventory step, 4-pattern catalog, 6-beat launch-post structure, anti-patterns, and checklist.
+- **Frontmatter Pre-Write Gate** in `skill-building` and `skill-creator` skills: required-fields table per artifact type is now enforced at authoring time, not at next `/dream`. Resolves the recurring "skill written → brain-qa fails later" pattern reported 3 times in 60 days.
+- **Meditation 5th R — Resolve**: Added explicit close step (Review → Relate → Reinforce → Record → **Resolve**). Resolve summarizes persisted artifacts, evaluates dream chaining criteria, and emits a one-line session summary so meditations no longer end ambiguously.
+- **Episodic Memory section** in `meditation/SKILL.md`: clarifies when to write `.github/episodic/meditation-YYYY-MM-DD-{topic}.md` vs `/memories/session/`, with file-naming conventions.
+- **User Section Token Budget** in `identity-customization.instructions.md`: explicit rule that the `## User` section in `copilot-instructions.md` carries name + preferences only; all other identity fields live in `AI-Memory/user-profile.json`.
+
+### Fixed
+
+- **Heir-aware `verifyProject`**: `--mode Verify` previously compared heir file counts against Master's full inventory, producing guaranteed false failures (heirs intentionally receive a filtered subset). Verify now detects Master via `isProtectedProject()` and applies a structural check to heirs (folder exists, non-empty) instead of strict file counts.
+- **Markdown preview styling for heirs**: Added `"markdown.styles": [".github/config/markdown-light.css"]` to `ESSENTIAL_SETTINGS`. Heirs now get the brain's preview styling on next upgrade via additive merge (existing user settings preserved).
+- **Heir fallback for missing `dream-report.json`**: Meditation skill now treats a missing dream report as never-dreamed (overdue).
+- **Heir fallback for missing welcome configs**: Welcome Experience Check skips when `taglines.json` or `loop-menu.json` does not exist.
+
+### Changed
+
+- `.github/skills/meditation/SKILL.md` renamed framework from "4 R's" to "5 R's" with the new Resolve step.
+
+### Notes
+
+- `EXTERNAL-API-REGISTRY.md` auto-preservation (requested by AlexBooks heir) was already implemented in v8.3.2; confirmed and closed.
+- v8.3.0 Phase 1 NORTH-STAR/copilot-instructions overwrite bug (reported by AlexBooks heir) was already fixed in v8.3.1; confirmed and closed.
+
+---
+
 ## [8.3.2] - 2026-04-23
 
 ### Fixed

@@ -81,6 +81,7 @@ const ESSENTIAL_SETTINGS = {
   "chat.includeReferencedInstructions": true,
   "github.copilot.chat.agent.thinkingTool": true,
   "chat.plugins.enabled": true,
+  "markdown.styles": [".github/config/markdown-light.css"],
 };
 
 // ── Default logger (silent) ──────────────────────────────────────────────────
@@ -516,6 +517,12 @@ function verifyProject({ projectPath, brainSource, brainVersion }) {
   const ghDir = path.join(projectPath, ".github");
   const issues = [];
 
+  // Detect whether this project is the brain source itself (Master) or a heir.
+  // Heirs intentionally receive a filtered subset (master-only content stripped
+  // by sync-to-heir.cjs), so file-count comparison against the brain source
+  // would always fail. For heirs we do a structural check (folders + key files).
+  const isMaster = isProtectedProject(projectPath);
+
   // Version stamp: brain-version.json `version` field is authoritative.
   const bvPath = path.join(ghDir, "brain-version.json");
   if (fs.existsSync(bvPath)) {
@@ -542,10 +549,15 @@ function verifyProject({ projectPath, brainSource, brainVersion }) {
     const dir = path.join(ghDir, subdir);
     if (!fs.existsSync(dir)) {
       issues.push(`missing directory: ${subdir}/`);
-    } else {
+    } else if (isMaster) {
+      // Strict file-count check only for Master (the brain source).
       const expected = countFiles(path.join(brainSource, subdir));
       const actual = countFiles(dir);
       if (actual < expected) issues.push(`${subdir}/: ${actual} files (expected >= ${expected})`);
+    } else {
+      // Heir: structural check only — directory exists and is non-empty.
+      const actual = countFiles(dir);
+      if (actual === 0) issues.push(`${subdir}/: empty directory`);
     }
   }
 

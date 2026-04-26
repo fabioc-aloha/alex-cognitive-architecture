@@ -3,7 +3,7 @@ name: skill-creator
 description: Create effective skills for AI agents — Azure SDK patterns, progressive disclosure, acceptance criteria, test scenarios
 tier: standard
 applyTo: '**/*skill*,**/*SKILL*,**/skills/**'
-currency: 2026-04-22
+currency: 2026-04-25
 ---
 
 # Skill Creator
@@ -373,6 +373,18 @@ azure-ai-agents/
 
 - [ ] User provided SDK package name or documentation URL
 - [ ] Verified SDK patterns via `microsoft-docs` MCP
+
+### Frontmatter Pre-Write Gate (REQUIRED)
+
+Before saving a new SKILL.md, validate required fields. Missing fields fail brain-qa later.
+
+- [ ] `name:` set
+- [ ] `description:` set (what AND when)
+- [ ] `applyTo:` set (glob patterns — required for skills)
+- [ ] `tier:` set (`standard` / `workflow` / etc.)
+- [ ] `currency:` set to today's date (`YYYY-MM-DD`)
+
+If the skill is a workflow skill, the matching `*.instructions.md` must also exist with `description`, `application`, and `currency`. See [skill-building](../skill-building/SKILL.md#frontmatter-pre-write-gate-required) for the full table.
 
 ### Skill Creation
 

@@ -35,6 +35,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const skillMeta = require("./shared/skill-meta.cjs");
 
 // --- Config ---
 const ROOT = path.resolve(__dirname, "..", "..");
@@ -461,23 +462,9 @@ function isCurrencyRecent(currency) {
   return daysSince <= CURRENCY_MAX_DAYS;
 }
 
-// --- Check if skill has corresponding instruction (for trifecta) ---
-function hasMatchingInstruction(skillName) {
-  const instrPath = path.join(GH, "instructions", `${skillName}.instructions.md`);
-  return fs.existsSync(instrPath);
-}
-
-// --- Check if skill describes a workflow (needs trifecta) ---
-function isWorkflowSkill(content) {
-  // Workflow indicators: phase/step/stage headings, workflow/procedure/process sections
-  const workflowPatterns = [
-    /(?:^|\n)##?\s*(?:phase|step|stage)\s*\d/i,  // Phase 1, Step 2, etc.
-    /(?:^|\n)##?\s*workflow/i,                    // ## Workflow section
-    /(?:^|\n)##?\s*procedure/i,                   // ## Procedure section
-    /(?:^|\n)##?\s*process/i,                     // ## Process section
-  ];
-  return workflowPatterns.some(p => p.test(content));
-}
+// --- Trifecta helpers (shared with dream-cli via shared/skill-meta.cjs) ---
+const hasMatchingInstruction = (skillName) => skillMeta.hasMatchingInstruction(GH, skillName);
+const isWorkflowSkill = skillMeta.isWorkflowSkill;
 
 // --- Skill Quality Scanner ---
 function scanSkills() {
