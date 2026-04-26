@@ -46,6 +46,21 @@ const GH = path.join(ROOT, ".github");
 const QUALITY_DIR = path.join(GH, "quality");
 const STDOUT_MODE = process.argv.includes("--stdout");
 
+// --- Review Cadence Sidecar (FM8a) ---
+// Lifecycle-driven currency windows loaded from .github/config/review-cadence.json.
+// Falls back to a flat 90-day window if the sidecar is missing.
+const REVIEW_CADENCE_PATH = path.join(GH, "config", "review-cadence.json");
+let reviewCadence = null;
+try {
+  reviewCadence = JSON.parse(fs.readFileSync(REVIEW_CADENCE_PATH, "utf-8"));
+} catch { /* degrade gracefully — use flat threshold */ }
+
+const LIFECYCLE_WINDOWS = reviewCadence?.lifecycleWindows ?? {};
+const LIFECYCLE_GATES = reviewCadence?.lifecycleGates ?? {};
+
+// Legacy flat threshold — used when lifecycle is unknown or sidecar missing
+const CURRENCY_MAX_DAYS = 90;
+
 // --- Drift Detection Helpers ---
 
 /**
@@ -99,6 +114,131 @@ function detectTokenWaste(content) {
   const wasteScore = (mermaidBlocks * 5) + styleLines;
   
   return { mermaidBlocks, mermaidLines, styleLines, wasteScore };
+}
+
+// --- FM4: Mechanical Obsolescence Checks Library ---
+// Reusable check functions. Each returns an array of finding strings (empty = pass).
+// Check assignments per type come from review-cadence.json typeChecks.
+
+const TYPE_CHECKS = reviewCadence?.typeChecks ?? {};
+
+const CHECK_LIBRARY = {
+  /**
+   * Verify that file references (.github/skills/X, .github/instructions/X, etc.) resolve.
+   * Covered by scanCrossReferences() globally; this per-file variant is lightweight.
+   */
+  'file-refs-exist': (content, filePath) => {
+    const findings = [];
+    const SKILL_RE = /(?:skills\/|skills\\)([\w-]+)(?:\/|\\)SKILL\.md/g;
+    const INSTR_RE = /(?:instructions\/|instructions\\)([\w-]+)\.instructions\.md/g;
+    for (const m of content.matchAll(SKILL_RE)) {
+      if (!fs.existsSync(path.join(GH, "skills", m[1], "SKILL.md"))) {
+        findings.push(`broken skill ref: ${m[1]}`);
+      }
+    }
+    for (const m of content.matchAll(INSTR_RE)) {
+      if (!fs.existsSync(path.join(GH, "instructions", `${m[1]}.instructions.md`))) {
+        findings.push(`broken instruction ref: ${m[1]}`);
+      }
+    }
+    return findings;
+  },
+
+  /**
+   * Verify that applyTo glob pattern matches at least one file in .github/.
+   * Empty applyTo or universal patterns (**) always pass.
+   */
+  'applyTo-matches-something': (content, _filePath) => {
+    const match = content.match(/^applyTo:\s*["']?(.+?)["']?\s*$/m);
+    if (!match) return ['missing applyTo field'];
+    const raw = match[1].trim();
+    if (raw === '**' || raw === '**/*' || raw === '**/**') return [];
+    // Check each comma-separated pattern has meaningful specificity
+    const patterns = raw.split(',').map(p => p.trim());
+    const empty = patterns.filter(p => !p || p === '**' || p === '**/*');
+    if (empty.length === patterns.length) return ['applyTo has only universal patterns'];
+    return [];
+  },
+
+  /**
+   * Verify that referenced VS Code commands exist in package.json.
+   * Matches patterns like `alex.commandName` or `workbench.action.X`.
+   */
+  'referenced-commands-exist': (content, _filePath) => {
+    // Only check alex.* commands (not VS Code built-ins)
+    const cmdRefs = content.matchAll(/\balex\.([\w.]+)/g);
+    const findings = [];
+    // Load commands from package.json if available
+    const pkgPath = path.join(ROOT, "heir", "platforms", "vscode-extension", "package.json");
+    let knownCommands = null;
+    try {
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
+      knownCommands = new Set((pkg.contributes?.commands || []).map(c => c.command));
+    } catch { /* extension package.json not available */ }
+
+    if (knownCommands) {
+      for (const m of cmdRefs) {
+        const cmd = `alex.${m[1]}`;
+        if (!knownCommands.has(cmd)) {
+          findings.push(`unknown command: ${cmd}`);
+        }
+      }
+    }
+    return findings;
+  },
+
+  /**
+   * Verify that markdown links resolve to existing files.
+   * Checks relative links like [text](../path/file.md).
+   */
+  'markdown-links-resolve': (content, filePath) => {
+    const findings = [];
+    const linkRe = /\[([^\]]*)\]\(([^)]+)\)/g;
+    const dir = path.dirname(filePath);
+    for (const m of content.matchAll(linkRe)) {
+      const target = m[2];
+      // Skip URLs, anchors, mailto, and template vars
+      if (/^(https?:|mailto:|#|\{\{)/.test(target)) continue;
+      // Strip anchor from path
+      const cleanTarget = target.split('#')[0];
+      if (!cleanTarget) continue;
+      const resolved = path.resolve(dir, cleanTarget);
+      if (!fs.existsSync(resolved)) {
+        findings.push(`broken link: ${target}`);
+      }
+    }
+    return findings;
+  },
+
+  /**
+   * Verify that skill files contain at least one decision table (## header with table).
+   */
+  'decision-table-present': (content, _filePath) => {
+    // Look for markdown tables (| ... | pattern after a ## header)
+    const hasTable = /^##.*(?:decision|triage|table)/im.test(content) ||
+                     /^\|.*\|.*\|/m.test(content);
+    if (!hasTable) return ['no decision table found'];
+    return [];
+  },
+};
+
+/**
+ * Run mechanical obsolescence checks for a brain file.
+ * @param {string} content - File content
+ * @param {string} filePath - Absolute file path
+ * @param {string|null} fileType - ADR-014 type (skill, instruction, etc.)
+ * @returns {{ checks: string[], findings: string[] }}
+ */
+function runMechanicalChecks(content, filePath, fileType) {
+  const checkNames = TYPE_CHECKS[fileType] || [];
+  const findings = [];
+  for (const checkName of checkNames) {
+    const fn = CHECK_LIBRARY[checkName];
+    if (!fn) continue;
+    const result = fn(content, filePath);
+    findings.push(...result.map(f => `[${checkName}] ${f}`));
+  }
+  return { checks: checkNames, findings };
 }
 
 // --- Cross-Reference Validation (QA3) ---
@@ -453,16 +593,57 @@ function getMasterOnlySkills() {
 
 const MASTER_ONLY_SKILLS = getMasterOnlySkills();
 
-// --- Currency freshness ---
-// Pass requires currency updated within this many days
-const CURRENCY_MAX_DAYS = 90;
+// --- Currency freshness (FM8a: lifecycle-driven) ---
+// Returns { status: 'FRESH'|'WARNING'|'STALE'|'SKIP', daysSince, window, gate }
+function getCurrencyStatus(currency, lifecycle) {
+  if (!lifecycle || lifecycle === 'deprecated') {
+    return { status: 'SKIP', daysSince: null, window: null, gate: 'skip' };
+  }
+  if (currency === '-') {
+    // Missing currency — always stale
+    const window = LIFECYCLE_WINDOWS[lifecycle] ?? CURRENCY_MAX_DAYS;
+    const gate = LIFECYCLE_GATES[lifecycle] ?? 'fail';
+    return { status: 'STALE', daysSince: Infinity, window, gate };
+  }
+  const currDate = new Date(currency);
+  if (isNaN(currDate.getTime())) {
+    const window = LIFECYCLE_WINDOWS[lifecycle] ?? CURRENCY_MAX_DAYS;
+    const gate = LIFECYCLE_GATES[lifecycle] ?? 'fail';
+    return { status: 'STALE', daysSince: Infinity, window, gate };
+  }
 
+  const daysSince = Math.floor((Date.now() - currDate.getTime()) / (1000 * 60 * 60 * 24));
+  const window = LIFECYCLE_WINDOWS[lifecycle] ?? CURRENCY_MAX_DAYS;
+  const gate = LIFECYCLE_GATES[lifecycle] ?? 'fail';
+  const warningBand = Math.ceil(window * 1.25);
+
+  if (daysSince <= window) {
+    return { status: 'FRESH', daysSince, window, gate };
+  }
+  if (daysSince <= warningBand) {
+    return { status: 'WARNING', daysSince, window, gate };
+  }
+  return { status: 'STALE', daysSince, window, gate };
+}
+
+// Legacy flat check — kept for backward compatibility with exports
 function isCurrencyRecent(currency) {
   if (currency === '-') return false;
   const currDate = new Date(currency);
   if (isNaN(currDate.getTime())) return false;
-  const daysSince = Math.floor((Date.now() - currDate) / (1000 * 60 * 60 * 24));
+  const daysSince = Math.floor((Date.now() - currDate.getTime()) / (1000 * 60 * 60 * 24));
   return daysSince <= CURRENCY_MAX_DAYS;
+}
+
+/**
+ * Determine pass/fail for currency using lifecycle-aware windows (FM8a).
+ * Returns true if file is FRESH or WARNING, or if gate is 'skip'/'warn'.
+ */
+function isCurrencyPassing(currency, lifecycle) {
+  const cs = getCurrencyStatus(currency, lifecycle);
+  if (cs.status === 'SKIP' || cs.status === 'FRESH' || cs.status === 'WARNING') return true;
+  // STALE: fail unless gate is 'warn' (experimental files)
+  return cs.gate === 'warn';
 }
 
 // --- Trifecta helpers (shared with dream-cli via shared/skill-meta.cjs) ---
@@ -509,6 +690,16 @@ function scanSkills() {
     const currencyMatch = content.match(/^currency:\s*(\d{4}-\d{2}-\d{2})/m);
     const currency = currencyMatch ? currencyMatch[1] : '-';
 
+    // Extract typed frontmatter (FM7 + FM8a)
+    const typeMatch = content.match(/^type:\s*(\S+)/m);
+    const lifecycleMatch = content.match(/^lifecycle:\s*(\S+)/m);
+    const fileType = typeMatch ? typeMatch[1] : null;
+    const lifecycle = lifecycleMatch ? lifecycleMatch[1] : null;
+    const typed = !!(fileType && lifecycle);
+
+    // Currency status (FM8a: lifecycle-driven)
+    const currencyStatus = getCurrencyStatus(currency, lifecycle);
+
     // Quality flags (informational)
     const flags = {
       fm: fmComplete ? 1 : 0,
@@ -516,12 +707,15 @@ function scanSkills() {
       inh: isMasterOnly ? 1 : 0,
     };
 
-    // Pass = frontmatter complete AND currency recent
-    const pass = fmComplete && isCurrencyRecent(currency);
+    // Pass = frontmatter complete AND currency passing (lifecycle-aware)
+    const pass = fmComplete && isCurrencyPassing(currency, lifecycle);
 
     const waste = detectTokenWaste(content);
 
-    results.push({ name, lines, flags, tier, pass, isWorkflow, waste, currency });
+    // FM4: Mechanical obsolescence checks
+    const mechChecks = runMechanicalChecks(content, path.join(skillsDir, name, "SKILL.md"), fileType || 'skill');
+
+    results.push({ name, lines, flags, tier, pass, isWorkflow, waste, currency, lifecycle, fileType, typed, currencyStatus, mechChecks });
   }
 
   // Sort: failing first, then oldest currency, then alphabetically
@@ -565,6 +759,16 @@ function scanAgents() {
     const currencyMatch = content.match(/^currency:\s*(\d{4}-\d{2}-\d{2})/m);
     const currency = currencyMatch ? currencyMatch[1] : '-';
 
+    // Extract typed frontmatter (FM7 + FM8a)
+    const typeMatch = content.match(/^type:\s*(\S+)/m);
+    const lifecycleMatch = content.match(/^lifecycle:\s*(\S+)/m);
+    const fileType = typeMatch ? typeMatch[1] : null;
+    const lifecycle = lifecycleMatch ? lifecycleMatch[1] : null;
+    const typed = !!(fileType && lifecycle);
+
+    // Currency status (FM8a: lifecycle-driven)
+    const currencyStatus = getCurrencyStatus(currency, lifecycle);
+
     // Token waste detection (Mermaid diagrams, style lines)
     const waste = detectTokenWaste(content);
 
@@ -574,9 +778,9 @@ function scanAgents() {
       persona: hasPersona ? 1 : 0,
     };
 
-    // Pass = frontmatter complete AND currency recent
-    const pass = fmComplete && isCurrencyRecent(currency);
-    results.push({ name, lines, flags, pass, currency, waste });
+    // Pass = frontmatter complete AND currency passing (lifecycle-aware)
+    const pass = fmComplete && isCurrencyPassing(currency, lifecycle);
+    results.push({ name, lines, flags, pass, currency, waste, lifecycle, fileType, typed, currencyStatus });
   }
 
   // Sort: failing first, then oldest currency, then alphabetically
@@ -631,6 +835,16 @@ function scanInstructions() {
     const currencyMatch = content.match(/^currency:\s*(\d{4}-\d{2}-\d{2})/m);
     const currency = currencyMatch ? currencyMatch[1] : '-';
 
+    // Extract typed frontmatter (FM7 + FM8a)
+    const typeMatch = content.match(/^type:\s*(\S+)/m);
+    const lifecycleMatch = content.match(/^lifecycle:\s*(\S+)/m);
+    const fileType = typeMatch ? typeMatch[1] : null;
+    const lifecycle = lifecycleMatch ? lifecycleMatch[1] : null;
+    const typed = !!(fileType && lifecycle);
+
+    // Currency status (FM8a: lifecycle-driven)
+    const currencyStatus = getCurrencyStatus(currency, lifecycle);
+
     const flags = {
       fm: fmComplete ? 1 : 0,
       depth: hasDepth ? 1 : 0,
@@ -638,13 +852,13 @@ function scanInstructions() {
       skill: hasSkill ? 1 : 0,
     };
 
-    // Pass = frontmatter complete AND currency recent
-    const pass = fmComplete && isCurrencyRecent(currency);
+    // Pass = frontmatter complete AND currency passing (lifecycle-aware)
+    const pass = fmComplete && isCurrencyPassing(currency, lifecycle);
 
     // Token waste detection (Mermaid diagrams, style lines)
     const waste = detectTokenWaste(content);
 
-    results.push({ name, lines, flags, pass, waste, currency });
+    results.push({ name, lines, flags, pass, waste, currency, lifecycle, fileType, typed, currencyStatus });
   }
 
   // Sort: failing first, then oldest currency, then alphabetically
@@ -702,6 +916,16 @@ function scanPrompts() {
     const currencyMatch = content.match(/^currency:\s*(\d{4}-\d{2}-\d{2})/m);
     const currency = currencyMatch ? currencyMatch[1] : '-';
 
+    // Extract typed frontmatter (FM7 + FM8a)
+    const typeMatch = content.match(/^type:\s*(\S+)/m);
+    const lifecycleMatch = content.match(/^lifecycle:\s*(\S+)/m);
+    const fileType = typeMatch ? typeMatch[1] : null;
+    const lifecycle = lifecycleMatch ? lifecycleMatch[1] : null;
+    const typed = !!(fileType && lifecycle);
+
+    // Currency status (FM8a: lifecycle-driven)
+    const currencyStatus = getCurrencyStatus(currency, lifecycle);
+
     const flags = {
       desc: hasDesc ? 1 : 0,
       app: hasApp ? 1 : 0,
@@ -710,9 +934,9 @@ function scanPrompts() {
     };
 
     const score = flags.desc + flags.app + flags.agent + flags.over20;
-    // desc + app are GATES (prompt fm) AND currency recent
-    const pass = hasDesc && hasApp && isCurrencyRecent(currency);
-    results.push({ name, lines, flags, pass, subdir, currency });
+    // desc + app are GATES (prompt fm) AND currency passing (lifecycle-aware)
+    const pass = hasDesc && hasApp && isCurrencyPassing(currency, lifecycle);
+    results.push({ name, lines, flags, pass, subdir, currency, lifecycle, fileType, typed, currencyStatus });
   }
 
   // Sort: failing first, then oldest currency, then alphabetically
@@ -808,6 +1032,16 @@ function scanMuscles() {
     const currencyMatch = content.match(/@currency\s*:?\s*(\d{4}-\d{2}-\d{2})/i);
     const currency = currencyMatch ? currencyMatch[1] : '-';
 
+    // Extract typed frontmatter from JSDoc tags (FM7 + FM8a)
+    const typeTagMatch = content.match(/@type\s*:?\s*(\S+)/i);
+    const lifecycleTagMatch = content.match(/@lifecycle\s*:?\s*(\S+)/i);
+    const fileType = typeTagMatch ? typeTagMatch[1] : null;
+    const lifecycle = lifecycleTagMatch ? lifecycleTagMatch[1] : null;
+    const typed = !!(fileType && lifecycle);
+
+    // Currency status (FM8a: lifecycle-driven)
+    const currencyStatus = getCurrencyStatus(currency, lifecycle);
+
     // Extract standard metadata tags from header comment
     // Format: @tag value (with optional colon)
     // Handle both CRLF and LF line endings
@@ -837,10 +1071,10 @@ function scanMuscles() {
       compat: isCrossPlatform ? 1 : 0,
     };
 
-    // Pass = standard header (muscle fm) AND currency recent
-    const pass = hasStandardHeader && isCurrencyRecent(currency);
+    // Pass = standard header (muscle fm) AND currency passing (lifecycle-aware)
+    const pass = hasStandardHeader && isCurrencyPassing(currency, lifecycle);
 
-    results.push({ name, lines: lineCount, lang, category, inh, flags, pass, meta, hasStandardHeader, currency });
+    results.push({ name, lines: lineCount, lang, category, inh, flags, pass, meta, hasStandardHeader, currency, lifecycle, fileType, typed, currencyStatus });
   }
 
   // Sort: failing first, then oldest currency, then alphabetically
@@ -890,6 +1124,16 @@ function scanHooks() {
     const currencyMatch = content.match(/@currency\s*:?\s*(\d{4}-\d{2}-\d{2})/i);
     const currency = currencyMatch ? currencyMatch[1] : '-';
 
+    // Extract typed tags from JSDoc (FM7 + FM8a)
+    const typeTagMatch = content.match(/@type\s*:?\s*(\S+)/i);
+    const lifecycleTagMatch = content.match(/@lifecycle\s*:?\s*(\S+)/i);
+    const fileType = typeTagMatch ? typeTagMatch[1] : null;
+    const lifecycle = lifecycleTagMatch ? lifecycleTagMatch[1] : null;
+    const typed = !!(fileType && lifecycle);
+
+    // Currency status (FM8a: lifecycle-driven)
+    const currencyStatus = getCurrencyStatus(currency, lifecycle);
+
     const flags = {
       header: hasHeader ? 1 : 0,
       stdin: hasStdinParse ? 1 : 0,
@@ -897,10 +1141,10 @@ function scanHooks() {
       err: hasErrorHandling ? 1 : 0,
     };
 
-    // Pass = header (hook fm) AND currency recent
-    const pass = hasHeader && isCurrencyRecent(currency);
+    // Pass = header (hook fm) AND currency passing (lifecycle-aware)
+    const pass = hasHeader && isCurrencyPassing(currency, lifecycle);
 
-    results.push({ name, lines: lineCount, event, flags, pass, currency });
+    results.push({ name, lines: lineCount, event, flags, pass, currency, lifecycle, fileType, typed, currencyStatus });
   }
 
   // Sort: failing first, then oldest currency, then alphabetically
@@ -939,9 +1183,27 @@ function generateGrid() {
   lines.push("| Gate | Requirement | Meaning |");
   lines.push("|------|-------------|---------|");
   lines.push(`| **fm** | Frontmatter complete | Type-specific required fields present (visibility to the brain) |`);
-  lines.push(`| **currency** | Updated within ${CURRENCY_MAX_DAYS} days | Content researched against current external developments |`);
+  lines.push(`| **currency** | Within lifecycle window | Content researched within lifecycle-driven window (FM8a) |`);
   lines.push("");
   lines.push("**Pass = fm AND currency**. Other dimensions (tri, handoffs, persona, etc.) are shown as informational columns but do not affect pass/fail.");
+  lines.push("");
+  lines.push("### Lifecycle Currency Windows (FM8a)");
+  lines.push("");
+  lines.push("Currency thresholds are lifecycle-driven (from `.github/config/review-cadence.json`):");
+  lines.push("");
+  lines.push("| Lifecycle | Fresh | Warning | Stale | Gate |");
+  lines.push("|-----------|------:|--------:|------:|------|");
+  const lcOrder = ["stable", "evolving", "external-dependent", "experimental", "deprecated"];
+  for (const lc of lcOrder) {
+    const w = LIFECYCLE_WINDOWS[lc];
+    const g = LIFECYCLE_GATES[lc] ?? "skip";
+    if (w === null || w === undefined) {
+      lines.push(`| \`${lc}\` | — | — | — | ${g} (review on cite) |`);
+    } else {
+      const warn = Math.ceil(w * 1.25);
+      lines.push(`| \`${lc}\` | ≤${w}d | ${w + 1}–${warn}d | >${warn}d | ${g} |`);
+    }
+  }
   lines.push("");
   lines.push("### Type-Specific fm Requirements");
   lines.push("");
@@ -968,7 +1230,7 @@ function generateGrid() {
   // Currency Audit Process section
   lines.push("## Currency Audit Process");
   lines.push("");
-  lines.push(`Files pass when \`currency\` is within ${CURRENCY_MAX_DAYS} days. A currency audit verifies content against current external knowledge (Research → Compare → Audit → Update → Stamp).`);
+  lines.push("Currency is lifecycle-driven (FM8a). Each file's `lifecycle` determines how long its `currency` stamp stays valid. Override per-file with `reviewEvery` in frontmatter.");
   lines.push("");
   lines.push("Full checklist and type-specific guidance: `.github/skills/currency-audit/SKILL.md`");
   lines.push("");
@@ -1115,6 +1377,66 @@ function generateGrid() {
     lines.push("**Status**: ✅ All brain files passing and reviewed");
   }
   lines.push("");
+
+  // ── FM7: Typing Completeness ──────────────────────────────────
+  lines.push("## Typing Completeness (FM7)");
+  lines.push("");
+  const allItems = [...skills, ...agents, ...instructions, ...prompts, ...muscles, ...hooks];
+  const typedCount = allItems.filter(i => i.typed).length;
+  const untypedCount = allItems.length - typedCount;
+  const typingPct = allItems.length > 0 ? Math.round(100 * typedCount / allItems.length) : 0;
+  lines.push(`**Coverage**: ${typedCount}/${allItems.length} files have \`type\` + \`lifecycle\` (${typingPct}%)`);
+  if (untypedCount > 0) {
+    lines.push("");
+    lines.push(`**Untyped**: ${untypedCount} files missing \`type\` or \`lifecycle\` — run \`audit-frontmatter.cjs --fix\` to backfill`);
+  }
+  lines.push("");
+
+  // ── FM9: Per-Lifecycle Currency Rollups ─────────────────────────
+  lines.push("## Lifecycle Currency Rollups (FM9)");
+  lines.push("");
+  const lcBuckets = {};
+  for (const item of allItems) {
+    const lc = item.lifecycle || 'untyped';
+    if (!lcBuckets[lc]) lcBuckets[lc] = { fresh: 0, warning: 0, stale: 0, skip: 0, total: 0 };
+    lcBuckets[lc].total++;
+    const st = item.currencyStatus?.status || 'STALE';
+    if (st === 'FRESH') lcBuckets[lc].fresh++;
+    else if (st === 'WARNING') lcBuckets[lc].warning++;
+    else if (st === 'SKIP') lcBuckets[lc].skip++;
+    else lcBuckets[lc].stale++;
+  }
+  lines.push("| Lifecycle | Total | Fresh | Warning | Stale | Skip |");
+  lines.push("|-----------|------:|------:|--------:|------:|-----:|");
+  for (const lc of [...lcOrder, 'untyped']) {
+    const b = lcBuckets[lc];
+    if (!b) continue;
+    lines.push(`| \`${lc}\` | ${b.total} | ${b.fresh} | ${b.warning} | ${b.stale} | ${b.skip} |`);
+  }
+  lines.push("");
+
+  // ── FM4: Mechanical Obsolescence Checks ─────────────────────────
+  const allMechFindings = skills.filter(s => s.mechChecks && s.mechChecks.findings.length > 0);
+  if (allMechFindings.length > 0) {
+    lines.push("## Mechanical Checks (FM4)");
+    lines.push("");
+    lines.push(`**Status**: ⚠️ ${allMechFindings.length} skill(s) with mechanical findings`);
+    lines.push("");
+    lines.push("| Skill | Findings |");
+    lines.push("|-------|----------|");
+    for (const s of allMechFindings.slice(0, 20)) {
+      lines.push(`| ${s.name} | ${s.mechChecks.findings.join('; ')} |`);
+    }
+    if (allMechFindings.length > 20) {
+      lines.push(`| ... | ${allMechFindings.length - 20} more |`);
+    }
+    lines.push("");
+  } else {
+    lines.push("## Mechanical Checks (FM4)");
+    lines.push("");
+    lines.push("**Status**: ✅ All skills pass mechanical checks");
+    lines.push("");
+  }
 
   // Skills table
   lines.push("## Skills");
@@ -1265,15 +1587,28 @@ function generateGrid() {
   lines.push("");
   lines.push("## Overall");
   lines.push("");
-  lines.push(`| Category | Count |`);
-  lines.push(`|----------|------:|`);
-  lines.push(`| Skills | ${skills.length} |`);
-  lines.push(`| Agents | ${agents.length} |`);
-  lines.push(`| Instructions | ${instructions.length} |`);
-  lines.push(`| Prompts | ${prompts.length} |`);
-  lines.push(`| Muscles | ${muscles.length} |`);
-  lines.push(`| Hooks | ${hooks.length} |`);
-  lines.push(`| **Total** | **${totalItems}** |`);
+  lines.push(`| Category | Count | Passing | Failing | Pass Rate |`);
+  lines.push(`|----------|------:|--------:|--------:|----------:|`);
+  const overallCategories = [
+    { name: 'Skills', items: skills },
+    { name: 'Agents', items: agents },
+    { name: 'Instructions', items: instructions },
+    { name: 'Prompts', items: prompts },
+    { name: 'Muscles', items: muscles },
+    { name: 'Hooks', items: hooks },
+  ];
+  let totalPassing = 0;
+  let totalFailing2 = 0;
+  for (const cat of overallCategories) {
+    const p = cat.items.filter(i => i.pass).length;
+    const f = cat.items.length - p;
+    totalPassing += p;
+    totalFailing2 += f;
+    const rate = cat.items.length > 0 ? Math.round(100 * p / cat.items.length) : 100;
+    lines.push(`| ${cat.name} | ${cat.items.length} | ${p} | ${f} | ${rate}% |`);
+  }
+  const overallRate = totalItems > 0 ? Math.round(100 * totalPassing / totalItems) : 100;
+  lines.push(`| **Total** | **${totalItems}** | **${totalPassing}** | **${totalFailing2}** | **${overallRate}%** |`);
 
   // Token Waste Report
   lines.push("");
@@ -1446,6 +1781,8 @@ if (typeof module !== 'undefined') {
     isWorkflowSkill,
     hasMatchingInstruction,
     isCurrencyRecent,
+    isCurrencyPassing,
+    getCurrencyStatus,
     scanSkills,
     scanAgents,
     scanInstructions,
@@ -1457,6 +1794,10 @@ if (typeof module !== 'undefined') {
     generateGrid,
     listBrainFiles,
     CURRENCY_MAX_DAYS,
+    LIFECYCLE_WINDOWS,
+    LIFECYCLE_GATES,
+    runMechanicalChecks,
+    CHECK_LIBRARY,
   };
 }
 
