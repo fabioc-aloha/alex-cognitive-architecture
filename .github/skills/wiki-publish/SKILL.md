@@ -101,3 +101,20 @@ The script handles clone, flatten, link-rewrite, commit, push, and cleanup.
 - **Sidebar ordering**: `_Sidebar.md` controls navigation. Update it when adding new pages or reorganizing sections.
 - **Image assets must be flat**: Wiki doesn't support subdirectories for assets. All SVGs go to wiki root.
 - **Duplicate page names**: Two source files mapping to the same wiki name will overwrite each other. The prefix table prevents this — follow it strictly.
+
+## Wiki Publish QA Decision Table (KW2)
+
+After `publish-master-wiki.cjs` runs mechanical link rewriting, the LLM reviews the flattened output for semantic quality issues the script cannot detect.
+
+| # | Check | Pass | Fail | Action on Fail |
+|---|-------|------|------|----------------|
+| 1 | **Audience fit** — wiki pages are user-facing (no Node.js assumed) | No dev-only jargon, build commands, or internal references | References `.github/`, `brain-qa`, muscle scripts, or `npm run` | Rewrite for end-user audience or move to README (developer docs) |
+| 2 | **Voice consistency** — wiki reads as one author, one tone | Consistent tone across all pages, matches Alex's public voice | Mixed formal/informal, or robotic instructions next to conversational prose | Harmonize tone to wiki voice guide |
+| 3 | **Orphaned pages** — every page reachable from `_Sidebar.md` | All published `.md` files appear in sidebar or are linked from a sidebar page | Pages exist in wiki root but have no inbound links | Add to `_Sidebar.md` or remove from publish |
+| 4 | **Broken cross-refs** — internal wiki links resolve after flattening | All `[[Page-Name]]` and `[text](Page-Name)` links resolve to actual wiki pages | Link target doesn't exist in flattened output | Fix link rewriting rule or source page |
+| 5 | **Asset references** — images and SVGs load correctly | All `![](asset.svg)` reference files that exist in wiki root | Image referenced but file not published (excluded by filter) | Add to publish list or remove reference |
+| 6 | **Prefix consistency** — page names follow folder-to-prefix mapping | Page names match `FOLDER_CONFIG` prefixes | Manual override broke naming convention | Revert to convention or update `FOLDER_CONFIG` |
+| 7 | **Stale content** — pages reflect current architecture/features | Content matches current v8.x capabilities | References deprecated features, old version numbers, removed commands | Update content or add "as of vX.Y" qualifier |
+| 8 | **Duplicate content** — no two pages cover the same topic | Each topic has one canonical page | Same content in GUIDE-X and BLOG-Y | Consolidate to one, cross-reference from the other |
+| 9 | **Navigation flow** — sidebar sections ordered logically | Getting Started → Guides → Reference → Blog | Random ordering or missing section headers | Reorder `_Sidebar.md` |
+| 10 | **Sensitive data** — no internal paths, credentials, or project-specific data | Clean of file paths, API keys, client names | `C:\Development\...` paths or internal project references leak through | Strip per `cross-project-isolation.instructions.md` |
