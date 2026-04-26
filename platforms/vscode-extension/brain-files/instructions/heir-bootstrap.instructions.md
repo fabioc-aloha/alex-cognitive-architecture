@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Heir project bootstrap protocol and initialization wizard"
 application: "When initializing or bootstrapping a new heir project"
 applyTo: "**/*bootstrap*,**/*heir*init*"

@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Brand asset management and enforcement rules for brand hierarchy"
 application: "When creating or managing brand assets, logos, or brand guidelines"
 applyTo: "**/*brand*,**/*logo*,**/*asset*"
