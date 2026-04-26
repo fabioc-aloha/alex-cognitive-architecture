@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "4-dimension gap analysis before implementation"
 application: "Identify knowledge, tooling, architecture, and process gaps before building"

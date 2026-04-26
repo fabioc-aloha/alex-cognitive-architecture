@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle insight-pipeline
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Auto-detect patterns across sessions by scanning dream reports, assignment logs, and knowledge artifacts
  * @version 1.0.0

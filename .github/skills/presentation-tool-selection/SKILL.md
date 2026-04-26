@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: presentation-tool-selection
 description: Best practice decision matrix for choosing between Marp, Gamma, and PptxGenJS based on use case requirements.
 tier: standard

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: privacy-responsible-ai
 description: Privacy by design, data protection, and responsible AI principles.
 tier: standard

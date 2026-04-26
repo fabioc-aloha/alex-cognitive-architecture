@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: kdp-publishing
 description: "Amazon KDP self-publishing specs — cover requirements, interior formatting, spine formulas, ink options, and pricing tiers"
 applyTo: "**/*kdp*,**/*publish*,**/*book*"

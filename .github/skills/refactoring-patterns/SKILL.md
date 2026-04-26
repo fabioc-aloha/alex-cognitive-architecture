@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: refactoring-patterns
 description: Safe transformations — same behavior, better structure.
 tier: core

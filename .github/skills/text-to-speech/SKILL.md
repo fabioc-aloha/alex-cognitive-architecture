@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: external-dependent
 name: "text-to-speech"
 description: "Cloud TTS via Replicate — 15 models, voice cloning, emotion control, and multi-language support"
 tier: extended

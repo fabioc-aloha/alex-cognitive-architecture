@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: external-dependent
 mode: agent
 name: "generate-image"
 description: "Generate an image or video using Replicate AI models"

@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle gamma-generator
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Gamma API presentation, document, and social content generator
  * @version 1.0.0

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: test-quality-analysis
 description: 'Analyze test code quality to detect coverage-only tests, test smells, and low-value assertions. Use when asked to "analyze test quality", "find coverage-only tests", "audit our tests", "are these tests valuable", "find test smells", or "which tests should we delete". Scores tests 1-5 on real value and produces prioritized improvement reports.'
 applyTo: "**/*.test.*,**/*.spec.*,**/test/**,**/__tests__/**"

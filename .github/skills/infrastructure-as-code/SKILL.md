@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: infrastructure-as-code
 description: '**Domain**: DevOps & Cloud Engineering'
 tier: standard

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: project-deployment
 description: Universal deployment patterns for any project type.
 tier: standard

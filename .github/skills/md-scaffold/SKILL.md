@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "md-scaffold"
 description: "Scaffold properly structured Markdown files from templates for clean first-pass conversion"
 tier: extended

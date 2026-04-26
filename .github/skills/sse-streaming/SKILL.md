@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: sse-streaming
 description: POST-based Server-Sent Events streaming for Azure Functions — HTTP streaming, chunked response parsing, reconnection
 tier: extended

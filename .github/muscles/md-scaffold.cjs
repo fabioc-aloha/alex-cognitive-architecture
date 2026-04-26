@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle md-scaffold
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Markdown file scaffolder with converter-ready templates
  * @version 1.0.0

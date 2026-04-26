@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle new-skill
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Create properly structured skill scaffolds with frontmatter
  * @version 1.0.0

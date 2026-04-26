@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: external-dependent
 name: "character-aging-progression"
 description: "Generate visually consistent character images across different life stages using nano-banana-pro with age-specific prompts"
 tier: extended

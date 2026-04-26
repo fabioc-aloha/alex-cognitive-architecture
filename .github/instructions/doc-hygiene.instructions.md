@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Documentation hygiene checks -- broken links, stale references, formatting consistency"
 application: "When working with doc hygiene or troubleshooting related issues"
 applyTo: "**/*doc*audit*,**/*doc*quality*,**/*drift*,**/*hygiene*"

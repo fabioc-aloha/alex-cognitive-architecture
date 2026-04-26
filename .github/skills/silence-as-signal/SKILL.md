@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "silence-as-signal"
 description: "Recognize when silence is more valuable than speech and suppress proactive suggestions"
 tier: core

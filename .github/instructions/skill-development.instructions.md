@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Skill development protocol for iterative skill improvement and testing"
 application: "When developing, testing, or refining brain skills"
 applyTo: "**/.github/skills/**,**/*skill*dev*"

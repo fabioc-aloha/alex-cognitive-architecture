@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle meditation-snapshot
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Produce a structural snapshot of meditation chronicles: lastMeditation date (from filename), chronicle count, and staleness; prune at 60 chronicles FIFO (D17, v8.4.0)
  * @version 1.0.0

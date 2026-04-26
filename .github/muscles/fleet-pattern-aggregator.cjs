@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle fleet-pattern-aggregator
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Cross-heir pattern aggregation and insight promotion for Fleet Intelligence
  * @version 1.0.0

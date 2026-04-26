@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: doc-hygiene
 description: Documentation hygiene — anti-drift rules, count elimination, and living document maintenance
 tier: core

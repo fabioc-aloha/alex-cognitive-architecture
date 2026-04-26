@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle install-hooks
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Install Git hooks for quality gate automation
  * @version 1.0.0

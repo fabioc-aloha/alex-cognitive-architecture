@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Create presentation slides for any audience"
 application: "Build slide decks with storytelling structure for any audience"

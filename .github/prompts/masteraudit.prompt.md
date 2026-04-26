@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: "Multi-phase automated brain audit using existing audit scripts"
 application: "When auditing brain health, architecture consistency, or running comprehensive quality checks"
 mode: agent

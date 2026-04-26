@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "heir-feedback"
 description: "Submit feedback, bug reports, and feature requests from heir projects to Master Alex via AI-Memory/feedback/"
 tier: standard

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: hr-people-operations
 description: Talent acquisition, employee lifecycle, compensation, labor regulations, and organizational development.
 tier: extended

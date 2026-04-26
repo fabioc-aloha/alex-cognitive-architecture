@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: chat-participant-patterns
 description: VS Code Chat API patterns.
 tier: standard

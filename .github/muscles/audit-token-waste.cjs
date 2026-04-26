@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle audit-token-waste
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Scan cognitive architecture for token waste patterns with auto-fix
  * @version 1.0.0

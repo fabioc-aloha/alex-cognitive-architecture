@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: copilot-sdk
 description: Build applications powered by GitHub Copilot using the Copilot SDK — session management, custom tools, streaming, hooks, MCP servers, BYOK, deployment patterns
 tier: standard

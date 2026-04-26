@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: tech-debt-discovery
 description: 'Systematic technical debt inventory and prioritization. Use when asked to "find tech debt", "show me the TODOs", "how healthy is this codebase", "what should we fix first", "find code smells", "audit code quality", or "identify hotspots". Scans code markers, analyzes git history, checks dependencies, and produces a prioritized debt report.'
 applyTo: "**/*debt*,**/*TODO*,**/*FIXME*,**/*smell*"

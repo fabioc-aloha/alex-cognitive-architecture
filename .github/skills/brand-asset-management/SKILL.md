@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "brand-asset-management"
 description: "Brand hierarchy, visual identity, asset deployment, platform-specific branding guidelines"
 tier: standard

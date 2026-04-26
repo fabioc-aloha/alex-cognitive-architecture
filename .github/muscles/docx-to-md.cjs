@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle docx-to-md
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Convert Word documents to clean Markdown with image extraction
  * @version 1.0.0

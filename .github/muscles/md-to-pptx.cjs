@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle md-to-pptx
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Convert Markdown to PowerPoint presentations via pandoc
  * @version 1.0.0

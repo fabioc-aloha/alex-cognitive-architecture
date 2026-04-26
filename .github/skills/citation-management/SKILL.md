@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: citation-management
 description: APA 7th formatting, citation integration, reference validation, and bibliography generation
 tier: extended

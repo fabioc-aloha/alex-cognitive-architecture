@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "testing-strategies"
 description: "Systematic testing for confidence without over-testing — the right test at the right level"
 tier: core

@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle update-registry
+ * @lifecycle stable
  * @description Heir-autonomous muscle for maintaining AI-Memory project registry
  * @platform node
  * @requires fs, path, os

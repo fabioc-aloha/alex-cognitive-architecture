@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: external-dependent
 description: "KQL (Kusto Query Language) patterns, best practices, and optimization for Azure Data Explorer and Log Analytics"
 application: "When working with kql (kusto query language) or troubleshooting related issues"
 applyTo: "**/*.kql,**/*kusto*"

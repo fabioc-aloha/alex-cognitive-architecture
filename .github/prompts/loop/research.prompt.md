@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Deep research with Researcher mode — breadth before depth"
 application: "Research topics in depth with web search, source gathering, and synthesis"

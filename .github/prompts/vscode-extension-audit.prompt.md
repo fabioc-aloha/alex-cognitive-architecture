@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 model: claude-opus-4-6
 description: Systematic VS Code extension review for API correctness, security, resource management, and 1.109+ agent platform readiness

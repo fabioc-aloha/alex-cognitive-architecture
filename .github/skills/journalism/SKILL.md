@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: journalism
 description: News writing, investigative reporting, source verification, editorial standards, and fact-checking for journalists.
 tier: extended

@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle brain-qa
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Generate brain health quality grid for cognitive architecture
  * @version 1.0.0

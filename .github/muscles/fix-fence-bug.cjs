@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle fix-fence-bug
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Detect and fix VS Code create_file wrapping fence bug
  * @version 1.0.0

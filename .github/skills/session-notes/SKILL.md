@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "session-notes"
 description: "Capture session observations, reminders, and quick notes to the shared AI-Memory/notes.md file"
 tier: standard

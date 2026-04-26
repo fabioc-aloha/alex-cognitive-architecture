@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "self-actualization"
 description: "Comprehensive cognitive self-assessment — honest evaluation of architecture health, growth, and optimization opportunities"
 tier: standard

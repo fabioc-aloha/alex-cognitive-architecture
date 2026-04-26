@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "sidebar-customization"
 description: "Customize the Alex sidebar — Loop tab buttons and project-specific workflows"
 tier: standard

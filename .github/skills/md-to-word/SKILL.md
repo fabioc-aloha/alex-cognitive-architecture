@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "md-to-word"
 description: "Convert Markdown with Mermaid diagrams and SVG illustrations to professional Word documents"
 tier: standard

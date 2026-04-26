@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: anti-hallucination
 description: Recognize and prevent confabulation — when you don't know, say so.
 tier: core

@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: Run a currency audit — full assessment (freshness + semantic consistency) before stamping dates
 mode: agent
 model: claude-opus-4-6

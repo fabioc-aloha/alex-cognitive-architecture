@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle brain-upgrade
+ * @lifecycle stable
  * @description LLM-callable per-project brain upgrade — Phase 1 mechanics + Phase 2 semantic helpers
  * @platform node
  * @requires fs, path

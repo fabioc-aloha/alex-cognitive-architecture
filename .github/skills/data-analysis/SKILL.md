@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: data-analysis
 description: "Exploratory data analysis patterns -- profiling, distributions, correlations, segmentation, anomaly detection, and translating statistics into narrative insights"
 tier: standard

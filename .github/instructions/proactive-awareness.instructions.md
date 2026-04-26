@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Cross-session context recovery, uncommitted work detection, and proactive behaviors"
 application: "Always active — recover context on session start, detect uncommitted work, route to active focus"
 applyTo: "**"

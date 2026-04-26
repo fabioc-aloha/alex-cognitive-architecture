@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: work-life-balance
 description: Detect burnout signals and proactively support sustainable productivity.
 tier: extended

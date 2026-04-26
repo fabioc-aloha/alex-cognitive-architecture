@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "global-knowledge"
 description: "Cross-project knowledge search, pattern recognition, and insight management via unified AI-Memory"
 tier: standard

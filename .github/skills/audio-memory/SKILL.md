@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: external-dependent
 name: "audio-memory"
 description: "Store and manage voice samples for TTS cloning — portable, version-controlled audio references"
 tier: standard

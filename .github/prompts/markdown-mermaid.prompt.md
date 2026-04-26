@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: Create technical documentation with Mermaid diagrams and visual standards
 application: "When creating markdown documentation with diagrams, troubleshooting Mermaid rendering, or applying visual documentation standards"
 agent: Alex

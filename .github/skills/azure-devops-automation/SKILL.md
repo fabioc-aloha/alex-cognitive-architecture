@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: azure-devops-automation
 description: CI/CD pipelines, infrastructure as code, and deployment automation for Azure workloads
 tier: standard

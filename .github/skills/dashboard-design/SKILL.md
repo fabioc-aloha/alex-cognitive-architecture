@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: dashboard-design
 description: "Dashboard layout patterns, KPI card design, filter architecture, narrative flow through panels, and self-contained HTML generation"
 tier: standard

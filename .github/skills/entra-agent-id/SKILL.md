@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: entra-agent-id
 description: Microsoft Entra Agent ID (preview) — create OAuth2-capable AI agent identities via Microsoft Graph beta API
 tier: standard

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "incident-response"
 description: "Calm, systematic crisis handling — from detection through post-mortem to prevention"
 tier: standard

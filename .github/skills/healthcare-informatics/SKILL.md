@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: healthcare-informatics
 description: Clinical terminology, healthcare compliance (HIPAA/HITECH), patient safety, and health data management.
 tier: extended

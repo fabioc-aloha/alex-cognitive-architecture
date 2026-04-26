@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: memory-curation
 description: "Monitor, audit, and curate VS Code user memory (/memories/) for token efficiency, scope correctness, and value density"
 tier: standard

@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Synchronize cognitive architecture changes between Master Alex and heir projects"
 application: "When syncing skills, instructions, or config between Master and heirs"
 applyTo: "**/*heir-sync*,**/*sync-heir*,**/*architecture-sync*"

@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "3-pass code review with confidence scoring and structured feedback"
 application: "Review code for correctness, security, performance, and maintainability"

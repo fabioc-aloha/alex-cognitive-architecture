@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Automated pre-publish quality gates — preventing regressions through build pipeline enforcement"
 application: "During deployment, release preparation, or publishing workflows"
 applyTo: "**/quality-gate*,**/scripts/quality*,**/*prepublish*,**/package.json"

@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Prompt authoring standard — tier classification, model selection, TODO tracking, and verify-before-proceed gates"
 application: "When creating, reviewing, or converting .prompt.md files"
 applyTo: "**/*.prompt.md"

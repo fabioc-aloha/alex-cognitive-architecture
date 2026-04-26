@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 model: claude-opus-4-6
 description: Check documents and policies for AI writing tells and suggest improvements for authentic voice

@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Create effective, reusable skills from real-world experience for promotion to Master Alex"
 application: "When creating new skills, documenting expertise, or promoting patterns to skills"
 applyTo: "**/*skill-creat*,**/*skill-build*,**/*SKILL.md*"

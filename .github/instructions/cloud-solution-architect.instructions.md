@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: external-dependent
 description: "Cloud solution architecture patterns, Well-Architected Framework alignment, and design reviews"
 application: "When working with cloud solution architect or troubleshooting related issues"
 applyTo: "**/*architect*,**/*solution*design*"

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: ralph-loop
 description: Iterative quality improvement — generate, evaluate, feedback, re-generate until threshold met
 applyTo: '**/*quality*,**/*eval*,**/*iterate*,**/*ralph*'

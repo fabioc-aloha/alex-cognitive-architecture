@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle chart-recommend
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Story-intent chart advisor for data visualization
  * @version 1.0.0

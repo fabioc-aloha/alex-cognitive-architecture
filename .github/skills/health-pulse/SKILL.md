@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "health-pulse"
 description: "Health Pulse data model, status rules, scoring algorithms, and thresholds — the canonical source the extension consumes"
 tier: standard

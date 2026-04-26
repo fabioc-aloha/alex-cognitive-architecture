@@ -1,4 +1,6 @@
 ---
+type: agent
+lifecycle: stable
 description: Alex Skill Builder Mode - Create high-quality trifectas (skill + instruction + muscle) and optional prompts for discoverability
 name: Skill Builder
 model: ["Claude Sonnet 4", "GPT-4o"]

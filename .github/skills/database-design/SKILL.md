@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: database-design
 description: Schema design, normalization, query optimization, and data modeling patterns
 tier: standard

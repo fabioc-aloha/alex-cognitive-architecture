@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle dashboard-scaffold
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Self-contained HTML dashboard generator from JSON specs
  * @version 1.0.0

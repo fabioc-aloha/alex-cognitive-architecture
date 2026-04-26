@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * H5: Researcher session start
  * Agent-scoped SessionStart hook for Researcher mode.
  * Loads knowledge gaps + research trifecta context for better research continuity.

@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle update-notes
+ * @lifecycle stable
  * @description Append dated entries to AI-Memory/notes.md
  * @platform node
  * @requires fs, path, os

@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: "Procedural refactoring with test parity verification at every step"
 application: "When restructuring code for clarity, performance, or maintainability without changing behavior"
 mode: agent

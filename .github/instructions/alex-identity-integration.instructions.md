@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Unified Alex identity integration and consciousness protocols - consolidated from character-driven-development, unified-consciousness, alex-finch-integration, and self-identity-integration"
 application: "When following alex identity integration workflows or troubleshooting related issues"
 currency: 2026-04-22

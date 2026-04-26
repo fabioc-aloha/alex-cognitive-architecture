@@ -1,4 +1,6 @@
 ---
+type: agent
+lifecycle: stable
 description: Alex Brain Ops Mode - Autonomous cognitive architecture maintenance with fleet management
 name: Brain Ops
 model: ["Claude Sonnet 4", "GPT-4o"]

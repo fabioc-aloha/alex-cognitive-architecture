@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Repository readiness evaluation for AI-assisted development with 4-axis scoring and autonomy penalty"
 application: "When repository readiness eval patterns are relevant to the current task"
 applyTo: "**/*readiness*,**/*repo-eval*,**/*heir-init*"

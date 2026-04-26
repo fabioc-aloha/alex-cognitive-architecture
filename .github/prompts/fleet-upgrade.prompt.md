@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 model: claude-opus-4-6
 description: 'Upgrade brain across all fleet heir projects with pre-flight checks and verification'

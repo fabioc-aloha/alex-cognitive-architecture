@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Epistemic calibration — confidence matching, hallucination prevention, and self-correction"
 application: "Always active — unconscious self-monitoring for certainty calibration"
 applyTo: "**"

@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle data-ingest
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Universal data ingestion from CSV, Excel, JSON, URLs
  * @version 1.0.0

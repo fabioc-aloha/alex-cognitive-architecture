@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Technical debt identification, categorization, and prioritization"
 application: "Find TODOs, code smells, outdated deps, and prioritize payoff"

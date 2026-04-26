@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: business-analysis
 description: Patterns for requirements elicitation, BRDs, process analysis, and stakeholder alignment.
 tier: standard

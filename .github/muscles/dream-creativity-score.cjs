@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle dream-creativity-score
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Score the most recent meditation-authored dream chronicle across 5 dimensions: completeness, freshness, integrity, insight density, and drift detection
  * @version 2.0.0

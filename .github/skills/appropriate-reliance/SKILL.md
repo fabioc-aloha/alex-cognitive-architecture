@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: appropriate-reliance
 description: "Calibrated human-AI collaboration with creative latitude — trust calibrated to reliability, creativity preserved with validation."
 tier: core

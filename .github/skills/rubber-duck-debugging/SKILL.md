@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: rubber-duck-debugging
 description: Be a thinking partner. The answer often emerges when explaining the problem.
 tier: extended

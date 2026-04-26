@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle html-to-md
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Convert HTML to Markdown via pandoc
  * @version 1.0.0

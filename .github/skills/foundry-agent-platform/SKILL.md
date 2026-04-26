@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "foundry-agent-platform"
 description: "Microsoft Foundry agent deployment, orchestration, and cloud-native AI service patterns"
 tier: extended

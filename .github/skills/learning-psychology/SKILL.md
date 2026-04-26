@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: learning-psychology
 description: Help humans learn through partnership, not instruction.
 tier: standard

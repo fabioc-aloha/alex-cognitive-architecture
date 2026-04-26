@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: error-recovery-patterns
 description: What to do when things break.
 tier: core

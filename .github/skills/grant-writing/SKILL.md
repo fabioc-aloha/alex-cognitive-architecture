@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: grant-writing
 description: Translate research vision into funded reality.
 tier: extended

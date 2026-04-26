@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle md-to-gamma
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Pre-process a markdown file into a Gamma-import-ready version (name.md → name-gamma.md)
  * @version 1.0.0

@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Alex core cognitive architecture and meta-cognitive protocols"
 application: "When following alex core workflows or troubleshooting related issues"
 excludeAgent: "coding-agent"

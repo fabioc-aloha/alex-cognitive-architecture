@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "bootstrap-learning"
 description: "Domain-agnostic knowledge acquisition — from zero to structured expertise through conversational learning"
 tier: standard

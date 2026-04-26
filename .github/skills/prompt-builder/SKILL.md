@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: prompt-builder
 description: Create and validate .prompt.md files that pass brain-qa on first attempt
 tier: standard

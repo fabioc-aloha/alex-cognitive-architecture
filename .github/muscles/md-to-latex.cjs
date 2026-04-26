@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle md-to-latex
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Convert Markdown to LaTeX source via pandoc
  * @version 1.0.0

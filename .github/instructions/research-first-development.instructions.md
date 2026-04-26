@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Research-first development workflow — pre-project knowledge encoding and gap analysis"
 application: "When starting new projects or features that require upfront research"
 applyTo: "**/research/**,**/*research*,**/*gap-analysis*"

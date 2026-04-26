@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle data-profile
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Quick data profiler for comprehensive dataset analysis
  * @version 1.0.0

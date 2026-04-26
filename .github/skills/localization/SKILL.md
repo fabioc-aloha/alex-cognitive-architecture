@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "localization"
 description: "**Domain**: Software localization, internationalization, multilingual application development"
 tier: extended

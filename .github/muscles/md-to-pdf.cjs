@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle md-to-pdf
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Convert Markdown to PDF via pandoc (LaTeX or HTML intermediate)
  * @version 1.0.0

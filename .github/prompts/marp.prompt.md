@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: Create Marp presentation slides from content with Alex branding
 application: "When creating presentations, slides, or Marp-based content"

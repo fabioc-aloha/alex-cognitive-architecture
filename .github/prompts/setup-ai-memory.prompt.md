@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: "Set up or verify the AI-Memory folder for cross-project knowledge sharing"
 application: "When setting up a new heir project or verifying AI-Memory folder exists"
 mode: agent

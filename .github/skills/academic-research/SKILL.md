@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: academic-research
 description: Research project scaffolding, thesis/dissertation writing, literature reviews, publication workflows, and Alex-assisted academic workflows
 tier: extended

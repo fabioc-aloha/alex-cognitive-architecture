@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: blog-writer
 description: "Write Alex blog posts from recent brain changes, commits, and experiences. Use when asked to write a blog post, generate a blog article, or when scheduled for automated blog creation."
 tier: standard

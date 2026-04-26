@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: external-dependent
 description: "Azure Bicep and AVM (Azure Verified Modules) patterns for infrastructure-as-code"
 application: "When working with bicep avm mastery or troubleshooting related issues"
 applyTo: "**/*.bicep,**/bicep*"

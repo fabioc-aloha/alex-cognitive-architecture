@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: mcp-development
 description: '**Domain**: AI Infrastructure'
 tier: standard

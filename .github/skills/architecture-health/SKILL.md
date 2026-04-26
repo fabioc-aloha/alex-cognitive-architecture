@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "architecture-health"
 description: "Diagnose cognitive architecture health — connection integrity, memory balance, link density, and drift detection"
 tier: standard

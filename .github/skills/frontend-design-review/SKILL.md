@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: frontend-design-review
 description: Review and create distinctive frontend interfaces — design system compliance, three quality pillars (Frictionless, Quality Craft, Trustworthy), accessibility
 tier: standard

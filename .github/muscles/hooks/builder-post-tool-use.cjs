@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * H4: Builder auto-compile reminder
  * Agent-scoped PostToolUse hook for Builder mode.
  * After a .ts file edit, reminds to compile for immediate error feedback.

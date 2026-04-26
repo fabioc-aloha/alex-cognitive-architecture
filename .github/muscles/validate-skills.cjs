@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle validate-skills
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Validate Alex skills for VS Code Agent Skills compliance
  * @version 1.0.0
@@ -36,7 +39,8 @@ const results = {
   missingName: [],
   missingDescription: [],
   missingApplyTo: [],
-  noFrontmatter: []
+  noFrontmatter: [],
+  noDecisionTable: []
 };
 
 /**
@@ -88,6 +92,14 @@ function main() {
     if (!hasDescription) results.missingDescription.push(dir.name);
     if (!hasApplyTo) results.missingApplyTo.push(dir.name);
 
+    // RA5: Phase 2 sections must contain at least one decision table
+    // A decision table is a markdown table with 3+ rows (header + separator + data)
+    const tablePattern = /^\|.+\|$/gm;
+    const tableRows = content.match(tablePattern);
+    if (!tableRows || tableRows.length < 3) {
+      results.noDecisionTable.push(dir.name);
+    }
+
     // VS Code requires name + description minimum
     if (hasName && hasDescription) {
       results.valid++;
@@ -125,6 +137,11 @@ function printReport() {
   if (results.missingApplyTo.length > 0) {
     console.log(`\n\x1b[90mMissing 'applyTo' (${results.missingApplyTo.length}):\x1b[0m`);
     results.missingApplyTo.forEach(s => console.log(`  - ${s}`));
+  }
+
+  if (results.noDecisionTable.length > 0) {
+    console.log(`\n\x1b[33mNo decision table (${results.noDecisionTable.length}):\x1b[0m`);
+    results.noDecisionTable.forEach(s => console.log(`  - ${s}`));
   }
 
   // Summary with compliance rate calculation

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: cross-cultural-collaboration
 description: '**Domain**: Multicultural team communication, cultural intelligence, global collaboration'
 tier: extended

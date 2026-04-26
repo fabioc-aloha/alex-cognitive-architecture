@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle normalize-paths
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Unified path normalization for Alex memory file references
  * @version 1.0.0

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "persona-detection"
 description: "Intelligent project persona identification using priority chain detection with LLM and heuristic fallback"
 tier: core

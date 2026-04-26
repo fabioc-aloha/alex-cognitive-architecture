@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: project-risk-analysis
 description: "Systematic methodology for identifying, categorizing, and mitigating software project risks before implementation"
 applyTo: "**/*risk*,**/*plan*,**/*assessment*"

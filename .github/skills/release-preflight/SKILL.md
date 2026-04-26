@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: release-preflight
 description: Pre-checks, version consistency, and deployment discipline.
 tier: standard
@@ -80,6 +82,26 @@ git add -A; git commit -m "release: v$v"; git tag "v$v"; git push --tags
 | Forgot to push tags            | Script does this                 |
 | Version mismatch               | Grep entire repo for old version |
 | PAT 401 error                  | Refresh PAT before release       |
+
+## Go / No-Go Decision Table (RP3)
+
+After preflight runs, classify each finding to decide whether to proceed:
+
+| Finding | Severity | Decision | Rationale |
+|---------|----------|----------|-----------|
+| Version mismatch across locations | **Block** | Fix before publish | Silent version drift = wrong artifact on marketplace |
+| VSIX file missing or wrong version in filename | **Block** | Rebuild VSIX | Publishing a stale or misnamed artifact is irreversible |
+| Git working tree dirty | **Block** | Commit or stash | Tagged release must match a clean commit |
+| Git tag already exists for target version | **Block** | Bump version or delete tag | Duplicate tag = ambiguous release provenance |
+| VSCE_PAT missing or expired | **Block** | Refresh token | Publish will 401; partial state is worse than no-op |
+| Heir sync drift detected | **Warning** | Review diff, then decide | Drift may be intentional (master-only changes) or accidental |
+| CHANGELOG entry missing for version | **Warning** | Add entry, or proceed if patch-only fix | Users and future-you need the audit trail |
+| Test failures in extension | **Block** | Fix tests | Shipping known-broken code violates trust |
+| Brain-qa score below threshold | **Warning** | Review findings; proceed if cosmetic-only | Brain health affects heirs on next upgrade |
+| Frontmatter audit failures | **Warning** | Fix if quick; track as debt if not | New files may lack frontmatter; not a ship-blocker unless systemic |
+
+**Rule**: Any **Block** finding = hard stop. Fix first, re-run preflight, then proceed.
+**Warning** findings require explicit operator acknowledgment — the LLM should list them and ask "proceed despite these warnings?"
 
 ## Related Scripts
 

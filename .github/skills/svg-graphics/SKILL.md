@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: svg-graphics
 description: Scalable, accessible, theme-aware visuals
 tier: standard

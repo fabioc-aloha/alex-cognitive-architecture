@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Safe refactoring — same behavior, better structure"
 application: "Restructure code while preserving behavior with test verification"

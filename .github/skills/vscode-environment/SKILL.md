@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: vscode-environment
 description: Optimal workspace setup for productivity.
 tier: standard

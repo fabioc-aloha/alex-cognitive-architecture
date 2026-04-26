@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: dissertation-defense
 description: Comprehensive preparation for doctoral dissertation defense including timeline management, presentation design, Q&A practice, mock sessions, and committee dynamics.
 tier: extended

@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: Investigate a bug or failure using systematic root cause analysis
 mode: agent
 model: claude-opus-4-6

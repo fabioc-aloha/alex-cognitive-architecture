@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Check alignment with project north star"
 application: "Verify current work aligns with project vision and guiding principles"

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "docx-to-md"
 description: "Convert Word documents (.docx) to clean Markdown with image extraction and pandoc cleanup"
 tier: extended

@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Battle-tested patterns learned from real project experience — gotchas, solutions, and architectural rules"
 application: "Always active — apply relevant patterns when working in matching domains"
 applyTo: "**"

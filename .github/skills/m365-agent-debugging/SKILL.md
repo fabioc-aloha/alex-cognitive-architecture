@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: m365-agent-debugging
 description: Debug non-functional M365 Copilot declarative agents.
 tier: standard

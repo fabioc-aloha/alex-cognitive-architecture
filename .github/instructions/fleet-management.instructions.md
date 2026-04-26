@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Fleet-wide brain synchronization — audit, upgrade, verify, rollback across heir projects"
 application: "When managing multiple heir projects or synchronizing brain updates across the fleet"
 applyTo: "**/*upgrade*brain*,**/*fleet*,**/*heir*sync*"

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "dialog-engineering"
 description: "CSAR Loop and structured conversation patterns for effective AI dialog -- Clarify, Summarize, Act, Reflect"
 tier: core

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "fleet-management"
 description: "Keep heir projects synchronized with Master Alex brain updates — audit drift, upgrade brains, verify deployments"
 tier: standard

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: ai-writing-avoidance
 description: "Help writers produce content that sounds genuinely human by avoiding telltale AI-generated text patterns"
 tier: standard

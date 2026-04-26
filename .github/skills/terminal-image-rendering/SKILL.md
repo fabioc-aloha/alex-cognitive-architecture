@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "terminal-image-rendering"
 description: "Render images inline in VS Code's integrated terminal using the Kitty graphics protocol"
 tier: extended

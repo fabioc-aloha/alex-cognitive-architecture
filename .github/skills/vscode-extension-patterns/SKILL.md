@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "vscode-extension-patterns"
 description: "Reusable patterns for VS Code extension development."
 tier: core

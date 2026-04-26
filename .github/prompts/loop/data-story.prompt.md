@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Data → Analysis → Visualization → Narrative pipeline"
 application: "Transform datasets into compelling data-driven narratives"

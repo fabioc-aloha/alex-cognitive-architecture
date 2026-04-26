@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: Manage API keys and secrets with VS Code SecretStorage
 mode: agent
 model: claude-opus-4-6

@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: "Customize Alex's identity for this project"
 application: "When the user wants to personalize the AI persona in copilot-instructions.md for their heir project"
 mode: agent

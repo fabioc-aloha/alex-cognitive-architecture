@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: prompt-engineering
 description: Craft effective prompts that get the best results from language models.
 tier: standard

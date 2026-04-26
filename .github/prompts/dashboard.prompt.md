@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: Design an interactive dashboard layout with KPIs, charts, filters, and drill-down
 application: "When requesting dashboard workflows"
 agent: Alex

@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Academic literature review workflow"
 application: "Search, synthesize, and organize academic papers and references"

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: git-workflow
 description: Consistent git practices, recovery patterns, and safe operations.
 tier: core

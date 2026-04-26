@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: financial-analysis
 description: Financial modeling, analysis frameworks, and regulatory awareness for business-minded professionals.
 tier: extended

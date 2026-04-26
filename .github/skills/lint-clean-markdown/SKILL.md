@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: lint-clean-markdown
 description: Write markdown that passes linting on first attempt by internalizing common rules.
 tier: core

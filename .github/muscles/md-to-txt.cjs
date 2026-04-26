@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle md-to-txt
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Convert Markdown to plain text via pandoc
  * @version 1.0.0

@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: Run a structured 4-phase implementation plan using the VS Code Plan Agent
 mode: agent
 application: "When planning implementation, creating project plans, or organizing tasks"

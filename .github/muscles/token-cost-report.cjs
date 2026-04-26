@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle token-cost-report
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Measure token cost of always-loaded instructions and all brain files
  * @version 1.0.0

@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: "Run a comprehensive self-actualization session — the deep monthly meditation that grades architecture across 6 dimensions and produces a chronicle with prioritized action plan"
 application: "Monthly cadence, or on-demand when architecture feels off; runs the snapshot muscle for mechanical inputs and applies LLM judgment for depth"
 mode: agent

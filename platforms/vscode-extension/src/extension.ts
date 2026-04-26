@@ -365,7 +365,13 @@ export function activate(context: vscode.ExtensionContext): void {
         vscode.window.showWarningMessage("Alex: Open a workspace folder first.");
         return;
       }
-      await muscleAndPrompt(wsRoot, "brain-qa.cjs", [], "Alex: Brain QA");
+      await muscleAndPrompt(
+        wsRoot,
+        "brain-qa.cjs",
+        [],
+        "Alex: Brain QA",
+        "Read .github/skills/brain-qa/SKILL.md then review the brain-qa report. Use the skill's triage tables to classify each finding: fix now vs track as debt vs false positive. Prioritize by severity.",
+      );
     }),
   );
 
@@ -381,7 +387,7 @@ export function activate(context: vscode.ExtensionContext): void {
         "validate-skills.cjs",
         [],
         "Alex: Validate Skills",
-        "Review the skill validation results and fix any issues found",
+        "Read .github/skills/skill-building/SKILL.md then review the validation results. Use the skill's quality rubric tables to triage each finding: required fix vs recommended improvement vs acceptable variance.",
       );
     }),
   );
@@ -399,7 +405,7 @@ export function activate(context: vscode.ExtensionContext): void {
         "markdown-lint.cjs",
         [fileUri.fsPath],
         "Alex: Markdown Lint",
-        "Fix the markdown lint issues found in the current file",
+        "Read .github/skills/lint-clean-markdown/SKILL.md then fix the markdown lint issues found. Use the skill's rule tables to apply fixes correctly — some rules have nuanced exceptions.",
       );
     }),
   );
@@ -446,7 +452,7 @@ export function activate(context: vscode.ExtensionContext): void {
         "new-skill.cjs",
         args,
         "Alex: New Skill",
-        `Customize the new skill ${name} — fill in the SKILL.md with real content and create the matching instruction file`,
+        `Read .github/skills/skill-creator/SKILL.md then customize the new skill ${name}. Use the skill's quality checklist and frontmatter requirements table to fill in SKILL.md with real content and create the matching instruction file.`,
       );
     }),
   );
@@ -658,7 +664,7 @@ export function activate(context: vscode.ExtensionContext): void {
         "insight-pipeline.cjs",
         [],
         "Alex: Insight Pipeline",
-        "Review the extracted insights and promote the most valuable ones to global knowledge",
+        "Read .github/skills/knowledge-synthesis/SKILL.md then review the extracted insights. Use the skill's promotion criteria table to decide which insights qualify for global knowledge. Apply cross-project isolation stripping rules before any promotion.",
       );
     }),
   );

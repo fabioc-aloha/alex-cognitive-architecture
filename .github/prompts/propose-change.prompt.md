@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: Report → Validate → Approve loop for non-trivial refactors and architecture changes
 mode: agent
 application: "When a change spans multiple files / trifectas / executors and deserves explicit sign-off before it ships"

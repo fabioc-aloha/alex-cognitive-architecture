@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: external-dependent
 name: "video-generation"
 description: "AI video generation via Replicate — 17 models, editing, and production workflows"
 tier: standard

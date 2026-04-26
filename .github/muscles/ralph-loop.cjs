@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle ralph-loop
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Iterative content improvement via quality feedback loops
  * @version 1.0.0

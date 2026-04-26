@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle markdown-lint
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Pre-conversion markdown validator for converters
  * @version 1.0.0

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * H2: Validator read-only enforcement
  * Agent-scoped PreToolUse hook for Validator mode.
  * Blocks write operations -- Validator reviews, it does not modify.

@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle session-name
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Generate descriptive session names from conversation context
  * @version 1.0.0

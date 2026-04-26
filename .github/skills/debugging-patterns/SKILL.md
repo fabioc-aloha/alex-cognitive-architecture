@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: debugging-patterns
 description: Systematic problem-solving and error analysis.
 tier: core

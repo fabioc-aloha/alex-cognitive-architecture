@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: Explain how code works
 application: When you need a clear explanation of unfamiliar code, algorithms, or patterns
 agent: Alex

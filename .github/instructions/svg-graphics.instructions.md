@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "SVG graphics creation, optimization, and manipulation patterns"
 application: "When working with svg graphics or troubleshooting related issues"
 applyTo: "**/*.svg,**/*svg*"

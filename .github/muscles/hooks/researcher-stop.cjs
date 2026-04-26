@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * H20: Research continuity
  * Agent-scoped Stop hook for Researcher mode.
  * Reminds to save unanswered questions and partial findings before the session ends.

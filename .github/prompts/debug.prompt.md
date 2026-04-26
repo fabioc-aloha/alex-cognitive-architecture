@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: "Procedural debugging: reproduce, isolate, fix, verify with test gates"
 application: "When investigating build failures, test errors, runtime crashes, or unexpected behavior"
 mode: agent

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: api-design
 description: Design APIs that developers love to use.
 tier: standard

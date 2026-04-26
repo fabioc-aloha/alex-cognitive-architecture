@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: enterprise-integration
 description: Patterns for Microsoft Graph, Microsoft Entra ID, and enterprise feature integration in VS Code extensions
 tier: standard

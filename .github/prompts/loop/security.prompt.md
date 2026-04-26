@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Security review covering deps, secrets, config, and code patterns"
 application: "Audit for OWASP vulnerabilities, exposed secrets, misconfigurations, and unsafe patterns"

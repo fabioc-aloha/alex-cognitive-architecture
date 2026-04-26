@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Knowledge coverage taxonomy and visible uncertainty indicators — assess brain coverage per domain, display confidence badges"
 application: "Always active — unconscious coverage assessment before responding"
 applyTo: "**"

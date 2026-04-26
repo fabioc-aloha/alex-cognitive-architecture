@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: "Guided welcome experience customization wizard"
 application: "Run the full welcome customization workflow — detect project, generate configs, validate coherence"
 mode: agent

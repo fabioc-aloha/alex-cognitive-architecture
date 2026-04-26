@@ -1,5 +1,8 @@
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle md-to-word
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Convert Markdown to production-quality Word documents
  * @version 5.3.0

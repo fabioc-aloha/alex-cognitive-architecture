@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle md-to-eml
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Convert Markdown to RFC 5322 email-safe .eml files
  * @version 1.0.0

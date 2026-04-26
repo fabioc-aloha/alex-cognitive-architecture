@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: meditation
 description: "Knowledge consolidation — transform session learnings into permanent architecture"
 tier: standard

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: extension-audit-methodology
 description: "Systematic 5-dimension audit framework for VS Code extensions — debug hygiene, dead code, performance, menu validation, dependency cleanup"
 tier: standard

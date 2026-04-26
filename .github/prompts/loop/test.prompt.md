@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Test phase — validate against success criteria with domain-specific methods"
 application: "Run tests, validate success criteria, and verify quality gates"

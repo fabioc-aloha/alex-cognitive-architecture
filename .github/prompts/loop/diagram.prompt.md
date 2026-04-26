@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Create Mermaid diagrams using ATACCU methodology"
 application: "Generate flowcharts, sequence diagrams, architecture diagrams in Mermaid"

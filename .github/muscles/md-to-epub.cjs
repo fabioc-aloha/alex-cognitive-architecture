@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle md-to-epub
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Convert Markdown to EPUB 3 e-book via pandoc
  * @version 1.0.0

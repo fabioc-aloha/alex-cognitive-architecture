@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: project-registration
 description: "Register projects in the fleet registry and track cross-project patterns"
 tier: standard

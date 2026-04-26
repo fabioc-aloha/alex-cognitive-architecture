@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "book-publishing"
 description: "Markdown-to-PDF pipeline via Pandoc and LuaLaTeX with emoji rendering, dual output, and print-ready formatting"
 tier: extended

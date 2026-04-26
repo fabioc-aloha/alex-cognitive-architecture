@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: awareness
 description: Proactive detection, self-correction, and epistemic vigilance
 tier: core

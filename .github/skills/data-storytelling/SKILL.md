@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: data-storytelling
 description: "End-to-end data narrative construction -- three-act structure, Knaflic/Duarte methodology, audience-first framing, and orchestration across analysis, visualization, and dashboard skills"
 tier: standard

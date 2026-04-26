@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Build phase — domain-specific implementation with wiki documentation"
 application: "Implement features guided by plan and wiki documentation"

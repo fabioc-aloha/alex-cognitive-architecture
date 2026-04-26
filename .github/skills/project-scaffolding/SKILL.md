@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: project-scaffolding
 description: First impressions matter. Set projects up for success.
 tier: standard

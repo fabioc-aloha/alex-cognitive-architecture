@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "agent-debug-panel"
 description: "Debug skill/hook/agent loading issues using VS Code's Agent Debug Panel"
 tier: standard

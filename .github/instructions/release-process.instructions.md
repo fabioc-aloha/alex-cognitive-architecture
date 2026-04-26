@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Release and publish workflows for versioning, changelogs, and marketplace deployment"
 application: "When preparing releases, publishing extensions, or managing changelogs"
 applyTo: "**/*{CHANGELOG,package,version}*,**/*.vsix"

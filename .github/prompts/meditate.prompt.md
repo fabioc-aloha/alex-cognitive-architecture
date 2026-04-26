@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: Run the meditation ritual — consolidate session learnings into permanent architecture (5 R's framework)
 application: "When a session has surfaced new patterns, gotchas, or insights worth persisting"

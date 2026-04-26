@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "ascii-project-dashboard"
 description: "Create and maintain ASCII visual dashboards for project tracking with parallel lane progress bars"
 tier: standard

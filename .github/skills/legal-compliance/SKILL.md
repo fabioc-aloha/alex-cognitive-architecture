@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: legal-compliance
 description: Legal research, contract analysis, regulatory compliance, and case law citation for legal professionals.
 tier: extended

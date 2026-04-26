@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 model: claude-opus-4-6
 description: Systematic WCAG AA accessibility and UI/UX audit covering typography, keyboard navigation, screen reader support, and design tokens

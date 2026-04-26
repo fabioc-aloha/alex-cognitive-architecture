@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle analyze-assignments
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Analyze assignment-log.json for delegation patterns
  * @version 1.0.0

@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Skill building procedure for creating reusable brain skills from experience"
 application: "When creating, updating, or reviewing brain skills"
 applyTo: "**/.github/skills/**,**/*skill*build*"

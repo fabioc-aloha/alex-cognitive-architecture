@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: microsoft-fabric
 description: Microsoft Fabric workspace management, governance, REST API patterns, and medallion architecture implementation
 tier: standard

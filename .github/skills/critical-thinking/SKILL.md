@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: critical-thinking
 description: "Challenge what you think is right — alternative hypotheses, missing data, evidence quality, bias detection, falsifiability, and adversarial review"
 tier: core

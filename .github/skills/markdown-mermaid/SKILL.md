@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "markdown-mermaid"
 description: "Clear documentation through visual excellence"
 tier: standard

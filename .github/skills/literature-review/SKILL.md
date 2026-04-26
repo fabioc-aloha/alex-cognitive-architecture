@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: literature-review
 description: Systematic literature search, synthesis, gap identification, and narrative construction for academic research
 tier: extended

@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Assess project against Microsoft Responsible AI principles"
 application: "Evaluate fairness, reliability, safety, privacy, inclusiveness, transparency, accountability"

@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle nav-inject
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Cross-document navigation table injector for doc suites
  * @version 1.0.0

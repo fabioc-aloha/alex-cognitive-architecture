@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: observability-monitoring
 description: Production visibility through logs, metrics, traces, and alerting — the three pillars of observability
 tier: standard

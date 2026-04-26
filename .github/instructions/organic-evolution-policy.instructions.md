@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Brain evolution governance — criteria for skill promotion, retirement, and architectural growth"
 application: "When proposing new skills, instructions, or agents for promotion to master brain"
 applyTo: "**/.github/skills/**,**/.github/instructions/**,**/.github/agents/**"

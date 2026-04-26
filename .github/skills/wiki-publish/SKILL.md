@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "wiki-publish"
 description: "Publish master-wiki/ to GitHub Wiki with folder flattening and link rewriting"
 tier: standard

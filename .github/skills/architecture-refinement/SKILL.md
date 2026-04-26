@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: architecture-refinement
 description: "Meta-skill for maintaining and evolving Alex's cognitive architecture through deliberate documentation and pattern extraction."
 tier: standard

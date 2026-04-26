@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * H3: Validator session start
  * Agent-scoped SessionStart hook for Validator mode.
  * Loads adversarial checklist + recent changes summary for faster QA startup.

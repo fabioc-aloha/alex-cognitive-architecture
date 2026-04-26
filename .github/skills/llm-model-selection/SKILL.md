@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: llm-model-selection
 description: Choosing the right model for the task — power vs. cost vs. speed.
 tier: standard

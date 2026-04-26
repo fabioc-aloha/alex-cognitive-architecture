@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Blog writing procedures for Alex — voice consistency, format enforcement, and content sourcing"
 application: "When writing blog posts or generating blog content"
 applyTo: "**/master-wiki/blog/**,**/*blog*write*"

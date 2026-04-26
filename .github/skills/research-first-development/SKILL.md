@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "research-first-development"
 description: "Build knowledge bases that build software — research before code, teach before execute"
 tier: standard

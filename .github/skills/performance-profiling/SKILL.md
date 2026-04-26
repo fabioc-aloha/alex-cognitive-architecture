@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: performance-profiling
 description: CPU, memory, network bottleneck analysis — systematic performance investigation
 tier: standard

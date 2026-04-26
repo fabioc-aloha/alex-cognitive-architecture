@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Cross-project data isolation rules — strip project-specific context before globalizing patterns, insights, and fleet data"
 application: "Always active — unconscious filter when promoting data from project scope to global scope"
 applyTo: "**"

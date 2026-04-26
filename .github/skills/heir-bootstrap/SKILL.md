@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "heir-bootstrap"
 description: "Post-Initialize wizard that tailors Alex's cognitive architecture to a specific heir project through interactive 10-phase configuration"
 tier: standard

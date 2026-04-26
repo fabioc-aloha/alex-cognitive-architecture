@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 applyTo: "**/*dream*,**/*meditation*,**/*consolidation*"
 description: "Detailed protocol triggers for dream, meditation, and knowledge consolidation"
 application: "When following protocol triggers workflows or troubleshooting related issues"

@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: ai-agent-design
 description: Design autonomous AI agents that reason, plan, and execute tasks
 tier: standard

@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "VS Code extension audit methodology for quality assessment across 5 dimensions"
 application: "When auditing or reviewing VS Code extension code quality"
 applyTo: "**/*audit*,**/*extension*"

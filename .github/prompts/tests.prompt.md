@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 description: Generate unit tests for selected code
 mode: agent
 model: claude-opus-4-6

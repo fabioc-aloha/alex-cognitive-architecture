@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: sales-enablement
 description: Sales methodology, pipeline management, negotiation frameworks, and customer engagement patterns.
 tier: extended

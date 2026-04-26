@@ -29,6 +29,25 @@ export function disposeMuscleChannels(): void {
 }
 
 /**
+ * Build a standard Phase 2 chatPrompt that references a skill with decision tables.
+ * Use this instead of hand-writing prompt strings to prevent drift (HI2).
+ *
+ * @param skillPath - Relative path to the SKILL.md (e.g., "brain-qa/SKILL.md")
+ * @param action - What the LLM should do with the findings
+ * @param tableName - Optional: name of the specific decision table to reference
+ */
+export function skillPrompt(
+  skillPath: string,
+  action: string,
+  tableName?: string,
+): string {
+  const tableRef = tableName
+    ? `Use the skill's ${tableName} to `
+    : "Use the skill's decision tables to ";
+  return `Read .github/skills/${skillPath} then ${action}. ${tableRef}guide your decisions.`;
+}
+
+/**
  * Muscle exit-code contract (HI5):
  *   0 = clean — no issues, no follow-up needed
  *   1 = error — something broke, surface stderr
@@ -106,6 +125,21 @@ export function runMuscleInTerminal(
 /**
  * Run muscle, show output in an Output Channel, then optionally open chat
  * for AI-assisted follow-up.
+ *
+ * ## chatPrompt Contract (EC8)
+ *
+ * A good Phase 2 chatPrompt:
+ *   1. **Reads a skill**: "Read .github/skills/<name>/SKILL.md then..."
+ *   2. **References decision tables**: "Use the skill's <table-name> to..."
+ *   3. **Defines the action**: "...triage/classify/fix each finding"
+ *   4. **Sets boundaries**: what to fix vs track vs ignore
+ *
+ * A bad chatPrompt: "Fix the issues found" (freeform — no skill, no table,
+ * no criteria for what constitutes "fixed").
+ *
+ * When `code === 2` (semantic-review-required per HI5), the chatPrompt
+ * is presented with warning-level urgency. The prompt should guide the
+ * LLM through structured decision-making, not hand it a blank page.
  */
 export async function muscleAndPrompt(
   workspaceRoot: string,

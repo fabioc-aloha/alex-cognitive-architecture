@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle self-actualization-snapshot
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Gather mechanical inputs for self-actualization (architecture inventory, memory balance, depth-sample candidates, connection counts, growth diff). LLM judges quality; this muscle only counts and samples.
  * @version 1.0.0

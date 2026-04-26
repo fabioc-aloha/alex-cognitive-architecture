@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Orchestrate full welcome experience customization — loop menu, taglines, identity, North Star, and persona in one guided workflow"
 application: "When customizing the Alex sidebar experience, onboarding a new project, or updating project identity"
 applyTo: "**/*welcome*custom*,**/*customize*welcome*,**/*onboard*,**/.github/config/loop-menu.json,**/.github/config/taglines.json"

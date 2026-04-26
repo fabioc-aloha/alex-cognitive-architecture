@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle fleet-feedback-aggregator
+ * @lifecycle stable
  * @inheritance inheritable
  * @description Aggregate heir feedback by skill for trend analysis
  * @version 1.0.0

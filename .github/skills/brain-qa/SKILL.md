@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: brain-qa
 description: >-
 tier: standard

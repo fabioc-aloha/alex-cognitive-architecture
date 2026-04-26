@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 /**
+ * @type muscle
+ * @lifecycle stable
  * @muscle visual-memory
+ * @lifecycle stable
  * @description Manage visual memory - add subjects, prepare photos, encode base64, build indexes
  * @version 1.0.0
  * @skill visual-memory

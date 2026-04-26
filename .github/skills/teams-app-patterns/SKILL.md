@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: teams-app-patterns
 description: Full Teams app development patterns.
 tier: standard

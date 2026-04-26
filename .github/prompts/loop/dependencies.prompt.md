@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Dependency review, security audit, and update strategy"
 application: "Audit dependencies for vulnerabilities, outdated versions, and upgrade paths"

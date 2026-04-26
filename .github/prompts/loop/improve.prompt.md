@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Improve phase — retrospective, iteration planning, and pattern extraction"
 application: "Run retrospectives, plan iterations, and extract reusable patterns"

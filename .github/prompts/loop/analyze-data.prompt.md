@@ -1,4 +1,6 @@
 ---
+type: prompt
+lifecycle: stable
 mode: agent
 description: "Systematic EDA that produces narrative insights, not just statistics"
 application: "Exploratory data analysis, profiling, distributions, correlations, anomaly detection"

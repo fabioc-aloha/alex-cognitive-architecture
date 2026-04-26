@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "memory-export"
 description: "Export all cognitive memory to a portable file for porting Alex to other AI work surfaces"
 tier: extended

@@ -1,4 +1,6 @@
 ---
+type: agent
+lifecycle: stable
 description: Cloud maintenance agent for scheduled brain health checks, architecture audits, and drift detection
 name: Maintenance Cloud
 model: ["Claude Sonnet 4", "GPT-4o"]

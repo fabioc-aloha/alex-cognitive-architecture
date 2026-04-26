@@ -1,4 +1,6 @@
 ---
+type: instruction
+lifecycle: stable
 description: "Agent debug panel integration for diagnostic UI"
 application: "When working with agent debug panel features"
 applyTo: "**/*debug*panel*,**/*agent*debug*"

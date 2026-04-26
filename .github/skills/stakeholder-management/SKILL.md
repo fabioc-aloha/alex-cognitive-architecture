@@ -1,4 +1,6 @@
 ---
+type: skill
+lifecycle: stable
 name: "stakeholder-management"
 description: "Influence mapping, communication strategies, and expectation management for complex organizations"
 tier: standard
