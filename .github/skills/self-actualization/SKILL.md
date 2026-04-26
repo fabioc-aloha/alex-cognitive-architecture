@@ -123,11 +123,11 @@ Meditation is the foundational ritual. Self-Actualize is a deep meditation varia
 | ------- | --------- | ----- | ------- |
 | **Meditation** | Per-session | Moderate | Foundational — the primary ritual |
 | Dream | On-demand | Structural | Diagnostic — chains after meditation sometimes |
-| **Self-Actualize** | **Monthly** | **Deep** | **Deep meditation — always starts with Dream baseline** |
+| **Self-Actualize** | **Monthly** | **Deep** | **Deep meditation; dream is an optional diagnostic input (D8)** |
 
 ### Session Flow
 
-1. Dream (structural baseline) → 2. 6-dimension assessment → 3. Meditation 4 R's (persist findings)
+1. (Optional) Dream for structural baseline → 2. Run snapshot muscle → 3. 6-dimension assessment → 4. Meditation 5 R's (persist findings as a chronicle)
 
 ## Drift Remediation Protocol
 
