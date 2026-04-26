@@ -146,7 +146,7 @@ export function activate(context: vscode.ExtensionContext): void {
           "brain-qa.cjs",
           [],
           "Alex: Brain QA",
-          "Review the brain health grid at .github/quality/brain-health-grid.md and fix the top priority issues",
+          "Read .github/skills/dream-state/SKILL.md then review the brain health grid at .github/quality/brain-health-grid.md. Use the dream skill decision tables to triage each finding. Escalate to meditation if needed (see \u00a7Escalation).",
         );
       } catch (err) {
         vscode.window.showErrorMessage(
@@ -202,6 +202,33 @@ export function activate(context: vscode.ExtensionContext): void {
         if (installed) {
           await enforceSafetySettings();
           welcomeProvider.refresh();
+
+          // EC1: Detect .backup.md files created during upgrade and prompt
+          // for Phase 2 LLM-assisted curation (closes the silent-handoff gap).
+          const wsRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+          if (wsRoot && status.version) {
+            const ghDir = path.join(wsRoot, ".github");
+            try {
+              const backupFiles = fs.existsSync(ghDir)
+                ? fs.readdirSync(ghDir).filter((f: string) => f.endsWith(".backup.md"))
+                : [];
+              if (backupFiles.length > 0) {
+                const names = backupFiles.map((f: string) => f.replace(".backup.md", "")).join(", ");
+                const curate = await vscode.window.showWarningMessage(
+                  `Alex: Upgrade created ${backupFiles.length} backup file(s) (${names}) that need review. Open chat for Phase 2 curation?`,
+                  "Open Chat",
+                  "Later",
+                );
+                if (curate === "Open Chat") {
+                  await vscode.commands.executeCommand("workbench.action.chat.open", {
+                    query: `Read .github/skills/brain-upgrade/SKILL.md then review the .backup.md files in .github/. For each backup, use the Phase 2 decision table to decide: merge custom content into the fresh template, keep the new version as-is, or flag for manual review. Files: ${backupFiles.join(", ")}`,
+                  });
+                }
+              }
+            } catch {
+              // Best effort — don't block upgrade success on backup detection
+            }
+          }
         }
       } catch (err) {
         vscode.window.showErrorMessage(
@@ -389,6 +416,7 @@ export function activate(context: vscode.ExtensionContext): void {
         "token-cost-report.cjs",
         [],
         "Alex: Token Cost Report",
+        "Read .github/skills/token-waste-elimination/SKILL.md then review the token cost report. Use the skill decision tables to triage findings: actionable waste vs instructional content vs false positives.",
       );
     }),
   );

@@ -29,6 +29,12 @@ export function disposeMuscleChannels(): void {
 }
 
 /**
+ * Muscle exit-code contract (HI5):
+ *   0 = clean — no issues, no follow-up needed
+ *   1 = error — something broke, surface stderr
+ *   2 = semantic-review-required — muscle succeeded mechanically,
+ *       findings need LLM-assisted review in chat
+ *
  * Run a muscle script and return its output.
  * Uses execFile (not execSync via shell) to avoid shell injection.
  */
@@ -128,7 +134,20 @@ export async function muscleAndPrompt(
 
   channel.appendLine(`\n[Done]`);
 
-  if (chatPrompt) {
+  // Exit code 2 = semantic-review-required (HI5 contract).
+  // Show an urgent prompt to open chat for LLM-assisted follow-up.
+  if (result.code === 2 && chatPrompt) {
+    const action = await vscode.window.showWarningMessage(
+      `Alex: ${channelName} needs review. Open chat for AI-assisted follow-up?`,
+      "Open Chat",
+      "Dismiss",
+    );
+    if (action === "Open Chat") {
+      await vscode.commands.executeCommand("workbench.action.chat.open", {
+        query: chatPrompt,
+      });
+    }
+  } else if (chatPrompt) {
     const action = await vscode.window.showInformationMessage(
       `Alex: ${channelName} complete. Open chat for follow-up?`,
       "Open Chat",
