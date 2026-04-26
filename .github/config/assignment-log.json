@@ -8,5 +8,5 @@
     "correlationId": "string | null"
   },
   "_maxEntries": 200,
-  "_notes": "Pruned to last 200 entries. Meditation analyzes for routing patterns: success rates per agent, duration averages, failure clusters."
+  "_notes": "Pruned to last 200 entries (size cap honored at insert time). Meditation reviews entries manually for routing patterns: success rates per agent, duration averages, failure clusters. Automated analysis is a future trifecta."
 }

@@ -5,5 +5,5 @@
     "startedAt": "ISO 8601 timestamp",
     "endedAt": "ISO 8601 timestamp | null"
   },
-  "_notes": "Session tracking for meditation analysis. Gitignored - local only."
+  "_notes": "Session tracking for in-session meditation review. Gitignored - local only. No automated analysis today."
 }
