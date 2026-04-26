@@ -41,6 +41,23 @@ Automated architecture maintenance — scan every memory file, validate structur
 | Incomplete trifectas | 0 | Any high-use skills |
 | Brand violations | 0 (outside exceptions) | Any |
 | Version drift | All match | Any mismatch |
+| Review queue size | 0–5 pending | >10 pending (semantic debt accumulating) |
+| Review queue age | Oldest <30d | Oldest >60d (stale reviews indicate blocked curation) |
+
+### Review-Queue Backpressure (FM10)
+
+The review queue (`.github/quality/review-queue.jsonl`, defined in FM5) is a leading indicator of semantic debt. When the queue grows faster than it's resolved, the architecture is accumulating unreviewed changes.
+
+| Signal | Threshold | Health Impact | Action |
+|--------|-----------|---------------|--------|
+| Queue size growing | >10 pending entries | `needs-attention` | Prioritize review session; schedule meditation |
+| High-priority entries stale | Any `high` priority entry >14d unresolved | `needs-attention` | Escalate: these are heir-feedback or drift-detected entries |
+| Queue empty | 0 pending | `healthy` | Normal state; curation is keeping pace |
+| Oldest entry age | >60 days | `needs-attention` | Something is blocking reviews; investigate |
+
+**Per-volatility weighting**: High-volatility files (instructions, skills with frequent edits) generate more queue pressure than stable reference docs. Weight queue entries by the source file's edit frequency when computing backpressure score.
+
+**Integration**: Dream protocol reads `review-queue.jsonl` during Phase 2 (architecture scan) and includes queue metrics in the dream report's health assessment.
 
 ## Ritual Hierarchy
 
