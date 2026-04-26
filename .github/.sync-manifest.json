@@ -1,5 +1,5 @@
 {
-  "lastSync": "2026-04-26T20:46:54.963Z",
+  "lastSync": "2026-04-26T21:58:31.650Z",
   "brainVersion": "8.4.0",
   "syncMode": "default",
   "files": {
@@ -11,7 +11,7 @@
     "agents/alex-security-cloud.agent.md": 1777225171662.6162,
     "agents/alex-skill-builder.agent.md": 1777227244850.193,
     "agents/alex.agent.md": 1777225171662.6162,
-    "brain-version.json": 1777236414954.9927,
+    "brain-version.json": 1777240711650.5574,
     "config/assignment-log.json": 1777223715535.657,
     "config/cognitive-config-template.json": 1776285848600.698,
     "config/cognitive-config.json": 1776957069493.6042,
@@ -59,13 +59,11 @@
     "instructions/dream-state-automation.instructions.md": 1777225171472.2266,
     "instructions/epistemic-calibration.instructions.md": 1777225171475.2266,
     "instructions/extension-audit-methodology.instructions.md": 1777225171476.229,
-    "instructions/fleet-management.instructions.md": 1777225171478.572,
     "instructions/global-knowledge-sync.instructions.md": 1777225171483.8774,
     "instructions/global-knowledge.instructions.md": 1777230318941.136,
     "instructions/heir-bootstrap.instructions.md": 1777225171485.8777,
     "instructions/heir-feedback.instructions.md": 1777225171485.8777,
     "instructions/heir-project-improvement.instructions.md": 1777225171487.1372,
-    "instructions/heir-sync-management.instructions.md": 1777228725135.9448,
     "instructions/identity-customization.instructions.md": 1777225171490.4255,
     "instructions/infrastructure-as-code.instructions.md": 1777225171492.822,
     "instructions/knowledge-coverage.instructions.md": 1777225171494.2346,
@@ -335,7 +333,6 @@
     "skills/extension-audit-methodology/SKILL.md": 1777225171734.5205,
     "skills/fabric-notebook-publish/SKILL.md": 1777225171734.5205,
     "skills/financial-analysis/SKILL.md": 1777225171734.5205,
-    "skills/fleet-management/SKILL.md": 1777225171734.5205,
     "skills/flux-brand-finetune/SKILL.md": 1777225171734.5205,
     "skills/foundry-agent-platform/SKILL.md": 1777225171734.5205,
     "skills/frontend-design-review/SKILL.md": 1777225171734.5205,
@@ -455,7 +452,6 @@
     "skills/vscode-environment/SKILL.md": 1777225171834.7104,
     "skills/vscode-extension-patterns/SKILL.md": 1777225171834.7104,
     "skills/welcome-experience-customization/SKILL.md": 1777225171834.7104,
-    "skills/wiki-publish/SKILL.md": 1777230136084.047,
     "skills/work-life-balance/SKILL.md": 1777225171843.6853
   }
 }
