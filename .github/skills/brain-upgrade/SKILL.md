@@ -201,6 +201,33 @@ Rules:
 - **Preserve the fresh template's structure** — master-owned sections stay master-owned
 - When done, delete `EXTERNAL-API-REGISTRY.backup.md`.
 
+### Step 2d — Classify the backup directory with `retro-tag-inheritance`
+
+The `.backup.md` files (Steps 2 / 2b / 2c) handle three known root-level singletons. The backup directory itself can contain hundreds of other files — custom skills, custom instructions, custom prompts, custom muscles — that the heir authored and that Phase 1 does not touch. The `retro-tag-inheritance` muscle classifies that surface mechanically so Phase 2 can focus on the `custom` set.
+
+Run against the backup, NOT against the live brain:
+
+```bash
+node .github/muscles/retro-tag-inheritance.cjs \
+  --target .github-backup-<stamp> \
+  --source .github \
+  --dry-run
+```
+
+The report classifies every file in the backup:
+
+| Classification | Meaning | Phase 2 action |
+|---|---|---|
+| `inheritable already-set` / `would tag` | Path matches a file in the fresh brain | Already in fresh install — skip |
+| `custom already-set` / `would tag` | Path NOT in fresh brain (heir-authored) | **Candidate for restoration** — LLM judges per file |
+| `master-only would delete` | Master-only contamination | Already absent from fresh brain — do not restore |
+| `frontmatter would create` | Sub-file with no tag, on canonical artifact path | Backup-only, classify by path |
+| `custom→inheritable conflicts` | Heir explicitly forked an inheritable file | Surface to user — either re-fork in v2 or accept fresh master version |
+
+For each `custom` file, the LLM applies the same Step 3 curation table below. The muscle is read-only when `--dry-run` is passed (default behavior in Phase 2 — destructive runs are reserved for explicit one-time fleet retagging, not per-upgrade Phase 2).
+
+When done classifying, leave the backup directory in place — only Step 5 (Clean) removes it, with user consent.
+
 ### Step 3 — Review non-standard content semantically
 
 For each item the scan reports, apply judgment:
@@ -302,6 +329,18 @@ node .github/muscles/brain-upgrade.cjs --mode AutoRestore [--dry-run]
 node .github/muscles/brain-upgrade.cjs --mode Curate --include "ProjectName"
 node .github/muscles/brain-upgrade.cjs --mode Clean --include "ProjectName"
 ```
+
+### Backup classification helper (per-project)
+
+```bash
+# Classify backup contents (custom vs inheritable vs master-only contamination)
+node .github/muscles/retro-tag-inheritance.cjs \
+  --target .github-backup-<stamp> \
+  --source .github \
+  --dry-run
+```
+
+Reports counts by classification. Use during Step 2d to scope the `custom` set the LLM must review. Always `--dry-run` in Phase 2; destructive mode is reserved for one-time fleet retagging.
 
 ---
 

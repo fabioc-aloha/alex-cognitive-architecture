@@ -61,9 +61,10 @@ Phase 2 runs **from the freshly-installed trifecta**, not from anything in the b
 1. **Detect backup** — confirm `.github-backup-*` exists and is from a recent upgrade
 2. **Run muscle scan** — `node .github/muscles/brain-upgrade.cjs --mode Scan` to inventory what the mechanical phase left for review
 3. **Reconcile `copilot-instructions.md`** — diff `copilot-instructions.backup.md` vs. fresh template; merge project identity, context, tech stack, and coding standards into the new template. Additive only.
-4. **Review non-standard content** — for each item the muscle reports under ROOT_FILE / UNKNOWN_DIR, decide copy-forward vs. skip, applying the Curation Categories in the skill
-5. **Semantic verification** — confirm the resulting heir is an Alex brain, has its customizations intact, loads skills/instructions, and nothing project-specific was lost
-6. **Summarize for user** — list what was preserved, what was merged, what needs human review, and explicitly ask before cleaning up backups
+4. **Classify backup directory** — `node .github/muscles/retro-tag-inheritance.cjs --target .github-backup-<stamp> --source .github --dry-run` to separate `inheritable` (already in fresh brain), `custom` (heir-authored, candidates for restoration), and `master-only` (do not restore). Always `--dry-run` in Phase 2.
+5. **Review non-standard content** — for each item the muscle reports under ROOT_FILE / UNKNOWN_DIR plus each `custom` file from Step 4, decide copy-forward vs. skip, applying the Curation Categories in the skill
+6. **Semantic verification** — confirm the resulting heir is an Alex brain, has its customizations intact, loads skills/instructions, and nothing project-specific was lost
+7. **Summarize for user** — list what was preserved, what was merged, what needs human review, and explicitly ask before cleaning up backups
 
 ## Trifecta Protection
 

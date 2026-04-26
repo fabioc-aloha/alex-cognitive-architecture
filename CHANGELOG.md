@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Changed
+
+- **`retro-tag-inheritance` muscle relocated to brain**: Moved from `scripts/retro-tag-inheritance.cjs` (master-only) to `.github/muscles/retro-tag-inheritance.cjs` (inheritable) so the muscle ships with every heir via `sync-to-heir.cjs`. Heirs no longer need master colocated to retag their own brains. Source brain now defaults to the colocated brain (`path.dirname(__dirname)`); `--source` flag re-introduced for cross-brain comparisons (e.g., heir Phase 2 of upgrade comparing fresh install against `.github-backup-*`). `--target` is now required (no implicit default). Master safety preserved by `MASTER-ALEX-PROTECTED.json` marker check on the target. Tests: 17/17 pass. Fleet upgrade smoke tested on 43 heirs (43/43 pass, 0 errors).
+- **Brain upgrade Phase 2 documentation**: SKILL and instruction now include a backup-directory classification step (Step 2d / Step 4) using `retro-tag-inheritance`. Scopes Phase 2 review to only the `custom` files instead of every file in the backup. Heir-facing guide (`PHASE2-HANDOFF-GUIDE.md`) updated with the same workflow.
+
+---
+
 ## [8.4.0] - 2026-04-26
 
 ### Cognitive Rituals Reconciliation
