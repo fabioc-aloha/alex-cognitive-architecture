@@ -277,6 +277,62 @@ When a file's currency stamp is expired or missing, decide before acting:
 
 **Rule**: Never re-stamp without reviewing. A stamp is an attestation, not a date bump.
 
+## Semantic Obsolescence Review Queue (FM5)
+
+When a brain file's currency window elapses or it enters the lifecycle warning band, it enters the **review queue** (`.github/quality/review-queue.jsonl`). The queue is the bridge between mechanical detection ("this file is overdue") and semantic judgment ("should this be updated, archived, or re-stamped?").
+
+### Queue Entry Schema
+
+Each line in `review-queue.jsonl` is a JSON object:
+
+```json
+{
+  "file": ".github/instructions/example.instructions.md",
+  "reason": "currency-expired",
+  "lifecycle": "stable",
+  "currency": "2025-11-15",
+  "daysSinceCurrency": 158,
+  "reviewEvery": 90,
+  "addedAt": "2026-04-25T12:00:00Z",
+  "status": "pending"
+}
+```
+
+### Queue Entry Reasons
+
+| Reason | Trigger | Priority |
+|--------|---------|----------|
+| `currency-expired` | `daysSinceCurrency > reviewEvery` | Medium |
+| `lifecycle-warning` | Within warning band (FM8a) but not expired | Low |
+| `manual-flag` | Operator or LLM explicitly adds file for review | High |
+| `heir-feedback` | Heir feedback references this file as problematic | High |
+| `drift-detected` | Sync drift report or audit found material inconsistency | High |
+
+### Queue Review Decision Table
+
+| # | Check | Pass | Fail | Action on Fail |
+|---|-------|------|------|----------------|
+| 1 | **Content still accurate** — file content matches current codebase reality | Claims verified against code; no stale references | Contains references to renamed files, removed features, or outdated patterns | Update content; re-stamp currency |
+| 2 | **Still relevant** — the capability this file documents is still active | Feature/pattern actively used in codebase | Feature deprecated, pattern abandoned, or superseded by newer approach | Transition to `deprecated` lifecycle; add supersededBy reference |
+| 3 | **No upstream drift** — for `external-dependent` files, upstream API/tool hasn't changed | Upstream docs match file content | Upstream has breaking changes or new versions | Update file to match upstream; document version pinned to |
+| 4 | **Heir impact assessed** — if file syncs to heirs, changes won't break heir workflows | Changes are additive or backward-compatible | Changes would break heir-side behavior or conventions | Phase change through heir sync dry-run (HS4) first |
+| 5 | **Re-stamp justified** — if re-stamping without content change, rationale documented | "Reviewed, still current" with specific verification evidence | Rubber-stamp date bump with no review | Refuse re-stamp; add specific finding or update content |
+| 6 | **Decision logged** — review outcome recorded in PE1 decision log | `logPhase2Decision()` called with review outcome + rationale | File exits queue with no audit trail | Log decision before changing queue status |
+
+### Queue Status Lifecycle
+
+```text
+pending → in-review → resolved (updated | re-stamped | deprecated | archived)
+                   → deferred (with rationale + re-review date)
+```
+
+### Integration Points
+
+- **brain-qa.cjs**: Scans currency stamps → adds `currency-expired` entries to queue
+- **FM8a** (lifecycle currency windows): Feeds `lifecycle-warning` entries
+- **FM10** (health metric): Reads queue length as a health signal
+- **Heir feedback**: `heir-feedback` entries added when feedback references specific files
+
 ## Related Skills
 
 - [doc-hygiene](../doc-hygiene/SKILL.md) — Anti-drift rules for living documents
