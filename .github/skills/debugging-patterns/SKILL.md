@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: debugging-patterns
 description: Systematic problem-solving and error analysis.
 tier: core

@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: skill-creator
 description: Create effective skills for AI agents — Azure SDK patterns, progressive disclosure, acceptance criteria, test scenarios
 tier: standard

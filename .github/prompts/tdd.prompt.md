@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: "Red-green-refactor TDD loop with compile and test verification at every cycle"
 application: "When starting test-driven development, writing tests for new features, or enforcing TDD discipline"
 mode: agent

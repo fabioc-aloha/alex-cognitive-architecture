@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "brand-asset-management"
 description: "Brand hierarchy, visual identity, asset deployment, platform-specific branding guidelines"
 tier: standard

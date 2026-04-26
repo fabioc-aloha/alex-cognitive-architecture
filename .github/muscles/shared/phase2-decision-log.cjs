@@ -47,6 +47,7 @@
  * @module phase2-decision-log
  * @type muscle
  * @lifecycle stable
+ * @inheritance inheritable
  */
 
 'use strict';

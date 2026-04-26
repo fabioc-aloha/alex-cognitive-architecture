@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Socratic method learning session"
 application: "Learn new topics through guided Socratic questioning and exploration"

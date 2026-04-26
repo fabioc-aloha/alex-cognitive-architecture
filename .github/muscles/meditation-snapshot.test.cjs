@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
  * @test meditation-snapshot
+ * @inheritance inheritable
  * @description Validates meditation-snapshot.cjs: filename date parsing, FIFO order, prune at 60, snapshot fields
  *
  * Run: node .github/muscles/meditation-snapshot.test.cjs

@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "vscode-extension-patterns"
 description: "Reusable patterns for VS Code extension development."
 tier: core

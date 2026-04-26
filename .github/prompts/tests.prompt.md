@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: Generate unit tests for selected code
 mode: agent
 model: claude-opus-4-6

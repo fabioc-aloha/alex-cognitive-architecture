@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: Explain how code works
 application: When you need a clear explanation of unfamiliar code, algorithms, or patterns
 agent: Alex

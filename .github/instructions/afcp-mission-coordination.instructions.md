@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "AFCP mission coordination — unknown consultation, delegation tracking, and mission lifecycle for multi-agent work"
 application: "When routing tasks to subagents, handling unknowns, or managing multi-step missions"
 applyTo: "**/*mission*,**/*delegate*,**/*unknown*,**/*subagent*"

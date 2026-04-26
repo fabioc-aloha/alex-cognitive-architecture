@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: azure-devops-automation
 description: CI/CD pipelines, infrastructure as code, and deployment automation for Azure workloads
 tier: standard

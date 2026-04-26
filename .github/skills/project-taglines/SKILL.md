@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "project-taglines"
 description: "Generate and configure project-specific taglines for the Alex sidebar banner"
 tier: standard

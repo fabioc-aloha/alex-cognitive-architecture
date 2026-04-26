@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "PII filter at memory write boundaries — prevent sensitive data from entering persistent storage tiers"
 application: "Always active — unconscious filter before writing to any persistent memory tier"
 applyTo: "**"

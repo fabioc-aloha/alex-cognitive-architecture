@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Ideate phase — scaffold a wiki and explore your idea"
 application: "Brainstorm, scaffold wiki structure, and explore new project ideas"

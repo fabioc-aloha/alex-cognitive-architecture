@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "knowledge-synthesis"
 description: "Cross-project pattern recognition — abstract, generalize, connect, store at the highest true level"
 tier: standard

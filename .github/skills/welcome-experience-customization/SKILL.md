@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "welcome-experience-customization"
 description: "Orchestrate full welcome experience customization — loop menu, taglines, identity, North Star, and persona in one guided workflow"
 tier: standard

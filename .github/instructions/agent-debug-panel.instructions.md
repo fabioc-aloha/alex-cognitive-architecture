@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Agent debug panel integration for diagnostic UI"
 application: "When working with agent debug panel features"
 applyTo: "**/*debug*panel*,**/*agent*debug*"

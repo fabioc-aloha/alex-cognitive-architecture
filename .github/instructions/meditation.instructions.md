@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Meditation protocol for knowledge consolidation into permanent architecture"
 application: "When running meditation or knowledge consolidation sessions"
 applyTo: "**/*meditat*,**/*consolidat*"

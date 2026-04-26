@@ -5,6 +5,7 @@
  * Validates rule matching, lint() aggregation, and autofix() patching.
  *
  * Run: node --test .github/muscles/markdown-lint.test.cjs
+ * @inheritance inheritable
  */
 'use strict';
 

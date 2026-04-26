@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: legal-compliance
 description: Legal research, contract analysis, regulatory compliance, and case law citation for legal professionals.
 tier: extended

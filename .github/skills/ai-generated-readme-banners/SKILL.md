@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: external-dependent
+inheritance: inheritable
 name: "ai-generated-readme-banners"
 description: "Create professional ultra-wide cinematic banners for GitHub READMEs using modern AI image models with typography"
 tier: standard

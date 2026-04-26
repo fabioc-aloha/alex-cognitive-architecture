@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Systematic EDA that produces narrative insights, not just statistics"
 application: "Exploratory data analysis, profiling, distributions, correlations, anomaly detection"

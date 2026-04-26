@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: prompt-builder
 description: Create and validate .prompt.md files that pass brain-qa on first attempt
 tier: standard

@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: azure-architecture-patterns
 description: Well-Architected Framework principles and Azure best practices
 tier: standard

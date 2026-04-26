@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: Manage brand assets, visual identity, and platform-specific branding
 application: "When managing brand assets, visual identity, or platform-specific branding"
 agent: Alex

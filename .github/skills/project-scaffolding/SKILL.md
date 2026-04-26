@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: project-scaffolding
 description: First impressions matter. Set projects up for success.
 tier: standard

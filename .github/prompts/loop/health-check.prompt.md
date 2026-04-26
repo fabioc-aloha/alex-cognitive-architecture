@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Multi-dimension project health assessment"
 application: "Assess project health across code quality, tests, docs, deps, and architecture"

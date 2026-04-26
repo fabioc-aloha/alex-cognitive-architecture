@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: literature-review
 description: Systematic literature search, synthesis, gap identification, and narrative construction for academic research
 tier: extended

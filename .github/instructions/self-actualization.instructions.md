@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Self-actualization cognitive skill for comprehensive architecture assessment and deep meditation"
 application: "Monthly cadence (D9: 30-day staleness threshold), or on-demand when architecture feels off"
 applyTo: "**/*actuali*,**/*assessment*,**/*self-assess*"

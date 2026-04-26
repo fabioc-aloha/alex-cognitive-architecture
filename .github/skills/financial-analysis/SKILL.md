@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: financial-analysis
 description: Financial modeling, analysis frameworks, and regulatory awareness for business-minded professionals.
 tier: extended

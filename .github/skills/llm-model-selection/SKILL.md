@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: llm-model-selection
 description: Choosing the right model for the task — power vs. cost vs. speed.
 tier: standard

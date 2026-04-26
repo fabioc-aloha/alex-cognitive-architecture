@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Ethical reasoning and moral psychology framework"
 application: "When making ethical decisions or reasoning about values and principles"
 currency: 2026-04-22

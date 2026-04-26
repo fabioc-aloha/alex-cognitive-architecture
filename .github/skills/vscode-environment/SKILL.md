@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: vscode-environment
 description: Optimal workspace setup for productivity.
 tier: standard

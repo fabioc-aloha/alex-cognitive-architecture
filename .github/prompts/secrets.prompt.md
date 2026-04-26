@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: Manage API keys and secrets with VS Code SecretStorage
 mode: agent
 model: claude-opus-4-6

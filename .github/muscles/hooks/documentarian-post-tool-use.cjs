@@ -2,6 +2,7 @@
 /**
  * @type muscle
  * @lifecycle stable
+ * @inheritance inheritable
  * H6: Documentarian post-tool -- file change tracker
  * Agent-scoped PostToolUse hook for Documentarian mode.
  * Tracks file modifications and suggests CHANGELOG entries when docs change.

@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: "Self-driving release pipeline with quality gates at every step"
 application: "When preparing releases, publishing artifacts, or deployment workflows"
 mode: agent

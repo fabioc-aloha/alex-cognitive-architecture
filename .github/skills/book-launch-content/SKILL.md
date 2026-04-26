@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: book-launch-content
 description: "Generate launch-companion content for books — blog posts, author notes, and dogfooding angles that demonstrate the book's thesis through its own production. Use when a manuscript is approaching publication submission (KDP, agent query, prelaunch)."
 tier: standard

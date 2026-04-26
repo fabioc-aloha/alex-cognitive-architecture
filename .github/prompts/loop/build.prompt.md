@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Build phase — domain-specific implementation with wiki documentation"
 application: "Implement features guided by plan and wiki documentation"

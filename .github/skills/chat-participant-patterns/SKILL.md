@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: chat-participant-patterns
 description: VS Code Chat API patterns.
 tier: standard

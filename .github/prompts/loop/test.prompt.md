@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Test phase — validate against success criteria with domain-specific methods"
 application: "Run tests, validate success criteria, and verify quality gates"

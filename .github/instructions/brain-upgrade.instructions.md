@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Two-phase brain upgrade — mechanical install (Phase 1) followed by semantic LLM reconciliation (Phase 2)"
 application: "After a brain upgrade via fleet script, VS Code extension, or muscle — whenever .github-backup-* exists"
 applyTo: "**/*upgrade*,**/*curat*,**/*backup*,**/*finalize*,**/*brain-upgrade*"

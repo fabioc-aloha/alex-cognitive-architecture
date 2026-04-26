@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "code-review"
 description: "Systematic code review for correctness, security, and growth — not just style enforcement"
 tier: core

@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Synchronize insights across AI surfaces via the shared OneDrive AI-Memory folder"
 application: "When syncing knowledge between VS Code, Copilot Chat, and other AI surfaces"
 applyTo: "**/*global-knowledge-sync*,**/*ai-memory-sync*"

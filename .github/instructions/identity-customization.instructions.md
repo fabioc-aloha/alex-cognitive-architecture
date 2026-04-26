@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Guide identity customization in copilot-instructions.md — preserve architecture layer, customize identity layer"
 application: "When editing copilot-instructions.md identity, persona, or project context"
 applyTo: "**/*copilot-instructions*,**/*identity*,**/*persona*"

@@ -2,6 +2,7 @@
 /**
  * @type muscle
  * @lifecycle stable
+ * @inheritance inheritable
  * @muscle visual-memory
  * @lifecycle stable
  * @description Manage visual memory - add subjects, prepare photos, encode base64, build indexes

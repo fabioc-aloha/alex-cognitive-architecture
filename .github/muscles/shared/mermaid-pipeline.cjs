@@ -10,6 +10,7 @@
  *   for (const block of blocks) {
  *     await renderMermaid(block.content, 'output.png', { scale: 8, width: 2400 });
  *   }
+ * @inheritance inheritable
  */
 
 const fs = require('fs');

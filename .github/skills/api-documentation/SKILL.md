@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: api-documentation
 description: Technical documentation, API references, user guides, and docs-as-code workflows.
 tier: standard

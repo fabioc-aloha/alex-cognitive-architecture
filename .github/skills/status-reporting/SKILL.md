@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "status-reporting"
 description: "Create stakeholder-friendly project status updates and progress reports"
 tier: standard

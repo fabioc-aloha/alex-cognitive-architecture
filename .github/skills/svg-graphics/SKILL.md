@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: svg-graphics
 description: Scalable, accessible, theme-aware visuals
 tier: standard

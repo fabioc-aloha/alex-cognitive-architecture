@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Structured meeting capture and organization"
 application: "Capture meeting notes with decisions, actions, and follow-ups"

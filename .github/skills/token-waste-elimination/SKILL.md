@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: token-waste-elimination
 description: Audit and eliminate token waste from cognitive architecture memory files -- instructions, prompts, skills, and agents
 tier: standard

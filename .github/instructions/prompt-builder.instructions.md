@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Enforce .prompt.md frontmatter standards — description, application, agent/mode, and body length"
 application: "When creating or editing .prompt.md files in .github/prompts/"
 applyTo: "**/*.prompt.md"

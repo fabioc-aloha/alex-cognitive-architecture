@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Technical debt identification, categorization, and prioritization"
 application: "Find TODOs, code smells, outdated deps, and prioritize payoff"

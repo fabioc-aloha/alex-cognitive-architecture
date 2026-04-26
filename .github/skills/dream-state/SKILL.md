@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "dream-state"
 description: "Architecture maintenance, connection validation, automated health diagnostics, and unconscious processing"
 tier: standard

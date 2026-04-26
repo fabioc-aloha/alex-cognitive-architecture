@@ -2,6 +2,7 @@
 /**
  * @type muscle
  * @lifecycle stable
+ * @inheritance inheritable
  * H20: Research continuity
  * Agent-scoped Stop hook for Researcher mode.
  * Reminds to save unanswered questions and partial findings before the session ends.

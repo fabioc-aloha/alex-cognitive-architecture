@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: msal-authentication
 description: Microsoft Authentication Library (MSAL) patterns for React/SPA applications with Entra ID
 tier: standard

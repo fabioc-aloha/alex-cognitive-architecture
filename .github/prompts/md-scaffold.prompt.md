@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Scaffold properly structured Markdown files from templates"
 application: "When user needs to create a new structured Markdown document from a template"

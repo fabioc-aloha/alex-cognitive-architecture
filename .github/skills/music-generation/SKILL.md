@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: external-dependent
+inheritance: inheritable
 name: "music-generation"
 description: "AI music generation via Replicate — 5 models for background tracks, lyrics, and sound design"
 tier: extended

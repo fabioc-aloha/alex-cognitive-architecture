@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: microsoft-fabric
 description: Microsoft Fabric workspace management, governance, REST API patterns, and medallion architecture implementation
 tier: standard

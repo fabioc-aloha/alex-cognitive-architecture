@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: "3-pass procedural code review: correctness, security, quality"
 application: "When reviewing code changes, pull requests, or auditing specific files"
 mode: agent

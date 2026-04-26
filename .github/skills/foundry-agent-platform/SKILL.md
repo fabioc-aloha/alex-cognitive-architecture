@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "foundry-agent-platform"
 description: "Microsoft Foundry agent deployment, orchestration, and cloud-native AI service patterns"
 tier: extended

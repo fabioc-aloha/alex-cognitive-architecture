@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "memory-activation"
 description: "Internal metacognitive skill for automatic capability and workflow discovery — combines skill routing and prompt retrieval"
 tier: core

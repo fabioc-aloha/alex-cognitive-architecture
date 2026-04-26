@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Systematic debugging — reproduce, isolate, hypothesize, fix, verify"
 application: "Debug errors, crashes, test failures, and unexpected behavior"

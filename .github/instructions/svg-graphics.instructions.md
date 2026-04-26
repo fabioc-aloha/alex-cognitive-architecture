@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "SVG graphics creation, optimization, and manipulation patterns"
 application: "When working with svg graphics or troubleshooting related issues"
 applyTo: "**/*.svg,**/*svg*"

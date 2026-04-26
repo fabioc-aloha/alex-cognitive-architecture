@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Mechanical/semantic split design contract — classify trifectas, route handoffs, prevent silent failures"
 application: "When designing or reviewing any trifecta (skill+instruction+muscle), extension command, or pipeline that combines deterministic and judgment work"
 applyTo: "**/.github/skills/**,**/.github/muscles/**,**/.github/instructions/**,**/.github/prompts/**,**/scripts/**,**/heir/platforms/**"

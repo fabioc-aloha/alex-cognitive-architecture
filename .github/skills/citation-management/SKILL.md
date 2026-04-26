@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: citation-management
 description: APA 7th formatting, citation integration, reference validation, and bibliography generation
 tier: extended

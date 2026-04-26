@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "converter-qa"
 description: "Test harness for validating converter outputs with 284 assertions across all converter muscles"
 tier: extended

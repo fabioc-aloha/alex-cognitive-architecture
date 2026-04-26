@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 applyTo: "**/*dream*,**/*meditation*,**/*consolidation*"
 description: "Detailed protocol triggers for dream, meditation, and knowledge consolidation"
 application: "When following protocol triggers workflows or troubleshooting related issues"

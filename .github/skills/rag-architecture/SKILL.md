@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: rag-architecture
 description: Build retrieval-augmented generation systems that ground LLMs in your data.
 tier: standard

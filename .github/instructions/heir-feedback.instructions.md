@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Submit feedback, bug reports, and feature requests from heir projects to Master Alex"
 application: "When reporting bugs, requesting features, or providing feedback from heir projects"
 applyTo: "**/*feedback*,**/*bug-report*,**/*feature-request*"

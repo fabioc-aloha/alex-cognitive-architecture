@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: brain-upgrade
 description: "Two-phase brain upgrade — mechanical install via shared core, then LLM-led semantic reconciliation"
 tier: standard

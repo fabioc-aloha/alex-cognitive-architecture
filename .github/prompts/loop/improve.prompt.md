@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Improve phase — retrospective, iteration planning, and pattern extraction"
 application: "Run retrospectives, plan iterations, and extract reusable patterns"

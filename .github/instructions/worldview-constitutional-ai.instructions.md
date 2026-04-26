@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Constitutional AI alignment principles for ethical decision-making"
 application: "When making ethical decisions or reasoning about values and principles"
 currency: 2026-04-22

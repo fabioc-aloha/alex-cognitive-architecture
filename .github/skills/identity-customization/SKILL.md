@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "identity-customization"
 description: "Customize Alex's identity in copilot-instructions.md for a specific heir project — replace generic brain with project-specific persona"
 tier: standard

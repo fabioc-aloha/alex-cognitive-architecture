@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: user-config-manager
 description: "Manage VS Code's global AI configuration — user memories, user prompts, and MCP servers"
 tier: standard

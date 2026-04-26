@@ -29,6 +29,7 @@
  * @module phase2-rollback
  * @type muscle
  * @lifecycle stable
+ * @inheritance inheritable
  */
 
 'use strict';

@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "health-pulse"
 description: "Health Pulse data model, status rules, scoring algorithms, and thresholds — the canonical source the extension consumes"
 tier: standard

@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: game-design
 description: Game mechanics, level design, player psychology, systems balancing, and narrative design for game developers.
 tier: extended

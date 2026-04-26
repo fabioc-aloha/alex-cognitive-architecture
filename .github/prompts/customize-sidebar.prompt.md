@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: "Customize Alex sidebar — add Loop tab buttons and workflow groups"
 application: "When the user wants to add custom buttons or workflows to the Alex sidebar"
 mode: agent

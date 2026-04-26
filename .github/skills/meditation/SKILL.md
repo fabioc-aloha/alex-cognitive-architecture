@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: meditation
 description: "Knowledge consolidation — transform session learnings into permanent architecture"
 tier: standard

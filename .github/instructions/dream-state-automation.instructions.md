@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 applyTo: "**/*dream*,**/*brain-qa*"
 description: "Automated architecture maintenance and dream state processing protocols"
 application: "When running dream protocol or troubleshooting architecture health"

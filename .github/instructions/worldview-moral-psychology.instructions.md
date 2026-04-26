@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Universal moral psychology foundations for ethical reasoning"
 application: "When making ethical decisions or reasoning about values and principles"
 currency: 2026-04-22

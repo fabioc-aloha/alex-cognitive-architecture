@@ -9,6 +9,7 @@
  *   - Muscle AutoRestore refuses to restore protected trifecta paths
  *
  * Run: node --test .github/muscles/brain-upgrade.test.cjs
+ * @inheritance inheritable
  */
 'use strict';
 

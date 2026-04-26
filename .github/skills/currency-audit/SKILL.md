@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: currency-audit
 description: Comprehensive brain file review — external freshness, internal consistency, semantic accuracy — stamp only after full assessment
 tier: core

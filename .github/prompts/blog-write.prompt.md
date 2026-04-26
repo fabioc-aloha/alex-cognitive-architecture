@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: "Write a new Alex blog post from recent brain activity"
 application: "Generate blog posts from recent commits, meditations, or experiences"
 mode: agent

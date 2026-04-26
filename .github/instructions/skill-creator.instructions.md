@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Create effective, reusable skills from real-world experience for promotion to Master Alex"
 application: "When creating new skills, documenting expertise, or promoting patterns to skills"
 applyTo: "**/*skill-creat*,**/*skill-build*,**/*SKILL.md*"

@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Sidebar customization for project-specific workflows and tab configuration"
 application: "When customizing the Alex sidebar or configuring project tabs"
 applyTo: "**/*sidebar*,**/*loop-menu*"

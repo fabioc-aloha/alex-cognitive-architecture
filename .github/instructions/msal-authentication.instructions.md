@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: external-dependent
+inheritance: inheritable
 description: "MSAL (Microsoft Authentication Library) patterns for token acquisition and auth flows"
 application: "When working with msal authentication or troubleshooting related issues"
 applyTo: "**/*msal*,**/*auth*token*"

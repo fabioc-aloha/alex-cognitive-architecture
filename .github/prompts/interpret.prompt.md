@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: Read any chart and extract insights, detect bias, and produce audience-adapted analysis
 application: "When analyzing data, creating visualizations, or building reports"
 agent: Alex

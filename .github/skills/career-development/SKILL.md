@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: career-development
 description: Resume crafting, interview preparation, job search strategy, and professional growth planning.
 tier: extended

@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: fabric-notebook-publish
 description: Seamless notebook publishing from VS Code to Microsoft Fabric via Azure DevOps Git integration
 tier: extended

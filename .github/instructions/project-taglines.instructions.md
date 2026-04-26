@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Project tagline generation and sidebar banner customization"
 application: "When creating or updating project taglines and banner messages"
 applyTo: "**/*tagline*,**/*banner*"

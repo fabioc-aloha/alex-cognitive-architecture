@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: external-dependent
+inheritance: inheritable
 name: "audio-memory"
 description: "Store and manage voice samples for TTS cloning — portable, version-controlled audio references"
 tier: standard

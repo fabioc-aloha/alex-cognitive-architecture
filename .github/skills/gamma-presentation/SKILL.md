@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: gamma-presentation
 description: Author markdown files optimized for Gamma import — card structure, layout hints, image directives, speaker notes, and chat-agent refinement workflow
 applyTo: "**/*gamma*,**/*presentation*.md,**/*slides*.md,**/*deck*.md"

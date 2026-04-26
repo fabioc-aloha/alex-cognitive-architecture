@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: Implement a production-ready Microsoft Graph API integration with least-privilege scopes, auth, error handling, and pagination
 application: "When designing APIs, integrations, or service interfaces"

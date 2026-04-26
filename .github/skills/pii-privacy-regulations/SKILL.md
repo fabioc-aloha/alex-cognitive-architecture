@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: pii-privacy-regulations
 description: Handling personally identifiable information under European and Australian privacy regulations.
 tier: extended

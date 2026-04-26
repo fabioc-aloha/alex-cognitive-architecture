@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Epistemic calibration — confidence matching, hallucination prevention, and self-correction"
 application: "Always active — unconscious self-monitoring for certainty calibration"
 applyTo: "**"

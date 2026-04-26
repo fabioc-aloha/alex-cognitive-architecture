@@ -14,6 +14,7 @@
  *   const client = initReplicate();
  *   const args = parseCliArgs(process.argv);
  *   const results = await runBatch(client, jobs, { dryRun: args.dryRun, rateLimit: 3000 });
+ * @inheritance inheritable
  */
 
 const fs = require('fs');

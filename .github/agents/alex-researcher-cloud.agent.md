@@ -1,6 +1,7 @@
 ---
 type: agent
 lifecycle: stable
+inheritance: inheritable
 description: Cloud research agent for scheduled technology scanning, competition monitoring, and knowledge harvesting
 name: Researcher Cloud
 model: ["Claude Sonnet 4", "GPT-4o"]

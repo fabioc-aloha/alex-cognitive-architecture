@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: external-dependent
+inheritance: inheritable
 description: "AI character reference generation with templates, scenario architecture, and model selection"
 application: "When generating character references, persona images, or AI character assets"
 applyTo: "**/*character*,**/*persona*image*,**/*reference*gen*"

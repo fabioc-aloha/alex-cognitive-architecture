@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: api-design
 description: Design APIs that developers love to use.
 tier: standard

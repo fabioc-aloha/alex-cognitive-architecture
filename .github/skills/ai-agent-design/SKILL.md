@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: ai-agent-design
 description: Design autonomous AI agents that reason, plan, and execute tasks
 tier: standard

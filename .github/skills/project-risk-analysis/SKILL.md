@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: project-risk-analysis
 description: "Systematic methodology for identifying, categorizing, and mitigating software project risks before implementation"
 applyTo: "**/*risk*,**/*plan*,**/*assessment*"

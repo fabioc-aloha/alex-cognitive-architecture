@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Test-Driven Development — Red/Green/Refactor cycle"
 application: "Write failing tests first, implement to pass, then refactor"

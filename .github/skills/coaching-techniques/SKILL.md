@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: coaching-techniques
 description: GROW model, active listening, developmental feedback, and team growth approaches
 tier: extended

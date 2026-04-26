@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Safe refactoring — same behavior, better structure"
 application: "Restructure code while preserving behavior with test verification"

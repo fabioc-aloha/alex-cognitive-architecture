@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "sidebar-customization"
 description: "Customize the Alex sidebar — Loop tab buttons and project-specific workflows"
 tier: standard

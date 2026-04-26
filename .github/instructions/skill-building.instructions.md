@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Skill building procedure for creating reusable brain skills from experience"
 application: "When creating, updating, or reviewing brain skills"
 applyTo: "**/.github/skills/**,**/*skill*build*"

@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Deep research with Researcher mode — breadth before depth"
 application: "Research topics in depth with web search, source gathering, and synthesis"

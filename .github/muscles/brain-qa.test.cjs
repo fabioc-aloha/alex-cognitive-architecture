@@ -3,6 +3,7 @@
  * Tests for brain-qa.cjs
  * 
  * Run: node --test .github/muscles/brain-qa.test.cjs
+ * @inheritance inheritable
  */
 'use strict';
 

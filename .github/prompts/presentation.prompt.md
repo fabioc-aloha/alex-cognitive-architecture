@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: Generate professional presentations via Gamma API, Marp markdown, or native PPTX
 application: "When creating presentations, slides, or visual storytelling content"

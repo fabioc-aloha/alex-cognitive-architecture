@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 model: claude-opus-4-6
 description: Validate VS Code extension manifest consistency: command registration, configuration keys, and graceful degradation patterns

@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: error-recovery-patterns
 description: What to do when things break.
 tier: core

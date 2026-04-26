@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "User configuration management for runtime settings and preferences"
 application: "When managing user configuration, settings, or preference systems"
 applyTo: "**/*config*,**/*settings*,**/*preferences*"

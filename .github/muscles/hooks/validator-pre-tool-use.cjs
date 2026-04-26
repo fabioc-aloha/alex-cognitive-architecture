@@ -2,6 +2,7 @@
 /**
  * @type muscle
  * @lifecycle stable
+ * @inheritance inheritable
  * H2: Validator read-only enforcement
  * Agent-scoped PreToolUse hook for Validator mode.
  * Blocks write operations -- Validator reviews, it does not modify.

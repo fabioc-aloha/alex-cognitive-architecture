@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: service-worker-offline-first
 description: "Progressive Web App offline-first patterns — Service Worker lifecycle, caching strategies, background sync, and offline fallbacks for resilient web applications"
 tier: extended

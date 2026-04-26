@@ -6,6 +6,7 @@
  * tests (no pandoc/mermaid-cli dependency) to validate converter building blocks.
  *
  * Run: node --test .github/muscles/converter-qa.test.cjs
+ * @inheritance inheritable
  */
 'use strict';
 

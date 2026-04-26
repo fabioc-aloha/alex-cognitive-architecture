@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Proactive skill selection and resource planning before complex task execution"
 application: "When building, auditing, or promoting cognitive architecture skills"
 currency: 2026-04-22

@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: early-filter-optimization
 description: "Cross-domain early-filtering paradigm for reducing cognitive and computational load in data pipelines, AI context, and human attention"
 applyTo: "**/*optimi*,**/*performance*,**/*cognitive*"

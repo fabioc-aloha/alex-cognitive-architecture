@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Release phase — pre-release audit, documentation, and shipping"
 application: "Run pre-release checks, update changelogs, and ship releases"

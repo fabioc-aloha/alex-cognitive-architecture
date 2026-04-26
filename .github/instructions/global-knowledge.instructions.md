@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Global knowledge management and AI-Memory location reference"
 application: "When managing cross-project knowledge or AI-Memory artifacts"
 applyTo: "**/AI-Memory/**,**/*global-knowledge*"

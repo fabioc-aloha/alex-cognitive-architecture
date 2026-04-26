@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Portable memory export for porting Alex context to other AI work surfaces"
 application: "When managing cognitive memory or porting context to other surfaces"
 currency: 2026-04-22

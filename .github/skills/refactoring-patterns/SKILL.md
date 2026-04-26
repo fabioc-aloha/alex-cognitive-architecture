@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: refactoring-patterns
 description: Safe transformations — same behavior, better structure.
 tier: core

@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: Generate a technical specification for a feature
 mode: agent
 application: When planning a new feature or system component before implementation

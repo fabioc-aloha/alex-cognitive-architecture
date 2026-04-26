@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Academic literature review workflow"
 application: "Search, synthesize, and organize academic papers and references"

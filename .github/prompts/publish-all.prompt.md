@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: Push master and heir repos, sync brain, and publish both GitHub Wikis in one shot
 mode: agent
 model: claude-opus-4-6

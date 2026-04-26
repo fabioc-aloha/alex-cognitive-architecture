@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: Fix an issue in code
 mode: agent
 model: claude-opus-4-6

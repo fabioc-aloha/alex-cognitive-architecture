@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: project-deployment
 description: Universal deployment patterns for any project type.
 tier: standard

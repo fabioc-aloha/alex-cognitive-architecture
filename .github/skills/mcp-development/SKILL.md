@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: mcp-development
 description: '**Domain**: AI Infrastructure'
 tier: standard

@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: doc-hygiene
 description: Documentation hygiene — anti-drift rules, count elimination, and living document maintenance
 tier: core

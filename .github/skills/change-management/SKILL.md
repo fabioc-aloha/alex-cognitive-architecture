@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: change-management
 description: Patterns for organizational change, ADKAR methodology, stakeholder engagement, and adoption strategies.
 tier: standard

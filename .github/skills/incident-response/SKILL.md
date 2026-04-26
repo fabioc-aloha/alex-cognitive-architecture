@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "incident-response"
 description: "Calm, systematic crisis handling — from detection through post-mortem to prevention"
 tier: standard

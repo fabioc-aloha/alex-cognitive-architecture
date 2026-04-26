@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: external-dependent
+inheritance: inheritable
 name: "image-handling"
 description: "Right format, right size, right quality — plus AI image generation via Replicate"
 tier: standard

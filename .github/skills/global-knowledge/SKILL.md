@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "global-knowledge"
 description: "Cross-project knowledge search, pattern recognition, and insight management via unified AI-Memory"
 tier: standard

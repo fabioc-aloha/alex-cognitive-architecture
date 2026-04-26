@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: infrastructure-as-code
 description: '**Domain**: DevOps & Cloud Engineering'
 tier: standard

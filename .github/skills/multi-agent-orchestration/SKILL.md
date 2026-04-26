@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: multi-agent-orchestration
 description: Coordinate multiple AI agents for complex tasks — decomposition, delegation, and synthesis
 tier: standard

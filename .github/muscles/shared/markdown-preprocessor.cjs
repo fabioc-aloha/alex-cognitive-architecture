@@ -10,6 +10,7 @@
  * Usage:
  *   const { preprocessMarkdown, convertLatexMath } = require('./shared/markdown-preprocessor.cjs');
  *   const processed = preprocessMarkdown(rawContent, { format: 'docx' });
+ * @inheritance inheritable
  */
 
 const LATEX_MATH_MAP = [

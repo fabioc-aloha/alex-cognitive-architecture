@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "AFCP artifact lifecycle — confirmation, supersession, provenance, and event logging for knowledge management"
 application: "When creating, updating, or retiring knowledge artifacts in config/knowledge-artifacts.json"
 applyTo: "**/*artifact*,**/*knowledge*,**/*insight*"

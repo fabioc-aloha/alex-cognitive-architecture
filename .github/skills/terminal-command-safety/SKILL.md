@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: terminal-command-safety
 description: "Safe terminal command patterns — backtick escaping, output capture, and hang prevention"
 tier: core

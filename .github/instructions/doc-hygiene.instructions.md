@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Documentation hygiene checks -- broken links, stale references, formatting consistency"
 application: "When working with doc hygiene or troubleshooting related issues"
 applyTo: "**/*doc*audit*,**/*doc*quality*,**/*drift*,**/*hygiene*"

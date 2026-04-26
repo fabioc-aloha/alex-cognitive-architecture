@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 description: "Apply structured skepticism to a problem, decision, or project"
 application: "Evaluate decisions, challenge assumptions, detect bias, stress-test reasoning"
 mode: agent

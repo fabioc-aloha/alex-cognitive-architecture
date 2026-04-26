@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: security-review
 description: Defend before attackers find the gaps - OWASP, STRIDE, and Microsoft SFI
 tier: core

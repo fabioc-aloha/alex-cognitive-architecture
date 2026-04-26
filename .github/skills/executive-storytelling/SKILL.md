@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: executive-storytelling
 description: Data-driven narrative construction, stakeholder management, and influencing senior leadership decisions
 tier: standard

@@ -1,6 +1,7 @@
 ---
 type: agent
 lifecycle: stable
+inheritance: inheritable
 description: Cloud security agent for scheduled dependency audits, CVE scanning, and compliance checks
 name: Security Cloud
 model: ["Claude Sonnet 4", "GPT-4o"]

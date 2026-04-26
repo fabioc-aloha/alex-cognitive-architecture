@@ -1,6 +1,7 @@
 ---
 type: agent
 lifecycle: stable
+inheritance: inheritable
 description: Cloud documentation agent for scheduled doc audits, link checking, and drift detection
 name: Docs Cloud
 model: ["Claude Sonnet 4", "GPT-4o"]

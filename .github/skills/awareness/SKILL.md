@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: awareness
 description: Proactive detection, self-correction, and epistemic vigilance
 tier: core

@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "localization"
 description: "**Domain**: Software localization, internationalization, multilingual application development"
 tier: extended

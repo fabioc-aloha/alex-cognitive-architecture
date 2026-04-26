@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Wiki publishing procedures for GitHub Wiki synchronization and link rewriting"
 application: "When publishing or syncing content to GitHub Wiki"
 applyTo: "**/*wiki*,**/*publish*wiki*"

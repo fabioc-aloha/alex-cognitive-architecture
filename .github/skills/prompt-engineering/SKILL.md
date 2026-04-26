@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: prompt-engineering
 description: Craft effective prompts that get the best results from language models.
 tier: standard

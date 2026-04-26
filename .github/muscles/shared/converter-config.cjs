@@ -9,6 +9,7 @@
  *   const { loadConfig } = require('./shared/converter-config.cjs');
  *   const cfg = loadConfig('word', { inputFile: './docs/README.md' });
  *   // cfg = { style: 'professional', toc: false, fonts: {...}, colors: {...}, ... }
+ * @inheritance inheritable
  */
 'use strict';
 

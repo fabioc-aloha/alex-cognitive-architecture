@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Capture session observations, reminders, and quick notes to AI-Memory/notes.md"
 application: "When user asks to note, remember, or save something for later, or during consolidation"
 applyTo: "**/*notes*,**/*session*,**/*reminder*"

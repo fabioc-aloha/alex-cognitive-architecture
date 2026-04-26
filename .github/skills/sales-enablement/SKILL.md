@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: sales-enablement
 description: Sales methodology, pipeline management, negotiation frameworks, and customer engagement patterns.
 tier: extended

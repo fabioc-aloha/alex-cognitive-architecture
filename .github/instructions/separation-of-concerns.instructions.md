@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Three-surface fleet boundary — Brain, Extension, Portfolio. Cardinal rule I6 generalized. Anti-patterns and decision tree for where work belongs."
 application: "When adding a feature, command, script, or task that could plausibly live in more than one surface (.github/, vscode-extension, AlexFleetPortfolio). Load before scoping any fleet, registry, or visibility work."
 applyTo: "**/.github/**,**/scripts/**,**/heir/platforms/**,**/PLAN-*.md,**/ROADMAP*.md"

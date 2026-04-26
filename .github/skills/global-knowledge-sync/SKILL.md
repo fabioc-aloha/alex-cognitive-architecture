@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "global-knowledge-sync"
 description: "Synchronize insights across AI surfaces via the shared OneDrive AI-Memory folder"
 tier: standard

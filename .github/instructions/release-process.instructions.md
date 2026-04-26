@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Release and publish workflows for versioning, changelogs, and marketplace deployment"
 application: "When preparing releases, publishing extensions, or managing changelogs"
 applyTo: "**/*{CHANGELOG,package,version}*,**/*.vsix"

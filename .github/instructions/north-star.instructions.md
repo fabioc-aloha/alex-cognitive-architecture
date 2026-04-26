@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Project vision definition and Active Context integration for ambitious goals"
 application: "When defining project vision, evaluating decisions against the North Star, or creating .github/NORTH-STAR.md"
 applyTo: "**/NORTH-STAR*,**/*north-star*,**/*vision*,**/*roadmap*"

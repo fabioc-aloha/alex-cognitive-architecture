@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: data-visualization
 description: Story-intent chart selection, color theory, annotation patterns, decluttering rules, and the "title = insight" principle for data-driven visuals
 tier: standard

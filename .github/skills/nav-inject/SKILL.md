@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "nav-inject"
 description: "Inject cross-document navigation tables into multi-file Markdown documentation suites"
 tier: extended

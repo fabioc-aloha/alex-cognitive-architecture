@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: learning-psychology
 description: Help humans learn through partnership, not instruction.
 tier: standard

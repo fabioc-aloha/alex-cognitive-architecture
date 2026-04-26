@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: chart-interpretation
 description: "Read any chart (image, HTML, screenshot) and extract insights, patterns, anomalies, bias, and narrative -- the reverse of visualization"
 tier: standard

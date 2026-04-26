@@ -1,6 +1,7 @@
 ---
 type: prompt
 lifecycle: stable
+inheritance: inheritable
 mode: agent
 description: "Documentation accuracy and drift audit"
 application: "Audit docs for accuracy, completeness, staleness, and code drift"

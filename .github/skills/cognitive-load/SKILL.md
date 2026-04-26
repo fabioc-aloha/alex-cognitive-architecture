@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: cognitive-load
 description: Don't overwhelm — chunk, scaffold, summarize first.
 tier: core

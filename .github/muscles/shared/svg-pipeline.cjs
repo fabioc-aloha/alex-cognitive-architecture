@@ -19,6 +19,7 @@
  *     ],
  *     arrows: [{ from: 0, to: 1, label: 'flows' }],
  *   });
+ * @inheritance inheritable
  */
 'use strict';
 

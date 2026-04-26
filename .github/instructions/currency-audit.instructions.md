@@ -1,6 +1,7 @@
 ---
 type: instruction
 lifecycle: stable
+inheritance: inheritable
 description: "Comprehensive brain file review — external freshness, internal consistency, semantic accuracy — stamp only after full assessment"
 application: "When performing currency audits, reviewing brain file freshness, or updating stale content"
 applyTo: "**/.github/quality/*,**/*currency*,**/*audit*,**/*brain-qa*"

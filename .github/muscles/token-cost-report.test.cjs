@@ -5,6 +5,7 @@
  * Validates token estimation, frontmatter parsing, and report generation.
  *
  * Run: node --test .github/muscles/token-cost-report.test.cjs
+ * @inheritance inheritable
  */
 'use strict';
 

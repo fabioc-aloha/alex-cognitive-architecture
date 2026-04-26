@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: "self-actualization"
 description: "Comprehensive cognitive self-assessment — honest evaluation of architecture health, growth, and optimization opportunities"
 tier: standard

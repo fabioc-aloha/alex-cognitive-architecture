@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: observability-monitoring
 description: Production visibility through logs, metrics, traces, and alerting — the three pillars of observability
 tier: standard

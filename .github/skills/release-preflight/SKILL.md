@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: release-preflight
 description: Pre-checks, version consistency, and deployment discipline.
 tier: standard

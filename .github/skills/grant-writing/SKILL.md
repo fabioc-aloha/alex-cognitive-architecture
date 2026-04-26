@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: grant-writing
 description: Translate research vision into funded reality.
 tier: extended

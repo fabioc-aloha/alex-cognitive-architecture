@@ -1,6 +1,7 @@
 ---
 type: skill
 lifecycle: stable
+inheritance: inheritable
 name: cloud-solution-architect
 description: Design well-architected Azure cloud systems — 10 design principles, 6 architecture styles, 44 design patterns, technology choices, WAF pillars
 tier: standard
