@@ -260,6 +260,25 @@ Store consistent motion style as JSON — not actual video files:
 
 ---
 
+## Image Embed Commit Gate (FC4)
+
+Before committing a new generated image to visual memory (`visual-memory.json`, `portraits/`, or `assets/`), the LLM reviews the generation report (from GP1's `generation-report.mjs`) against these criteria. No image enters canonical memory without passing this gate.
+
+| # | Check | Pass | Fail | Action on Fail |
+|---|-------|------|------|----------------|
+| 1 | **Subject identity match** — generated face matches reference image | Same person, recognizable features | Wrong face, different age/ethnicity, identity drift | Regenerate with stronger identity section; increase reference weight |
+| 2 | **Prompt fidelity** — scene, pose, expression match prompt | All major elements present | Missing key element (wrong setting, wrong expression) | Revise prompt; check model supports requested style |
+| 3 | **AI artifact scan** — no visible generation artifacts | Clean render, natural anatomy | Extra fingers, melted features, seam lines, floating objects | Regenerate; reduce prompt complexity; try different model |
+| 4 | **Text legibility** (if applicable) — overlay text is correct and readable | Text spelled correctly, fully visible | Garbled, misspelled, or cut off | Use ideogram model; simplify text; reduce word count |
+| 5 | **Brand alignment** — colors, style match project identity | Consistent with brand guide | Off-brand palette, wrong visual style | Add explicit hex codes to prompt; reference brand-asset-management |
+| 6 | **Resolution match** — output dimensions fit target use case | Correct aspect ratio and pixel dimensions | Wrong ratio (portrait instead of banner, too small for print) | Specify exact dimensions in generation parameters |
+| 7 | **Encoding size** — base64 embedding stays within token budget | ≤256px longest edge for embedded dataUri (~13KB) | Full resolution in dataUri (42KB+, context overflow risk) | Resize to 256px before encoding; keep original at full resolution |
+| 8 | **Duplicate check** — asset doesn't duplicate existing entry | New asset or intentional replacement | Near-identical image already exists in visual memory | Skip commit; use existing asset; or mark as variant |
+| 9 | **Metadata completeness** — entry has required fields | id, model, prompt, outputPath, qaStatus=ok | Missing fields or qaStatus still pending | Complete generation report entry before committing |
+| 10 | **Storage location** — file goes to correct directory | Portraits → `portraits/`, banners → `images/`, brand → `assets/` | File placed in wrong directory | Move to correct location per asset type conventions |
+
+**Workflow**: Generate → review `.generation-report.json` → pass all rows above → commit to visual memory. Images that fail any row stay in staging (output directory) until fixed or discarded.
+
 ## Benefits Summary
 
 | Without Visual Memory     | With Visual Memory                    |

@@ -104,6 +104,48 @@ See `master-wiki/decisions/change-proposals/` for worked examples:
 - `brain-upgrade-v8.3/` — trifecta refactor with shared core + TS mirror +
   version-stamp migration (2026-04-23)
 
+### Worked Example: brain-upgrade v8.3.1 (DP5)
+
+This refactor touched 3 executors (`upgrade-brain.cjs`, `bootstrap.ts`, `brain-upgrade.cjs`),
+a shared core module (`brain-upgrade-core.cjs`), and the brain-upgrade trifecta itself.
+It demonstrates the full propose-change loop in action.
+
+**Phase 1 — Working notes** (`WORKING-NOTES.txt`):
+Raw thinking about the problem: three executors duplicated the same copy/backup/restore
+logic. Each had its own bugs. The shared core idea emerged, plus the realization that
+the trifecta must protect itself (old backups cannot overwrite the new skill).
+
+**Phase 2 — Proposal** (`PROPOSED.txt`):
+Structured as: Summary → 5 numbered phases (extract core → wire executors → protect
+trifecta → fleet testing → documentation) → contract/invariants (BRAIN_SUBDIRS parity,
+exit codes, `.backup.md` convention) → critical thinking section with:
+- Q1: "Should bootstrap.ts duplicate or import the CJS core?" → A: duplicate with
+  parity preflight check (cross-language import is fragile)
+- Q2: "What if upgrade fails mid-copy?" → A: atomic swap via staging directory
+- R1: "TS mirror drifts silently from CJS" → Mitigated by `release-preflight.cjs`
+  parity check that fails the build
+- Falsifiability: "If fleet tests pass but a real heir upgrade corrupts `.github/`,
+  the staging-directory approach is wrong"
+- Approval checklist: 6 items covering each phase + test green + docs updated
+
+**Phase 3 — User annotation**:
+User added `A:` lines under Q1 and Q2. Silence on R1 = accepted residual risk.
+
+**Phase 4 — Closeout**:
+Agent propagated answers: Q1 answer → documented in SKILL.md Hard Rules; parity
+check added to `release-preflight.cjs` (which indeed caught drift on first run).
+Q2 answer → staging directory pattern added to `brain-upgrade-core.cjs`.
+Approval stamp: `APPROVED 2026-04-23`.
+
+**Phase 5 — Archive**:
+Working notes renamed to `.superseded.txt`. Proposal stays as reference. Both
+live in `master-wiki/decisions/change-proposals/brain-upgrade-v8.3/`.
+
+**Key lessons captured in `learned-patterns.instructions.md`**:
+- "Report → Validate → Approve loop for non-trivial refactors"
+- "Mechanical vs semantic split in trifectas — both need critical thinking"
+- "The parity checks you add during closeout will catch real drift — that is the point"
+
 ## Template
 
 Start new proposals from:
