@@ -80,6 +80,18 @@ The **trifecta** (skill + instruction + muscle) ensures consistency through auto
 **Intellectual** = Skill + Instruction (no automation needed)  
 **Agentic** = Skill + Instruction + Muscle (full trifecta)
 
+## Skill References
+
+Route quality decisions through these skills — don't rely on inline judgment alone:
+
+| Decision Domain | Skill | Key Table |
+|---|---|---|
+| Skill quality rubric + frontmatter requirements | `.github/skills/skill-creator/SKILL.md` | Quality checklist, frontmatter template |
+| Trifecta completeness (what needs instruction/muscle) | `.github/skills/skill-building/SKILL.md` | Component decision matrix |
+| Decision-table presence check | `.github/skills/brain-qa/SKILL.md` | Finding Triage Decision Table (AC1) |
+| Token budget (skill body size thresholds) | `.github/skills/token-waste-elimination/SKILL.md` | Size Thresholds table |
+| Promotion from heir to master | `.github/skills/knowledge-synthesis/SKILL.md` | Promotion Candidacy Decision Table (TR5) |
+
 ---
 
 ## Quality Dimensions (from Brain Health Grid)

@@ -68,6 +68,19 @@ Brain Ops operates in named modes with distinct behaviors:
 
 **Diagnose → Analyze → Triage → Act → Report → (repeat)**
 
+## Skill References
+
+Route decisions through these skills — don't rely on inline judgment alone:
+
+| Decision Domain | Skill | Key Table |
+|---|---|---|
+| Finding triage (what to fix vs track vs skip) | `.github/skills/brain-qa/SKILL.md` | Finding Triage Decision Table (AC1) |
+| File staleness (re-stamp vs rewrite vs deprecate) | `.github/skills/currency-audit/SKILL.md` | Stale File Decision Table (AC2) |
+| Token budget (waste vs instructional content) | `.github/skills/token-waste-elimination/SKILL.md` | Waste Triage Decision Table (AC3) |
+| Insight promotion (local → global knowledge) | `.github/skills/knowledge-synthesis/SKILL.md` | Promotion Candidacy Decision Table (TR5) |
+| Upgrade gate (Phase 1 → Phase 2 handoff) | `.github/skills/brain-upgrade/SKILL.md` | Go/No-Go tables |
+| Skill quality (trifecta completeness) | `.github/skills/skill-creator/SKILL.md` | Quality checklist |
+
 ## Diagnostic Operations
 
 Run these scripts to build a comprehensive health picture:

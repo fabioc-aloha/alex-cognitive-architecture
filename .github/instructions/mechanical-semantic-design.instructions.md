@@ -11,7 +11,7 @@ currency: 2026-04-26
 
 Every capability has a **mechanical half** (deterministic, script-enforced) and a **semantic half** (judgment, LLM-led). The handoff between them is the product. Apply this lens to every trifecta, command, and pipeline.
 
-**Full reference**: [`master-wiki/architecture/MECHANICAL-SEMANTIC-PARADIGM.md`](../../master-wiki/architecture/MECHANICAL-SEMANTIC-PARADIGM.md). This instruction is the runtime design checklist — load when designing or reviewing the split.
+**Full reference**: `master-wiki/architecture/MECHANICAL-SEMANTIC-PARADIGM.md` (master-only — not bundled with heirs). This instruction is the runtime design checklist — load when designing or reviewing the split.
 
 ## Classification Codes
 
@@ -61,7 +61,7 @@ When creating or auditing a trifecta, walk through:
 | Does the muscle modify files the user/heir might want to keep? | Write `.backup.md` before overwrite; surface via exit code 2 | Direct write is fine |
 | Does the muscle produce findings someone must triage? | Emit `.report.json`; skill provides decision table for triage | Plain stdout summary is enough |
 | Is there a TS↔CJS or master↔heir mirror of this contract? | Add a parity check to release preflight | No parity test needed |
-| Could a future platform invoke this muscle? | Verify it follows [`CROSS-PLATFORM-MUSCLE-CONTRACT.md`](../../master-wiki/architecture/CROSS-PLATFORM-MUSCLE-CONTRACT.md) (no platform APIs, exit-code contract, stdout/stderr discipline) | Document why it's platform-specific |
+| Could a future platform invoke this muscle? | Verify it follows the cross-platform muscle contract (no platform APIs, exit-code contract, stdout/stderr discipline) — see `master-wiki/architecture/CROSS-PLATFORM-MUSCLE-CONTRACT.md` for the full spec | Document why it's platform-specific |
 | Will the LLM make recurring decisions on this artifact? | Decision table with explicit rows; never freeform prompt | Single judgment with critical-thinking stance is acceptable |
 
 ## Anti-Patterns to Catch

@@ -41,6 +41,22 @@ Producer-consumer reconciliation across all four cognitive rituals. Each ritual 
 
 - **31 stale meditation chronicles** pruned (Jan 30 – Feb 7 2026) to maintain 60-chronicle FIFO cap.
 
+### Pipeline QA Decision Tables (Wave D)
+
+Systematic decision tables and QA contracts for pipelines that previously ran with no semantic quality gate.
+
+### Added
+
+- **`conversion-report.cjs`** (FC1): Shared helper in `muscles/shared/` — converters call `report.add(severity, category, message)` during processing, then `report.write()` to emit `.conversion-report.json` next to the output file. Findings include ok/warning/dropped/error severities.
+- **Conversion acceptance decision tables** (FC2): 12–14 row tables in `md-to-html`, `md-to-word`, `md-to-eml`, and `docx-to-md` skills covering fidelity scoring, embed preservation, formatting retention, and round-trip delta.
+- **Post-sync semantic diff report** (HS1): `--report` flag on `sync-to-heir.cjs` compares master vs heir line-by-line after sync, filters known transforms (currency stamps, version footers), and reports material content diffs with sample lines.
+- **Sync drift decision table** (HS2): 12-row table in `heir-sync-management.instructions.md` — covers whitespace normalization, known transforms, heir-maintained files, experimental leaks, orphans, and config differences.
+- **Version bump decision table** (RP1): 12-row table in `release-process/SKILL.md` classifying changelog content into major/minor/patch based on breaking changes, new features, deprecations, and security fixes.
+- **Changelog voice QA decision table** (RP2): 12-row table in `release-preflight/SKILL.md` checking tense, user impact, jargon, vagueness, task IDs, categories, and breaking change markers.
+- **Release `.backup.md` pattern** (RP5): Post-publish steps in `release-vscode.cjs` now use `runOrThrow` with a `writeReleaseBackup` handler. On failure after marketplace publish, writes `.release-backup.md` with completed/failed steps, recovery options, and remaining manual commands.
+- **Blog voice QA decision table** (KW3): 12-row table in `blog-writer/SKILL.md` checking for AI-writing tells (listy structure, hedging, "delve", "landscape") against `ai-writing-avoidance.instructions.md`.
+- **Generation output decision table** (GP2): 13-row table in `image-generation-guidelines.instructions.md` covering subject match, text legibility, brand alignment, resolution, AI artifacts, face consistency, cost thresholds, and regeneration escalation.
+
 ---
 
 ## [8.3.3] - 2026-04-25
