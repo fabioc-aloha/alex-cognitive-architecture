@@ -1,5 +1,5 @@
 {
-  "lastSync": "2026-04-26T19:03:28.994Z",
+  "lastSync": "2026-04-26T19:05:45.552Z",
   "brainVersion": "8.4.0",
   "syncMode": "default",
   "files": {
@@ -11,7 +11,7 @@
     "agents/alex-security-cloud.agent.md": 1777225171662.6162,
     "agents/alex-skill-builder.agent.md": 1777227244850.193,
     "agents/alex.agent.md": 1777225171662.6162,
-    "brain-version.json": 1777230208987.818,
+    "brain-version.json": 1777230345544.9883,
     "config/assignment-log.json": 1777223715535.657,
     "config/cognitive-config-template.json": 1776285848600.698,
     "config/cognitive-config.json": 1776957069493.6042,
@@ -61,7 +61,7 @@
     "instructions/extension-audit-methodology.instructions.md": 1777225171476.229,
     "instructions/fleet-management.instructions.md": 1777225171478.572,
     "instructions/global-knowledge-sync.instructions.md": 1777225171483.8774,
-    "instructions/global-knowledge.instructions.md": 1777225171484.8782,
+    "instructions/global-knowledge.instructions.md": 1777230318941.136,
     "instructions/heir-bootstrap.instructions.md": 1777225171485.8777,
     "instructions/heir-feedback.instructions.md": 1777225171485.8777,
     "instructions/heir-project-improvement.instructions.md": 1777225171487.1372,
@@ -356,7 +356,7 @@
     "skills/infrastructure-as-code/SKILL.md": 1777225171745.7087,
     "skills/journalism/SKILL.md": 1777225171745.7087,
     "skills/kdp-publishing/SKILL.md": 1777225171745.7087,
-    "skills/knowledge-synthesis/SKILL.md": 1777227244856.9988,
+    "skills/knowledge-synthesis/SKILL.md": 1777230318941.136,
     "skills/kql/references/advanced-patterns.md": 1776187250939.8467,
     "skills/kql/references/error-recovery.md": 1776187250940.8464,
     "skills/kql/references/query-templates.md": 1776187250941.846,

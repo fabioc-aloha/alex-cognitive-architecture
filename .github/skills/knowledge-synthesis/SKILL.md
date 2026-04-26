@@ -82,6 +82,27 @@ When deciding whether to promote a finding to global knowledge:
 
 **Minimum bar**: All "Required" rows must pass. Failing any "Required" criterion = not ready for promotion.
 
+## Research-Promotion Decision Table (KW1)
+
+When a project-local finding is a candidate for promotion to global `AI-Memory/`, evaluate this table. This extends TR5's candidacy check with the mandatory cross-project-isolation stripping test from `cross-project-isolation.instructions.md`.
+
+| # | Check | Pass | Fail | Action on Fail |
+|---|-------|------|------|----------------|
+| 1 | **Multi-project signal** — observed in 2+ independent contexts | Evidence from separate projects or domains | Single project only | Hold as local insight (GI-*); promote only after second sighting |
+| 2 | **File paths stripped** — no `src/services/billing/handler.ts:42` style paths | Generic references ("a service handler module") | Absolute or project-relative paths present | Rewrite with generic descriptions |
+| 3 | **Project names stripped** — no identifying project names | "A Fabric workspace management project" | "In the FabricManager project..." | Replace with generic description |
+| 4 | **Client names stripped** — no employer clients, customers | "A client billing API" | "Contoso's billing API" | Replace with generic reference |
+| 5 | **Domain entities generalized** — no domain-specific PII-adjacent data | "A domain entity schema" | "Patient record schema in FHIR format" | Generalize to domain category ("regulated domain", "compliance-heavy domain") |
+| 6 | **Repo URLs omitted** — no private repo links | No GitHub/GitLab URLs | `github.com/org/private-repo` present | Remove entirely |
+| 7 | **Stranger test** — would this help someone who has never seen the source project? | Pattern is self-contained and actionable | Requires project context to understand | Not abstract enough; rewrite or discard |
+| 8 | **Code snippets ≤5 lines** — longer snippets leak architecture | Short illustrative examples | 10+ line code blocks | Trim to essential pattern; replace specifics with placeholders |
+| 9 | **No configuration values** — connection strings, endpoints, resource names absent | Technology names only (React, Azure Functions) | Endpoint URLs, resource IDs, connection strings | Strip all configuration; keep only technology references |
+| 10 | **Existing pattern check** — not a duplicate of current GK-* | Novel insight or significant extension | Near-duplicate of existing pattern | Extend existing entry instead of creating new one |
+| 11 | **Quantified outcomes stripped of attribution** — "reduced build time by 40%" not "Project X reduced..." | Anonymous metrics | Attributed to specific project or client | Remove attribution; keep the metric |
+| 12 | **PII memory filter pass** — passes `pii-memory-filter.instructions.md` self-check | "Would I be comfortable if this appeared in a GitHub issue?" = yes | Contains names + identifiers, health data, financial data, credentials | Do not promote; strip PII first or discard |
+
+**Workflow**: Local finding → pass all 12 rows → write to `AI-Memory/` with `scope: global-safe` → log promotion via PE1 decision log with `promotedFrom` provenance.
+
 ## Promotion Checklist (Insight → Pattern)
 
 Before promoting a GI-\_ insight to GK-\_ pattern:
