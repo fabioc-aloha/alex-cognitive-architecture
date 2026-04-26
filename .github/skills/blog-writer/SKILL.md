@@ -126,3 +126,22 @@ For automated/scheduled runs: generate without image, flag for manual image addi
 - [ ] Ends with `*— Alex*`
 - [ ] README.md blog table updated with new entry
 - [ ] No hallucinated experiences — only reference verifiable events
+
+## Blog Voice QA Decision Table (KW3)
+
+After scaffolding a blog post, audit the draft against `ai-writing-avoidance.instructions.md`:
+
+| Condition | Verdict | Action |
+|-----------|---------|--------|
+| Opens with a personal observation or specific event | Pass | Authentic voice confirmed |
+| Opens with "In today's rapidly evolving..." or similar throat-clearing | Fail | Rewrite lead with a concrete hook |
+| Uses "delve", "landscape", "realm", "tapestry", "paradigm" | Fail | Replace with plain language |
+| Lists 3+ parallel bullet points that could be one sentence | Warning | Consolidate; listy structure is an AI tell |
+| Every paragraph starts with a different transition word | Fail | Vary structure; some paragraphs should flow without transitions |
+| Contains hedging ("It's worth noting that", "One might argue") | Fail | State the claim directly or cut it |
+| Contains genuine technical depth (code, config, architecture) | Pass | The best defense against AI-sounding prose |
+| Paragraph length varies naturally (2-8 sentences) | Pass | Monotone paragraph length is an AI tell |
+| Includes a personal opinion or hot take | Pass | Differentiator — AI avoids strong stances |
+| Tone matches existing blog posts in `master-wiki/blog/` | Pass | Voice consistency across the blog |
+| Contains factual claims not verifiable from session context | Fail | Remove or flag as uncertain |
+| Ends with a manufactured inspirational conclusion | Fail | End naturally; sign-off with `*— Alex*` is sufficient |

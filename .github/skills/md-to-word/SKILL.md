@@ -399,6 +399,27 @@ node .github/muscles/md-to-word.cjs spec.md --watch
 
 ---
 
+## Conversion Acceptance Decision Table
+
+| Condition | Verdict | Action |
+|-----------|---------|--------|
+| All headings use correct Word styles (Heading 1-6) | Accept | Verify TOC generates from styles |
+| Headings are bold plain text instead of styled | Reject | Check pandoc heading-style mapping |
+| Tables render with borders and header row formatting | Accept | Spot-check alignment |
+| Tables overflow page width or lose column alignment | Reject | Adjust column widths or split wide tables |
+| Images embedded at correct resolution | Accept | Verify no placeholder boxes |
+| Images missing or show `[image]` placeholder | Reject | Check image paths resolve; pandoc `--resource-path` |
+| Mermaid diagrams converted to PNG and embedded | Accept | Verify labels readable at print size |
+| Mermaid diagrams missing entirely | Reject | Pre-render with mermaid-cli before pandoc |
+| Code blocks use monospace font with syntax coloring | Accept | Verify long lines don't overflow |
+| Code blocks use body font or lose indentation | Warning | Check pandoc `--highlight-style` setting |
+| Page breaks at expected section boundaries | Accept | Required for multi-section documents |
+| Headers/footers match brand template | Accept | Verify reference.docx applied correctly |
+| File opens without macro warnings | Accept | Required — no macros in output |
+| File size >10MB for text-only document | Warning | Check for uncompressed embedded images |
+
+---
+
 ## Related Skills
 
 | Skill | Relationship |

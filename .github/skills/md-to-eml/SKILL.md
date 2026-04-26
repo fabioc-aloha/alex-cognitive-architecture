@@ -195,6 +195,25 @@ For high-fidelity diagrams, pre-render to PNG and include as images.
 
 ---
 
+## Conversion Acceptance Decision Table
+
+| Condition | Verdict | Action |
+|-----------|---------|--------|
+| Subject, From, To headers present and correct | Accept | Required fields for valid .eml |
+| Missing or malformed email headers | Reject | Check frontmatter extraction |
+| HTML body renders in Outlook/Gmail preview | Accept | Test in at least one client |
+| Body shows raw HTML tags or broken layout | Reject | Check MIME Content-Type is text/html |
+| Inline images display (CID or base64) | Accept | Verify no external URL references |
+| Images missing or show broken icons | Reject | Embed as base64 or CID attachment |
+| Links are clickable and point to correct URLs | Accept | Spot-check 2-3 links |
+| Mermaid diagrams pre-rendered as inline images | Accept | Raw mermaid syntax is not email-safe |
+| Mermaid diagrams show as code blocks | Reject | Pre-render to PNG before embedding |
+| File opens in default mail client without errors | Accept | Test .eml file import |
+| Total .eml size >5MB | Warning | Compress images or link instead of embed |
+| Plain-text MIME part included as fallback | Accept | Recommended for accessibility |
+
+---
+
 ## Related Skills
 
 - **md-to-html** — Sister converter for web page output

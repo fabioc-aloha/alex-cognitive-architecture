@@ -192,6 +192,25 @@ Get-ChildItem docs/*.md | ForEach-Object {
 
 ---
 
+## Conversion Acceptance Decision Table
+
+| Condition | Verdict | Action |
+|-----------|---------|--------|
+| All headings, lists, tables, code blocks render correctly | Accept | Ship as-is |
+| Mermaid diagrams rendered as PNG/SVG with correct layout | Accept | Verify diagram labels readable |
+| Mermaid diagrams missing or show raw syntax | Reject | Check mermaid-cli installed; re-run with `--mermaid-png` |
+| Math equations (KaTeX/MathJax) render correctly | Accept | Spot-check complex equations |
+| Math equations show raw LaTeX source | Reject | Verify KaTeX CSS/JS included in template |
+| Embedded images display at correct size | Accept | Confirm no broken `<img>` tags |
+| Images missing or show broken placeholders | Reject | Check paths are relative and files exist |
+| CSS custom properties resolve (colors, fonts) | Accept | Visual spot-check against brand |
+| Inline styles lost or overridden by browser defaults | Warning | Add `!important` or inline fallbacks |
+| Output file size >5MB for a simple document | Warning | Check for unoptimized base64 images |
+| HTML validates (no unclosed tags, no script injection) | Accept | Required for security |
+| HTML contains `<script>` from untrusted source | Reject | Sanitize; only allow known libraries |
+
+---
+
 ## Related Skills
 
 - **md-to-word** — Sister converter for Word document output

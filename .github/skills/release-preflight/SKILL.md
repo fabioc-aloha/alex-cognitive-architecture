@@ -103,6 +103,25 @@ After preflight runs, classify each finding to decide whether to proceed:
 **Rule**: Any **Block** finding = hard stop. Fix first, re-run preflight, then proceed.
 **Warning** findings require explicit operator acknowledgment — the LLM should list them and ask "proceed despite these warnings?"
 
+## Changelog Voice QA Decision Table (RP2)
+
+After preflight passes, review `CHANGELOG.md` entries for the release version against these voice standards:
+
+| Condition | Verdict | Action |
+|-----------|---------|--------|
+| Entry uses past tense ("Added", "Fixed", "Removed") | Pass | Standard changelog convention |
+| Entry uses present/future tense ("Adds", "Will fix") | Fail | Rewrite to past tense |
+| Entry describes user-visible impact ("Users can now...") | Pass | Preferred framing |
+| Entry describes internal implementation ("Refactored the parser loop") | Warning | Rewrite to user impact; move internal detail to commit message |
+| Entry uses internal jargon ("brain-qa", "trifecta", "sidecar") | Fail | Replace with user-facing language ("health checks", "skill set", "config") |
+| Entry is a single vague line ("Bug fixes and improvements") | Fail | Expand to specific items |
+| Entry references a PLAN task ID ("FM4", "RP2") only | Fail | Add human-readable description alongside |
+| Entry groups related changes under a category header | Pass | Use: Added, Changed, Fixed, Removed, Security |
+| Breaking change is clearly marked with `**BREAKING**` | Pass | Required for major bumps |
+| Entry length proportional to change significance | Pass | One-liners for patches, paragraphs for features |
+| Links to related docs/issues included for complex changes | Pass | Helps users understand context |
+| Duplicate entries from cherry-pick or merge | Fail | Deduplicate; keep most descriptive version |
+
 ## Related Scripts
 
 | Script                                        | Purpose                                |

@@ -221,132 +221,24 @@ Get-ChildItem *.docx | ForEach-Object {
 
 ---
 
-## Related Skills
+## Conversion Acceptance Decision Table
 
-- **md-to-word** — Reverse direction (Markdown to Word)
-- **lint-clean-markdown** — Post-validate converted Markdown
-- **md-scaffold** — Template for structuring imported content
-- **md-to-html** — Convert result to HTML for web
-- **md-to-eml** — Convert result to email
-
----
-
-*Skill version: 2.0.0 | Last updated: 2026-04-14 | Category: document-conversion*
-
-The conversion follows a multi-stage cleanup:
-
-```
-.docx → pandoc → raw MD → cleanup → clean MD
-                            ↓
-                    1. Escaped brackets removed
-                    2. Trailing backslashes removed
-                    3. Span classes stripped
-                    4. Image attributes cleaned
-                    5. Comments stripped (optional)
-                    6. Headings normalized (optional)
-                    7. Tables reformatted
-                    8. Images extracted
-                    9. Frontmatter added (optional)
-```
-
----
-
-## Pandoc Cleanup Details
-
-| Pandoc Quirk | Before | After |
-|--------------|--------|-------|
-| Escaped brackets | `\[text\]` | `[text]` |
-| Trailing backslashes | `line\` | `line` |
-| Span classes | `{.underline}` | (removed) |
-| Image attributes | `{width="5in"}` | (removed) |
-| Heading anchors | `{#section-1}` | (removed) |
-| Excessive blank lines | `\n\n\n\n` | `\n\n` |
-
----
-
-## Image Extraction
-
-Embedded images are extracted to a sibling `images/` folder:
-
-```
-input/
-├── document.docx
-└── document.md (output)
-    └── images/
-        ├── image1.png
-        ├── image2.png
-        └── image3.jpg
-```
-
-Image references in markdown are updated automatically:
-
-```markdown
-![](images/image1.png)
-```
-
----
-
-## Common Workflows
-
-### Stakeholder Document Ingestion
-
-```bash
-# Convert with full cleanup
-node .github/muscles/docx-to-md.cjs stakeholder-spec.docx \
-  --add-frontmatter --fix-headings --strip-comments
-
-# Validate output
-node .github/muscles/markdown-lint.cjs stakeholder-spec.md
-
-# Review and commit
-git add stakeholder-spec.md images/
-git commit -m "docs: ingest stakeholder specification"
-```
-
-### Legacy Documentation Migration
-
-```bash
-# Batch convert all Word docs
-Get-ChildItem *.docx | ForEach-Object {
-  node .github/muscles/docx-to-md.cjs $_.FullName --add-frontmatter --fix-headings
-}
-```
-
----
-
-## Troubleshooting
-
-| Problem | Cause | Solution |
-|---------|-------|----------|
-| "pandoc not found" | pandoc not installed | `winget install pandoc` |
-| Images missing | Extraction failed | Check images/ folder, re-run |
-| Tables misaligned | Complex table structure | Manual cleanup may be needed |
-| Headings start at H3 | Original doc structure | Use `--fix-headings` |
-| Comments in output | Track changes not stripped | Use `--strip-comments` |
-| Encoding issues | Non-UTF8 content | Re-save .docx as UTF-8 |
-
----
-
-## Limitations
-
-- **Track changes**: Accept or reject all changes in Word before converting
-- **Embedded objects**: Charts, SmartArt, etc. must be extracted manually
-- **Complex tables**: Merged cells may not convert cleanly
-- **Styles**: Word styles are lost (only structural elements preserved)
-- **Headers/footers**: Not extracted (document body only)
-
----
-
-## Requirements
-
-- Node.js 18+
-- pandoc (`winget install pandoc`)
-
----
-
-## Muscle Script
-
-`.github/muscles/docx-to-md.cjs` (v1.0.0)
+| Condition | Verdict | Action |
+|-----------|---------|--------|
+| All headings mapped to correct `#` levels | Accept | Verify no skipped heading levels |
+| Headings rendered as bold paragraphs instead of `#` | Reject | Check pandoc `--shift-heading-level` and source styles |
+| Tables converted to valid Markdown pipe tables | Accept | Spot-check alignment |
+| Complex tables (merged cells) lose structure | Warning | Manual restructure or use HTML table fallback |
+| Images extracted and linked with relative paths | Accept | Verify image files exist in output dir |
+| Images lost or referenced with absolute Windows paths | Reject | Use `--extract-media` with correct output dir |
+| Footnotes converted to Markdown footnote syntax | Accept | Verify numbering is sequential |
+| Footnotes lost or inlined as parenthetical text | Warning | Check pandoc footnote handling |
+| Code blocks preserve monospace and indentation | Accept | Verify language fence tags present |
+| Track changes / comments stripped from output | Accept | Expected — Markdown has no change tracking |
+| Track changes rendered as visible markup | Reject | Accept or reject all changes before conversion |
+| Bullet and numbered lists preserve nesting | Accept | Verify indent levels match source |
+| Output passes markdownlint with zero errors | Accept | Run `lint-clean-markdown` post-conversion |
+| Round-trip (docx→md→docx) preserves semantic content | Accept | Formatting differences OK; content loss is not |
 
 ---
 
