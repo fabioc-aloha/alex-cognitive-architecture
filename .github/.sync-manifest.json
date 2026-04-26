@@ -1,5 +1,5 @@
 {
-  "lastSync": "2026-04-26T19:49:03.944Z",
+  "lastSync": "2026-04-26T20:05:37.288Z",
   "brainVersion": "8.4.0",
   "syncMode": "default",
   "files": {
@@ -11,7 +11,7 @@
     "agents/alex-security-cloud.agent.md": 1777225171662.6162,
     "agents/alex-skill-builder.agent.md": 1777227244850.193,
     "agents/alex.agent.md": 1777225171662.6162,
-    "brain-version.json": 1777232943944.2676,
+    "brain-version.json": 1777233937281.8594,
     "config/assignment-log.json": 1777223715535.657,
     "config/cognitive-config-template.json": 1776285848600.698,
     "config/cognitive-config.json": 1776957069493.6042,
@@ -71,9 +71,9 @@
     "instructions/knowledge-coverage.instructions.md": 1777225171494.2346,
     "instructions/knowledge-synthesis.instructions.md": 1777225171495.677,
     "instructions/kql.instructions.md": 1777225171496.686,
-    "instructions/learned-patterns.instructions.md": 1777225171499.6865,
+    "instructions/learned-patterns.instructions.md": 1777233649224.638,
     "instructions/localization.instructions.md": 1777225171503.7305,
-    "instructions/mechanical-semantic-design.instructions.md": 1777232885582.4084,
+    "instructions/mechanical-semantic-design.instructions.md": 1777233021321.365,
     "instructions/meditation.instructions.md": 1777225171513.074,
     "instructions/memory-curation.instructions.md": 1777225171515.5833,
     "instructions/memory-export.instructions.md": 1777225171516.1963,
