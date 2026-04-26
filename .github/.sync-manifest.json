@@ -1,5 +1,5 @@
 {
-  "lastSync": "2026-04-26T20:05:37.288Z",
+  "lastSync": "2026-04-26T20:43:10.117Z",
   "brainVersion": "8.4.0",
   "syncMode": "default",
   "files": {
@@ -11,7 +11,7 @@
     "agents/alex-security-cloud.agent.md": 1777225171662.6162,
     "agents/alex-skill-builder.agent.md": 1777227244850.193,
     "agents/alex.agent.md": 1777225171662.6162,
-    "brain-version.json": 1777233937281.8594,
+    "brain-version.json": 1777236190111.432,
     "config/assignment-log.json": 1777223715535.657,
     "config/cognitive-config-template.json": 1776285848600.698,
     "config/cognitive-config.json": 1776957069493.6042,
@@ -93,6 +93,7 @@
     "instructions/research-first-development.instructions.md": 1777225171548.6548,
     "instructions/research-first-workflow.instructions.md": 1777225171549.7615,
     "instructions/self-actualization.instructions.md": 1777225171555.7686,
+    "instructions/separation-of-concerns.instructions.md": 1777236106426.175,
     "instructions/session-health-monitoring.instructions.md": 1777225171557.7722,
     "instructions/session-notes.instructions.md": 1777225171558.8904,
     "instructions/sidebar-customization.instructions.md": 1777225171558.8904,
