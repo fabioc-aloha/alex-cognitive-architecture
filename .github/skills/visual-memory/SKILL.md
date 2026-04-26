@@ -290,3 +290,38 @@ Before committing a new generated image to visual memory (`visual-memory.json`, 
 | Different results per machine  | Exact consistency everywhere      |
 | ~2MB unoptimized originals | ~50MB → 500KB optimized               |
 > **For voice samples**: See [audio-memory/SKILL.md](../audio-memory/SKILL.md)
+
+## Visual/Audio Asset Staging Gate (GP3)
+
+New generated assets (images, audio, video) must land in a **staging area** before promotion to canonical memory. This mirrors the AI-Memory promotion boundary (SK2) — no silent writes to permanent stores.
+
+### Staging Flow
+
+```text
+Generate → staging/ → review (FC4 table + this gate) → promote to canonical memory
+                   ↘ reject → delete or archive in staging/rejected/
+```
+
+### Staging Gate Decision Table
+
+| # | Check | Pass | Fail | Action on Fail |
+|---|-------|------|------|----------------|
+| 1 | **Staging directory used** — generated asset lands in `staging/` or output dir, not directly in canonical memory | Asset path is in staging area | Asset written directly to `portraits/`, `assets/`, or memory JSON | Move to staging; update generation script to use staging path |
+| 2 | **Generation report exists** — `.generation-report.json` accompanies the asset | Report file present with model, prompt, parameters, timestamp | Asset exists without provenance metadata | Generate report retroactively or regenerate with report enabled |
+| 3 | **FC4 commit gate passed** — all 10 rows of Image Embed Commit Gate evaluated | All FC4 rows pass or have documented exceptions | FC4 not run or rows failing without justification | Run FC4 review; fix or document exceptions before promoting |
+| 4 | **No duplicate in canonical** — asset doesn't duplicate an existing canonical asset | No visually/audibly similar asset in target memory location | Duplicate or near-duplicate already exists | Keep better version; archive or delete the other |
+| 5 | **Operator/LLM confirmation** — promotion requires explicit approval | Operator or LLM reviews staging asset and approves | Auto-promoted without review | Add confirmation step to generation pipeline |
+| 6 | **Decision logged** — promotion decision recorded in PE1 decision log | `logPhase2Decision()` called with accept/reject + rationale | Asset promoted or deleted with no audit trail | Log decision before moving file |
+| 7 | **Backup of replaced asset** — if promoting over an existing canonical asset, original is backed up | `.backup` copy of original created before overwrite | Original silently overwritten | Create backup; include path in decision log entry |
+
+### Staging Directories by Asset Type
+
+| Asset Type | Staging Directory | Canonical Directory |
+|-----------|-------------------|---------------------|
+| Portraits | `images/staging/portraits/` | `images/portraits/` or portrait JSON `dataUri` |
+| Banners | `images/staging/banners/` | `assets/` or README inline |
+| Blog images | `images/staging/blog/` | `master-wiki/blog/assets/` |
+| Audio samples | `audio/staging/` | Audio memory JSON `dataUri` |
+| Video clips | `video/staging/` | Video memory or assets directory |
+
+**Note**: Generation scripts (`generate-*.js`) should default to writing into `images/staging/` rather than the final destination. The promotion step is a separate manual or LLM-assisted action.
