@@ -7,6 +7,74 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.4.0] - 2026-04-26
+
+### Cognitive Rituals Reconciliation
+
+Producer-consumer reconciliation across all four cognitive rituals. Each ritual now has an honest contract between the muscle (data producer) and the prompt/skill (data consumer).
+
+### Removed
+
+- **Lucid Dream ritual**: Retired entirely. The escalation pattern (meditation → dream chain) absorbed into `dream-state/SKILL.md` §Escalation. ADR-013 documents the rationale. All files git-deleted; history preserved.
+- **Synapse validation**: Deprecated from dream-cli. `SYNAPSE-SCHEMA.json` deleted. Dream now focuses on structural health (broken refs, trifecta audit, inventory).
+
+### Added
+
+- **`meditation-snapshot.cjs` v1.0.0**: Lightweight muscle that derives `lastMeditation` from chronicle filenames (mtimes unreliable after bulk git operations). Writes `.github/quality/meditation-snapshot.json`. FIFO prunes to newest 60 chronicles.
+- **`self-actualization-snapshot.cjs` v1.0.0**: Hybrid muscle + LLM pattern — gathers mechanical inputs (inventory, memory balance, depth samples, connection density, growth diff) for 6-dimension architecture assessment. Dream is optional input (D8); LLM judges dimension 3 (Knowledge Depth) from a deterministic skill sample.
+- **`meditate.prompt.md`**: Orchestrates the full meditation ritual — pre-flight snapshot, 5 R's (Review → Relate → Reinforce → Record → Resolve), bookkeeping pass, chronicle authoring, snapshot refresh.
+- **`self-actualize.prompt.md`**: Orchestrates the monthly deep assessment — snapshot pre-flight, 6-dimension scoring with weighted rubric, prioritized improvement plan, chronicle authoring, cogConfig bookkeeping.
+- **Cognitive Rituals section** in `brain-health-grid.md`: Shows meditation and self-actualization recency, days since last run, threshold, and overdue status.
+- **`cogConfig.lastSelfActualization`**: New fallback field for heir compatibility (D12). Snapshot derives truth from chronicle filenames.
+- **Session-start staleness warnings**: `session-start.cjs` warns when meditation is overdue (≥7d) or self-actualization is stale (≥30d), reading from snapshot files first with cogConfig fallback.
+
+### Changed
+
+- **Dream Path C**: Dream is now a diagnostic that feeds meditation (not standalone maintenance). `dream-cli.cjs` schema locked at v1; `dream-creativity-score.cjs` upgraded to v2.0.0 (synapse-free scoring with research-depth and cross-domain bonuses). Chronicle pruning at 50 FIFO.
+- **Meditation Path B**: Chronicles are the canonical source of truth for meditation cadence. `session-start.cjs` reads `meditation-snapshot.json` first, falls back to `cogConfig.lastMeditation`. Meditation 5th R (Resolve) fully integrated.
+- **Self-actualization Path B**: Decoupled from dream (D8) — dream is recommended but not required. Staleness threshold set to 30 days (D9). Session Flow updated from rigid "Dream first" to optional dream input.
+- **Self-actualization SKILL.md**: Fixed cross-ritual drift ("4 R's" → "5 R's"); added §Snapshot Muscle and §Bookkeeping Surfaces documentation.
+- **Loop-menu ritual buttons**: Wired to `promptFile` references (meditation, self-actualization) and updated tooltips/descriptions to reflect current ritual mechanics. Removed synapse references.
+- **Config `_notes`**: Honest current state in heir-tracked configs — "manual curation today, automation deferred" replaces aspirational "Meditation prunes/analyzes" claims.
+
+### Fixed
+
+- **31 stale meditation chronicles** pruned (Jan 30 – Feb 7 2026) to maintain 60-chronicle FIFO cap.
+
+---
+
+## [8.3.3] - 2026-04-25
+
+### Heir Feedback Sweep
+
+Processed 9 feedback items submitted by heir projects (`fabioc-aloha`, `alexbooks`, `aloha`, `health`) via `AI-Memory/feedback/`. All items resolved and feedback queue cleared.
+
+### Added
+
+- **Skill `book-launch-content`**: New skill capturing the "dogfood the book's thesis on its own manuscript" pattern observed in AlexBooks. Includes inventory step, 4-pattern catalog, 6-beat launch-post structure, anti-patterns, and checklist. Triggers on book/manuscript paths and launch-content phrases.
+- **Frontmatter Pre-Write Gate** in `skill-building` and `skill-creator` skills: required-fields table per artifact type (skill / instruction / prompt / agent) is now enforced at authoring time, not at next `/dream`. Prompts user inline when fields are missing; auto-stamps `currency:` only (semantic fields stay author-decided). Resolves the recurring "skill written → brain-qa fails later" pattern reported 3 times in 60 days.
+- **Meditation 5th R — Resolve**: Added explicit close step to the meditation skill (Review → Relate → Reinforce → Record → **Resolve**). Resolve summarizes persisted artifacts, evaluates dream chaining criteria explicitly, and emits a one-line session summary so meditations no longer end ambiguously.
+- **Episodic Memory section** in `meditation/SKILL.md`: clarifies when to write `.github/episodic/meditation-YYYY-MM-DD-{topic}.md` vs `/memories/session/`, with file-naming conventions and the heir-portability note.
+- **User Section Token Budget** in `identity-customization.instructions.md`: explicit rule that the `## User` section in `copilot-instructions.md` carries name + preferences only; all other identity fields (role, education, location, links) live in `AI-Memory/user-profile.json`. Includes template and migration guidance.
+
+### Fixed
+
+- **Heir-aware `verifyProject` in `brain-upgrade-core.cjs`**: `--mode Verify` previously compared heir file counts against Master's full inventory, producing guaranteed false failures (heirs intentionally receive a filtered subset). Verify now detects Master via `isProtectedProject()` and applies a structural check to heirs (folder exists, non-empty) instead of strict file counts.
+- **Markdown preview styling for heirs**: Added `"markdown.styles": [".github/config/markdown-light.css"]` to `ESSENTIAL_SETTINGS` in `brain-upgrade-core.cjs`. The CSS shipped with the brain but the setting that loads it was missing; heirs now get GitHub-flavored preview styling on next upgrade via additive merge (existing user settings preserved).
+- **Heir fallback for missing `dream-report.json`**: Meditation skill now states explicitly that a missing dream report is treated as never-dreamed (overdue), removing the micro-friction in fresh heirs that have not yet run `/dream`.
+- **Heir fallback for missing welcome configs**: Welcome Experience Check skips when `taglines.json` or `loop-menu.json` does not exist (heir has not run welcome customization yet) instead of probing for files that aren't there.
+
+### Changed
+
+- `.github/skills/meditation/SKILL.md` renamed framework from "4 R's" to "5 R's" with the new Resolve step.
+
+### Notes
+
+- `EXTERNAL-API-REGISTRY.md` auto-preservation (requested by AlexBooks heir) was already implemented in v8.3.2 (`brain-upgrade-core.cjs:486-493`); confirmed and closed.
+- v8.3.0 Phase 1 NORTH-STAR/copilot-instructions overwrite bug (reported by AlexBooks heir) was already fixed in v8.3.1; confirmed and closed.
+
+---
+
 ## [8.3.3] - 2026-04-25
 
 ### Heir Feedback Sweep

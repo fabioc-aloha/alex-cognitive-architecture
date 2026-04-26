@@ -13,5 +13,5 @@
     "correlationId": "string | null"
   },
   "_maxEntries": 50,
-  "_notes": "Unknowns with state=resolved are pruned during meditation. Deferred unknowns become research candidates."
+  "_notes": "Unknowns with state=resolved are reviewed manually during meditation; pruning is not yet automated. Deferred unknowns become research candidates."
 }

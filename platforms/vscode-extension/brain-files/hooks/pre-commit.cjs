@@ -16,9 +16,6 @@ const path = require('path');
 const errors = [];
 const warnings = [];
 
-// Valid connection types for synapses
-const validTypes = ['implements', 'extends', 'activates', 'complements', 'uses', 'feeds', 'consumes', 'relates', 'supports', 'requires'];
-
 /**
  * Get staged files from git
  */
@@ -37,7 +34,6 @@ function getStagedFiles() {
 function categorizeFiles(files) {
   return {
     skills: files.filter(f => /^\.github\/skills\/[^\/]+\/SKILL\.md$/.test(f)),
-    synapses: files.filter(f => /\.github\/skills\/[^\/]+\/synapses\.json$/.test(f)),
     episodic: files.filter(f => /^\.github\/episodic\//.test(f)),
     instructions: files.filter(f => /^\.github\/instructions\//.test(f)),
     // NOTE: "trifecta" name predates v8.0.0 redefinition. This validates markdown docs with frontmatter.
@@ -101,46 +97,7 @@ function validateTrifectaFiles(files) {
 }
 
 // ============================================================
-// CHECK 2: synapses.json structure + connection type validation
-// ============================================================
-function validateSynapseFiles(files) {
-  if (files.length === 0) return;
-  
-  console.log('  Validating synapses.json...');
-  
-  for (const file of files) {
-    if (!fs.existsSync(file)) continue;
-    
-    try {
-      const content = fs.readFileSync(file, 'utf8');
-      const syn = JSON.parse(content);
-      
-      if (syn.inheritance) {
-        warnings.push(`${file}: Stale 'inheritance' field (centralized in sync-architecture.cjs)`);
-      }
-      
-      if (!syn.skillId) {
-        errors.push(`${file}: Missing 'skillId' field`);
-      }
-      
-      if (syn.connections) {
-        for (const conn of syn.connections) {
-          if (conn.type && !validTypes.includes(conn.type)) {
-            errors.push(`${file}: Invalid connection type '${conn.type}' -> ${conn.target}. Valid: ${validTypes.join(', ')}`);
-          }
-          if (conn.when && conn.reason && conn.when === conn.reason) {
-            warnings.push(`${file}: when==reason duplication for target '${conn.target}' -- when should be a trigger, reason should explain why`);
-          }
-        }
-      }
-    } catch (err) {
-      errors.push(`${file}: Invalid JSON - ${err.message}`);
-    }
-  }
-}
-
-// ============================================================
-// CHECK 3: Episodic file naming
+// CHECK 2: Episodic file naming
 // ============================================================
 function validateEpisodicFiles(files) {
   if (files.length === 0) return;
@@ -169,38 +126,16 @@ function validateEpisodicFiles(files) {
 }
 
 // ============================================================
-// CHECK 4: Master-only contamination prevention
+// CHECK 3: Master-only contamination prevention
 // ============================================================
 function validateMasterOnlyRefs(files) {
   if (files.length === 0) return;
-  
+
   console.log('  Checking for master-only references...');
-  
-  for (const file of files) {
-    if (!fs.existsSync(file)) continue;
-    
-    // Check for master-only paths in inheritable skills
-    if (/synapses\.json$/.test(file)) {
-      try {
-        const content = fs.readFileSync(file, 'utf8');
-        const syn = JSON.parse(content);
-        
-        const inheritance = syn.inheritance || 'inheritable';
-        if (['inheritable', 'universal'].includes(inheritance)) {
-          if (syn.connections) {
-            for (const conn of syn.connections) {
-              const target = conn.target || '';
-              if (/(ROADMAP|alex_docs\/|platforms\/(?!vscode-extension)|MASTER-ALEX-PROTECTED)/.test(target)) {
-                warnings.push(`${file}: Inheritable skill references master-only path: ${target}`);
-              }
-            }
-          }
-        }
-      } catch (err) {
-        // Already handled in validateSynapseFiles
-      }
-    }
-  }
+
+  // Future hook: validate that inheritable instructions don't link to master-only paths.
+  // Synapse-based validation removed in v8.4.0 (synapses.json no longer exists).
+  // Re-add per-file scanning here if a new inheritable artifact format requires it.
 }
 
 // ============================================================
@@ -213,9 +148,8 @@ const categorized = categorizeFiles(stagedFiles);
 
 validateSkillFiles(categorized.skills);
 validateTrifectaFiles(categorized.trifecta);
-validateSynapseFiles(categorized.synapses);
 validateEpisodicFiles(categorized.episodic);
-validateMasterOnlyRefs([...categorized.synapses, ...categorized.instructions]);
+validateMasterOnlyRefs(categorized.instructions);
 
 // ============================================================
 // REPORT & DECISION

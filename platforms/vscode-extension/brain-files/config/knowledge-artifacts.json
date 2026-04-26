@@ -16,5 +16,5 @@
     "tags": "string[]"
   },
   "_maxEntries": 100,
-  "_notes": "Knowledge artifacts with supersededBy are kept for provenance but deprioritized in searches. Meditation prunes artifacts older than 90 days with confidence < 0.5. See afcp-artifact-management.instructions.md for lifecycle rules."
+  "_notes": "Knowledge artifacts with supersededBy are kept for provenance but deprioritized in searches. Stale-low-confidence pruning (90 days, conf < 0.5) is curated manually during meditation today; automation deferred. See afcp-artifact-management.instructions.md for lifecycle rules."
 }
