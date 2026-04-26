@@ -1,3 +1,9 @@
+---
+type: resource
+lifecycle: stable
+inheritance: inheritable
+---
+
 # Tool Set Template
 
 > Reference for configuring tool restrictions in custom agents.

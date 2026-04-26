@@ -1,3 +1,9 @@
+---
+type: resource
+lifecycle: stable
+inheritance: inheritable
+---
+
 # User Memory Structure Template
 
 > Recommended `/memories/` directory layout for heir projects.

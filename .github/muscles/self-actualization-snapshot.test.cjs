@@ -1,3 +1,10 @@
+#!/usr/bin/env node
+/**
+ * @type test
+ * @lifecycle stable
+ * @inheritance inheritable
+ * @description Tests for self-actualization-snapshot muscle
+ */
 "use strict";
 
 const test = require("node:test");

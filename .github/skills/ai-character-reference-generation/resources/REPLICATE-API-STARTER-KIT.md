@@ -1,3 +1,9 @@
+---
+type: resource
+lifecycle: stable
+inheritance: inheritable
+---
+
 # Replicate API Starter Kit
 
 > Validated reference for AI image generation via Replicate (Feb 2026)

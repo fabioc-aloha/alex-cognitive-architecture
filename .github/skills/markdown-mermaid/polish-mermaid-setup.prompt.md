@@ -1,3 +1,9 @@
+---
+type: resource
+lifecycle: stable
+inheritance: inheritable
+---
+
 # Polish Mermaid Setup
 
 Interactive configuration helper for Mermaid diagram rendering in VS Code.

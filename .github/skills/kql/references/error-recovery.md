@@ -1,3 +1,9 @@
+---
+type: resource
+lifecycle: stable
+inheritance: inheritable
+---
+
 # Error Recovery Reference
 
 Complete mapping of common KQL error patterns. For each error: the exact message, a real query that triggered it, and the fix.

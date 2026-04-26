@@ -1,3 +1,9 @@
+---
+type: resource
+lifecycle: stable
+inheritance: inheritable
+---
+
 # KQL Query Templates
 
 Reusable query patterns for common data investigation operations. Copy and adapt these.

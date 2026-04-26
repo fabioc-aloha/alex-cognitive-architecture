@@ -1,3 +1,9 @@
+---
+type: resource
+lifecycle: stable
+inheritance: inheritable
+---
+
 # Text-to-Speech Skill for Master Alex
 
 **Status:** Active
