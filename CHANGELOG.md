@@ -7,6 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.4.0] - 2026-04-26
+
+### Cognitive Rituals Reconciliation
+
+Producer-consumer reconciliation across all four cognitive rituals. Each ritual now has an honest contract between the muscle (data producer) and the prompt/skill (data consumer).
+
+### Removed
+
+- **Lucid Dream ritual**: Retired entirely. The escalation pattern (meditation → dream chain) absorbed into `dream-state/SKILL.md` §Escalation. ADR-013 documents the rationale. All files git-deleted; history preserved.
+- **Synapse validation**: Deprecated from dream-cli. `SYNAPSE-SCHEMA.json` deleted. Dream now focuses on structural health (broken refs, trifecta audit, inventory).
+
+### Added
+
+- **`meditation-snapshot.cjs` v1.0.0**: Lightweight muscle that derives `lastMeditation` from chronicle filenames (mtimes unreliable after bulk git operations). Writes `.github/quality/meditation-snapshot.json`. FIFO prunes to newest 60 chronicles.
+- **`self-actualization-snapshot.cjs` v1.0.0**: Hybrid muscle + LLM pattern — gathers mechanical inputs (inventory, memory balance, depth samples, connection density, growth diff) for 6-dimension architecture assessment. Dream is optional input (D8); LLM judges dimension 3 (Knowledge Depth) from a deterministic skill sample.
+- **`meditate.prompt.md`**: Orchestrates the full meditation ritual — pre-flight snapshot, 5 R's (Review → Relate → Reinforce → Record → Resolve), bookkeeping pass, chronicle authoring, snapshot refresh.
+- **`self-actualize.prompt.md`**: Orchestrates the monthly deep assessment — snapshot pre-flight, 6-dimension scoring with weighted rubric, prioritized improvement plan, chronicle authoring, cogConfig bookkeeping.
+- **Cognitive Rituals section** in `brain-health-grid.md`: Shows meditation and self-actualization recency, days since last run, threshold, and overdue status.
+- **`cogConfig.lastSelfActualization`**: New fallback field for heir compatibility (D12). Snapshot derives truth from chronicle filenames.
+- **Session-start staleness warnings**: `session-start.cjs` warns when meditation is overdue (≥7d) or self-actualization is stale (≥30d), reading from snapshot files first with cogConfig fallback.
+
+### Changed
+
+- **Dream Path C**: Dream is now a diagnostic that feeds meditation (not standalone maintenance). `dream-cli.cjs` schema locked at v1; `dream-creativity-score.cjs` upgraded to v2.0.0 (synapse-free scoring with research-depth and cross-domain bonuses). Chronicle pruning at 50 FIFO.
+- **Meditation Path B**: Chronicles are the canonical source of truth for meditation cadence. `session-start.cjs` reads `meditation-snapshot.json` first, falls back to `cogConfig.lastMeditation`. Meditation 5th R (Resolve) fully integrated.
+- **Self-actualization Path B**: Decoupled from dream (D8) — dream is recommended but not required. Staleness threshold set to 30 days (D9). Session Flow updated from rigid "Dream first" to optional dream input.
+- **Self-actualization SKILL.md**: Fixed cross-ritual drift ("4 R's" → "5 R's"); added §Snapshot Muscle and §Bookkeeping Surfaces documentation.
+- **Loop-menu ritual buttons**: Wired to `promptFile` references (meditation, self-actualization) and updated tooltips/descriptions to reflect current ritual mechanics. Removed synapse references.
+- **Config `_notes`**: Honest current state in heir-tracked configs — "manual curation today, automation deferred" replaces aspirational "Meditation prunes/analyzes" claims.
+
+### Fixed
+
+- **31 stale meditation chronicles** pruned (Jan 30 – Feb 7 2026) to maintain 60-chronicle FIFO cap.
+
+---
+
 ## [8.3.3] - 2026-04-25
 
 ### Heir Feedback Sweep

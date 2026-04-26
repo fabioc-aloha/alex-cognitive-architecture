@@ -2,17 +2,22 @@
 /**
  * @muscle dream-creativity-score
  * @inheritance inheritable
- * @description Score dream report quality across 5 dimensions: completeness, freshness, connectivity, insight density, and drift detection
- * @version 1.0.0
+ * @description Score the most recent meditation-authored dream chronicle across 5 dimensions: completeness, freshness, integrity, insight density, and drift detection
+ * @version 2.0.0
  * @skill architecture-health
- * @currency 2026-04-20
+ * @currency 2026-04-25
  * @platform windows,macos,linux
  * @requires node
  *
  * Dream Creativity Score (BE5)
  * Location: .github/muscles/dream-creativity-score.cjs
  *
- * Evaluates the most recent dream report for cognitive health indicators.
+ * Path C semantics (v8.4.0): chronicles are hand-authored meditation
+ * artifacts in .github/episodic/dream-report-YYYY-MM-DD.md. The companion
+ * dream-cli.cjs writes the structural JSON snapshot at
+ * .github/quality/dream-report.json. This grader reads the latest chronicle
+ * and (when present) the JSON snapshot to derive the integrity dimension.
+ *
  * Each dimension scores 0-20 for a total of 0-100.
  *
  * Usage:
@@ -29,6 +34,7 @@ const workspaceRoot = process.argv.find(a => !a.startsWith("-") && a !== process
   || path.resolve(__dirname, "../..");
 const JSON_MODE = process.argv.includes("--json");
 const episodicDir = path.join(workspaceRoot, ".github", "episodic");
+const dreamSnapshotPath = path.join(workspaceRoot, ".github", "quality", "dream-report.json");
 
 // ── Find latest dream report ──────────────────────────────────────
 
@@ -44,13 +50,13 @@ function findLatestDream() {
 // ── Scoring dimensions (0-20 each) ───────────────────────────────
 
 function scoreCompleteness(content) {
-  // Does the report cover expected sections?
+  // Does the chronicle cover expected sections? (Path C: meditation-authored, no synapses)
   const expectedSections = [
-    /architecture statistics/i,
-    /documentation count/i,
-    /skill.*inheritance/i,
-    /synapse/i,
-    /health score/i,
+    /architecture statistics|inventory/i,
+    /findings|issues|trifecta/i,
+    /broken (refs|references|links)|connection/i,
+    /recommend|action/i,
+    /health|score|status/i,
   ];
   const found = expectedSections.filter(re => re.test(content)).length;
   return Math.min(20, Math.round((found / expectedSections.length) * 20));
@@ -70,19 +76,38 @@ function scoreFreshness(content, filePath) {
   return 0;
 }
 
-function scoreConnectivity(content) {
-  // How many synapses and what's the health ratio?
-  const totalMatch = content.match(/Total Synapses\s*\|\s*(\d+)/);
-  const healthyMatch = content.match(/Healthy Connections\s*\|\s*(\d+)/);
-  const brokenMatch = content.match(/Broken Connections\s*\|\s*(\d+)/);
+function scoreIntegrity(content) {
+  // Health derived from dream-cli.cjs JSON snapshot when available, falling back
+  // to chronicle-internal counts. Replaces the legacy synapse connectivity dimension.
+  let snapshot = null;
+  if (fs.existsSync(dreamSnapshotPath)) {
+    try {
+      snapshot = JSON.parse(fs.readFileSync(dreamSnapshotPath, "utf8"));
+    } catch (_err) {
+      snapshot = null;
+    }
+  }
+
+  if (snapshot && snapshot.inventory && Number.isFinite(snapshot.inventory.total)) {
+    const total = snapshot.inventory.total;
+    const broken = Array.isArray(snapshot.brokenRefs) ? snapshot.brokenRefs.length : 0;
+    const orphans = Array.isArray(snapshot.trifectaIssues) ? snapshot.trifectaIssues.length : 0;
+    const issues = broken + orphans;
+    if (total === 0) return 0;
+    const healthRatio = Math.max(0, 1 - issues / total);
+    const sizeBonus = Math.min(1, total / 200);
+    return Math.min(20, Math.round(healthRatio * sizeBonus * 20));
+  }
+
+  // Fallback: parse chronicle-internal counts (broken refs / total files)
+  const totalMatch = content.match(/Total\s+(?:Files|Skills|Architecture)\s*[|:]\s*(\d+)/i);
+  const brokenMatch = content.match(/Broken\s+(?:Refs|References|Links|Connections)\s*[|:]\s*(\d+)/i);
   if (!totalMatch) return 0;
   const total = parseInt(totalMatch[1], 10);
-  const healthy = healthyMatch ? parseInt(healthyMatch[1], 10) : 0;
   const broken = brokenMatch ? parseInt(brokenMatch[1], 10) : 0;
   if (total === 0) return 0;
-  const healthRatio = healthy / (healthy + broken);
-  // Score: 20 for 100% health with 200+ synapses, scale down
-  const sizeBonus = Math.min(1, total / 200);
+  const healthRatio = Math.max(0, 1 - broken / total);
+  const sizeBonus = Math.min(1, total / 100);
   return Math.min(20, Math.round(healthRatio * sizeBonus * 20));
 }
 
@@ -127,7 +152,7 @@ const fileName = path.basename(dreamPath);
 const dimensions = {
   completeness: scoreCompleteness(content),
   freshness: scoreFreshness(content, dreamPath),
-  connectivity: scoreConnectivity(content),
+  integrity: scoreIntegrity(content),
   insightDensity: scoreInsightDensity(content),
   driftDetection: scoreDriftDetection(content),
 };

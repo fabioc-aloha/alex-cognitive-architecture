@@ -106,3 +106,39 @@ Prioritized list of manual fixes needed.
 | ATTENTION REQUIRED | One or more issues detected | Review issues table, prioritize by severity |
 
 Severity levels: **critical** (broken trifecta), **warning** (missing frontmatter field), **info** (cosmetic).
+
+## Escalation: When Findings Need Human Judgment
+
+Dream is a diagnostic — it never modifies files. When findings require judgment (skill consolidation, content quality decisions, contradiction resolution), the natural next step is **meditation**, which reads the dream report and decides what to fix.
+
+| Finding type | Resolution path |
+|---|---|
+| Missing frontmatter, broken link with mapping | Author the fix in the next meditation; mechanical |
+| Two skills with overlapping `applyTo` | Meditation decides merge / split / keep; semantic |
+| Skill flagged as shallow | Meditation enriches or deprecates; requires domain context |
+| Trifecta where instruction contradicts skill | Meditation reconciles intent; requires understanding |
+| Version drift master/heir | Meditation picks canonical; project-specific |
+
+The handoff is the dream report file. Meditation's `Resolve` step explicitly evaluates whether a dream should chain after it; the inverse — meditation reading an existing dream report — happens naturally when a meditation session opens with "check the architecture first."
+
+*This pattern replaces the former lucid-dream ritual (retired v8.4.0). The escalation concept lives here because dream is the producer of the findings; meditation is the consumer that decides.*
+
+## Snapshot Schema (`.github/quality/dream-report.json`)
+
+`dream-cli.cjs` writes a single structural JSON snapshot every run. Heirs and graders depend on this shape; preserve it across versions.
+
+| Field | Type | Purpose |
+|---|---|---|
+| `schemaVersion` | number | Currently `1`. Bump only with a heir migration plan. |
+| `timestamp` | ISO string | Last dream run; consumed by `proactive-awareness` and `health-pulse`. |
+| `workspace` | string | Absolute path of the dreamed workspace. |
+| `inventory.skills` / `.instructions` / `.prompts` / `.agents` / `.total` | numbers | File counts under `.github/`. |
+| `trifectaIssues[]` | `{type, skill, detail}` | Workflow skills missing matching `.instructions.md` or `.prompt.md`. |
+| `brokenRefs[]` | `{sourceFile, line, target}` | Markdown / config references that no longer resolve. |
+| `health` | `"healthy"` \| `"good"` \| `"needs-attention"` | Derived bucket: 0 / ≤5 / >5 issues. |
+
+**Stability rule**: meditation, `dream-creativity-score.cjs`, and heir consumers (`health-pulse`, `proactive-awareness.instructions.md`) all read these field names directly. Adding fields is safe; renaming or removing requires a fleet-wide migration.
+
+## Chronicle Pruning
+
+`dream-cli.cjs` keeps the newest **50** `dream-report-YYYY-MM-DD*.md` chronicles in `.github/episodic/` after each run; older ones are deleted in place. Rolling architecture history lives in the JSON snapshot and `brain-qa` outputs — chronicles are only useful as recent narrative context for meditation.

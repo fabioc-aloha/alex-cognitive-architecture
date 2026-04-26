@@ -38,6 +38,10 @@ After completing the 5 R's, optionally trigger a Dream diagnostic when:
 
 Dream produces the diagnostic report; meditation decides what to fix.
 
+### Consuming Dream Findings
+
+The inverse handoff also exists: a meditation may *open* by reading an existing `dream-report.json` and using it to focus the session. See `dream-state/SKILL.md` §Escalation for the finding→resolution mapping. This pattern replaces the former lucid-dream ritual (retired v8.4.0).
+
 ## The 5 R's — Facilitation Framework
 
 Review → Relate → Reinforce → Record → Resolve. The first four discover and persist; Resolve closes the meditation explicitly so the user knows what was saved and whether a dream follows.
@@ -164,3 +168,41 @@ Don't just list — ask *why* it matters:
 - **Too shallow**: "I learned about testing" → probe for specifics
 - **Right depth**: "Property-based testing caught an edge case our unit tests missed because..."
 - **Too deep**: 30 minutes on one function → zoom out to pattern level
+
+## Snapshot Muscle (`meditation-snapshot.cjs`)
+
+Path B (v8.4.0): chronicle files in `.github/episodic/meditation-YYYY-MM-DD-*.md` are the canonical record of when meditation last happened. The `meditation-snapshot.cjs` muscle scans them, derives the date from each filename (mtimes are unreliable across bulk git operations), and writes `.github/quality/meditation-snapshot.json`.
+
+`session-start.cjs` reads this snapshot to decide whether to surface the "meditation overdue" nag — replacing the hand-edited `cogConfig.lastMeditation` field, which is now a fallback only.
+
+| Field | Source |
+|---|---|
+| `lastMeditation` | `YYYY-MM-DD` from newest matching filename |
+| `lastMeditationFile` | Workspace-relative path |
+| `daysSinceLastMeditation` | Computed from `lastMeditation` |
+| `overdue` | `daysSinceLastMeditation >= 7` |
+| `chronicleCount` | Total matching chronicles |
+| `cadence.last30Days` / `last90Days` | Trailing-window counts |
+| `pruneThreshold` | `60` (D17) |
+
+Run after authoring a new chronicle:
+
+```pwsh
+node .github/muscles/meditation-snapshot.cjs
+```
+
+The muscle prunes the episodic directory to the newest **60** chronicles (FIFO) on each non-`--json` run. Older chronicles remain in git history; meditation's job is to produce new insight, not to curate the archive.
+
+## Bookkeeping Surfaces
+
+Four config files reference meditation as their lifecycle owner. The current honest state (v8.4.0):
+
+| File | Claim | Status |
+|---|---|---|
+| `.github/config/assignment-log.json` | "Meditation analyzes for routing patterns" | AFCP feature; pruning not yet automated. Manually inspect during meditation when the log has entries. |
+| `.github/config/knowledge-artifacts.json` | "Meditation prunes artifacts older than 90 days with confidence < 0.5" | Future trifecta — see `PLAN-meditation-ritual-refactor.md`. Manually curate during meditation for now. |
+| `.github/config/unknowns.json` | "Unknowns with state=resolved are pruned during meditation" | Manual curation during meditation. No automated pruning today. |
+| `.github/config/session-metrics.json` | "Session tracking for meditation analysis" | Gitignored local file; analyze in-session if useful. |
+
+When meditating, scan these files only if they are non-empty.
+

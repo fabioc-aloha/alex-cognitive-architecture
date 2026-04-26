@@ -970,6 +970,30 @@ function generateGrid() {
   lines.push("Full checklist and type-specific guidance: `.github/skills/currency-audit/SKILL.md`");
   lines.push("");
 
+  // Cognitive Rituals section (v8.4.0): show recency of meditation and self-actualization
+  // from their respective snapshots when present.
+  try {
+    const medSnap = (() => {
+      try { return JSON.parse(fs.readFileSync(path.join(ROOT, ".github", "quality", "meditation-snapshot.json"), "utf8")); } catch { return null; }
+    })();
+    const saSnap = (() => {
+      try { return JSON.parse(fs.readFileSync(path.join(ROOT, ".github", "quality", "self-actualization-snapshot.json"), "utf8")); } catch { return null; }
+    })();
+    lines.push("## Cognitive Rituals");
+    lines.push("");
+    lines.push("| Ritual | Last Run | Days Since | Threshold | Status |");
+    lines.push("|--------|----------|-----------:|----------:|--------|");
+    const fmtRow = (ritual, last, days, threshold) => {
+      const status = days === null ? "no record" : (days >= threshold ? `⚠ overdue` : "ok");
+      return `| ${ritual} | ${last || "(none)"} | ${days === null ? "—" : days} | ${threshold} | ${status} |`;
+    };
+    lines.push(fmtRow("Meditation", medSnap?.lastMeditation, medSnap?.daysSinceLastMeditation ?? null, 7));
+    lines.push(fmtRow("Self-Actualization", saSnap?.recency?.lastSelfActualization, saSnap?.recency?.daysSinceLastSelfActualization ?? null, 30));
+    lines.push("");
+    lines.push("> Snapshots: `.github/quality/meditation-snapshot.json`, `.github/quality/self-actualization-snapshot.json` (gitignored). Regenerate with the corresponding muscles in `.github/muscles/`.");
+    lines.push("");
+  } catch { /* degrade gracefully if snapshot files are unreadable */ }
+
   // Priority Queue section
   lines.push("## Priority Queue");
   lines.push("");

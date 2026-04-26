@@ -140,3 +140,42 @@ Self-actualization detects documentation drift — when implementation evolves f
 | Memory balance | P:E:D ratio outside maturity target | Consolidate episodic, enrich skills, prune redundant instructions |
 
 **Drift is not always bad** — growth causes natural ratio shifts. Remediate only when the shift indicates debt (e.g., unconsolidated sessions, stagnant skills, overlapping instructions).
+
+## Snapshot Muscle (self-actualization-snapshot.cjs)
+
+Mechanical inputs are produced by `.github/muscles/self-actualization-snapshot.cjs`. The snapshot is gitignored (D13) — it's regenerable working state. Run before each self-actualization session and re-run after writing the chronicle.
+
+### Schema (`.github/quality/self-actualization-snapshot.json`)
+
+| Field | Meaning |
+|---|---|
+| `schemaVersion` | Snapshot schema version (current: 1) |
+| `generatedAt` | ISO timestamp |
+| `recency.lastSelfActualization` | Date of newest `self-actualization-YYYY-MM-DD.md` chronicle (D7-pattern) |
+| `recency.source` | `chronicle-filename` \| `cogConfig` \| `none` |
+| `recency.daysSinceLastSelfActualization` | Days since last chronicle |
+| `recency.stale` | `true` if `≥ 30` days (D9) |
+| `dimensions.structuralIntegrity.dreamAvailable` | `false` if `dream-report.json` missing (D8 — dim 1 then N/A) |
+| `dimensions.structuralIntegrity.brokenRefs` / `trifectaIssues` / `health` | Pulled from dream report when present |
+| `dimensions.memoryBalance.ratio.{P,E,D}` | Procedural / Episodic / Domain mix |
+| `dimensions.knowledgeDepth.samples[]` | Smallest N skills for LLM-judged depth pass (D16: dim 3 LLM-judged) |
+| `dimensions.connectionDensity.{avgPatternsPerSkill, orphanSkills, hubSkills}` | applyTo network shape |
+| `dimensions.trifectaCompleteness.trifectaIssueCount` | From dream report (or null if dream unavailable) |
+| `dimensions.growthTrajectory.diff` | Per-artifact-type delta vs prior snapshot, or `priorAvailable: false` on first run |
+
+### What's mechanical vs what's LLM-judged (D16)
+
+| Dimension | Producer |
+|---|---|
+| 1. Structural Integrity | Mechanical (from dream report) |
+| 2. Memory Balance | Mechanical counts; LLM interprets ratio against maturity target |
+| 3. Knowledge Depth | Muscle picks deterministic sample; **LLM judges** Deep / Adequate / Shallow / Empty-shell |
+| 4. Connection Density | Mechanical (avg / orphans / hubs); LLM interprets distribution |
+| 5. Trifecta Completeness | Mechanical (count from dream); LLM picks build priority |
+| 6. Growth Trajectory | Mechanical diff; LLM interprets as healthy growth or consolidation debt |
+
+### Cadence and recency tracking
+
+- `cogConfig.lastSelfActualization` is the **fallback** field name (D11/D12). The snapshot derives `lastSelfActualization` from chronicle filenames first; cogConfig only matters when no chronicle exists yet (e.g., heir bootstrap).
+- `session-start.cjs` warns when `daysSinceLastSelfActualization ≥ 30` (D9).
+- Always re-run the muscle after authoring a new chronicle so `recency.daysSinceLastSelfActualization` resets.
