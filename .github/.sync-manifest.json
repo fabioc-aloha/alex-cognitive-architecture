@@ -1,5 +1,5 @@
 {
-  "lastSync": "2026-04-26T22:34:16.420Z",
+  "lastSync": "2026-04-26T22:38:22.923Z",
   "brainVersion": "8.4.0",
   "syncMode": "default",
   "files": {
@@ -11,7 +11,7 @@
     "agents/alex-security-cloud.agent.md": 1777241178981.3071,
     "agents/alex-skill-builder.agent.md": 1777241178981.3071,
     "agents/alex.agent.md": 1777241178995.2688,
-    "brain-version.json": 1777242856404.51,
+    "brain-version.json": 1777243102916.453,
     "config/assignment-log.json": 1777223715535.657,
     "config/cognitive-config-template.json": 1776285848600.698,
     "config/cognitive-config.json": 1776957069493.6042,
@@ -158,6 +158,7 @@
     "muscles/pptx-to-md.cjs": 1777225249417.9995,
     "muscles/ralph-loop.cjs": 1777225249417.9995,
     "muscles/README.md": 1776373022112.3867,
+    "muscles/retro-tag-inheritance.cjs": 1777243073306.0923,
     "muscles/self-actualization-snapshot.cjs": 1777225249417.9995,
     "muscles/self-actualization-snapshot.test.cjs": 1777241394215.6484,
     "muscles/session-name.cjs": 1777225249417.9995,
