@@ -13,6 +13,7 @@
 - [Talking to Alex](User-Manual#talking-to-alex)
 - [Sidebar Panel](User-Manual#sidebar-panel)
   - [Loop Tab](Loop-Tab)
+    - [Critical Thinking (ACT)](Loop-Tab#critical-thinking)
   - [Setup Tab](Setup-Tab)
 - [Agents](User-Manual#agents)
 - [Skills](User-Manual#skills)

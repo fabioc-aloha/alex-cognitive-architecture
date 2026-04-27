@@ -9,6 +9,7 @@ The Loop tab is your primary workspace in the Alex sidebar. It provides one-clic
 - [Overview](#overview)
 - [Health Pulse](#health-pulse)
 - [Chat with Alex](#chat-with-alex)
+- [Critical Thinking](#critical-thinking)
 - [Creative Loop](#creative-loop)
 - [Build Helpers](#build-helpers)
 - [Research and Learn](#research-and-learn)
@@ -80,6 +81,30 @@ When Alex detects an issue, a clickable nudge appears below the status:
 ## Chat with Alex
 
 The primary indigo button at the top opens Copilot Chat with Alex ready to help. This is the fastest way to start any conversation — no prompt template, just a blank chat.
+
+---
+
+## Critical Thinking
+
+The **CRITICAL THINKING** group sits at the top of the Loop tab and is **expanded by default**. It surfaces ACT (Artificial Critical Thinking) — the discipline that makes Alex's reasoning visible, auditable, and falsifiable. Shipped in v9.0.0.
+
+This group is marked `mandatory: true` in `loop-menu.json`. You can reorder buttons within the group, but the group itself is required by the brain so the discipline stays one click away.
+
+| Button | Icon | What It Does |
+|--------|------|-------------|
+| **ACT Pass** | Verified Filled | Run the full 7-step ACT pass on a non-trivial decision: Materiality → Hypothesise → Alternatives → Disconfirmers → Audit-priors → Severity → Commit. Use for releases, irreversible operations, architectural choices. |
+| **Reframe** | Search Fuzzy | Force a frame audit on a stuck or repeating problem. Restates the literal frame, surfaces symptom→cause distinctions, proposes alternative framings. Use when you've tried the same thing twice and it isn't working. |
+| **Claims Audit** | Checklist | Validate `ACT/CLAIMS-REGISTRY.md` for duplicate IDs, orphan citations, and empty cells. Mechanical check that Alex's framework claims stay retractable. |
+
+### When to use ACT
+
+- **Always**: medium- and high-stakes work triggers a trimmed or full pass automatically (visible markers in the response).
+- **On demand**: click **ACT Pass** before a decision you can't easily reverse — architecture choices, releases, deployments, irreversible deletes.
+- **When stuck**: click **Reframe** when you've retried the same approach and it keeps failing — the problem framing is probably wrong.
+
+For the full framework, see the master wiki [ACT Framework page](https://github.com/fabioc-aloha/AlexMaster/wiki/CRITICAL-THINKING-ACT-FRAMEWORK).
+
+> **Note for upgraded heirs**: The ACT skills, instructions, and prompts ship inside `.github/` on every v9.0.0+ heir, so `/act-pass` and `/reframe` work in chat immediately after upgrade. The CRITICAL THINKING **group** in the sidebar comes from `loop-menu.json`, which is heir-maintained config. If you don't see the group, add it to your `loop-menu.json` with `mandatory: true` and `collapsed: false` (or run `@alex /customize-welcome` to be guided through it).
 
 ---
 
