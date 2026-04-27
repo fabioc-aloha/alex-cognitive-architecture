@@ -16,6 +16,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [9.0.0] - 2026-04-26
+
+### Alex ACT — Living Proof of Concept
+
+ACT (Artificial Critical Thinking) crystallised in v8.4.0 as 17 documents in `ACT/`. v9.0.0 binds those documents to runtime brain artifacts: skills, instructions, prompts, and audit muscles. Every tenet that was Owed or Planned is now Built. The 7-step pass has a single callable entry. The claims registry has a validator. The discipline now leaves visible markers in the output, not just in the manifesto.
+
+This is the *living* part of "living POC" — the framework runs, not just the documentation.
+
+### Added
+
+- **`act-pass` trifecta** (Lane 1, PLAN-act-brain-integration): the 7-step pass (Materiality → Hypothesise → Alternatives → Disconfirmers → Audit-priors → Severity → Commit) now has one entry point that composes Tenets I, II, III, VI, VII, VIII.
+  - `.github/skills/act-pass/SKILL.md` — declarative knowledge: 7 steps, trimmed-vs-full pass triage, worked example (build-is-slow case from INCREDULITY-AS-METHOD §4), visible-marker cheat sheet, falsifiability test (≥5 invocations / 30 days).
+  - `.github/instructions/act-pass.instructions.md` — always-on trigger calibration: skip / trimmed / full by stakes.
+  - `.github/prompts/act-pass.prompt.md` — user-invokable `/act-pass` with 7 required output sections.
+- **Discipline -1 (Frame Audit)** trifecta (PLAN-CT Lane C, ACT Tenet VII):
+  - `.github/skills/problem-framing-audit/SKILL.md` — 8-check step-back protocol (Restate / Generalise / Specialise / Invert / Five Whys / Pre-mortem / Stakeholder / Frame audit), symptom→cause table, falsifiability target ≥20% per PLAN-CT.
+  - `.github/instructions/problem-framing-audit.instructions.md` — always-on gate; asymmetric activation rule (skip trivial; activate non-trivial / fix-language / repeated-failure / "just do X").
+  - `.github/prompts/reframe.prompt.md` — user-invokable `/reframe` for stuck or repeating problems.
+- **`system-prompt-skepticism` instruction** (ACT Tenet IV — was Owed, now Built): closes the only Owed tenet. Encodes the 5 operational tells from INCREDULITY-AS-METHOD §5; F5 falsifiability with 12-month window.
+- **`claims-registry-validation` trifecta** (Lane 2, PLAN-act-brain-integration, master-only):
+  - `.github/skills/claims-registry-validation/SKILL.md` — when, why, and how to run the validator.
+  - `.github/muscles/audit-act-claims.cjs` — validates `ACT/CLAIMS-REGISTRY.md`: detects duplicate IDs (excluding §11 cross-references), orphan citations from any ACT/*.md, empty cells. Exit 0 on clean. Verified clean against the v1.0 registry (321 IDs, 19 files scanned, 0 findings).
+- **Two-Hypothesis Floor** (ACT Tenets I/III/IX upgrade, PLAN-CT Lane D): `critical-thinking.instructions.md` Core Protocol step 1 now requires the visible marker `Considered: A vs B — going with A because <specific reason>`. Both alternatives must cite a specific reason ("because" or "given") — performative alternatives without reasons fail the rule. Cites Wason 1960, Nickerson 1998, Heuer 1999.
+- **`brain-qa.cjs` ACT Markers section**: scans for the Two-Hypothesis Floor marker rule and the Discipline -1 gate; emits a status row in the QA grid.
+
+### Changed
+
+- **`critical-thinking/SKILL.md`**: gains "Discipline -1: Problem Framing (Frame Audit)" section before the Materiality Gate. Framework-binding callout updated — this skill now holds Disciplines -1, 0, 1, 6, 7. Internal links to ACT/* converted to plain-text path references per `check-self-contained` policy (heirs do not have ACT/).
+- **`audit-critical-thinking.cjs`** (master-only): finding messages updated v8.6.0 → v9.0.0 / Lane references; ACT-binding finding count dropped 4 → 0 after Tenets IV, VII, IX, and act-pass shipped.
+- **`IMPLEMENTING-ACT-IN-ALEX.md`** §1 status table: Tenets I, III, IV, VII, IX, X all updated. Of 10 tenets, 9 are now Built (5 with v9.0.0 upgrades); only Tenet V outcome side remains Planned (PLAN-CT Lane A — calibration register).
+
+### Acceptance Criteria
+
+- AC2 — `audit-critical-thinking.cjs` `byKind."act-binding"` = **0** ✅
+- AC3 — `audit-act-claims.cjs` exit **0** (321 IDs, 0 duplicates, 0 orphans) ✅
+- AC5 — `brain-qa.cjs` 200/200 skills, 22/22 agents, 172/172 instructions, 74/74 prompts, 49/50 muscles passing ✅
+- AC6 — `sync-to-heir --dry-run`: inheritable artifacts queued; master-only (`audit-act-claims`, `claims-registry-validation`) excluded ✅
+- AC7 — `check-self-contained.cjs` exit **0** ✅
+- AC8 — IMPLEMENTING-ACT-IN-ALEX.md status updated (IV/VII Owed→Built; I/III/IX upgraded) ✅
+- AC9 — this entry written in past tense ✅
+
+### Deferred to v9.1.0
+
+- **ACT Fleet management**: roll v9.0.0 across the heir fleet, enforce Two-Hypothesis Floor markers in heir contexts, and aggregate `/act-pass` invocation counts for F6 falsifier measurement.
+
+---
+
 ## [8.4.0] - 2026-04-26
 
 ### Cognitive Rituals Reconciliation
