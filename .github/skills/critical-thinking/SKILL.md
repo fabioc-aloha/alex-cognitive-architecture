@@ -35,6 +35,8 @@ The third leg of epistemic integrity. A system that never fabricates and always 
 
 Critical thinking is the only leg that challenges _correct-looking_ output. Anti-hallucination catches lies. Awareness catches mistakes. Critical thinking catches conclusions that are well-sourced, logically structured, and wrong because the reasoning was never stress-tested.
 
+> **Framework binding**: The 10 tenets and 6 falsifiers that name the disciplines below as a coherent system live in `ACT/ACT-MANIFESTO.md`. The tenet → artifact map and outstanding work are in `ACT/IMPLEMENTING-ACT-IN-ALEX.md`. The brain integration plan (lanes 0–3) is in `ACT/PLAN-act-brain-integration.md`. This skill holds Disciplines -1, 0, 1, 6, 7. Disciplines I/III/IX gain a Two-Hypothesis Floor visible marker (Lane D). Tenet IV (system-prompt skepticism) ships as a sibling instruction. The composite 7-step pass lives in `act-pass/SKILL.md`.
+
 ---
 
 ## When to Activate
@@ -47,6 +49,61 @@ This skill runs as a background discipline (like awareness), but intensifies at 
 | Analysis, recommendations, architecture decisions      | Medium — run disciplines 1, 2, 5    |
 | Health, legal, security, financial advice              | High — run all 7 disciplines        |
 | Any output the user will act on with real consequences | High — full protocol                |
+
+---
+
+## Discipline -1: Problem Framing (Frame Audit)
+
+Before the Materiality Gate, before any of the seven disciplines, before any solution attempt: **audit the frame**. The most expensive class of error is solving the wrong problem precisely (Mitroff & Featheringham 1974, Type III error). A flawless solution to the wrong question is still a wrong answer.
+
+### The asymmetric rule
+
+| Task class | Frame audit |
+|---|---|
+| Trivial — single-file edit, < 15 min, mechanical | **Skip** |
+| Non-trivial — 3+ files, architectural choice, > 15 min, or symptom-frame language ("fix", "make faster", "broken", "just do X") | **Run** |
+| User restated the same request after a failed attempt | **Run** |
+| User invokes `/reframe` or asks "what am I missing?" | **Run** |
+
+### The minimum viable audit
+
+Run **at least one** of the eight step-back checks before committing to a solution:
+
+1. **Restate** — write the problem in one sentence in your own words. If you can't, ask.
+2. **Generalise** — what is this a special case of?
+3. **Specialise** — what's the simplest concrete instance?
+4. **Invert** — what would make this worse?
+5. **Five Whys** — why is this a problem? And why is *that* a problem? (×5)
+6. **Pre-mortem** — imagine it's done and didn't work; what went wrong?
+7. **Stakeholder** — whose problem is this, really? What outcome would tell *them* it's solved?
+8. **Frame audit** — what other framings exist? At least two.
+
+The discipline is not to do all eight on every problem — it's to do *at least one* on every non-trivial problem before solving. The cost is small; avoiding a Type III error is large.
+
+### Symptom-frame → cause-frame
+
+The most common reframe: the user names a *symptom*, the audit surfaces the *cause*.
+
+| User said (symptom-frame) | Audit surfaces (cause-frame) |
+|---|---|
+| "Make this function faster" | Function is fine; it's called 1000× when it should be called 1× |
+| "Fix this flaky test" | Test is correct; system has a real race condition |
+| "Add a workaround for this API quirk" | Quirk is the API enforcing a real constraint |
+| "Why does this query take 2 minutes?" | Query is fine; UI re-renders 47M rows |
+
+When the audit surfaces a cause-frame, *propose it before solving*. Don't silently solve the cause-frame — let the user choose between symptom and cause.
+
+### Visible markers
+
+Fire only when the audit produced something:
+
+- `**Frame**: <one-sentence restatement>` — always when audit fires
+- `**Cause-frame**: <reframe>` — when symptom→cause move is real
+- `**Considered framings**: (a) X, (b) Y — going with X because ...` — when frame audit (step 8) surfaced a real alternative
+
+Silent passes need no markers. Performative markers on every response defeat the purpose.
+
+> **Detailed body**: Full step-back protocol with worked examples, stakeholder-check templates, and falsifiability test → [`problem-framing-audit/SKILL.md`](../problem-framing-audit/SKILL.md). Always-on gate → [`problem-framing-audit.instructions.md`](../../instructions/problem-framing-audit.instructions.md). User-invokable → [`/reframe.prompt.md`](../../prompts/reframe.prompt.md).
 
 ---
 

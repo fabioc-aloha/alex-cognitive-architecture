@@ -263,6 +263,56 @@ project-context.instructions.md  (hub)
 
 ---
 
+## Approved Research Stamp
+
+Research artifacts produced under this skill carry the **Alex Approved Research** banner at the top of the file. The stamp is the visible certification that the seven critical-thinking disciplines were applied to the document's claims.
+
+### Required header line
+
+The first line of the file, before the `# Title`:
+
+```markdown
+![Alex Research Assistance — Approved Research](RELATIVE_PATH/assets/banner-research-assistance.svg)
+```
+
+### Path resolution
+
+| Document location | Path to use |
+|---|---|
+| Repo root (`*.md`) | `assets/banner-research-assistance.svg` |
+| `master-wiki/research/*.md` | `../assets/banner-research-assistance.svg` |
+| `master-wiki/*.md` (root wiki) | `./assets/banner-research-assistance.svg` |
+| Heir `docs/` or `research/` | `../assets/banner-research-assistance.svg` (after copying the SVG into the heir's `assets/`) |
+
+### Source asset
+
+The canonical SVG ships with this skill at:
+
+```text
+.github/skills/research-first-development/assets/banner-research-assistance.svg
+```
+
+The repo also keeps published copies at `assets/banner-research-assistance.svg` and `master-wiki/assets/banner-research-assistance.svg`. When stamping research in a new location, copy the SVG from the skill folder into the project's `assets/` directory and reference it from there.
+
+### Quality bar (do not stamp unless this is true)
+
+The stamp implies:
+
+- Multiple sources consulted, with citations
+- Alternatives or competing interpretations considered
+- Evidence quality assessed (primary > peer-reviewed > practitioner > AI training data)
+- Residual gaps and open questions named explicitly
+- The seven critical-thinking disciplines applied at the depth the topic warrants
+
+If the document does not meet that bar, **do not apply the stamp** — fix the document first. The stamp is a quality signal, not decoration.
+
+### When to apply
+
+- **Apply** to: literature surveys, comparison studies, gap analyses, architecture investigations, empirical findings, domain research documents living in `research/` or `docs/`.
+- **Do not apply** to: PLAN.md, ROADMAP.md, READMEs, implementation logs, status reports, or meeting notes. Those have their own banner conventions.
+
+---
+
 ## Replication Checklist
 
 To apply Research-First Development to any new project:

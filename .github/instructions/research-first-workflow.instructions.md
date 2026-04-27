@@ -26,6 +26,29 @@ currency: 2026-04-22
 | **2: Gap Analysis** | All 4 dimensions ≥ 75% | Gap report + fill plan |
 | **3: Execute** | GA passed | Implementation code |
 
+## Approved Research Stamp
+
+Every research artifact authored under this workflow gets the **Alex Approved Research** banner at the top of the file. This is the visible stamp that the document was produced through Alex's critical-thinking protocol, not just dropped in as opinion.
+
+**Required header line** (first line of file, before the `# Title`):
+
+```markdown
+![Alex Research Assistance — Approved Research](RELATIVE_PATH/assets/banner-research-assistance.svg)
+```
+
+| Document location | Path to use |
+|---|---|
+| Repo root (`*.md`) | `assets/banner-research-assistance.svg` |
+| `master-wiki/research/*.md` | `../assets/banner-research-assistance.svg` |
+| `master-wiki/*.md` (root wiki) | `./assets/banner-research-assistance.svg` |
+| Heir `docs/` or `research/` | `../assets/banner-research-assistance.svg` (after copying the SVG into the heir's `assets/`) |
+
+**When to apply**: any artifact that documents findings, comparisons, literature surveys, gap analyses, architecture studies, or empirical investigations. Not for plans, READMEs, or implementation logs — those have their own banner conventions.
+
+**The stamp implies a quality bar**: alternatives considered, evidence quality assessed, residual gaps named. If the document doesn't meet that bar, don't apply the stamp — fix the document first.
+
+The asset is checked in at `assets/banner-research-assistance.svg` (root) and `master-wiki/assets/banner-research-assistance.svg` (wiki). White background for printer friendliness; brand-aligned indigo and slate accents with a green approval checkmark.
+
 ---
 
 ## When to Run

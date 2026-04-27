@@ -39,10 +39,13 @@ Hard-won patterns from production experience. Each entry records a specific gotc
 - **Dual-surface docs drift**: Two READMEs covering overlapping scope will diverge. Cross-reference from the less-detailed to the more-detailed, or consolidate.
 - **Wiki = user docs, README = developer docs**: Keep audience separation clean. Wiki for end users (no Node.js), README for contributors.
 - **No decoration in machine-consumed files**: Emoji, color codes, or visual markers in tables/configs parsed by regex or LLMs will break tooling.
+- **Mermaid mode fragility — default to flowchart**: `timeline` (uses `:` as time/event separator and silently breaks on `HH:MM` events), `gitGraph` (linear chains >10 commits with quoted colon-bearing tags fail to render), and `gantt` (`dateFormat HH:mm` mis-parses task lines whose start time contains `:`) silently fail on otherwise valid content. Default to `flowchart` (TB/LR/TD) for any diagram with arbitrary text labels — it is the only Mermaid mode that survives complex content reliably. Caught in `ACT/ARC.md` (v8.4.0): all three fragile modes had to be replaced post-publish.
+- **ACT (Artificial Critical Thinking)**: 10-tenet framework for AI systems applying CT to themselves. Lives in `ACT/` (manifesto, claims registry, implementing-binding, plan). Bind to brain via `act-pass` skill (planned v8.6.0, Lane 1 of `ACT/PLAN-act-brain-integration.md`). Tenet X: discipline applies to itself — `audit-critical-thinking.cjs` flags ACT-owed artifacts as findings until they ship. Empty findings = decorative, not absent.
 
 ## Architecture
 
 - **Default to fast, opt into slow**: For AI/LLM features, default to shortest response length. Users who want more depth will select it. Persist preference in localStorage.
+- **Asset-ships-with-authoring-skill**: When a skill authors a recurring artifact (banner, template, certification stamp), the canonical asset ships inside the skill folder (e.g., `.github/skills/research-first-development/assets/banner-research-assistance.svg`) with published copies in repo `assets/` and wiki `master-wiki/assets/` for consumption. Heirs inherit the asset on next sync because the skill is `inheritable`. The skill body documents the path-resolution table for each consumption context. Pattern proven with the Alex Approved Research stamp — the certification asset ships with the skill that defines what "approved" means.
 - **Defaults-plus-overrides**: Provide role/archetype defaults, allow partial overrides, clamp bounds.
 - **Weighted scoring matrix**: Multi-factor scoring with normalized weights and optional boosts.
 - **Staged transformation pipeline**: Input flows through discrete stages (profile → style → format → output). Each stage is independently testable and replaceable.
@@ -87,6 +90,8 @@ Hard-won patterns from production experience. Each entry records a specific gotc
 ## Quality Process
 
 - **Universal audit pattern**: Inventory → compare against ground truth → severity-classify → fix all. Works for code, docs, security. Transfers to any domain where claims can drift from reality.
+- **Vision QA for visual artifacts**: SVG/banner/UI output that passes static checks can still fail to render. Loop is render → view (image tool) → diff against intent → fix → re-render. Caught a real `<textPath>` rendering bug in `banner-research-assistance.svg` that ImageMagick silently dropped — no markdown lint, no SVG validator, and no CI check would have surfaced it. Apply this loop whenever shipping visual output that humans will see.
+- **Falsifiability test per plan lane**: Every deferred or speculative work item should declare a measurable rule that says "this lane worked / this lane failed" within a defined window. Without it, plans drift into wishful thinking. Pattern proven in `ACT/PLAN-critical-thinking-improvement.md` — 8 lanes, each with a falsifiability test and a 90-day decision rule.
 - **Iterative health-check loop**: Score → fix top issues → rescore. Fix the highest-ROI dimension first.
 - **Dev folder harvest**: Scan all projects → deduplicate against master → tier (ADOPT/MAYBE/SKIP) → copy → clean frontmatter → validate. Battle-tested (3+ projects) is a strong quality signal.
 - **brain-qa frontmatter gate**: All 4 fields required (name, description, applyTo, tier). Missing any one → fm=0 → likely fail. Workflow skills also need matching `.instructions.md` for tri=1.

@@ -1715,6 +1715,41 @@ function generateGrid() {
     }
   }
 
+  // ── ACT Markers (PLAN-CT Lane D / Two-Hypothesis Floor) ────────
+  // Verifies that critical-thinking.instructions.md still carries the
+  // Two-Hypothesis Floor visible-marker rule. Falsifiability gate for
+  // Tenets I/III/IX per ACT/PLAN-critical-thinking-improvement.md.
+  lines.push("");
+  lines.push("## ACT Markers (Two-Hypothesis Floor)");
+  lines.push("");
+  const ctInstrPath = path.join(GH, "instructions", "critical-thinking.instructions.md");
+  const actMarkerFindings = [];
+  if (!fs.existsSync(ctInstrPath)) {
+    actMarkerFindings.push("`critical-thinking.instructions.md` is missing");
+  } else {
+    const ctContent = fs.readFileSync(ctInstrPath, "utf-8");
+    const hasFloor = /two[- ]hypothesis floor/i.test(ctContent);
+    const hasMarker = /considered:\s*[a-z]+\s+vs\s+[a-z]+/i.test(ctContent) || /\balt:\s/i.test(ctContent) || /hypothesis 2:/i.test(ctContent);
+    const hasReasonRule = /\bbecause\b|\bgiven\b/i.test(ctContent);
+    if (!hasFloor) actMarkerFindings.push("Two-Hypothesis Floor language missing from Core Protocol");
+    if (!hasMarker) actMarkerFindings.push("Visible marker stub (`Considered: A vs B`) not present");
+    if (!hasReasonRule) actMarkerFindings.push("Reason rule (`because`/`given`) not enforced for alternatives");
+  }
+  // Frame audit cross-reference (Discipline -1)
+  const frameAuditInstr = path.join(GH, "instructions", "problem-framing-audit.instructions.md");
+  if (!fs.existsSync(frameAuditInstr)) {
+    actMarkerFindings.push("`problem-framing-audit.instructions.md` (Discipline -1) is missing");
+  }
+  if (actMarkerFindings.length === 0) {
+    lines.push("**Status**: ✅ Two-Hypothesis Floor marker rule and Discipline -1 gate are present");
+  } else {
+    lines.push(`**Status**: ⚠️ ${actMarkerFindings.length} ACT-marker finding(s)`);
+    lines.push("");
+    for (const f of actMarkerFindings) {
+      lines.push(`- ${f}`);
+    }
+  }
+
   // ── BE3: Master ↔ Heir Drift Detection ──────────────────────────
   const heirBrain = path.join(ROOT, "heir", ".github");
   if (fs.existsSync(heirBrain)) {
