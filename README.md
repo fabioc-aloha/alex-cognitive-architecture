@@ -8,6 +8,8 @@
 
 **Your cognitive learning partner for VS Code.** Alex installs a living brain of skills, instructions, and prompts that makes GitHub Copilot dramatically smarter in any project.
 
+> **Note:** This architecture has a new version. The current release is [Alex_ACT_ONE](https://github.com/fabioc-aloha/Alex_ACT_ONE), which carries this work forward. This repository is kept for reference.
+
 ## What Alex Does
 
 Alex enhances GitHub Copilot with a **cognitive architecture** — domain knowledge, behavior rules, and reusable workflows that load automatically based on what you're working on.
